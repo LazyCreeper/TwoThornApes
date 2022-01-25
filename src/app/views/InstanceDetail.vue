@@ -28,24 +28,24 @@
   <Panel>
     <template #title>实例详细信息设置</template>
     <template #default>
-      <div v-loading="loading" element-loading-text="获取中">
+      <div v-loading="loading" element-loading-text="获取中" element-loading-background="rgba(0, 0, 0, 0.5)">
         <el-row :gutter="20">
           <el-col :md="6">
-            <div class="sub-title">唯一标识符（UUID）</div>
+            <div class="overview-info-title">唯一标识符（UUID）</div>
             <p v-text="instanceInfo.instanceUuid"></p>
-            <div class="sub-title">远程标识符（GUID）</div>
+            <div class="overview-info-title">远程标识符（GUID）</div>
             <p v-text="serviceUuid"></p>
-            <div class="sub-title">当前状态</div>
+            <div class="overview-info-title">当前状态</div>
             <p v-text="codeToText(instanceInfo.status)"></p>
-            <div class="sub-title">已启动次数</div>
+            <div class="overview-info-title">已启动次数</div>
             <p v-text="instanceInfo.started"></p>
-            <div class="sub-title">创建日期</div>
+            <div class="overview-info-title">创建日期</div>
             <p v-text="instanceInfo.config.createDatetime"></p>
-            <div class="sub-title">最后启动日期</div>
+            <div class="overview-info-title">最后启动日期</div>
             <p v-text="instanceInfo.config.lastDatetime"></p>
-            <div class="sub-title">到期时间</div>
+            <div class="overview-info-title">到期时间</div>
             <p v-text="instanceInfo.config.endTime ? instanceInfo.config.endTime : '无限制'"></p>
-            <div class="sub-title">进程类型</div>
+            <div class="overview-info-title">进程类型</div>
             <p v-text="instanceInfo.config.processType"></p>
           </el-col>
           <el-col :md="18">
@@ -98,7 +98,7 @@
                 </div>
                 <div class="flex">
                   <el-input v-model="instanceInfo.config.startCommand" type="text"> </el-input>
-                  <el-button type="primary" plain @click="openCommandAssistCall(1)">
+                  <el-button plain @click="openCommandAssistCall(1)">
                     命令生成
                   </el-button>
                 </div>

@@ -251,7 +251,7 @@
       </Panel>
     </el-col>
     <el-col :md="18">
-      <Panel v-loading="!available" element-loading-text="连接中">
+      <Panel v-loading="!available" element-loading-text="连接中" element-loading-background="rgba(0, 0, 0, 0.5)">
         <template #title>实例操作终端</template>
         <template #default>
           <div class="terminal-wrapper">
@@ -275,17 +275,14 @@
         <template #default>
           <div v-if="commandhistory.length > 0">
             <ItemGroup>
-              <el-tag
+              <div
                 v-for="(item, index) in commandhistory"
                 :key="index"
                 @click="selectHistoryCommand(item)"
-                size="small"
-                type="info"
-                class="text-overflow-ellipsis"
-                style="max-width: 23%; cursor: pointer; font-size: 13px"
-              >
+                class="text-overflow-ellipsis cmdhistory"
+                style="max-width: 23%; cursor: pointer; font-size: 13px">
                 {{ item }}
-              </el-tag>
+              </div>
             </ItemGroup>
           </div>
           <div v-else>
@@ -802,5 +799,22 @@ export default {
 #terminal-input-wrapper input {
   width: 100%;
   font-size: 12px;
+}
+.cmdhistory {
+  cursor: pointer;
+  font-size: 13px;
+  margin: 2px;
+  display: inline-block;
+  padding: 5px 10px 5px 10px;
+  background: rgba(0,0,0,.3);
+  border: 1px solid #bfbfbf;
+  color: #55ff62;
+  max-width: 25%;
+}
+.cmdhistory:hover {
+  border: 1px solid #4eff42;
+  box-shadow: 0 0 5px #42ff85;
+  padding: 6px 11px 6px 11px;
+  transition: all .5s;
 }
 </style>

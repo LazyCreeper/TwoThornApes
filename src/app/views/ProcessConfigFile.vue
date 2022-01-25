@@ -34,6 +34,7 @@
         v-loading="loading"
         style="min-height: 600px"
         element-loading-text="加载中"
+        element-loading-background="rgba(0, 0, 0, 0.5)"
       >
         <el-row :gutter="20">
           <el-col :span="12" :offset="0">

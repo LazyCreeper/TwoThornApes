@@ -11,18 +11,12 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
 
   版权所有 (C) 2022 Suwings(https://github.com/Suwings)
 
   本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
   该程序以具有实际用途为目的发布，但是并不包含任何担保，
   也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
-
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
 -->
 
 <template>
@@ -44,7 +38,7 @@
   ></div>
 
   <div id="login-panel-wrapper" :class="{ 'login-panel-wrapper-out': closeWindow }">
-    <Panel id="login-panel" body-style="padding:44px;" v-loading="loading">
+    <Panel id="login-panel" body-style="padding:44px;" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
       <template #default>
         <form action="/login" method="post">
           <div style="font-size: 24px; font-weight: 600">身份验证</div>
@@ -140,7 +134,6 @@ import Panel from "../../components/Panel";
 // import router from "../router";
 import { API_USER_LOGIN, sleep } from "../service/common";
 import { request, setupUserInfo } from "../service/protocol";
-
 export default {
   components: { Panel },
   data: function () {
@@ -221,16 +214,7 @@ export default {
   },
   async mounted() {
     console.log("Welcome use MCSManager.");
-    console.log("Copyright 2022 Suwings All rights reserved.");
-    // try {
-    //   await setupUserInfo();
-    //   if (this.$store.state?.userInfo?.uuid) {
-    //     console.log("用户已登录，正在跳转");
-    //     window.location.href = "/";
-    //   }
-    // } catch (err) {
-    //   // 忽略
-    // }
+    console.log("Copyright 2021 Suwings All rights reserved.");
   }
 };
 </script>
@@ -312,7 +296,7 @@ export default {
 #login-layer-right,
 #login-layer-bottom {
   z-index: 998;
-  background-color: rgb(228, 228, 228);
+  background-color: rgb(0, 0, 0);
   position: fixed;
 }
 #login-layer-top {
@@ -344,7 +328,9 @@ export default {
   left: 0px;
   right: 0px;
   bottom: 0px;
-
+  background: url(https://api.imlazy.ink/img);
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   align-items: center;
 
@@ -378,7 +364,7 @@ export default {
 }
 
 .login-info-wrapper a {
-  color: gray;
+  color: #e9e4e4;
   text-decoration: underline;
 }
 
@@ -389,7 +375,7 @@ export default {
 }
 
 /* 针对手机的登录界面 */
-@media (max-width: 900px) {
+@media (max-width: 888px) {
   #login-panel {
     text-align: center;
     margin: 0;
@@ -415,6 +401,11 @@ export default {
   #login-cause {
     margin-top: 12px;
     margin-right: 0px;
+  }
+  #login-panel-wrapper {
+    background: url(https://api.imlazy.ink/img-phone);
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .login-info-wrapper {
     text-align: center;

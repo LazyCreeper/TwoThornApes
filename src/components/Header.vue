@@ -40,11 +40,12 @@
         </div>
         <div
           style="font-size: 14px; font-weight: 700; line-height: 28px"
+          class="only-pc-display"
           v-for="(item, index) in breadcrumbsList"
           :to="{ path: item.path }"
           :key="index"
         >
-          <span class="only-pc-display">控制面板 / {{ item.title }}</span>
+          <span class="only-pc-display"><a href="./" class="HeaderTitle">控制面板</a>&nbsp;&nbsp;/&nbsp;&nbsp;<span class="HeaderInfo">{{ item.title }}</span></span>
         </div>
         <!-- 电脑端显示全部内容 -->
         <!-- <el-breadcrumb separator="/" style="line-height: 28px" class="only-pc-display">
@@ -89,22 +90,25 @@
   >
     <div class="flex flex-space-between">
       <router-link to="/home">
-        <div style="height: 36px; line-height: 36px">
+        <div style="height: 33px; line-height: 33px">
           <div>
             <Logo style="vertical-align: text-top" margin="0px"></Logo>
           </div>
         </div>
       </router-link>
       <div style="height: 36px; line-height: 36px">
-        <ItemGroup :lr="true">
-          <router-link to="/home">
-            <el-link :underline="false" class="only-pc-display header-a"
-              >欢迎您，{{ userInfo.userName }}</el-link
-            >
-          </router-link>
-          <el-link @click="toPrivate" class="header-a">个人资料</el-link>
-          <el-link @click="logout" class="header-a">退出</el-link>
-        </ItemGroup>
+        <el-dropdown style="margin: 0px 10px">
+          <span class="el-dropdown-link">
+            欢迎您，{{ userInfo.userName }}
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="toPrivate">个人资料</el-dropdown-item>
+              <el-dropdown-item @click="logout">退出</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
   </el-card>
@@ -183,7 +187,6 @@ export default {
 }
 
 .page-header-img {
-  background: url("../assets/side.png");
   background-position-y: 40px;
   transition: all 1s;
 }
@@ -193,7 +196,7 @@ export default {
 }
 
 .header-a {
-  color: rgb(235, 235, 235);
+  color: #caffff;
   font-weight: 400;
 }
 </style>

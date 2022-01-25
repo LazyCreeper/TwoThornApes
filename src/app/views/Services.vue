@@ -129,7 +129,7 @@
         <div class="sub-title">备注信息</div>
         <el-input
           v-model="newServiceInfo.remarks"
-          placeholder="选填，支持中文，用于填写相关备注信息"
+          placeholder="必填，支持中文，用于填写相关备注信息"
           size="small"
         ></el-input>
         <div class="sub-title row-mt">

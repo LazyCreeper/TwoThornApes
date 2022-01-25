@@ -44,7 +44,7 @@
               <LineLabel>
                 <template #title>账号状态</template>
                 <template #default>
-                  <span style="color: green">{{ moreUserInfo.safe }}</span>
+                  <span>{{ moreUserInfo.safe }}</span>
                 </template>
               </LineLabel>
             </el-col>
@@ -164,11 +164,12 @@
           <div
             class="row-mt"
             style="
-              padding: 12px 8px;
-              background: rgba(0, 0, 0, 0.02);
+              padding: 8px 8px;
+              background: rgba(0, 0, 0, 0.2);
               box-sizing: border-box;
-              border-radius: 2px;
               font-size: 13px;
+              border: 1px solid #aaaaaa;
+              border-radius: 4px;
             "
           >
             <span>{{ userInfo.apiKey ? userInfo.apiKey : "未启用" }}</span>

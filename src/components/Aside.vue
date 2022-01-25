@@ -31,10 +31,10 @@
     mode="vertical"
     :router="true"
     :uniqueOpened="false"
-    background-color="#30313300"
+    background-color="rgba(0,0,0,0.5)"
     text-color="#fff"
     active-text-color="#ffd04b"
-    style="height: 100%; padding: 0px 8px"
+    style="height: 100%; padding: 0px 0px;"
     :default-active="$route.path"
   >
     <el-scrollbar>
@@ -139,7 +139,7 @@ export default {
   text-align: center;
 }
 .page-el-menu {
-  background: url("../assets/side.png");
+  backdrop-filter: blur(3px);
   transition: all 1s;
 }
 

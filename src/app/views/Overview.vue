@@ -28,7 +28,7 @@
 <template>
   <el-row :gutter="20">
     <el-col :span="24">
-      <Panel v-loading="loading">
+      <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
         <template #title>面板端系统数据</template>
         <template #default>
           <el-row :gutter="20">
@@ -62,7 +62,7 @@
       </Panel>
       <el-row :gutter="20">
         <el-col :md="12" :offset="0">
-          <Panel v-loading="loading">
+          <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
             <template #title>面板端接口请求量</template>
             <template #default>
               <p>每1分钟统计间隔，总计1小时的请求历史</p>
@@ -73,7 +73,7 @@
           </Panel>
         </el-col>
         <el-col :md="12" :offset="0">
-          <Panel v-loading="loading">
+          <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
             <template #title>面板端 CPU 使用率</template>
             <template #default>
               <p>每10秒统计间隔，总十分钟的 CPU 历史使用率</p>
@@ -86,7 +86,7 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :md="12" :offset="0">
-          <Panel v-loading="loading">
+          <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
             <template #title>分布式应用实例状态</template>
             <template #default>
               <p>每1分钟统计间隔，总计1小时的实例状态历史</p>
@@ -97,7 +97,7 @@
           </Panel>
         </el-col>
         <el-col :md="12" :offset="0">
-          <Panel v-loading="loading">
+          <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
             <template #title>面板端内存使用率</template>
             <template #default>
               <p>每10秒统计间隔，总十分钟的内存历史使用率</p>
@@ -109,7 +109,7 @@
         </el-col>
       </el-row>
 
-      <Panel v-loading="loading">
+      <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
         <template #title>分布式服务总览</template>
         <template #default>
           <p>
@@ -338,16 +338,26 @@ export default {
         source[key]["time"] = `${MAX_TIME - key * 1} 分前`;
       }
       this.systemChart3.setOption({
+        textStyle: {color:"#dad6a1"},
         dataset: {
           dimensions: ["time", "value"],
-          source
-        }
+          source,
+        },
+        //接口请求量
+        color: [
+          '#fff493'
+        ]
       });
       this.systemChart4.setOption({
+        textStyle: {color:"#dad6a1"},
         dataset: {
           dimensions: ["time", "totalInstance", "runningInstance"],
           source
-        }
+        },
+        //总数，运行书
+        color: [
+        '#99f5bd','#dbff95'
+        ]
       });
     },
     setSystemChart() {
@@ -357,16 +367,26 @@ export default {
         source[key]["time"] = `${(MAX_TIME - key) * 10} 秒前`;
       }
       this.systemChart.setOption({
+        textStyle: {color:"#8ec7ff"},
         dataset: {
           dimensions: ["time", "cpu"],
           source
-        }
+        },
+        //CPU
+        color: [
+          '#87c2fe'
+        ]
       });
       this.systemChart2.setOption({
+        textStyle: {color:"#d79aff"},
         dataset: {
           dimensions: ["time", "mem"],
           source
-        }
+        },
+        ///面板段内存使用率
+        color: [
+          '#d58dff'
+        ]
       });
     },
     setChartSource() {

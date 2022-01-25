@@ -61,6 +61,8 @@ export default {
 }
 
 .select-block:hover {
-  border: 1px solid #409eff;
+  border: 1px solid #d9dd8c;
+  background: rgba(79,114,78,0.5);
+  backdrop-filter: blur(3px);
 }
 </style>

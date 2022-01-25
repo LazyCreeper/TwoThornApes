@@ -11,24 +11,68 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
 
   版权所有 (C) 2022 Suwings(https://github.com/Suwings)
 
   本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
   该程序以具有实际用途为目的发布，但是并不包含任何担保，
   也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
-
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
 */
+body {
+  font-family: hmos;
+}
+
+a {
+  color: #e6ffe2;
+}
+
+a:hover {
+  color: #79ffbb;
+  transition: color .5s;
+}
+
+.app {
+  height: 100%;
+  background: url(https://tva4.sinaimg.cn/large/006MpbfMgy1gsiwf1tnt6j31be0qoqdm.jpg)!important;
+  background-repeat: no-repeat;
+  background-size: cover!important;
+}
 
 /* 菜单 */
 #app-menu {
   height: 100%;
   transition: all 1s;
+}
+
+.el-drawer {
+  background-color: rgba(127,131,125,0.5);;
+}
+
+.is-active {
+  background-color: rgba(18,30,13,.5)!important;
+  border-left: 5px solid #8ee17f;
+  color: #dbffb6!important;
+}
+
+.el-tabs__nav>.is-active {
+  background-color: transparent!important;
+  border: 0!important;
+}
+
+.el-tabs__item {
+  color:#e8efd2;
+}
+
+.el-menu-item {
+  border-radius: 0!important;
+}
+
+.el-menu-item:hover {
+  background-color: rgba(50,71,61,0.7);
+}
+
+.el-menu-item-group__title {
+  color: #fff4a3!important;
 }
 
 /* 动画 */
@@ -47,16 +91,17 @@
 .sub-title {
   margin-bottom: 10px;
   font-size: 14px;
+  
 }
 
 .sub-title-title {
   font-size: 14px;
-  color: #000000;
+  color: #ffefdc;
   margin: 0px;
 }
 .sub-title-info {
   font-size: 13px;
-  color: gray;
+  color: #b1e2c0;
   margin: 0px;
 }
 
@@ -125,14 +170,15 @@
 /* 常见问题栏目连接属性集合 */
 .manualLink {
   display: block;
-  color: black;
+  color: #e6ffe2;
   line-height: 1.5;
   margin-bottom: 8px;
   box-sizing: border-box;
   text-decoration: none;
 }
 .manualLink:hover {
-  color: #006eff !important;
+  color: #79ffbb;
+  transition: color .5s;
 }
 
 .manual-link-block-wrapper {
@@ -141,14 +187,14 @@
 }
 
 .manual-link-block {
-  background-color: #ebeef3;
+  background-color: rgba(76,217,204,0.4);
   display: block;
   padding: 8px;
   line-height: 1.5;
   transition: all 0.4s;
 }
 .manual-link-block:hover {
-  background-color: #caced6;
+  background-color: rgba(22,189,167,0.5);
 }
 
 .CodeMirror {
@@ -157,6 +203,10 @@
 }
 
 /* 卡片 CSS 标题元素 */
+.el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover {
+  background: rgba(0,0,0,0.6);
+}
+
 .box-card-title-more {
   font-weight: 800;
   margin-bottom: 12px;
@@ -164,4 +214,159 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.line-info {
+  color: #e9fffa!important;
+}
+
+.el-card {
+  background-color: rgba(0,0,0,.5);
+  box-shadow: 0 0 10px 0 rgba(0,0,0,.5)!important;
+  border: 0!important;
+  color: rgb(255 230 204)!important;
+  border-radius: 0!important;
+}
+
+.overview-info-title {
+  color: rgb(234 255 197)!important;
+}
+
+/* 表格 */
+.el-table--enable-row-hover .el-table__body tr:hover>td {
+	background-color: rgba(58,118,121,.5)!important
+}
+
+.el-table {
+  color: #a3fff9!important;
+  background-color: transparent!important;
+}
+
+.el-table th {
+	color: #a3fff9!important;
+	background-color: rgba(50,78,88,.5)!important
+}
+
+.el-table tr {
+  background-color: rgba(0,0,0,.5)!important;
+}
+
+.el-table td, .el-table th.is-leaf {
+  border-bottom: 1px solid #68879e!important;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+  background: rgba(38,60,79,.5)!important;
+}
+
+
+/* 输入框 */
+.el-input--small .el-input__inner, .el-input__inner {
+  background: rgba(0,0,0,.3);
+  color: #b9ffcf;
+}
+
+/* 按钮 */
+.el-button.el-button--default,.el-button--small {
+  background: hsla(0,0%,100%,.15);
+  color: #cbe5ff;
+}
+
+.el-button.el-button--default:hover {
+  color: #92c9ff;
+  background-color: hsla(0,0%,100%,.3);
+}
+
+.el-button--default.el-button--small:hover {
+  color: #92c9ff;
+  background-color: hsla(0,0%,100%,.3);
+}
+
+.el-button--success {
+  background-color: rgb(120,183,90,0.78);
+}
+
+.el-button--danger {
+  background-color: rgba(101,12,12,0.5);
+  border-color: #fbc4c4;
+}
+
+.el-button--danger.is-plain {
+  background-color: rgba(167,114,114,0.5);
+}
+
+/* 对话框 */
+.component-dialog-overflow {
+  backdrop-filter: blur(5px);
+}
+
+.el-message-box {
+  background-color: rgba(217,255,241,0.5)!important;
+  backdrop-filter: blur(4px);
+  border: 2px solid #7ca399!important;
+}
+
+.el-message-box__title {
+  color: #a4ffe2!important;
+}
+
+.el-message-box__content {
+  color: #b5ffd3!important;
+}
+
+.HeaderTitle {
+  color: #bcffa7;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.HeaderInfo {
+  color: #63cbd0;
+}
+
+/* 下拉选择 */
+.el-select .el-input.is-focus .el-input__inner {
+  border-color: #7ce0b1;
+  box-shadow: 0 0 5px #7ce0b1;
+}
+
+.el-dropdown-link {
+  color: #b1ffe9!important;
+}
+
+.el-select__popper.el-popper[role=tooltip] {
+  background: rgba(0,0,0,.5);
+  backdrop-filter: blur(5px);
+  border: 1px solid #7ce0b1;
+  box-shadow: 0 0 7px #62feb5;
+}
+
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+    background: rgba(68,83,80,.3);
+    color: #d0ffe2;
+}
+
+.el-select-dropdown__item.selected {
+  color: #7ee5b5;
+}
+
+.el-select-dropdown__item {
+  color: #eafff6;
+}
+
+.el-timeline-item__timestamp {
+  color: #eaebed;
+}
+
+.el-alert--info.is-light {
+	background-color: rgba(244,244,245,.3);
+	color: #fff
+}
+
+.el-alert--info.is-light .el-alert__description {
+	color: #e4edff
+}
+
+.el-alert--error.is-light {
+	background-color: rgba(255,190,190,.3)
 }

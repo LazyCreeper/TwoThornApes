@@ -138,6 +138,7 @@
         style="width: 100%"
         size="mini"
         v-loading="info.loading"
+        element-loading-background="rgba(0, 0, 0, 0.5)"
       >
         <el-table-column prop="nickname" label="实例昵称" min-width="240"></el-table-column>
         <el-table-column label="运行状态">
@@ -192,12 +193,16 @@
   <!-- 版权信息 -->
   <div
     class="flex flex-space-center flex-align-items-center"
-    style="font-size: 12px; color: #cdcdcd; text-align: center; margin-top: 40px"
+    style="font-size: 12px;
+    color: rgb(195 219 122);
+    text-align: center;
+    margin-top: 40px;
+    text-shadow: 0 0 10px #65e54e;"
   >
     <div>
       <span>MCSManager is released under the GPL-3.0 License</span>
       <br />
-      <span>Copyright © 2021 Suwings</span>
+      <span>Copyright © 2022 Suwings | Modify by <a href="https://lazy.ink" target="_blank">Lazy</a></span>
     </div>
   </div>
 

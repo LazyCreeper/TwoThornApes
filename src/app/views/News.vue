@@ -75,29 +75,57 @@
     </el-col>
   </el-row>
 
-  <Panel v-if="activities">
-    <template #title>产品动态</template>
-    <template #default>
-      <div>
-        <el-timeline style="margin-left: -36px">
-          <el-timeline-item
-            v-for="(activity, index) in activities"
-            :key="index"
-            :icon="activity.icon"
-            :type="activity.type"
-            :color="activity.color"
-            :size="activity.size"
-            :timestamp="activity.time"
-          >
+  <el-row :gutter="20">
+    <el-col :md="16" :offset="0">
+      <Panel v-if="activities">
+        <template #title>产品动态</template>
+        <template #default>
+          <div>
+            <el-timeline style="margin-left: -36px">
+              <el-timeline-item
+                v-for="(activity, index) in activities"
+                :key="index"
+                :icon="activity.icon"
+                :type="activity.type"
+                :color="activity.color"
+                :size="activity.size"
+                :timestamp="activity.time"
+              >
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ activity.title }}</p>
+                  <p class="sub-title-info">{{ activity.info }}</p>
+                </div>
+              </el-timeline-item>
+            </el-timeline>
+          </div>
+        </template>
+      </Panel>
+    </el-col>
+    <el-col :md="8" :offset="0">
+      <Panel>
+        <template #title>主题更新</template>
+        <template #default>
+          <div style="height: 280px; overflow: auto">
             <div class="sub-title">
-              <p class="sub-title-title">{{ activity.title }}</p>
-              <p class="sub-title-info">{{ activity.info }}</p>
+              <div class="sub-title-title">该主题由<a href="https://www.lazy.ink" target="_blank">Lazy</a>开发</div>
+              <div class="sub-title-info">
+                如果你在使用主题过程中遇到任何问题或发现错误，可反馈到我的邮箱：<a href="mailto:lazy_creeper@qq.com">lazy_creeper@qq.com</a><br>主题<span style="color:rgb(255, 97, 97)">完全免费！</span>严禁倒卖！
+              </div>
             </div>
-          </el-timeline-item>
-        </el-timeline>
-      </div>
-    </template>
-  </Panel>
+            <LineLabel>
+              <template #title>主题发布地址<br>赞助二维码</template>
+              <template #default><a href="https://blog.imlazy.ink:233/index.php/archives/253/" target="_blank">点击前往</a><br><a href="https://s1.imlazy.ink:233/img/2020/07/07/f0d49c4bb6c8520200707.jpg" target="_blank">点击前往</a></template>
+            </LineLabel>
+            <LineLabel>
+              <template #title>当前主题版本</template>
+              <template #default>1.2&nbsp;&nbsp;<a href="javascript:checkUpdate();">检查更新</a><lazy id="lazy"></lazy></template>
+            </LineLabel>
+          </div>
+        </template>
+      </Panel>
+    </el-col>
+  </el-row>
+  
 </template>
 
 <script>
