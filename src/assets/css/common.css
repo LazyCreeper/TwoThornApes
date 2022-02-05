@@ -184,14 +184,14 @@ a:hover {
 /* 常见问题栏目链接属性集合 */
 .manualLink {
   display: block;
-  color: #e6ffe2;
+  color: var(--a-color);
   line-height: 1.5;
   margin-bottom: 8px;
   box-sizing: border-box;
   text-decoration: none;
 }
 .manualLink:hover {
-  color: #79ffbb;
+  color: var(--a-hover-color);
   transition: color .5s;
 }
 
@@ -201,14 +201,15 @@ a:hover {
 }
 
 .manual-link-block {
-  background-color: rgba(76,217,204,0.4);
+  background-color: var(--manual-link-bg-color);
   display: block;
   padding: 8px;
   line-height: 1.5;
   transition: all 0.4s;
 }
+
 .manual-link-block:hover {
-  background-color: rgba(22,189,167,0.5);
+  background-color: var(--manual-link-bg-hover-color);
 }
 
 .CodeMirror {
@@ -217,8 +218,8 @@ a:hover {
 }
 
 /* 卡片 CSS 标题元素 */
-.el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover {
-  background: rgba(0,0,0,0.6);
+.is-hover-shadow:focus, .el-card.is-hover-shadow:hover {
+  background: var(--card-bg-color);
 }
 
 .box-card-title-more {
@@ -235,8 +236,8 @@ a:hover {
 }
 
 .el-card {
-  background-color: rgba(0,0,0,.5);
-  box-shadow: 0 0 10px 0 rgba(0,0,0,.5)!important;
+  background-color: var(--card-bg-color);
+  box-shadow: var(--card-box-shadow)!important;
   border: 0!important;
   color: rgb(255 230 204)!important;
   border-radius: 0!important;

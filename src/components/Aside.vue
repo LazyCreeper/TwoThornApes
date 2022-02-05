@@ -137,7 +137,7 @@ export default {
   text-align: center;
 }
 .page-el-menu {
-  backdrop-filter: blur(3px);
+  backdrop-filter: var(--cd-blur);
   transition: all 1s;
 }
 
