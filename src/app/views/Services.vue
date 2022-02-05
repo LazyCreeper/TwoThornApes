@@ -27,7 +27,7 @@
 
 <template>
   <Panel>
-    <template #title>远程服务管理</template>
+    <template #title>远程守护进程管理</template>
     <template #default>
       <div class="flex flex-space-between">
         <ItemGroup>
@@ -43,13 +43,15 @@
     </template>
   </Panel>
   <Panel>
-    <template #title>所有分布式服务总览</template>
+    <template #title>已配置的守护进程</template>
     <template #default>
       <p>
-        远程服务（远程主机）必须确保全部在线且互相网络畅通，面板连接需公开放行远程服务端口与配置密钥。
+        远程守护进程（在任何物理主机上）必须确保全部在线且互相网络畅通，面板连接需公开放行守护进程端口与配置密钥。
         <br />
-        网页需要能直接连接远程服务（上传，下载与控制台），避免使用除 localhost
-        外的局域网段任何IP，尽可能使用外网IP或域名进行连接。
+        网页需要能直接连接远程守护进程（上传，下载与控制台），避免使用除 localhost
+        外的局域网段任何IP，必须使用外网IP或域名进行连接。
+        <br />
+        面板端对应的守护进程版本：{{ specifiedDaemonVersion }}
       </p>
       <el-table :data="services" style="width: 100%" size="small">
         <el-table-column label="地址" width="170">
@@ -95,6 +97,26 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column label="版本">
+          <template #default="scope">
+            <span
+              class="color-green"
+              v-if="scope.row.version && scope.row.version === specifiedDaemonVersion"
+            >
+              <i class="el-icon-circle-check"></i> {{ scope.row.version }}
+            </span>
+            <span class="color-red">
+              <el-tooltip
+                effect="dark"
+                v-if="scope.row.version !== specifiedDaemonVersion"
+                placement="top"
+                content="与面板端要求版本不一致"
+              >
+                <span><i class="el-icon-warning-outline"></i> {{ scope.row.version }}</span>
+              </el-tooltip>
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column label="连接状态">
           <template #default="scope">
             <span class="color-green" v-if="scope.row.available">
@@ -123,17 +145,17 @@
   </Panel>
 
   <Dialog v-model="isNewService">
-    <template #title>新增远程服务</template>
+    <template #title>新增远程守护进程</template>
     <template #default>
       <div>
         <div class="sub-title">备注信息</div>
         <el-input
           v-model="newServiceInfo.remarks"
-          placeholder="必填，支持中文，用于填写相关备注信息"
+          placeholder="选填，支持中文，用于填写相关备注信息"
           size="small"
         ></el-input>
         <div class="sub-title row-mt">
-          <div class="sub-title-title">远程服务所在主机的IP地址</div>
+          <div class="sub-title-title">守护进程所在主机的IP地址</div>
           <div class="sub-title-info">
             <b>必须使用外网地址</b>或 localhost 地址，否则将导致远程实例无法连接
           </div>
@@ -143,7 +165,7 @@
           placeholder="必填，列如 mcsmanager.com，43.123.211.12"
           size="small"
         ></el-input>
-        <div class="sub-title row-mt">远程服务端口</div>
+        <div class="sub-title row-mt">守护进程端口</div>
         <el-input
           v-model="newServiceInfo.port"
           placeholder="必填，列如 24444"
@@ -154,12 +176,7 @@
           <div class="sub-title-info">
             在守护进程启动时控制台上会输出显示，务必确保密钥安全
             <br />
-            <a
-              href="https://github.com/Suwings/MCSManager-Document/wiki/%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E5%AF%86%E9%92%A5%E6%9C%89%E4%BD%95%E4%BD%9C%E7%94%A8%EF%BC%9F"
-              class="color-blue"
-            >
-              如何获取密钥？
-            </a>
+            <a href="https://docs.mcsmanager.com/" class="color-blue"> 如何获取密钥？ </a>
           </div>
         </div>
         <el-input
@@ -185,7 +202,7 @@
           检测到您的连接IP为 :{{ newServiceInfo.ip }}，似乎是一个内网地址？
         </div>
         <div class="sub-title-info">
-          面板与远程服务端均要能够让用户访问，以此行为设计即可实现流量分流减轻中心面板端的压力。
+          面板与守护进程端均要能够让用户访问，以此行为设计即可实现流量分流减轻中心面板端的压力。
         </div>
       </div>
       <div class="sub-title">
@@ -268,7 +285,10 @@ export default {
       selectRow: null,
       isNewService: false,
       isNewServiceWarning: false,
-      isOpenPrinciplePanel: false
+      isOpenPrinciplePanel: false,
+
+      panelVersion: null,
+      specifiedDaemonVersion: null
     };
   },
   methods: {
@@ -293,6 +313,9 @@ export default {
         }
       });
       this.services = result.remote;
+      // 版本相关数据渲染
+      this.specifiedDaemonVersion = result.specifiedDaemonVersion;
+      this.panelVersion = result.version;
     },
     // 新增服务
     async toNewService(enforce = false) {
@@ -355,7 +378,7 @@ export default {
     },
     // 删除服务
     async deleteService(uuid) {
-      await this.$confirm("此操作将永久删除该远程服务，是否继续？", "警告", {
+      await this.$confirm("此操作将永久删除该守护进程，是否继续？", "警告", {
         confirmButtonText: "删除",
         cancelButtonText: "取消",
         type: "warning"

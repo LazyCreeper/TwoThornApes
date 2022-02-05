@@ -42,7 +42,7 @@
 
     <!-- 管理用户 电脑屏幕菜单栏 -->
     <div v-if="isTopPermission" id="app-menu" class="only-pc-display">
-      <el-aside width="240px" style="height: 100%;box-shadow: 0px 0px 10px 0px #003c29;">
+      <el-aside width="240px" style="height: 100%;">
         <Aside />
       </el-aside>
     </div>

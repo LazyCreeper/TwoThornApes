@@ -30,7 +30,12 @@ import { ElNotification } from "element-plus";
 
 // import { API_URL } from "./common";
 
-export function connectRemoteService(addr, password) {
+export function connectRemoteService(
+  addr,
+  password,
+  connectCallback = () => {},
+  errorCallbackCallback = () => {}
+) {
   console.log("浏览器正在连接守护进程:", addr);
   console.log("临时密码:", password);
   const socket = io(addr, {}).connect();
@@ -55,13 +60,16 @@ export function connectRemoteService(addr, password) {
 
   socket.on("connect_error", (error) => {
     console.log("[WS->Daemon] 连接错误:", error);
+    errorCallbackCallback(error);
   });
 
   socket.on("stream/auth", (packet) => {
     const data = packet.data;
     if (data === true) {
       console.log("[WS->Daemon/stream/auth] Websocket 身份验证成功");
+      connectCallback();
     } else {
+      console.log("身份认证错误:", data);
       ElNotification({
         title: "无法与终端建立连接",
         message: `<span style="font-size: 12px;">身份验证(stream/auth)失败，可能是守护进程导致，请刷新页面重试。</span>`,

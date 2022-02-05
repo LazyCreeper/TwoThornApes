@@ -92,10 +92,10 @@
               </div>
               <div class="login-info-wrapper row-mt">
                 <div>
-                  <span class="color-gray"
-                    >版权所有 2022
-                    <a target="black" href="https://github.com/Suwings">Suwings</a></span
-                  >
+                  <span class="color-gray" >
+                    <strong>Copyright © 2022 <a href="https://github.com/Suwings" target="_blank">Suwings</a> All Rights Reserved.<br>
+                    Theme by <a href="https://www.lazy.ink" target="_blank">Lazy</a></strong>
+                  </span>
                 </div>
               </div>
             </div>
@@ -214,7 +214,17 @@ export default {
   },
   async mounted() {
     console.log("Welcome use MCSManager.");
-    console.log("Copyright 2021 Suwings All rights reserved.");
+    console.log("Copyright 2022 Suwings All rights reserved.");
+    console.log("%c%s","border:5px solid #00ff14;font-size:1em","Theme by Lazy(https://lazy.ink)");
+    // try {
+    //   await setupUserInfo();
+    //   if (this.$store.state?.userInfo?.uuid) {
+    //     console.log("用户已登录，正在跳转");
+    //     window.location.href = "/";
+    //   }
+    // } catch (err) {
+    //   // 忽略
+    // }
   }
 };
 </script>

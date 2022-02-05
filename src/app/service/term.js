@@ -28,25 +28,39 @@
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 
-export const TERM_TEXT_RED = "\x1B[31m";
-export const TERM_TEXT_GREEN = "\x1B[32m";
-export const TERM_TEXT_YELLOW = "\x1B[33m";
-export const TERM_TEXT_BLUE = "\x1B[34m";
+export const TERM_TEXT_RED = "\x1B[31m";//&4
+export const TERM_TEXT_BRIGHT_RED = "\x1B[1;31m";//&c
+
+export const TERM_TEXT_GREEN = "\x1B[32m";//2
+export const TERM_TEXT_BRIGHT_GREEN = "\x1B[1;32m";//&a
+
+export const TERM_TEXT_YELLOW = "\x1B[33m";//6
+export const TERM_TEXT_BRIGHT_YELLOW = "\x1B[1;33m";//e
+
+export const TERM_TEXT_BLUE = "\x1B[34m"; //&1
+export const TERM_TEXT_BRIGHT_BLUE = "\x1B[1;34m"; //&9
+
+export const TERM_TEXT_CYAN = "\x1B[36m";//&3
+export const TERM_TEXT_BRIGHT_CYAN = "\x1B[1;36m";//&b
+
 export const TERM_TEXT_FUCHSIA = "\x1B[35m";
-export const TERM_TEXT_CYAN = "\x1B[36m";
-export const TERM_TEXT_WHITE = "\x1B[37m";
+export const TERM_TEXT_BRIGHT_FUCHSIA = "\x1B[1;35m";
+export const TERM_TEXT_WHITE = "\x1B[1;37m";
 export const TERM_TEXT_B = "\x1B[1m";
 
-export function initTerminalWindow(elem) {
+
+export function initTerminalWindow(elem, fontSize = 13) {
   const term = new Terminal({
     rendererType: "canvas",
     convertEol: true,
     disableStdin: false,
     cursorStyle: "underline",
     cursorBlink: true,
-    fontSize: 12,
+    fontSize: fontSize,
+    fontFamily: 'cascadia code,consolas,-apple-system,hmos,monospace',
+    allowTransparency: true,
     theme: {
-      background: "#1e1e1e"
+      background: "#00000000"
     }
   });
   const fitAddon = new FitAddon();
@@ -60,7 +74,7 @@ export function initTerminalWindow(elem) {
   }, 3000);
 
   term.writeln(`${TERM_TEXT_YELLOW}MCSManager Terminal ${TERM_TEXT_CYAN}[Powered by Term.js]`);
-  term.writeln(`${TERM_TEXT_YELLOW}Copyright Suwings All rights reserved${TERM_TEXT_WHITE}`);
+  term.writeln(`${TERM_TEXT_YELLOW}Copyright Suwings All rights reserved.${TERM_TEXT_WHITE}`);
   term.info = (msg) => {
     term.writeln(`\r\n[MCSManager] [INFO] ${msg}`);
   };
@@ -76,18 +90,18 @@ export function textToTermText(data) {
   text = text.replace(/§0/gim, TERM_TEXT_WHITE);
   text = text.replace(/§1/gim, TERM_TEXT_BLUE);
   text = text.replace(/§2/gim, TERM_TEXT_GREEN);
-  text = text.replace(/§3/gim, TERM_TEXT_BLUE);
+  text = text.replace(/§3/gim, TERM_TEXT_CYAN);
   text = text.replace(/§4/gim, TERM_TEXT_RED);
   text = text.replace(/§5/gim, TERM_TEXT_FUCHSIA);
   text = text.replace(/§6/gim, TERM_TEXT_YELLOW);
   text = text.replace(/§7/gim, TERM_TEXT_WHITE);
   text = text.replace(/§8/gim, TERM_TEXT_WHITE);
-  text = text.replace(/§9/gim, TERM_TEXT_BLUE);
-  text = text.replace(/§a/gim, TERM_TEXT_GREEN);
-  text = text.replace(/§b/gim, TERM_TEXT_GREEN);
-  text = text.replace(/§c/gim, TERM_TEXT_RED);
-  text = text.replace(/§d/gim, TERM_TEXT_CYAN);
-  text = text.replace(/§e/gim, TERM_TEXT_YELLOW);
+  text = text.replace(/§9/gim, TERM_TEXT_BRIGHT_BLUE);
+  text = text.replace(/§a/gim, TERM_TEXT_BRIGHT_GREEN);
+  text = text.replace(/§b/gim, TERM_TEXT_BRIGHT_CYAN);
+  text = text.replace(/§c/gim, TERM_TEXT_BRIGHT_RED);
+  text = text.replace(/§d/gim, TERM_TEXT_BRIGHT_FUCHSIA);
+  text = text.replace(/§e/gim, TERM_TEXT_BRIGHT_YELLOW);
   text = text.replace(/§f/gim, TERM_TEXT_WHITE);
   text = text.replace(/§g/gim, TERM_TEXT_YELLOW);
   text = text.replace(/§k/gim, TERM_TEXT_WHITE);

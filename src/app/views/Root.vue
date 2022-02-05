@@ -26,8 +26,8 @@
 -->
 
 <template>
-  <Panel v-loading="true">
-    <template #title>板块</template>
+  <Panel v-loading="true" element-loading-background="rgba(0, 0, 0, 0.5)">
+    <template #title>Loading</template>
     <template #default>
       <el-skeleton :rows="12" />
     </template>

@@ -18,22 +18,28 @@
   该程序以具有实际用途为目的发布，但是并不包含任何担保，
   也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
 */
+::selection {
+  background: var(--selection-background-color);
+  backdrop-filter: blur(5px);
+  color: var(--selection-color);
+}
+
 body {
   font-family: hmos;
 }
 
 a {
-  color: #e6ffe2;
+  color: var(--a-color)
 }
 
 a:hover {
-  color: #79ffbb;
+  color: var(--a-hover-color);
   transition: color .5s;
 }
 
 .app {
   height: 100%;
-  background: url(https://tva4.sinaimg.cn/large/006MpbfMgy1gsiwf1tnt6j31be0qoqdm.jpg)!important;
+  background: var(--background-image)!important;
   background-repeat: no-repeat;
   background-size: cover!important;
 }
@@ -45,13 +51,21 @@ a:hover {
 }
 
 .el-drawer {
-  background-color: rgba(127,131,125,0.5);;
+  background-color: var(--drawer-bg-color);
 }
 
 .is-active {
-  background-color: rgba(18,30,13,.5)!important;
-  border-left: 5px solid #8ee17f;
-  color: #dbffb6!important;
+  background-color: var(--cd-bg-color)!important;
+  border-left: var(--cd-border-left);
+  color: var(--cd-color)!important;
+}
+
+.el-aside {
+	box-shadow: var(--cd-box-shadow)!important 
+}
+
+.el-menu {
+	background-color: var(--menu-bg-color);
 }
 
 .el-tabs__nav>.is-active {
@@ -60,7 +74,7 @@ a:hover {
 }
 
 .el-tabs__item {
-  color:#e8efd2;
+  color: var(--tab-color);
 }
 
 .el-menu-item {
@@ -68,11 +82,11 @@ a:hover {
 }
 
 .el-menu-item:hover {
-  background-color: rgba(50,71,61,0.7);
+  background-color: var(--cd-bg-hover-color);
 }
 
 .el-menu-item-group__title {
-  color: #fff4a3!important;
+  color: var(--cd-title-color)!important;
 }
 
 /* 动画 */
@@ -96,12 +110,12 @@ a:hover {
 
 .sub-title-title {
   font-size: 14px;
-  color: #ffefdc;
+  color: var(--subtitle-color);
   margin: 0px;
 }
 .sub-title-info {
   font-size: 13px;
-  color: #b1e2c0;
+  color: var(--subtitle-info-color);
   margin: 0px;
 }
 
@@ -151,7 +165,7 @@ a:hover {
 /* 首页的项目数值表格 */
 .overview-info-title {
   /* text-align: center; */
-  color: rgb(66, 66, 66);
+  color: var(--overview-info-title);
   font-size: 12px;
   margin-top: 0px;
 }
@@ -167,7 +181,7 @@ a:hover {
   color: rgb(122, 122, 122);
 }
 
-/* 常见问题栏目连接属性集合 */
+/* 常见问题栏目链接属性集合 */
 .manualLink {
   display: block;
   color: #e6ffe2;
@@ -226,10 +240,6 @@ a:hover {
   border: 0!important;
   color: rgb(255 230 204)!important;
   border-radius: 0!important;
-}
-
-.overview-info-title {
-  color: rgb(234 255 197)!important;
 }
 
 /* 表格 */
@@ -293,6 +303,10 @@ a:hover {
 
 .el-button--danger.is-plain {
   background-color: rgba(167,114,114,0.5);
+}
+
+button[disabled] {
+    filter: brightness(0.6);
 }
 
 /* 对话框 */
@@ -369,4 +383,8 @@ a:hover {
 
 .el-alert--error.is-light {
 	background-color: rgba(255,190,190,.3)
+}
+
+.blur {
+  backdrop-filter: var(--terminal-backdrop-filter);
 }

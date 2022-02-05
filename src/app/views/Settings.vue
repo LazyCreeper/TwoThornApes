@@ -232,29 +232,6 @@
         </el-row>
       </template>
     </Panel>
-
-    <Panel>
-      <template #title>关于主题</template>
-      <template #default>
-        <el-row :gutter="20">
-          <el-col :md="12">
-            <div class="sub-title">
-              <p class="sub-title-title">
-                该主题由<a href="https://www.lazy.ink" target="_blank">Lazy</a>开发
-              </p>
-              <p class="sub-title-info">
-                如果你在使用主题过程中遇到任何问题或发现错误，可反馈到我的邮箱：<a href="mailto:lazy_creeper@qq.com">lazy_creeper@qq.com</a><br>主题<span style="color:rgb(255, 97, 97)">完全免费！</span>严禁倒卖！
-              </p>
-            </div>
-          </el-col>
-          <el-col :md="4"></el-col>
-          <el-col :md="8">
-              <p style="font-size: 13px;">当前主题版本：<span class="color-gray">1.2 </span><br></p>
-          </el-col>
-        </el-row>
-      </template>
-    </Panel>
-
     <Panel>
       <template #title>关于</template>
       <template #default>

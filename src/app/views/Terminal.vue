@@ -131,7 +131,7 @@
               <el-button style="width: 100%" size="small">自动重启 <span class="color-green">开启</span>
               </el-button>
             </el-col> -->
-            <el-col :sm="12" :offset="0" class="row-mb">
+            <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
                 :disabled="!instanceInfo.config.type"
                 icon="el-icon-s-operation"
@@ -141,17 +141,18 @@
                 >特定配置</el-button
               >
             </el-col>
-            <el-col :sm="12" :offset="0" class="row-mb">
+            <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
                 :disabled="!available"
-                icon="el-icon-folder-opened"
+                icon="el-icon-monitor"
                 style="width: 100%"
                 size="small"
-                @click="toFileManager"
-                >文件管理</el-button
+                @click="toTerminalSettingPanel"
+                >终端设置</el-button
               >
             </el-col>
-            <el-col :sm="12" :offset="0" class="row-mb">
+
+            <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
                 :disabled="!available"
                 icon="el-icon-mobile"
@@ -161,7 +162,7 @@
                 >计划任务</el-button
               >
             </el-col>
-            <el-col :sm="12" :offset="0" class="row-mb">
+            <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
                 :disabled="!available"
                 icon="el-icon-data-line"
@@ -171,7 +172,7 @@
                 >状态查询</el-button
               >
             </el-col>
-            <el-col :sm="12" :offset="0" class="row-mb">
+            <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
                 :disabled="!available"
                 icon="el-icon-notebook-2"
@@ -181,7 +182,7 @@
                 >事件任务</el-button
               >
             </el-col>
-            <el-col :sm="12" :offset="0" class="row-mb">
+            <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
                 :disabled="!available"
                 icon="el-icon-reading"
@@ -189,6 +190,16 @@
                 size="small"
                 @click="toLogPanel"
                 >终端日志</el-button
+              >
+            </el-col>
+            <el-col :sm="24" :offset="0" class="row-mb">
+              <el-button
+                :disabled="!available"
+                icon="el-icon-folder-opened"
+                style="width: 100%"
+                size="small"
+                @click="toFileManager"
+                >文件管理</el-button
               >
             </el-col>
             <el-col :sm="24" :offset="0" v-if="isTopPermission">
@@ -251,11 +262,11 @@
       </Panel>
     </el-col>
     <el-col :md="18">
-      <Panel v-loading="!available" element-loading-text="连接中" element-loading-background="rgba(0, 0, 0, 0.5)">
+      <Panel v-loading="!available" element-loading-text="连接中" element-loading-background="rgba(0, 0, 0, 0.5)" class="blur">
         <template #title>实例操作终端</template>
         <template #default>
           <div class="terminal-wrapper">
-            <div id="terminal-container" style="height: 550px; width: 100%"></div>
+            <div id="terminal-container" style="height: 560px; width: 100%"></div>
             <div id="terminal-input-wrapper">
               <el-input
                 placeholder="此处可输入命令，按回车键执行"
@@ -280,7 +291,8 @@
                 :key="index"
                 @click="selectHistoryCommand(item)"
                 class="text-overflow-ellipsis cmdhistory"
-                style="max-width: 23%; cursor: pointer; font-size: 13px">
+                style="max-width: 23%; cursor: pointer; font-size: 13px"
+              >
                 {{ item }}
               </div>
             </ItemGroup>
@@ -353,6 +365,27 @@
     </template>
   </Dialog>
 
+  <Dialog v-model="terminalSettingPanel.visible">
+    <template #title>网页终端设置</template>
+    <template #default>
+      <div class="sub-title">
+        <p class="sub-title-title">颜色渲染</p>
+        <p class="sub-title-info">
+          网页自动给输出内容增加颜色渲染，渲染的颜色不一定完全正确。<br />如果颜色渲染功能与软件自带的颜色功能冲突，可以关闭此功能。
+        </p>
+        <div class="row-mt">
+          <el-switch v-model="terminalSettingPanel.haveColor"> </el-switch>
+        </div>
+      </div>
+      <div class="row-mt">
+        <ItemGroup>
+          <el-button type="success" size="small" @click="instanceConfigUpdate">保存</el-button>
+          <el-button size="small" @click="terminalSettingPanel.visible = false">取消</el-button>
+        </ItemGroup>
+      </div>
+    </template>
+  </Dialog>
+
   <Dialog v-model="logPanel.visible">
     <template #title>终端日志</template>
     <template #default>
@@ -398,24 +431,36 @@
     <template #title>无法与守护进程建立连接</template>
     <template #default>
       <div class="sub-title">
-        <p class="sub-title-title">网页无法与远程服务建立直接连接通道</p>
-        <p class="sub-title-info">
-          <span>可能是您未开放远程服务的端口导致，或是使用了内网地址的缘故</span>
-          <br />
-          <span>请您尝试一下操作进行修复</span>
+        <p class="sub-title-title">
+          {{ unavailableIp ? `浏览器无法连接到 ${unavailableIp}` : "浏览器无法与守护进程建立连接" }}
         </p>
-        <ul style="padding-left: 20px">
-          <li>检查您自己的网络是否通畅，远程服务是否在线状态</li>
-          <li>检查<b>分布式服务界面</b>连接的远程服务<b>是否为公网地址</b></li>
-          <li>检查<b>远程服务是否已经开放端口</b>，一般默认是 24444 端口</li>
-          <li>检查分布式服务界面连接的远程服务<b>密钥是否正确</b></li>
-          <br />
-          <li>重启 Web 面板端程序</li>
-          <li>重启远程服务守护进程 (Daemon) 程序</li>
-          <br />
-          <li>若有反向代理，FRP，SSL 等，需兼容 Websocket 功能</li>
-          <li>前往 Github 仓库的 Wiki 搜索您的情况</li>
-        </ul>
+        <p class="sub-title-info">
+          <span>可能是您未开放守护进程的端口导致，或是使用了内网地址的缘故</span>
+        </p>
+        <div>
+          <img
+            :src="require('../../assets/daemon_connection_error.png')"
+            alt=""
+            srcset=""
+            style="width: 460px"
+          />
+        </div>
+        <div class="sub-title">可能的解决方案</div>
+        <ol style="padding-left: 20px">
+          <li>确保守护进程的地址是公网地址，且守护进程端口已经开放。</li>
+          <li>
+            若有反向代理，FRP，HTTPS 等，请采用 wss:// 协议连接，
+            <br />
+            并且守护进程端地址也需要 HTTPS，WSS 支持。
+          </li>
+          <li>
+            前往
+            <a href="https://docs.mcsmanager.com" target="_blank" rel="noopener noreferrer"
+              >https://docs.mcsmanager.com</a
+            >
+            了解更多
+          </li>
+        </ol>
       </div>
     </template>
   </Dialog>
@@ -440,6 +485,7 @@ import {
 } from "../service/common";
 import router from "../router";
 import { parseforwardAddress, request } from "../service/protocol";
+import { encodeConsoleColor } from "../service/terminal_color";
 import { ElNotification } from "element-plus";
 import { statusCodeToText, typeTextToReadableText } from "../service/instance_tools";
 import { initTerminalWindow, textToTermText } from "../service/term";
@@ -480,7 +526,13 @@ export default {
         data: ""
       },
 
-      unavailableTerminal: false
+      terminalSettingPanel: {
+        visible: false,
+        haveColor: true
+      },
+
+      unavailableTerminal: false,
+      unavailableIp: null
     };
   },
   computed: {
@@ -537,16 +589,30 @@ export default {
       // 直接与守护进程建立频道
       const password = res.password;
       const addr = parseforwardAddress(res.addr, "ws");
-      this.socket = connectRemoteService(addr, password);
+      this.socket = connectRemoteService(
+        addr,
+        password,
+        () => {
+          this.unavailableIp = null;
+          this.unavailableTerminal = false;
+        },
+        () => {
+          this.unavailableIp = addr;
+          this.unavailableTerminal = true;
+        }
+      );
 
       // 监听输出流
       this.socket.on("instance/stdout", (packet) => {
-        this.term.write(textToTermText(packet.data.text));
+        if (this.instanceInfo?.config?.terminalOption?.haveColor) {
+          this.term.write(encodeConsoleColor(packet.data.text));
+        } else {
+          this.term.write(textToTermText(packet.data.text));
+        }
       });
       // 监听实例详细信息
       this.socket.on("stream/detail", (packet) => {
         this.instanceInfo = packet.data;
-        console.log("[WS->Daemon] 实例信息", this.instanceInfo);
       });
       // 断开事件
       this.socket.on("disconnect", () => {
@@ -578,12 +644,6 @@ export default {
     },
     startInterval() {
       if (!this.renderTask) this.renderTask = setInterval(this.renderFromSocket, 1000);
-      // 设置连接超时定时器
-      setTimeout(() => {
-        if (!this.available && this.unavailableTerminal === false) {
-          this.unavailableTerminal = true;
-        }
-      }, 8000);
     },
     stopInterval() {
       clearInterval(this.renderTask);
@@ -690,6 +750,10 @@ export default {
       }
       this.eventConfigPanel.visible = true;
     },
+    toTerminalSettingPanel() {
+      this.terminalSettingPanel.visible = true;
+      this.terminalSettingPanel.haveColor = this.instanceInfo.config.terminalOption.haveColor;
+    },
     async toLogPanel() {
       this.logPanel.data = "";
       this.logPanel.visible = true;
@@ -720,7 +784,8 @@ export default {
           params: { remote_uuid: this.serviceUuid, uuid: this.instanceUuid },
           data: {
             pingConfig: this.pingConfigForm,
-            eventTask: this.eventConfigPanel
+            eventTask: this.eventConfigPanel,
+            terminalOption: this.terminalSettingPanel
           }
         });
         this.$message({
@@ -729,6 +794,7 @@ export default {
         });
         this.pingConfigForm.is = false;
         this.eventConfigPanel.visible = false;
+        this.terminalSettingPanel.visible = false;
       } catch (error) {
         this.$message({
           type: "error",
@@ -791,7 +857,7 @@ export default {
 
 <style scoped>
 .terminal-wrapper {
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30,0);
   padding: 4px;
   border-radius: 4px;
   /* overflow: hidden; */
@@ -806,7 +872,7 @@ export default {
   margin: 2px;
   display: inline-block;
   padding: 5px 10px 5px 10px;
-  background: rgba(0,0,0,.3);
+  background: rgba(0, 0, 0, 0.3);
   border: 1px solid #bfbfbf;
   color: #55ff62;
   max-width: 25%;
@@ -815,6 +881,6 @@ export default {
   border: 1px solid #4eff42;
   box-shadow: 0 0 5px #42ff85;
   padding: 6px 11px 6px 11px;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 </style>

@@ -31,9 +31,7 @@
     mode="vertical"
     :router="true"
     :uniqueOpened="false"
-    background-color="rgba(0,0,0,0.5)"
     text-color="#fff"
-    active-text-color="#ffd04b"
     style="height: 100%; padding: 0px 0px;"
     :default-active="$route.path"
   >
@@ -62,11 +60,11 @@
         <template #title>高级功能</template>
         <el-menu-item key="/services" index="/services">
           <i class="el-icon-connection"></i>
-          <template #title>分布式服务</template>
+          <template #title>守护进程管理</template>
         </el-menu-item>
         <el-menu-item key="/container" index="/container">
           <i class="el-icon-copy-document"></i>
-          <template #title>服务环境</template>
+          <template #title>镜像与容器</template>
         </el-menu-item>
         <!-- <el-menu-item key="/update" index="/update">
           <i class="el-icon-guide"></i>

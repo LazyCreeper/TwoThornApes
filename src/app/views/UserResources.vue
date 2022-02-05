@@ -74,7 +74,6 @@
           虚拟化容器中运行，否则您的用户将有可能入侵破坏宿主机。
           <br />
           建议您前往<a
-            class="color-blue"
             href="https://docs.mcsmanager.com/"
             target="_blank"
             rel="noopener noreferrer"
@@ -97,7 +96,7 @@
       </div>
       <div class="row-mt">
         <el-table :data="userInfo.instances" stripe style="width: 100%" size="small">
-          <el-table-column label="远程服务节点">
+          <el-table-column label="所属守护进程">
             <template #default="{ row }"> {{ row.hostIp }}（{{ row.remarks }}） </template>
           </el-table-column>
           <el-table-column prop="nickname" label="实例名称" width="240"></el-table-column>

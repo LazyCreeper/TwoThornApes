@@ -21,7 +21,7 @@
 
 @media (max-width: 900px) {
   .app {
-    background: url(https://tvax2.sinaimg.cn/large/008qLT8ggy1gxqzv16v0sj31m02oo4qt.jpg)!important;
+    background: var(--background-image-phone)!important;
     background-repeat: no-repeat;
     background-size: cover!important;
   }

@@ -60,6 +60,58 @@
           </el-row>
         </template>
       </Panel>
+
+      <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+        <template #title>分布式服务总览</template>
+        <template #default>
+          <p>
+            确保所有远程服务均在线，离线状态将导致此远程服务以及相关功能不可用，可能会影响使用体验与数据。
+            <br />
+            面板端 {{ panelVersion }} 所需最低守护进程版本：{{ specifiedDaemonVersion }}
+          </p>
+          <el-table :data="servicesStatus" style="width: 100%" size="small">
+            <el-table-column prop="ip" label="地址" width="180"> </el-table-column>
+            <el-table-column prop="port" label="端口" width="180"> </el-table-column>
+            <el-table-column prop="cpu" label="CPU"> </el-table-column>
+            <el-table-column prop="mem" label="内存"> </el-table-column>
+            <el-table-column prop="instance" label="已有实例"> </el-table-column>
+            <el-table-column prop="started" label="运行实例"> </el-table-column>
+            <el-table-column prop="version" label="守护进程版本">
+              <template #default="scope">
+                <span
+                  class="color-green"
+                  v-if="scope.row.version && scope.row.version === specifiedDaemonVersion"
+                >
+                  <i class="el-icon-circle-check"></i> {{ scope.row.version }}
+                </span>
+                <span class="color-red">
+                  <el-tooltip
+                    effect="dark"
+                    v-if="scope.row.version !== specifiedDaemonVersion"
+                    placement="top"
+                    content="与面板端要求版本不一致"
+                  >
+                    <span><i class="el-icon-warning-outline"></i> {{ scope.row.version }}</span>
+                  </el-tooltip>
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="status" label="连接状态">
+              <template #default="scope">
+                <span class="color-green" v-if="scope.row.status">
+                  <i class="el-icon-circle-check"></i> 在线
+                </span>
+                <span class="color-red" v-if="!scope.row.status">
+                  <el-tooltip effect="dark" content="无法连接到指定ip或者密钥错误" placement="top">
+                    <span><i class="el-icon-warning-outline"></i> 离线</span>
+                  </el-tooltip>
+                </span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </template>
+      </Panel>
+
       <el-row :gutter="20">
         <el-col :md="12" :offset="0">
           <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
@@ -109,23 +161,6 @@
         </el-col>
       </el-row>
 
-      <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
-        <template #title>分布式服务总览</template>
-        <template #default>
-          <p>
-            确保所有远程服务均在线，离线状态将导致此远程服务以及相关功能不可用，可能会影响使用体验与数据。
-          </p>
-          <el-table :data="servicesStatus" style="width: 100%" size="small">
-            <el-table-column prop="ip" label="地址" width="180"> </el-table-column>
-            <el-table-column prop="port" label="端口" width="180"> </el-table-column>
-            <el-table-column prop="cpu" label="CPU"> </el-table-column>
-            <el-table-column prop="mem" label="内存"> </el-table-column>
-            <el-table-column prop="instance" label="已有实例"> </el-table-column>
-            <el-table-column prop="started" label="运行实例"> </el-table-column>
-            <el-table-column prop="status" label="连接状态"> </el-table-column>
-          </el-table>
-        </template>
-      </Panel>
     </el-col>
   </el-row>
 
@@ -173,7 +208,10 @@ export default {
       computerInfoA: [],
       computerInfoB: [],
       servicesStatus: [],
-      manualLink: null
+      manualLink: null,
+      forChartTotalInstance: 0,
+      specifiedDaemonVersion: null,
+      panelVersion: null
     };
   },
   methods: {
@@ -194,6 +232,10 @@ export default {
       });
     },
     render(data) {
+      // 版本相关数据渲染
+      this.specifiedDaemonVersion = data.specifiedDaemonVersion;
+      this.panelVersion = data.version;
+
       const system = data.system;
       // 表格数据渲染
       if (data.chart) this.systemChartData = data.chart;
@@ -270,11 +312,11 @@ export default {
         },
 
         {
-          name: "面板已用内存",
-          value: `${Number(data.process.memory / 1024 / 1024).toFixed(0)}MB`
+          name: "对应守护进程版本",
+          value: this.specifiedDaemonVersion
         },
         {
-          name: "越权请求次数",
+          name: "阻挡请求次数",
           value: data.record.illegalAccess
         },
         {
@@ -302,23 +344,27 @@ export default {
             mem: `${usedmem}GB/${totalmem}GB`,
             instance: iterator.instance.total,
             started: iterator.instance.running,
-            status: iterator.available ? "正常" : "离线"
+            status: iterator.available,
+            version: iterator.version,
+            remarks: iterator.remarks
           });
         } else {
           this.servicesStatus.push({
             ip: iterator.ip,
             port: iterator.port,
+            remarks: "--",
             cpu: "--",
             mem: "--",
             instance: "--",
             started: "--",
-            status: iterator.available ? "正常" : "离线"
+            version: "--",
+            status: iterator.available
           });
         }
       }
     },
     initChart() {
-      console.log("正在初始化表格....");
+      //console.log("正在初始化表格....");
       // 基于准备好的dom，初始化echarts实例
       this.systemChart = echarts.init(document.getElementById("echart-wrapper-main"));
       this.systemChart.setOption(getDefaultOption());

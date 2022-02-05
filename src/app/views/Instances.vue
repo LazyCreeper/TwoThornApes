@@ -27,7 +27,7 @@
 
 <template>
   <Panel>
-    <template #title>分布式应用实例列表</template>
+    <template #title>应用实例列表</template>
     <template #default>
       <el-row :gutter="20" justify="space-between" class="row-mb">
         <el-col :md="12" :offset="0">
@@ -36,7 +36,7 @@
               style="width: 320px"
               v-model="currentRemoteUuid"
               filterable
-              placeholder="请选择远程服务地址"
+              placeholder="请选择远程守护进程地址"
               size="small"
               @change="remoteSelectHandle"
             >
@@ -86,9 +86,9 @@
       <div>
         <div class="instance-table-warpper">
           <div>
-            <p class="color-red" v-if="!currentRemoteUuid">
-              未选择任何远程服务，请通过这里选择一个地址。若没有任何可选项，请前往“分布式服务”界面进行设置
-            </p>
+            <div class="color-red" v-if="!currentRemoteUuid">
+              &nbsp;未选择任何远程守护进程，请通过这里选择一个地址。若没有任何可选项，请前往“分布式服务”界面进行设置
+            </div>
           </div>
           <div>
             <el-pagination
@@ -103,6 +103,34 @@
           </div>
         </div>
 
+        <!-- 未选择守护进程时显示 -->
+        <div v-show="!currentRemoteUuid">
+          <div class="notAnyInstanceTip" style="margin:100px 0px">
+            <img :src="require('../../assets/nosee.jpg')" style="max-width: 90%;">
+            <div class="sub-title">
+              <div class="sub-title-title">请在左上方的下拉框中选择远程守护进程</div>
+              <div class="sub-title-info">
+                默认可选择 localhost
+                守护进程，守护进程可以部署在任意主机上，帮助您快速管理多个主机并且分布式部署。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第一页且无任何数据时显示 -->
+        <div v-show="notAnyInstance && page === 1">
+          <div class="notAnyInstanceTip">
+            <img :src="require('../../assets/something-lost.png')" style="max-width: 90%;">
+            <div class="sub-title">
+              <div class="sub-title-title">无数据，请点击右上方绿色的“新建实例”按钮创建实例。</div>
+              <div class="sub-title-info">
+                应用实例可以是 Minecraft
+                服务器，也可以是其他任何应用程序，点击创建后将部署在指定的远程守护进程中。
+              </div>
+            </div>
+          </div>
+        </div>
+
         <el-table
           :data="instances"
           stripe
@@ -110,9 +138,19 @@
           size="mini"
           ref="multipleTable"
           @selection-change="selectionChange"
+          v-show="!notAnyInstance && currentRemoteUuid"
         >
           <el-table-column type="selection" width="55"> </el-table-column>
-          <el-table-column prop="nickname" label="实例昵称" min-width="240"></el-table-column>
+          <el-table-column prop="nickname" label="实例昵称" min-width="240">
+            <template #default="scope">
+              <div
+                @click="toInstance(scope.row.serviceUuid, scope.row.instanceUuid)"
+                class="instanceTitle"
+              >
+                {{ scope.row.nickname }}
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column prop="status" label="运行状态" width="120">
             <template #default="scope">
               <div class="color-gray" v-if="scope.row.status == 0">
@@ -153,6 +191,20 @@
   </Panel>
 </template>
 
+<style scoped>
+.instanceTitle {
+  cursor: pointer;
+}
+
+.instanceTitle:hover {
+  color: #84d1c6;
+}
+.notAnyInstanceTip {
+  text-align: center;
+  /*margin: 100px 0px;*/
+}
+</style>
+
 <script>
 import { CircleCheckFilled, CircleCloseFilled } from "@element-plus/icons";
 import Panel from "../../components/Panel";
@@ -174,8 +226,10 @@ export default {
       multipleSelection: [], // 表格多选属性
       startedInstance: 0,
       loading: true,
-      availableService: [], // 可用和不可用远程服务列表
+      availableService: [], // 可用和不可用守护进程列表
       unavailableService: [],
+
+      notAnyInstance: false, // 无任何实例
 
       page: 1,
       maxPage: 1,
@@ -202,13 +256,15 @@ export default {
         if (service.available) {
           this.remoteList.push({
             value: service.uuid,
-            label: `${ip} ${remarks}`
+            label: `${ip} ${remarks}`,
+            available: true
           });
           this.availableService.push(service);
         } else {
           this.remoteList.push({
             value: service.uuid,
-            label: `${ip} ${remarks} (离线)`
+            label: `${ip} ${remarks} (离线)`,
+            available: false
           });
           this.unavailableService.push(service);
         }
@@ -223,12 +279,17 @@ export default {
             return this.remoteSelectHandle();
           }
         });
+      } else {
+        this.remoteList.forEach((v) => {
+          if (v.available) this.currentRemoteUuid = v.value;
+        });
+        this.remoteSelectHandle();
       }
     },
-    // 获取分布式服务具体实例列表
+    // 获取守护进程具体实例列表
     async remoteSelectHandle() {
       try {
-        if (!this.currentRemoteUuid) throw new Error("还未选择远程服务器");
+        if (!this.currentRemoteUuid) throw new Error("还未选择远程守护进程");
         this.startedInstance = 0;
         this.instances = [];
         this.loading = true;
@@ -261,11 +322,18 @@ export default {
           });
         });
         this.loading = false;
-        // 记录当前选择的远程服务，方便下次直接加载
+        // 记录当前选择的守护进程，方便下次直接加载
         localStorage.setItem("pageSelectedRemoteUuid", this.currentRemoteUuid);
+
+        // 无任何实例时，显示快速创建界面
+        if (this.instances.length === 0) {
+          this.notAnyInstance = true;
+        } else {
+          this.notAnyInstance = false;
+        }
       } catch (error) {
         this.$notify({
-          title: "访问远程服务异常",
+          title: "访问远程守护进程异常",
           message: error.toString(),
           type: "error"
         });
@@ -293,7 +361,7 @@ export default {
     },
     toNewInstance() {
       if (!this.currentRemoteUuid) {
-        return this.$message({ type: "info", message: "请先在左侧下拉框中选择远程服务" });
+        return this.$message({ type: "info", message: "请先在左侧下拉框中选择守护进程" });
       }
       router.push({ path: `/new_instace/${this.currentRemoteUuid}` });
     },
