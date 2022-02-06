@@ -9,13 +9,14 @@
 ```
 
 适用于 MCSManager 9 的二次元主题
+博客发布地址：https://blog.imlazy.ink:233/index.php/archives/253/
 
 <br />
 
 ## 简介
-二次元！二次元！二次元！该主题原名`Summer`，基于MCSManager 9开发。
+二次元！二次元！二次元！该主题原名`Summer`，基于MCSManager 9开发。<br>
 主题自带两款皮肤，`Summer`和`猫羽雫`。默认为`Summer`皮肤，如需切换请自行修改文件名。<br>
-Summer背景图地址：https://www.pixiv.net/artworks/83708125
+Summer背景图地址：https://www.pixiv.net/artworks/83708125<br>
 猫羽雫背景图地址：https://www.pixiv.net/artworks/94819771
 <!--more-->
 
@@ -43,7 +44,7 @@ https://mcsm.lanzoui.com/b010ss66f 密码:`bpxr`
  3. 刷新浏览器即可
 
 ## 使用说明
-[https://blog.imlazy.ink:233/index.php/archives/283/][https://blog.imlazy.ink:233/index.php/archives/283/]
+https://blog.imlazy.ink:233/index.php/archives/283/
 
 ## 更新内容`v2.0`
  1. 更改主题名称为二次元
@@ -52,4 +53,4 @@ https://mcsm.lanzoui.com/b010ss66f 密码:`bpxr`
 
 ## 已知BUG
  1. 新增用户 的取消按钮无法点击
-![img](https://pro-image.xiaoheiban.cn/wum/a07ffc2a-667f-4d6f-9819-a11dc5f950e3.jpg])
+![img](https://pro-image.xiaoheiban.cn/wum/a07ffc2a-667f-4d6f-9819-a11dc5f950e3.jpg)
