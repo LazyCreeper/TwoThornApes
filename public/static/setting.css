@@ -12,10 +12,13 @@
     --selection-background-color: rgba(182,255,169,0.5);	/*鼠标选择后的 背景颜色*/
     --selection-color: #3b4856;													/*鼠标选择后的 文本颜色*/
 	
-	--background-image: url(https://tva4.sinaimg.cn/large/006MpbfMgy1gsiwf1tnt6j31be0qoqdm.jpg); 					/*电脑端首页背景图*/
-	--background-image-phone: url(https://tvax2.sinaimg.cn/large/008qLT8ggy1gxqzv16v0sj31m02oo4qt.jpg);	/*手机端首页背景图*/
+	/*背景图片*/
+	--background-login-image: url(https://api.imlazy.ink/img); 																											/*电脑端登录页背景图（来自 雫 API 的随机图片API）*/
+	--background-image: url(https://tva4.sinaimg.cn/large/006MpbfMgy1gsiwf1tnt6j31be0qoqdm.jpg); 								/*电脑端首页背景图*/
+	--background-login-image-phone: url(https://api.imlazy.ink/img-phone);																				/*手机端登录页背景图（来自 雫 API 的随机图片API）*/
+	--background-image-phone: url(https://tvax2.sinaimg.cn/large/008qLT8ggy1gxqzv16v0sj31m02oo4qt.jpg);				/*手机端首页背景图*/
 	
-    --terminal-backdrop-filter: blur(4px); 	/*终端背景模糊程度，越大越模糊。不需要就改为0*/
+    --terminal-backdrop-filter: blur(4px); 							/*终端背景模糊程度，越大越模糊。不需要就改为0*/
 	
 	/*顶部导航栏*/
 	--header-title-color:#bcffa7;											/*文本颜色*/
@@ -73,7 +76,7 @@
 	/*输入框*/
 	--input-bg-color: rgba(0,0,0,.3);						/*背景颜色*/
 	--input-color: #b9ffcf;											/*文本颜色*/
-	--input-focus-border-color:;								/*点击时边框的颜色*/
+	--input-focus-border-color:unset;					/*点击时边框的颜色*/
 	
 	/*对话框*/
 	--dl-blur: blur(5px);												/*背景模糊。默认5，不喜欢就改为0*/

@@ -338,7 +338,7 @@ export default {
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background: url(https://api.imlazy.ink/img);
+  background: var(--background-login-image);
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
@@ -413,7 +413,7 @@ export default {
     margin-right: 0px;
   }
   #login-panel-wrapper {
-    background: url(https://api.imlazy.ink/img-phone);
+    background: var(--background-login-image-phone);
     background-repeat: no-repeat;
     background-size: cover;
   }
