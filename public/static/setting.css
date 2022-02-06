@@ -12,20 +12,23 @@
     --selection-background-color: rgba(182,255,169,0.5);	/*鼠标选择后的 背景颜色*/
     --selection-color: #3b4856;													/*鼠标选择后的 文本颜色*/
 	
-	--background-image: url(https://tva4.sinaimg.cn/large/006MpbfMgy1gsiwf1tnt6j31be0qoqdm.jpg); 					/*电脑端背景图*/
-	--background-image-phone: url(https://tvax2.sinaimg.cn/large/008qLT8ggy1gxqzv16v0sj31m02oo4qt.jpg);	/*手机端背景图*/
+	--background-image: url(https://tva4.sinaimg.cn/large/006MpbfMgy1gsiwf1tnt6j31be0qoqdm.jpg); 					/*电脑端首页背景图*/
+	--background-image-phone: url(https://tvax2.sinaimg.cn/large/008qLT8ggy1gxqzv16v0sj31m02oo4qt.jpg);	/*手机端首页背景图*/
 	
     --terminal-backdrop-filter: blur(4px); 	/*终端背景模糊程度，越大越模糊。不需要就改为0*/
 	
-	--a-color: #e6ffe2;				/*链接的颜色*/
-	--a-hover-color: #79ffbb;	/*当鼠标悬浮到连接上时的颜色*/
+	/*顶部导航栏*/
+	--header-title-color:#bcffa7;											/*文本颜色*/
+	--header-title-font-weight: 700;									/*字体粗细*/
+	--header-info-color: #63cbd0;										/*链接颜色*/
 
+	/*菜单*/
 	--drawer-bg-color: rgba(127,131,125,0.5); 				/*手机端菜单的背景颜色*/
 	--menu-bg-color:	rgba(0,0,0,0.5);								/*电脑端菜单背景颜色*/
-	--cd-bg-color: rgba(18,30,13,.5);									/*菜单背景颜色*/
+	--cd-bg-color: rgba(18,30,13,.5);									/*菜单被选中时的 背景颜色*/
+	--cd-color: #dbffb6;															/*菜单被选中时的 文本颜色*/
 	--cd-bg-hover-color: rgba(50,71,61,0.7); 					/*当鼠标悬浮到菜单上时的背景颜色*/
 	--cd-title-color: #fff4a3;													/*菜单标题颜色*/
-	--cd-color: #dbffb6;															/*菜单文本颜色*/
 	--cd-border-left: 5px solid #8ee17f;							/*菜单左侧边框样式*/
 	--cd-box-shadow: rgb(0,60,41) 0px 0px 10px 0px;	/*菜单阴影样式*/
 	--cd-blur:	blur(3px);															/*菜单背景模糊程度，越大越模糊。不需要就改为0*/
@@ -36,13 +39,19 @@
 	--subtitle-info-color: #b1e2c0;										/*副标题颜色*/
 	--overview-info-title: rgb(234,255,197);						/*实例详情页面的标题颜色*/
 	
-	--manual-link-bg-color: rgba(76,217,204,0.4);						/*快捷链接的背景颜色*/
-	--manual-link-bg-hover-color: rgba(22,189,167,0.5);			/*当鼠标悬浮到快捷链接时背景颜色*/
+	/*链接*/
+	--a-color: #e6ffe2;																			/*链接的颜色*/
+	--a-hover-color: #79ffbb;																/*当鼠标悬浮到链接上时的颜色*/
+	--manual-link-bg-color: rgba(76,217,204,0.4);							/*快捷链接的背景颜色*/
+	--manual-link-bg-hover-color: rgba(22,189,167,0.5);				/*当鼠标悬浮到快捷链接时背景颜色*/
 	
-	--card-bg-color: rgba(0,0,0,0.5);												/*卡片背景颜色*/
-	--card-box-shadow: 0 0 10px 0 rgba(0,0,0,.5);						/*卡片阴影效果*/
-	--card-blur: blur(0px);																	/*卡片背景模糊；默认0，需要请调大*/
+	/*卡片*/
+	--card-bg-color: rgba(0,0,0,0.5);													/*背景颜色*/
+	--card-color: rgb(255,230,204);														/*文本颜色*/
+	--card-box-shadow: 0 0 10px 0 rgba(0,0,0,.5);							/*阴影效果*/
+	--card-blur: blur(0px);																		/*背景模糊；默认0，需要请调大*/
 	
+	/*按钮*/
 	--btn-default-bg-color: hsla(0,0%,100%,.15);							/*默认按钮的 背景 颜色*/
 	--btn-default-color:#cbe5ff;															/*默认按钮的 文本 颜色*/
 	--btn-default-bg-hover-color: hsla(0,0%,100%,.3);					/*当鼠标悬浮在默认按钮时的  背景 颜色*/
@@ -53,8 +62,43 @@
 	--btn-q-danger-color: rgba(167,114,114,0.5);							/*浅红色按钮的 背景 颜色*/
 	--btn-disabled-filter: brightness(0.6);											/*按钮禁用时的效果*/
 	
-	--tr-bg-color: rgba(0,0,0,.5);				/*表格背景颜色*/
-	--th-bg-color: rgba(50,78,88,.5);		/*表格头部 背景颜色*/
-	--th-color : #a3fff9;									/*表格头部 文本颜色*/
+	/*表格*/
+	--tr-bg-color: rgba(0,0,0,.5);								/*背景颜色*/
+	--table-color: #a3fff9;											/*内容 文本颜色*/
+    --td-2bg-color:rgba(38,60,79,.5);						/*内容 背景颜色*/
+	--th-bg-color: rgba(50,78,88,.5);						/*头部 背景颜色*/
+	--th-color : #a3fff9;												/*头部 文本颜色*/
+	--td-bg-hover-color: rgba(58,118,121,.5);		/*当鼠标悬浮在表格内容上时表格的背景颜色*/
 	
+	/*输入框*/
+	--input-bg-color: rgba(0,0,0,.3);						/*背景颜色*/
+	--input-color: #b9ffcf;											/*文本颜色*/
+	--input-focus-border-color:;								/*点击时边框的颜色*/
+	
+	/*对话框*/
+	--dl-blur: blur(5px);												/*背景模糊。默认5，不喜欢就改为0*/
+	
+	/*消息框*/
+	--msgbox-blur: blur(4px);									/*背景模糊。默认4，不喜欢就改为0*/
+	--msgbox-bg-color: rgba(217,255,241,0.5); 	/*背景颜色*/
+	--msgbox-border: 2px solid #7ca399; 				/*边框样式*/
+	--msgbox-title-color: #a4ffe2;							/*内容文本颜色*/
+	--msgbox-content-color: #b5ffd3;					/*标题颜色*/
+	
+	/*下拉选择*/
+	--select-border-color: #7ce0b1;						/*边框颜色*/
+	--select-color: #eafff6;											/*文本颜色*/
+	--selected-color: #7ee5b5;									/*被选中の文本の颜色*/
+	--select-shadow: 0 0 7px #62feb5;					/*阴影样式*/
+	--select-bg-color: rgba(0,0,0,0.5);						/*背景颜色*/
+	--select-blur: blur(5px);										/*背景模糊。默认5，不喜欢就改为0*/
+	--select-bg-hover-color: rgba(68,83,80,.3);	/*当鼠标悬浮到上面时的 背景颜色*/
+	--select-hover-color: #d0ffe2;							/*当鼠标悬浮到上面时的 文本颜色*/
+	--select-shadow1: 0 0 5px #7ce0b1;					/*忘记了是哪个的阴影样式*/
+	
+	/*提示框*/
+	--alert-info-bg-color: rgba(244,244,245,.3);	/*白色提示框的 背景颜色*/
+	--alert-info-color:#fff;											/*白色提示框的 文本颜色*/
+	--alert-desc-color:#e4edff;								/*白色提示框的 文本颜色2*/
+	--alert-error-bg-color: rgba(255,190,190,0.3);/*警告框的背景颜色*/
 }
