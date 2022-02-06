@@ -118,7 +118,7 @@
             </LineLabel>
             <LineLabel>
               <template #title>当前主题版本</template>
-              <template #default>1.3&nbsp;&nbsp;<a href="javascript:checkUpdate();">检查更新</a><lazy id="lazy"></lazy></template>
+              <template #default>2.0&nbsp;&nbsp;<a href="javascript:checkUpdate();">检查更新</a><lazy id="lazy"></lazy></template>
             </LineLabel>
           </div>
         </template>

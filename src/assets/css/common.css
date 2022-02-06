@@ -239,18 +239,18 @@ a:hover {
   background-color: var(--card-bg-color);
   box-shadow: var(--card-box-shadow)!important;
   border: 0!important;
-  color: rgb(255 230 204)!important;
+  color: var(--card-color)!important;
   border-radius: 0!important;
   backdrop-filter: var(--card-blur);
 }
 
 /* 表格 */
 .el-table--enable-row-hover .el-table__body tr:hover>td {
-	background-color: rgba(58,118,121,.5)!important
+	background-color: var(--td-bg-hover-color)!important
 }
 
 .el-table {
-  color: #a3fff9!important;
+  color: var(--table-color)!important;
   background-color: transparent!important;
 }
 
@@ -268,14 +268,18 @@ a:hover {
 }
 
 .el-table--striped .el-table__body tr.el-table__row--striped td {
-  background: rgba(38,60,79,.5)!important;
+  background: var(--td-2bg-color)!important;
 }
 
 
 /* 输入框 */
 .el-input--small .el-input__inner, .el-input__inner {
-  background: rgba(0,0,0,.3);
-  color: #b9ffcf;
+  background: var(--input-bg-color);
+  color: var(--input-color);
+}
+
+.el-input__inner:focus {
+	border-color: var(--input-focus-border-color);
 }
 
 /* 按钮 */
@@ -313,37 +317,37 @@ button[disabled] {
 
 /* 对话框 */
 .component-dialog-overflow {
-  backdrop-filter: blur(5px);
+  backdrop-filter: var(--dl-blur);
 }
 
 .el-message-box {
-  background-color: rgba(217,255,241,0.5)!important;
-  backdrop-filter: blur(4px);
-  border: 2px solid #7ca399!important;
+  background-color: var(--msgbox-bg-color)!important;
+  backdrop-filter: var(--msgbox-blur);
+  border: var(--msgbox-border)!important;
 }
 
 .el-message-box__title {
-  color: #a4ffe2!important;
+  color: var(--msgbox-title-color)!important;
 }
 
 .el-message-box__content {
-  color: #b5ffd3!important;
+  color: var(--msgbox-content-color)!important;
 }
 
 .HeaderTitle {
-  color: #bcffa7;
-  font-weight: 700;
+  color: var(--header-title-color);
+  font-weight: var(--header-title-font-weight);
   text-decoration: none;
 }
 
 .HeaderInfo {
-  color: #63cbd0;
+  color: var(--header-info-color);
 }
 
 /* 下拉选择 */
 .el-select .el-input.is-focus .el-input__inner {
-  border-color: #7ce0b1;
-  box-shadow: 0 0 5px #7ce0b1;
+  border-color: var(--select-border-color);
+  box-shadow: var(--select-shadow1);
 }
 
 .el-dropdown-link {
@@ -351,23 +355,23 @@ button[disabled] {
 }
 
 .el-select__popper.el-popper[role=tooltip] {
-  background: rgba(0,0,0,.5);
-  backdrop-filter: blur(5px);
-  border: 1px solid #7ce0b1;
-  box-shadow: 0 0 7px #62feb5;
+  background: var(--select-bg-color);
+  backdrop-filter: var(--select-blur);
+  border: 1px solid var(--select-border-color);
+  box-shadow: var(--select-shadow1);
 }
 
 .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
-    background: rgba(68,83,80,.3);
-    color: #d0ffe2;
+    background: var(--select-bg-hover-color);
+    color: var(--select-hover-color);
 }
 
 .el-select-dropdown__item.selected {
-  color: #7ee5b5;
+  color: var(--selected-color);
 }
 
 .el-select-dropdown__item {
-  color: #eafff6;
+  color: var(--select-color);
 }
 
 .el-timeline-item__timestamp {
@@ -375,16 +379,16 @@ button[disabled] {
 }
 
 .el-alert--info.is-light {
-	background-color: rgba(244,244,245,.3);
-	color: #fff
+	background-color: var(--alert-info-bg-color);
+	color: var(--alert-info-color);
 }
 
 .el-alert--info.is-light .el-alert__description {
-	color: #e4edff
+	color: var(--alert-desc-color);
 }
 
 .el-alert--error.is-light {
-	background-color: rgba(255,190,190,.3)
+	background-color: var(--alert-error-bg-color);
 }
 
 .blur {
