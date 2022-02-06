@@ -241,6 +241,7 @@ a:hover {
   border: 0!important;
   color: rgb(255 230 204)!important;
   border-radius: 0!important;
+  backdrop-filter: var(--card-blur);
 }
 
 /* 表格 */
@@ -254,12 +255,12 @@ a:hover {
 }
 
 .el-table th {
-	color: #a3fff9!important;
-	background-color: rgba(50,78,88,.5)!important
+	color: var(--th-color)!important;
+	background-color: var(--th-bg-color)!important
 }
 
 .el-table tr {
-  background-color: rgba(0,0,0,.5)!important;
+  background-color: var(--tr-bg-color)!important;
 }
 
 .el-table td, .el-table th.is-leaf {
@@ -279,35 +280,35 @@ a:hover {
 
 /* 按钮 */
 .el-button.el-button--default,.el-button--small {
-  background: hsla(0,0%,100%,.15);
-  color: #cbe5ff;
+  background: var(--btn-default-bg-color);
+  color: var(--btn-default-color);
 }
 
 .el-button.el-button--default:hover {
-  color: #92c9ff;
-  background-color: hsla(0,0%,100%,.3);
+  color: var(--btn-default-hover-color);
+  background-color: var(--btn-default-bg-hover-color);
 }
 
 .el-button--default.el-button--small:hover {
-  color: #92c9ff;
-  background-color: hsla(0,0%,100%,.3);
+  color: var(--btn-default-hover-color);
+  background-color:  var(--btn-default-bg-hover-color);
 }
 
 .el-button--success {
-  background-color: rgb(120,183,90,0.78);
+  background-color: var(--btn-success-bg-color);
 }
 
 .el-button--danger {
-  background-color: rgba(101,12,12,0.5);
-  border-color: #fbc4c4;
+  background-color: var(--btn-danger-bg-color);
+  border-color: var(--btn-danger-color);
 }
 
 .el-button--danger.is-plain {
-  background-color: rgba(167,114,114,0.5);
+  background-color: var(--btn-q-danger-color);
 }
 
 button[disabled] {
-    filter: brightness(0.6);
+    filter: var(--btn-disabled-filter);
 }
 
 /* 对话框 */
