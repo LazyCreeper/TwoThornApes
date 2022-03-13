@@ -1,65 +1,56 @@
-<!--
- * @Author: your name
- * @Date: 2021-12-04 19:37:37
- * @LastEditTime: 2021-12-04 19:47:44
- * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: \MCSManager-UI\README.md
--->
+
 ```
-______  _______________________  ___
-___   |/  /_  ____/_  ___/__   |/  /_____ _____________ _______ _____________
-__  /|_/ /_  /    _____ \__  /|_/ /_  __  /_  __ \  __  /_  __  /  _ \_  ___/
-_  /  / / / /___  ____/ /_  /  / / / /_/ /_  / / / /_/ /_  /_/ //  __/  /
-/_/  /_/  \____/  /____/ /_/  /_/  \__,_/ /_/ /_/\__,_/ _\__, / \___//_/
-                                                        /____/
+  __  __  ____ ____  __  __                                     _____ _                         
+ |  \/  |/ ___/ ___||  \/  | __ _ _ __   __ _  __ _  ___ _ __  |_   _| |__   ___ _ __ ___   ___ 
+ | |\/| | |   \___ \| |\/| |/ _` | '_ \ / _` |/ _` |/ _ \ '__|   | | | '_ \ / _ \ '_ ` _ \ / _ \
+ | |  | | |___ ___) | |  | | (_| | | | | (_| | (_| |  __/ |      | | | | | |  __/ | | | | |  __/
+ |_|  |_|\____|____/|_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|      |_| |_| |_|\___|_| |_| |_|\___|
+                                              |___/                                             
 ```
 
-[![Status](https://img.shields.io/badge/npm-v8.1.0-blue.svg)](https://www.npmjs.com/)
-[![Status](https://img.shields.io/badge/node-v14.17.6-blue.svg)](https://nodejs.org/en/download/)
-[![Status](https://img.shields.io/badge/License-GPL-red.svg)](https://github.com/Suwings/MCSManager)
-
-
-适用于 MCSManager 未来版本的 Web 界面项目。
-
-
-[官方网站](http://mcsm.suwings.top/) | 当前正在开发中
+适用于 MCSManager 9 的二次元主题
+博客发布地址：https://blog.imlazy.ink:233/index.php/archives/253/
 
 <br />
 
-相关项目
------------
-[MCSManager 守护进程项目](https://github.com/Suwings/MCSManager-Daemon)
-[MCSManager 前端项目](https://github.com/Suwings/MCSManager-UI)
-[MCSManager 8.X 版本主项目](https://github.com/Suwings/MCSManager)
+## 简介
+二次元！二次元！二次元！该主题原名`Summer`，基于MCSManager 9开发。<br>
+主题自带两款皮肤，`Summer`和`猫羽雫`。默认为`Summer`皮肤，如需切换请自行修改文件名。<br>
+Summer背景图地址：https://www.pixiv.net/artworks/83708125<br>
+猫羽雫背景图地址：https://www.pixiv.net/artworks/94819771
+<!--more-->
 
-<br />
+## 特性
+ 1. 更好看的页面（二次元！）
+ 2. 更好看的字体
+ 3. 透明终端
+ 4. 可高度自定义修改（具体请看`/static/setting.css`）
 
-MCSManager 简介
------------
-这是一款可以管理多个 Minecraft 服务端（支持群组端）的 Web 管理面板，并且可以分配多个子账号来分别管理不同的 Minecraft 服务端，支持绝大部分主流的服务端，甚至是其他非 Minecraft 的程序。
+## 截图
+不一定为最新版界面，请下载后体验！
+![NekohaShizuku](https://pro-image.xiaoheiban.cn/xyd/80342d87-b830-4578-acfb-accbed3e91b1.png)
+![Summer](https://pro-image.xiaoheiban.cn/xyd/b8e7cdd3-71c9-4b83-8ef8-abdd0c7c93f7.png)
+![QQ截图20210812224635](https://tvax2.sinaimg.cn/large/006MpbfMgy1gtee7z1v98j313p0oydjt.jpg)
+![QQ截图20210812224800](https://tvax2.sinaimg.cn/large/006MpbfMgy1gtee7z7k9wj313p0oy0wz.jpg)
+![QQ截图20210812224838](https://tvax2.sinaimg.cn/large/006MpbfMgy1gtee7zkty1j313p0oyaef.jpg)
+![QQ截图20210812225029](https://tva4.sinaimg.cn/large/006MpbfMgy1gtee7zra69j313p0r342j.jpg)
 
-控制面板可运行在 Windows 与 Linux 平台，无需数据库与任何系统配置，只需安装 node 环境即可快速运行，属于轻量级的 Minecraft 服务端控制面板。
+## 下载地址
+https://mcsm.lanzoui.com/b010ss66f 密码:`bpxr`
 
+## 使用方法
+ 1. 下载本主题
+ 2. 解压覆盖到面板目录`public`文件夹内
+ 3. 刷新浏览器即可
 
-<br />
+## 使用说明
+https://blog.imlazy.ink:233/index.php/archives/283/
 
+## 更新内容`v2.0`
+ 1. 更改主题名称为二次元
+ 2. 添加更多主题设置文件，在`/static/setting.css`
+ 3. 支持使用此设置创建属于自己的皮肤
 
-搭建开发环境
------------
-```
-git clone https://github.com/Suwings/MCSManager-UI.git
-cd MCSManager-UI
-npm install
-npm run serve
-```
-
-<br />
-
-开源协议
------------
-本项目为 MCSManager 软件的前端界面设计，遵循 GPL License。
-
-在公开完整源代码的情况下，准许自定义界面，二次开发，商业使用和主题开发等。
-
-<br />
+## 已知BUG
+ 1. 新增用户 的取消按钮无法点击
+![img](https://pro-image.xiaoheiban.cn/wum/a07ffc2a-667f-4d6f-9819-a11dc5f950e3.jpg)
