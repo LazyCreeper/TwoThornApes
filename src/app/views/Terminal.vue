@@ -43,8 +43,8 @@
             </LineInfo>
             <LineInfo
               ><i class="el-icon-finished"></i> 状态:
-              {{ codeToText(instanceInfo.status) }}</LineInfo
-            >
+              {{ codeToText(instanceInfo.status) }}
+            </LineInfo>
             <LineInfo v-if="instanceInfo.info && instanceInfo.info.currentPlayers != -1">
               <i class="el-icon-user"></i> 玩家数: {{ instanceInfo.info.currentPlayers }} /
               {{ instanceInfo.info.maxPlayers }}
@@ -192,7 +192,7 @@
                 >终端日志</el-button
               >
             </el-col>
-            <el-col :sm="24" :offset="0" class="row-mb">
+            <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
                 :disabled="!available"
                 icon="el-icon-folder-opened"
@@ -202,7 +202,7 @@
                 >文件管理</el-button
               >
             </el-col>
-            <el-col :sm="24" :offset="0" v-if="isTopPermission">
+            <el-col :lg="24" :offset="0" v-if="isTopPermission">
               <el-button
                 :disabled="!available"
                 icon="el-icon-setting"
@@ -302,6 +302,15 @@
           </div>
         </template>
       </Panel>
+      <Panel v-if="isShowPlayersChart">
+        <template #title>面板端在线人数</template>
+        <template #default>
+          <p>每10分钟统计间隔，总10小时的在线人数趋势</p>
+          <div class="echart-wrapper">
+            <div id="echart-wrapper-players" style="width: 100%; height: 200px"></div>
+          </div>
+        </template>
+      </Panel>
     </el-col>
   </el-row>
 
@@ -342,7 +351,7 @@
           若实例状态在未经面板操作的情况下变为非运行状态将立刻发起启动实例操作。<br />可用于崩溃后自动重启功能。
         </p>
         <div class="row-mt">
-          <el-switch v-model="eventConfigPanel.autoRestart"> </el-switch>
+          <el-switch v-model="eventConfigPanel.autoRestart"></el-switch>
         </div>
       </div>
 
@@ -352,7 +361,7 @@
           只要守护进程（远程节点）运行，就自动发起一次启动实例操作。<br />如果将守护进程开机自启则可用于开机自启实例。
         </p>
         <div class="row-mt">
-          <el-switch v-model="eventConfigPanel.autoStart"> </el-switch>
+          <el-switch v-model="eventConfigPanel.autoStart"></el-switch>
         </div>
       </div>
 
@@ -374,7 +383,7 @@
           网页自动给输出内容增加颜色渲染，渲染的颜色不一定完全正确。<br />如果颜色渲染功能与软件自带的颜色功能冲突，可以关闭此功能。
         </p>
         <div class="row-mt">
-          <el-switch v-model="terminalSettingPanel.haveColor"> </el-switch>
+          <el-switch v-model="terminalSettingPanel.haveColor"></el-switch>
         </div>
       </div>
       <div class="row-mt">
@@ -467,6 +476,7 @@
 </template>
 
 <script>
+import * as echarts from "echarts";
 import Dialog from "../../components/Dialog";
 import Panel from "../../components/Panel";
 import "../../assets/xterm/xterm.css";
@@ -489,6 +499,7 @@ import { encodeConsoleColor } from "../service/terminal_color";
 import { ElNotification } from "element-plus";
 import { statusCodeToText, typeTextToReadableText } from "../service/instance_tools";
 import { initTerminalWindow, textToTermText } from "../service/term";
+import { getPlayersOption } from "../service/chart_option";
 
 export default {
   data: function () {
@@ -496,6 +507,8 @@ export default {
       serviceUuid: this.$route.params.serviceUuid,
       instanceUuid: this.$route.params.instanceUuid,
       term: null,
+      terminalWidth: 0,
+      terminalHeight: 0,
       command: "",
       available: false,
       socket: null,
@@ -521,18 +534,16 @@ export default {
         autoStart: false
       },
 
-      logPanel: {
-        visible: false,
-        data: ""
-      },
-
       terminalSettingPanel: {
         visible: false,
         haveColor: true
       },
 
       unavailableTerminal: false,
-      unavailableIp: null
+      unavailableIp: null,
+
+      playersChart: null,
+      isShowPlayersChart: false
     };
   },
   computed: {
@@ -562,6 +573,7 @@ export default {
     },
     // 请求数据源（Websocket）
     async renderFromSocket() {
+      this.sendResize(this.terminalWidth, this.terminalHeight);
       this.socket.emit("stream/detail", {});
     },
     // 与守护进程建立连接
@@ -595,6 +607,8 @@ export default {
         () => {
           this.unavailableIp = null;
           this.unavailableTerminal = false;
+          // 获取一次系统日志
+          this.syncLog();
         },
         () => {
           this.unavailableIp = addr;
@@ -613,6 +627,7 @@ export default {
       // 监听实例详细信息
       this.socket.on("stream/detail", (packet) => {
         this.instanceInfo = packet.data;
+        this.initChart();
       });
       // 断开事件
       this.socket.on("disconnect", () => {
@@ -650,7 +665,9 @@ export default {
     },
     // 初始化 Terminal 窗口
     initTerm() {
+      // 创建窗口与输入事件传递
       this.term = initTerminalWindow(document.getElementById("terminal-container"));
+      this.term.onData(this.sendInput);
     },
     // 开启实例（Ajax）
     async openInstance() {
@@ -712,9 +729,32 @@ export default {
         setTimeout(() => (this.busy = false), 2000);
       }
     },
+    sendResize(w, h) {
+      if (this.instanceInfo.config.processType !== "docker") return;
+      if (!this.socket || !this.available) return;
+      if (!this.isStarted) return;
+      this.socket.emit("stream/resize", {
+        data: { w, h }
+      });
+    },
+    // 使用Websocket发送输入
+    sendInput(input) {
+      // 非 Docker 类型拒绝终端直接输入，不需要提示。
+      if (this.instanceInfo.config.processType !== "docker") return;
+      if (!this.socket || !this.available)
+        return this.$message({ message: "无法输入到终端，数据流通道不可用", type: "error" });
+      if (!this.isStarted)
+        return this.$message({ message: "无法输入到终端，服务器未开启", type: "error" });
+      this.socket.emit("stream/write", {
+        data: { input }
+      });
+    },
     // 使用Websocket发送命令
     sendCommand(command, method) {
-      if (!this.socket || !this.available) return this.$message("无法执行命令，数据流通道不可用");
+      if (!this.socket || !this.available)
+        return this.$message({ message: "无法执行命令，数据流通道不可用", type: "error" });
+      if (!this.isStarted)
+        return this.$message({ message: "无法执行命令，服务器未开启", type: "error" });
       if (method !== 1) this.pushHistoryCommand(command);
       this.socket.emit("stream/input", {
         data: { command }
@@ -754,26 +794,23 @@ export default {
       this.terminalSettingPanel.visible = true;
       this.terminalSettingPanel.haveColor = this.instanceInfo.config.terminalOption.haveColor;
     },
-    async toLogPanel() {
-      this.logPanel.data = "";
-      this.logPanel.visible = true;
+    async syncLog() {
       try {
         const text = await request({
           url: API_INSTANCE_OUTPUT,
           method: "GET",
           params: { remote_uuid: this.serviceUuid, uuid: this.instanceUuid }
         });
-        this.logPanel.data = text;
-      } catch (error) {
-        this.logPanel.data = error;
-      }
-      this.$nextTick(() => {
-        const tr = this.$refs.logPanelTextArea.textarea;
-        window.tr = tr;
-        if (tr) {
-          tr.scrollTop = tr.scrollHeight;
+        this.term.clear();
+        if (this.instanceInfo?.config?.terminalOption?.haveColor) {
+          this.term.write(encodeConsoleColor(text));
+        } else {
+          this.term.write(text);
         }
-      });
+        this.term.scrollToBottom();
+      } catch (error) {
+        this.term.write(error);
+      }
     },
     // 普通用户更新配置
     async instanceConfigUpdate() {
@@ -816,6 +853,37 @@ export default {
     },
     toInstanceDetail() {
       this.$router.push({ path: `/instance_detail/${this.serviceUuid}/${this.instanceUuid}/` });
+    },
+    initChart() {
+      if (!this.instanceInfo.info.playersChart || !this.instanceInfo.info.playersChart.length) {
+        this.isShowPlayersChart = false;
+        return;
+      }
+      if (!this.isShowPlayersChart) {
+        this.isShowPlayersChart = true;
+        setTimeout(() => {
+          // 基于准备好的dom，初始化echarts实例
+          this.playersChart = echarts.init(document.getElementById("echart-wrapper-players"));
+          this.playersChart.setOption(getPlayersOption());
+          this.setPlayersChart();
+        }, 200);
+      } else {
+        this.setPlayersChart();
+      }
+    },
+    setPlayersChart() {
+      if (!this.playersChart) return;
+      const MAX_TIME = this.instanceInfo.info.playersChart.length - 1;
+      const source = this.instanceInfo.info.playersChart;
+      for (const key in source) {
+        source[key]["time"] = `${(MAX_TIME - key) * 10} 分前`;
+      }
+      this.playersChart.setOption({
+        dataset: {
+          dimensions: ["time", "value"],
+          source
+        }
+      });
     }
   },
   // 装载事件
@@ -826,10 +894,18 @@ export default {
 
       // 初始化终端窗口
       this.initTerm();
+      this.term.onResize((size) => {
+        this.terminalHeight = size.rows;
+        this.terminalWidth = size.cols;
+        this.sendResize(size.cols, size.rows);
+      });
+      this.term.fitAddon.fit();
+      window.onresize = () => {
+        this.term.fitAddon.fit();
+      };
 
       // 与守护进程建立 Websocket 连接
       await this.setUpWebsocket();
-
       // 请求数据 & 启用状态获取定时器
       await this.renderFromSocket();
       this.startInterval();

@@ -1,160 +1,116 @@
 /*
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+  Copyright (C) 2022 Suwings <Suwings@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
+  According to the AGPL, it is forbidden to delete all copyright notices, 
   and if you modify the source code, you must open source the
   modified source code.
 
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
+  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
 
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
+  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
+  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
 
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
+  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
+  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
 */
+
+import { termColor } from "./term";
 
 // 用于 Terminal 视图中终端组件的文字颜色渲染
 export function encodeConsoleColor(text) {
-  const term = {};
-  term.TERM_NULL = "\x1B[0m";
-  term.TERM_TEXT_RED = "\x1B[1;0;31m";
-  term.TERM_TEXT_GREEN = "\x1B[1;0;32m";
-  term.TERM_TEXT_YELLOW = "\x1B[1;0;33m";
-  term.TERM_TEXT_BLUE = "\x1B[1;1;34m";
-  term.TERM_TEXT_FUCHSIA = "\x1B[1;0;35m";
-  term.TERM_TEXT_CYAN = "\x1B[1;0;36m";
-  term.TERM_TEXT_WHITE = "\x1B[1;0;37m";
-  term.TERM_TEXT_B = "\x1B[1m";
-
   // 基本颜色
-  text = text.replace(/\[([^[\]]+)\]/gim, "[§1$1§r]");
-  text = text.replace(/([A-Za-z0-9 _§&;\-\\.]{1,}: )/gim, "§6$1§r");
+  // eslint-disable-next-line no-control-regex
+  text = text.replace(/(\x1B[^m]*m)/gm, "$1;");
+  text = text.replace(/ \[([A-Za-z0-9 _\-\\.]+)]/gim, " [§3$1§r]");
+  text = text.replace(/^\[([A-Za-z0-9 _\-\\.]+)]/gim, "[§3$1§r]");
+  text = text.replace(/([A-Za-z0-9 _\-\\.]+: )/gim, "§6$1§r");
+  // eslint-disable-next-line no-control-regex
+  text = text.replace(/(\x1B[^m]*m);/gm, "$1");
   //   text = text.replace(/INFO/gm, term.TERM_TEXT_GREEN + "INFO" + term.TERM_NULL);
   //   text = text.replace(/(\d{2,}:\d{2,}:\d{2,})/gm, term.TERM_TEXT_CYAN + "$1" + term.TERM_NULL);
 
   // Minecraft 原生颜色替代解析
-  text = text.replace(/§0/gm, term.TERM_TEXT_WHITE);
-  text = text.replace(/§1/gm, term.TERM_TEXT_CYAN);
-  text = text.replace(/§2/gm, term.TERM_TEXT_GREEN);
-  text = text.replace(/§3/gm, term.TERM_TEXT_CYAN);
-  text = text.replace(/§4/gm, term.TERM_TEXT_RED);
-  text = text.replace(/§5/gm, term.TERM_TEXT_FUCHSIA);
-  text = text.replace(/§6/gm, term.TERM_TEXT_YELLOW);
-  text = text.replace(/§7/gm, term.TERM_TEXT_WHITE);
-  text = text.replace(/§8/gm, term.TERM_TEXT_WHITE);
-  text = text.replace(/§9/gm, term.TERM_TEXT_CYAN);
-  text = text.replace(/§a/gm, term.TERM_TEXT_GREEN);
-  text = text.replace(/§b/gm, term.TERM_TEXT_CYAN);
-  text = text.replace(/§c/gm, term.TERM_TEXT_RED);
-  text = text.replace(/§d/gm, term.TERM_TEXT_RED);
-  text = text.replace(/§e/gm, term.TERM_TEXT_YELLOW);
-  text = text.replace(/§f/gm, term.TERM_TEXT_WHITE);
+  text = text.replace(/§0/gim, termColor.TERM_TEXT_BLACK);
+  text = text.replace(/§1/gim, termColor.TERM_TEXT_DARK_BLUE);
+  text = text.replace(/§2/gim, termColor.TERM_TEXT_DARK_GREEN);
+  text = text.replace(/§3/gim, termColor.TERM_TEXT_DARK_AQUA);
+  text = text.replace(/§4/gim, termColor.TERM_TEXT_DARK_RED);
+  text = text.replace(/§5/gim, termColor.TERM_TEXT_DARK_PURPLE);
+  text = text.replace(/§6/gim, termColor.TERM_TEXT_GOLD);
+  text = text.replace(/§7/gim, termColor.TERM_TEXT_GRAY);
+  text = text.replace(/§8/gim, termColor.TERM_TEXT_DARK_GRAY);
+  text = text.replace(/§9/gim, termColor.TERM_TEXT_BLUE);
+  text = text.replace(/§a/gim, termColor.TERM_TEXT_GREEN);
+  text = text.replace(/§b/gim, termColor.TERM_TEXT_AQUA);
+  text = text.replace(/§c/gim, termColor.TERM_TEXT_RED);
+  text = text.replace(/§d/gim, termColor.TERM_TEXT_LIGHT_PURPLE);
+  text = text.replace(/§e/gim, termColor.TERM_TEXT_YELLOW);
+  text = text.replace(/§f/gim, termColor.TERM_TEXT_WHITE);
+  text = text.replace(/§k/gim, termColor.TERM_TEXT_OBFUSCATED);
+  text = text.replace(/§l/gim, termColor.TERM_TEXT_BOLD);
+  text = text.replace(/§m/gim, termColor.TERM_TEXT_STRIKETHROUGH);
+  text = text.replace(/§n/gim, termColor.TERM_TEXT_UNDERLINE);
+  text = text.replace(/§o/gim, termColor.TERM_TEXT_ITALIC);
+  text = text.replace(/§r/gim, termColor.TERM_RESET);
+
   // 基于&符号
-  text = text.replace(/&0/gm, term.TERM_TEXT_WHITE);
-  text = text.replace(/&1/gm, term.TERM_TEXT_CYAN);
-  text = text.replace(/&2/gm, term.TERM_TEXT_GREEN);
-  text = text.replace(/&3/gm, term.TERM_TEXT_CYAN);
-  text = text.replace(/&4/gm, term.TERM_TEXT_RED);
-  text = text.replace(/&5/gm, term.TERM_TEXT_FUCHSIA);
-  text = text.replace(/&6/gm, term.TERM_TEXT_YELLOW);
-  text = text.replace(/&7/gm, term.TERM_TEXT_WHITE);
-  text = text.replace(/&8/gm, term.TERM_TEXT_WHITE);
-  text = text.replace(/&9/gm, term.TERM_TEXT_CYAN);
-  text = text.replace(/&a/gm, term.TERM_TEXT_GREEN);
-  text = text.replace(/&b/gm, term.TERM_TEXT_CYAN);
-  text = text.replace(/&c/gm, term.TERM_TEXT_RED);
-  text = text.replace(/&d/gm, term.TERM_TEXT_RED);
-  text = text.replace(/&e/gm, term.TERM_TEXT_YELLOW);
-  text = text.replace(/&f/gm, term.TERM_TEXT_WHITE);
-  // 字体格式
-  text = text.replace(/§r/gm, term.TERM_NULL);
-  text = text.replace(/&r/gm, term.TERM_NULL);
-  text = text.replace(/§k/gm, "\x1B[1m");
-  text = text.replace(/&k/gm, "\x1B[1m");
-  text = text.replace(/§l/gm, "\x1B[1m");
-  text = text.replace(/&l/gm, "\x1B[1m");
-  text = text.replace(/§m/gm, "\x1B[2m");
-  text = text.replace(/&m/gm, "\x1B[2m");
-  text = text.replace(/§n/gm, "\x1B[4m");
-  text = text.replace(/&n/gm, "\x1B[4m");
-  text = text.replace(/§o/gm, "\x1B[3m");
-  text = text.replace(/&o/gm, "\x1B[3m");
+  text = text.replace(/&0/gim, termColor.TERM_TEXT_BLACK);
+  text = text.replace(/&1/gim, termColor.TERM_TEXT_DARK_BLUE);
+  text = text.replace(/&2/gim, termColor.TERM_TEXT_DARK_GREEN);
+  text = text.replace(/&3/gim, termColor.TERM_TEXT_DARK_AQUA);
+  text = text.replace(/&4/gim, termColor.TERM_TEXT_DARK_RED);
+  text = text.replace(/&5/gim, termColor.TERM_TEXT_DARK_PURPLE);
+  text = text.replace(/&6/gim, termColor.TERM_TEXT_GOLD);
+  text = text.replace(/&7/gim, termColor.TERM_TEXT_GRAY);
+  text = text.replace(/&8/gim, termColor.TERM_TEXT_DARK_GRAY);
+  text = text.replace(/&9/gim, termColor.TERM_TEXT_BLUE);
+  text = text.replace(/&a/gim, termColor.TERM_TEXT_GREEN);
+  text = text.replace(/&b/gim, termColor.TERM_TEXT_AQUA);
+  text = text.replace(/&c/gim, termColor.TERM_TEXT_RED);
+  text = text.replace(/&d/gim, termColor.TERM_TEXT_LIGHT_PURPLE);
+  text = text.replace(/&e/gim, termColor.TERM_TEXT_YELLOW);
+  text = text.replace(/&f/gim, termColor.TERM_TEXT_WHITE);
+  text = text.replace(/&k/gim, termColor.TERM_TEXT_OBFUSCATED);
+  text = text.replace(/&l/gim, termColor.TERM_TEXT_BOLD);
+  text = text.replace(/&m/gim, termColor.TERM_TEXT_STRIKETHROUGH);
+  text = text.replace(/&n/gim, termColor.TERM_TEXT_UNDERLINE);
+  text = text.replace(/&o/gim, termColor.TERM_TEXT_ITALIC);
+  text = text.replace(/&r/gim, termColor.TERM_RESET);
 
   // 特殊文本替换
-  var RegExpStringArr = [
+  const RegExpStringArr = [
     //蓝色
-    [
-      "Unknown command",
-      "Loading libraries, please wait...",
-      "Loading",
-      "Loaded",
-      "\\d{1,3}%",
-      "true",
-      "false",
-      "plugin.yml"
-    ],
+    ["Loading libraries, please wait...", "\\d{1,3}%", "true", "false"],
     //绿色
-    [
-      "/help",
-      "left the game",
-      "Enabling",
-      "Server thread",
-      "Saving chunks for level",
-      "----",
-      "UUID",
-      "Starting minecraft server version",
-      "Timings Reset",
-      "\\(",
-      "\\)",
-      "\\{",
-      "\\}",
-      '\\"',
-      "&lt;",
-      "&gt;",
-      "Preparing start region for level"
-    ],
+    ["INFO", "EULA", "----", "\\(", "\\)", "\\{", "\\}", '\\"', "&lt;", "&gt;"],
     //红色
-    ["WARN", "EULA", "Error", "Invalid", "Stopping the server", "Caused by", "Stopping"],
+    ["Error", "Caused by"],
     //黄色
-    [
-      "Starting Minecraft server on",
-      "world_the_end",
-      "world_nether",
-      "Done",
-      "MCSMANAGER",
-      "Server thread"
-    ]
+    ["WARN", "Server thread"]
   ];
-  for (var k in RegExpStringArr) {
-    for (var y in RegExpStringArr[k]) {
-      var reg = new RegExp("(" + RegExpStringArr[k][y].replace(/ /gim, "&nbsp;") + ")", "igm");
-      if (k == 0)
+  for (const k in RegExpStringArr) {
+    for (const y in RegExpStringArr[k]) {
+      const reg = new RegExp("(" + RegExpStringArr[k][y].replace(/ /gim, "&nbsp;") + ")", "igm");
+      if (k === "0")
         //蓝色
-        text = text.replace(reg, term.TERM_TEXT_BLUE + "$1" + term.TERM_NULL);
-      if (k == 1)
+        text = text.replace(reg, termColor.TERM_TEXT_BLUE + "$1" + termColor.TERM_RESET);
+      if (k === "1")
         //绿色
-        text = text.replace(reg, term.TERM_TEXT_GREEN + "$1" + term.TERM_NULL);
-      if (k == 2)
+        text = text.replace(reg, termColor.TERM_TEXT_DARK_GREEN + "$1" + termColor.TERM_RESET);
+      if (k === "2")
         //红色
-        text = text.replace(reg, term.TERM_TEXT_RED + "$1" + term.TERM_NULL);
-      if (k == 3)
+        text = text.replace(reg, termColor.TERM_TEXT_RED + "$1" + termColor.TERM_RESET);
+      if (k === "3")
         //黄色
-        text = text.replace(reg, term.TERM_TEXT_YELLOW + "$1" + term.TERM_NULL);
+        text = text.replace(reg, termColor.TERM_TEXT_GOLD + "$1" + termColor.TERM_RESET);
     }
   }
   // 行结尾符号替换
-  text = text.replace(/\r\n/gm, term.TERM_NULL + "\r\n");
+  text = text.replace(/\r\n/gm, termColor.TERM_RESET + "\r\n");
   return text;
 }
