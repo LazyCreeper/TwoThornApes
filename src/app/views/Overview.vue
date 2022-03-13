@@ -44,21 +44,6 @@
                 ></p>
               </div>
             </el-col>
-
-            <el-col :span="24" :offset="0">
-              <div class="box-card-title-more">面板总览数据</div>
-            </el-col>
-
-            <el-col :xs="12" :md="6" v-for="(item, index) in computerInfoB" :key="index">
-              <div class="overview-info-warpper">
-                <p class="overview-info-title" v-html="item.name"></p>
-                <p
-                  class="overview-info-value"
-                  v-text="item.value"
-                  :class="{ 'color-red': item.warn }"
-                ></p>
-              </div>
-            </el-col>
           </el-row>
         </template>
       </Panel>
@@ -258,7 +243,9 @@ export default {
       computerInfoB: [],
       servicesStatus: [],
       manualLink: null,
+
       forChartTotalInstance: 0,
+
       specifiedDaemonVersion: null,
       panelVersion: null,
 
@@ -315,6 +302,13 @@ export default {
         }
       }
 
+      this.forChartTotalInstance = totalInstance;
+
+      // 计算内存
+      const free = Number(system.freemem / 1024 / 1024 / 1024).toFixed(1);
+      const total = Number(system.totalmem / 1024 / 1024 / 1024).toFixed(1);
+      const used = Number(total - free).toFixed(1);
+
       // 数值卡片列表赋值
       this.valueCard.totalInstance = totalInstance;
       this.valueCard.runningInstance = runningInstance;
@@ -328,10 +322,6 @@ export default {
       this.valueCard.Logined = data.record.logined;
       this.valueCard.cpu = Number(system.cpu * 100).toFixed(0);
       this.valueCard.mem = Number((used / total) * 100).toFixed(0);
-      // 计算内存
-      const free = Number(system.freemem / 1024 / 1024 / 1024).toFixed(1);
-      const total = Number(system.totalmem / 1024 / 1024 / 1024).toFixed(1);
-      const used = Number(total - free).toFixed(1);
       // 计算已正常运行时间
       // const uptime = Number(system.uptime / 60 / 60).toFixed(0);
       this.computerInfoA = [
@@ -360,17 +350,16 @@ export default {
           value: system.user.username
         },
         {
-          name: "内存使用",
+          name: "内存使用数值",
           value: `${used}GB/${total}GB`,
           warn: used / total > 0.9
         },
-        {
-          name: "系统 CPU 使用率",
-          value: `${Number(system.cpu * 100).toFixed(1)}%`,
-          warn: system.cpu * 100 > 90
-        }
-      ];
-      this.computerInfoB = [
+        // {
+        //   name: "系统 CPU 使用率",
+        //   value: `${Number(system.cpu * 100).toFixed(1)}%`,
+        //   warn: system.cpu * 100 > 90
+        // }
+
         {
           name: "Node 版本",
           value: system.node
@@ -379,15 +368,16 @@ export default {
           name: "面板版本",
           value: data.version
         },
-        {
-          name: "分布式在线",
-          value: `${remoteCount.available}/${remoteCount.total}`,
-          warn: remoteCount.available !== remoteCount.total
-        },
-        //{
-        //  name: "实例运行数",
-        //  value: `${runningInstance}/${totalInstance}`
-        //},
+        // {
+        //   name: "分布式在线",
+        //   value: `${remoteCount.available}/${remoteCount.total}`,
+        //   warn: remoteCount.available !== remoteCount.total
+        // },
+        // {
+        //   name: "实例运行数",
+        //   value: `${runningInstance}/${totalInstance}`
+        // },
+
         {
           name: "对应守护进程版本",
           value: this.specifiedDaemonVersion
@@ -396,17 +386,17 @@ export default {
           name: "阻挡请求次数",
           value: data.record.illegalAccess
         },
-        //{
-        //  name: "登录失败与总次数",
-        //  value: `${data.record.loginFailed}/${data.record.logined}`
-        //},
+        // {
+        //   name: "登录失败与总次数",
+        //   value: `${data.record.loginFailed}/${data.record.logined}`
+        // },
         {
           name: "封禁 IP 数",
           value: data.record.banips,
           warn: data.record.banips > 0
         }
       ];
-      // 装载远程服务信息
+      // 装载守护进程信息
       this.servicesStatus = [];
       for (const iterator of remote) {
         if (iterator.system) {
