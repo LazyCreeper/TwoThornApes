@@ -185,16 +185,6 @@
             <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
                 :disabled="!available"
-                icon="el-icon-reading"
-                style="width: 100%"
-                size="small"
-                @click="toLogPanel"
-                >终端日志</el-button
-              >
-            </el-col>
-            <el-col :lg="12" :offset="0" class="row-mb">
-              <el-button
-                :disabled="!available"
                 icon="el-icon-folder-opened"
                 style="width: 100%"
                 size="small"
@@ -395,46 +385,6 @@
     </template>
   </Dialog>
 
-  <Dialog v-model="logPanel.visible">
-    <template #title>终端日志</template>
-    <template #default>
-      <div class="sub-title">
-        <div class="sub-title-info">
-          终端日志仅会记录 1MB 的日常日志，超过 1MB
-          后会删除重新记录，若需要更多日志可前往文件管理下载日志文件。
-        </div>
-      </div>
-
-      <div style="width: 80vw">
-        <el-input
-          ref="logPanelTextArea"
-          v-loading="!logPanel.data"
-          element-loading-text="获取中"
-          v-model="logPanel.data"
-          :rows="30"
-          style="width: 100%; font-size: 12px"
-          type="textarea"
-          placeholder="暂无内容，请先启动实例稍等一段时间"
-        />
-      </div>
-
-      <div class="row-mt">
-        <ItemGroup>
-          <el-button
-            type="success"
-            size="small"
-            @click="
-              () => {
-                logPanel.visible = false;
-                this.logPanel.data = '';
-              }
-            "
-            >关闭</el-button
-          >
-        </ItemGroup>
-      </div>
-    </template>
-  </Dialog>
 
   <Dialog v-model="unavailableTerminal" style="z-index: 9999">
     <template #title>无法与守护进程建立连接</template>

@@ -151,6 +151,18 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column prop="currentPlayers" label="详细信息" width="240">
+            <template #default="scope">
+              <div>
+                <span v-if="scope.row.info && scope.row.info.currentPlayers >= 0">
+                  人数: {{ scope.row.info.currentPlayers }}/{{ scope.row.info.maxPlayers }}
+                </span>
+                <span v-if="scope.row.info && scope.row.version">
+                  &nbsp;版本: {{ scope.row.version }}
+                </span>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column prop="status" label="运行状态" width="120">
             <template #default="scope">
               <div class="color-gray" v-if="scope.row.status == 0">
@@ -317,6 +329,9 @@ export default {
             instanceUuid: instance.instanceUuid,
             serviceUuid: this.currentRemoteUuid,
             nickname: instance.config.nickname,
+            info: instance.info,
+            currentPlayers: instance.info ? instance.info.currentPlayers : "0",
+            version: instance.info ? instance.info.version : "",
             type,
             status
           });
