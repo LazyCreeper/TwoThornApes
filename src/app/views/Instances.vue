@@ -1,28 +1,22 @@
 <!--
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+  Copyright (C) 2022 Suwings <Suwings@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
+  According to the AGPL, it is forbidden to delete all copyright notices, 
   and if you modify the source code, you must open source the
   modified source code.
 
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
+  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
 
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
+  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
+  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
 
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
+  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
+  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
 -->
 
 <template>
@@ -87,7 +81,7 @@
         <div class="instance-table-warpper">
           <div>
             <div class="color-red" v-if="!currentRemoteUuid">
-              &nbsp;未选择任何远程守护进程，请通过这里选择一个地址。若没有任何可选项，请前往“分布式服务”界面进行设置
+              &nbsp;错误：未选择任何远程守护进程
             </div>
           </div>
           <div>
@@ -105,8 +99,8 @@
 
         <!-- 未选择守护进程时显示 -->
         <div v-show="!currentRemoteUuid">
-          <div class="notAnyInstanceTip" style="margin:100px 0px">
-            <img :src="require('../../assets/nosee.jpg')" style="max-width: 90%;">
+          <div class="notAnyInstanceTip">
+            <i class="el-icon-guide" style="font-size: 190px"></i>
             <div class="sub-title">
               <div class="sub-title-title">请在左上方的下拉框中选择远程守护进程</div>
               <div class="sub-title-info">
@@ -120,7 +114,7 @@
         <!-- 第一页且无任何数据时显示 -->
         <div v-show="notAnyInstance && page === 1">
           <div class="notAnyInstanceTip">
-            <img :src="require('../../assets/something-lost.png')" style="max-width: 90%;">
+            <i class="el-icon-truck" style="font-size: 190px"></i>
             <div class="sub-title">
               <div class="sub-title-title">无数据，请点击右上方绿色的“新建实例”按钮创建实例。</div>
               <div class="sub-title-info">
@@ -209,11 +203,11 @@
 }
 
 .instanceTitle:hover {
-  color: #84d1c6;
+  color: rgb(20, 128, 230);
 }
 .notAnyInstanceTip {
   text-align: center;
-  /*margin: 100px 0px;*/
+  margin: 100px 0px;
 }
 </style>
 
@@ -293,7 +287,11 @@ export default {
         });
       } else {
         this.remoteList.forEach((v) => {
-          if (v.available) this.currentRemoteUuid = v.value;
+          if (v.available) {
+            // 默认取第一个开启的实例
+            this.currentRemoteUuid = v.value;
+            return;
+          }
         });
         this.remoteSelectHandle();
       }
@@ -336,6 +334,7 @@ export default {
             status
           });
         });
+        console.log(this.instances);
         this.loading = false;
         // 记录当前选择的守护进程，方便下次直接加载
         localStorage.setItem("pageSelectedRemoteUuid", this.currentRemoteUuid);

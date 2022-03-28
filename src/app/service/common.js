@@ -1,28 +1,22 @@
 /*
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+  Copyright (C) 2022 Suwings <Suwings@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
+  According to the AGPL, it is forbidden to delete all copyright notices, 
   and if you modify the source code, you must open source the
   modified source code.
 
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
+  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
 
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
+  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
+  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
 
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
+  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
+  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
 */
 
 export const API_URL = "//" + window.location.host;
@@ -66,6 +60,8 @@ export const API_INSTANCE_REMOTE_SERVICE_STREAM = `${API_URL}/api/protected_inst
 export const API_INSTANCE_UPDATE = `${API_URL}/api/protected_instance/instance_update`;
 export const API_INSTANCE_RESTART = `${API_URL}/api/protected_instance/restart`;
 export const API_INSTANCE_OUTPUT = `${API_URL}/api/protected_instance/outputlog`;
+export const API_INSTANCE_ASYNC_TASK = `${API_URL}/api/protected_instance/asynchronous`;
+export const API_INSTANCE_ASYNC_STOP = `${API_URL}/api/protected_instance/stop_asynchronous`;
 
 export const API_PROCESS_CONFIG_LIST = `${API_URL}/api/protected_instance/process_config/list`;
 export const API_PROCESS_CONFIG_FILE = `${API_URL}/api/protected_instance/process_config/file`;
@@ -76,6 +72,7 @@ export const API_SETTINGS = `${API_URL}/api/overview/setting`;
 
 export const API_IMAGES = `${API_URL}/api/environment/image`;
 export const API_CONTAINERS = `${API_URL}/api/environment/containers`;
+export const API_NETWORK_MODES = `${API_URL}/api/environment/networkModes`;
 export const API_PROGRESS = `${API_URL}/api/environment/progress`;
 
 export function sleep(t) {
