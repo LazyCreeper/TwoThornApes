@@ -1,28 +1,22 @@
 <!--
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+  Copyright (C) 2022 Suwings <Suwings@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
+  According to the AGPL, it is forbidden to delete all copyright notices, 
   and if you modify the source code, you must open source the
   modified source code.
 
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
+  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
 
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
+  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
+  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
 
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
+  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
+  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
 -->
 
 <template>
@@ -43,7 +37,13 @@
             </LineInfo>
             <LineInfo
               ><i class="el-icon-finished"></i> 状态:
-              {{ codeToText(instanceInfo.status) }}
+              <!-- {{ codeToText(instanceInfo.status) }} -->
+              <span v-if="instanceInfo.status === -1" class="color-red">忙碌中</span>
+              <span v-else-if="instanceInfo.status === 0" class="color-gray">未运行</span>
+              <span v-else-if="instanceInfo.status === 1" class="color-yellow">停止中</span>
+              <span v-else-if="instanceInfo.status === 2" class="color-yellow">启动中</span>
+              <span v-else-if="instanceInfo.status === 3" class="color-green">正在运行</span>
+              <span v-else class="color-red">未知</span>
             </LineInfo>
             <LineInfo v-if="instanceInfo.info && instanceInfo.info.currentPlayers != -1">
               <i class="el-icon-user"></i> 玩家数: {{ instanceInfo.info.currentPlayers }} /
@@ -60,21 +60,22 @@
         <template #default>
           <div v-loading="busy">
             <el-row type="flex" justify="space-between" :gutter="10">
-              <el-col :lg="24">
+              <el-col :lg="24" v-show="instanceInfo.status === 0">
                 <el-popconfirm title="确定执行此操作？" @confirm="openInstance">
                   <template #reference>
                     <el-button
                       icon="el-icon-video-play"
+                      type="warning"
                       style="width: 100%"
                       size="small"
-                      :disabled="instanceInfo.status != 0"
+                      plain
                     >
                       开启实例
                     </el-button>
                   </template>
                 </el-popconfirm>
               </el-col>
-              <el-col :lg="24">
+              <el-col :lg="24" v-show="instanceInfo.status === 3">
                 <el-popconfirm title="确定执行此操作？" @confirm="stopInstance">
                   <template #reference>
                     <el-button
@@ -82,13 +83,12 @@
                       style="width: 100%"
                       size="small"
                       class="row-mt"
-                      :disabled="instanceInfo.status == 0"
-                      >关闭实例</el-button
-                    >
+                      >关闭实例
+                    </el-button>
                   </template>
                 </el-popconfirm>
               </el-col>
-              <el-col :lg="24">
+              <el-col :lg="24" v-show="instanceInfo.status === 3">
                 <el-popconfirm title="确定执行此操作？" @confirm="restartInstance">
                   <template #reference>
                     <el-button
@@ -96,14 +96,13 @@
                       style="width: 100%"
                       size="small"
                       class="row-mt"
-                      :disabled="instanceInfo.status == 0"
                     >
                       重启实例
                     </el-button>
                   </template>
                 </el-popconfirm>
               </el-col>
-              <el-col :lg="24">
+              <el-col :lg="24" v-show="instanceInfo.status > 0">
                 <el-popconfirm title="确定执行此操作？" @confirm="killInstance">
                   <template #reference>
                     <el-button
@@ -113,9 +112,40 @@
                       style="width: 100%"
                       size="small"
                       class="row-mt"
-                      :disabled="instanceInfo.status == 0"
-                      >强制终止实例</el-button
-                    >
+                      >强制终止实例
+                    </el-button>
+                  </template>
+                </el-popconfirm>
+              </el-col>
+              <el-col :lg="24" v-show="instanceInfo.status === -1">
+                <el-popconfirm title="确定执行此操作？" @confirm="stopAsynchronousTask">
+                  <template #reference>
+                    <el-button
+                      icon="el-icon-switch-button"
+                      type="danger"
+                      plain
+                      style="width: 100%"
+                      size="small"
+                      class="row-mt"
+                      >终止正在运行的任务
+                    </el-button>
+                  </template>
+                </el-popconfirm>
+              </el-col>
+              <el-col
+                :lg="24"
+                v-show="instanceInfo.config.updateCommand && instanceInfo.status === 0"
+              >
+                <el-popconfirm title="确定执行此操作？" @confirm="updateInstace">
+                  <template #reference>
+                    <el-button
+                      icon="el-icon-files"
+                      plain
+                      style="width: 100%"
+                      size="small"
+                      class="row-mt"
+                      >更新/安装实例
+                    </el-button>
                   </template>
                 </el-popconfirm>
               </el-col>
@@ -138,8 +168,8 @@
                 style="width: 100%"
                 size="small"
                 @click="toProcessConfig"
-                >特定配置</el-button
-              >
+                >特定配置
+              </el-button>
             </el-col>
             <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
@@ -148,8 +178,8 @@
                 style="width: 100%"
                 size="small"
                 @click="toTerminalSettingPanel"
-                >终端设置</el-button
-              >
+                >终端设置
+              </el-button>
             </el-col>
 
             <el-col :lg="12" :offset="0" class="row-mb">
@@ -159,8 +189,8 @@
                 style="width: 100%"
                 size="small"
                 @click="toSchedule"
-                >计划任务</el-button
-              >
+                >计划任务
+              </el-button>
             </el-col>
             <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
@@ -169,8 +199,8 @@
                 style="width: 100%"
                 size="small"
                 @click="toPingPanel"
-                >状态查询</el-button
-              >
+                >状态查询
+              </el-button>
             </el-col>
             <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
@@ -179,8 +209,8 @@
                 style="width: 100%"
                 size="small"
                 @click="toEventPanel"
-                >事件任务</el-button
-              >
+                >事件任务
+              </el-button>
             </el-col>
             <el-col :lg="12" :offset="0" class="row-mb">
               <el-button
@@ -189,8 +219,8 @@
                 style="width: 100%"
                 size="small"
                 @click="toFileManager"
-                >文件管理</el-button
-              >
+                >文件管理
+              </el-button>
             </el-col>
             <el-col :lg="24" :offset="0" v-if="isTopPermission">
               <el-button
@@ -199,8 +229,8 @@
                 style="width: 100%"
                 size="small"
                 @click="toInstanceDetail"
-                >实例设置</el-button
-              >
+                >实例设置
+              </el-button>
             </el-col>
           </el-row>
         </template>
@@ -245,8 +275,8 @@
             <!-- <LineInfo><i class="el-icon-document"></i> 标签: {{ instanceInfo.tag }}</LineInfo> -->
             <LineInfo
               ><i class="el-icon-document"></i> 输入编码: {{ instanceInfo.config.ie }} 输出编码:
-              {{ instanceInfo.config.oe }}</LineInfo
-            >
+              {{ instanceInfo.config.oe }}
+            </LineInfo>
           </div>
         </template>
       </Panel>
@@ -276,15 +306,17 @@
         <template #default>
           <div v-if="commandhistory.length > 0">
             <ItemGroup>
-              <div
+              <el-tag
                 v-for="(item, index) in commandhistory"
                 :key="index"
                 @click="selectHistoryCommand(item)"
-                class="text-overflow-ellipsis cmdhistory"
+                size="small"
+                type="info"
+                class="text-overflow-ellipsis"
                 style="max-width: 23%; cursor: pointer; font-size: 13px"
               >
                 {{ item }}
-              </div>
+              </el-tag>
             </ItemGroup>
           </div>
           <div v-else>
@@ -315,9 +347,11 @@
       </div>
       <div class="sub-title">
         <p class="sub-title-title">服务端访问地址</p>
-        <p class="sub-title-info">必填，支持域名与IP地址，不填写则自动为 localhost 地址</p>
+        <p class="sub-title-info">
+          必填，支持域名与IP地址，不填写则不会查询服务端信息，人数，版本等。
+        </p>
       </div>
-      <el-input v-model="pingConfigForm.ip" placeholder="如 mcsmanager.com" size="small"></el-input>
+      <el-input v-model="pingConfigForm.ip" placeholder="列如：localhost" size="small"></el-input>
       <div class="sub-title row-mt">
         <p class="sub-title-title">服务端访问端口</p>
         <p class="sub-title-info">必填，仅可输入数字端口号</p>
@@ -385,7 +419,6 @@
     </template>
   </Dialog>
 
-
   <Dialog v-model="unavailableTerminal" style="z-index: 9999">
     <template #title>无法与守护进程建立连接</template>
     <template #default>
@@ -441,7 +474,9 @@ import {
   API_INSTANCE_RESTART,
   API_INSTANCE_UPDATE,
   API_INSTANCE_STOP,
-  API_INSTANCE_OUTPUT
+  API_INSTANCE_OUTPUT,
+  API_INSTANCE_ASYNC_TASK,
+  API_INSTANCE_ASYNC_STOP
 } from "../service/common";
 import router from "../router";
 import { parseforwardAddress, request } from "../service/protocol";
@@ -642,6 +677,37 @@ export default {
           method: "GET",
           url: API_INSTANCE_STOP,
           params: { remote_uuid: this.serviceUuid, uuid: this.instanceUuid }
+        });
+      } catch (error) {
+        this.$message({ message: error.toString(), type: "error" });
+      } finally {
+        setTimeout(() => (this.busy = false), 200);
+      }
+    },
+    // 终止正在进行异步任务（如更新）
+    async stopAsynchronousTask() {
+      try {
+        await request({
+          method: "GET",
+          url: API_INSTANCE_ASYNC_STOP,
+          params: { remote_uuid: this.serviceUuid, uuid: this.instanceUuid }
+        });
+      } catch (error) {
+        this.$message({ message: error.toString(), type: "error" });
+      } finally {
+        setTimeout(() => (this.busy = false), 200);
+      }
+    },
+    // 更新实例
+    async updateInstace() {
+      try {
+        await request({
+          method: "POST",
+          url: API_INSTANCE_ASYNC_TASK,
+          params: { remote_uuid: this.serviceUuid, uuid: this.instanceUuid, task_name: "update" },
+          data: {
+            time: new Date().getTime()
+          }
         });
       } catch (error) {
         this.$message({ message: error.toString(), type: "error" });
@@ -883,30 +949,14 @@ export default {
 
 <style scoped>
 .terminal-wrapper {
-  background-color: rgba(30, 30, 30,0);
+  background-color: rgb(30, 30, 30);
   padding: 4px;
   border-radius: 4px;
   /* overflow: hidden; */
 }
+
 #terminal-input-wrapper input {
   width: 100%;
   font-size: 12px;
-}
-.cmdhistory {
-  cursor: pointer;
-  font-size: 13px;
-  margin: 2px;
-  display: inline-block;
-  padding: 5px 10px 5px 10px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid #bfbfbf;
-  color: #55ff62;
-  max-width: 25%;
-}
-.cmdhistory:hover {
-  border: 1px solid #4eff42;
-  box-shadow: 0 0 5px #42ff85;
-  padding: 6px 11px 6px 11px;
-  transition: all 0.5s;
 }
 </style>
