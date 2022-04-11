@@ -305,17 +305,15 @@
         <template #default>
           <div v-if="commandhistory.length > 0">
             <ItemGroup>
-              <el-tag
+              <div
                 v-for="(item, index) in commandhistory"
                 :key="index"
                 @click="selectHistoryCommand(item)"
-                size="small"
-                type="info"
-                class="text-overflow-ellipsis"
+                class="text-overflow-ellipsis cmdhistory"
                 style="max-width: 23%; cursor: pointer; font-size: 13px"
               >
                 {{ item }}
-              </el-tag>
+              </div>
             </ItemGroup>
           </div>
           <div v-else>
@@ -977,7 +975,7 @@ export default {
 
 <style scoped>
 .terminal-wrapper {
-  background-color: rgb(30, 30, 30);
+  background-color: rgb(30, 30, 30,0);
   padding: 4px;
   border-radius: 4px;
   /* overflow: hidden; */
@@ -986,5 +984,23 @@ export default {
 #terminal-input-wrapper input {
   width: 100%;
   font-size: 12px;
+}
+
+.cmdhistory {
+  cursor: pointer;
+  font-size: 13px;
+  margin: 2px;
+  display: inline-block;
+  padding: 5px 10px 5px 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #bfbfbf;
+  color: #55ff62;
+  max-width: 25%;
+}
+.cmdhistory:hover {
+  border: 1px solid #4eff42;
+  box-shadow: 0 0 5px #42ff85;
+  padding: 6px 11px 6px 11px;
+  transition: all 0.5s;
 }
 </style>

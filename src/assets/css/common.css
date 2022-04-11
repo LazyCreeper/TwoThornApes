@@ -311,6 +311,10 @@ a:hover {
   background-color: var(--btn-q-danger-color);
 }
 
+.el-button--warning.is-plain {
+  background-color: var(--btn-q-warning-color);
+}
+
 button[disabled] {
     filter: var(--btn-disabled-filter);
 }
