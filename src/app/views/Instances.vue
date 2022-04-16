@@ -100,7 +100,7 @@
         <!-- 未选择守护进程时显示 -->
         <div v-show="!currentRemoteUuid">
           <div class="notAnyInstanceTip">
-            <i class="el-icon-guide" style="font-size: 190px"></i>
+            <img src="../../assets/p.gif">
             <div class="sub-title">
               <div class="sub-title-title">请在左上方的下拉框中选择远程守护进程</div>
               <div class="sub-title-info">

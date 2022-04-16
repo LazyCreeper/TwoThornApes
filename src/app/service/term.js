@@ -55,7 +55,7 @@ export function initTerminalWindow(elem, fontSize = 13) {
     cursorStyle: "underline",
     cursorBlink: true,
     fontSize: fontSize,
-    fontFamily: 'cascadia code,consolas,-apple-system,hmos,monospace',
+    fontFamily: 'Consolas,cascadia code,MiSans,monospace',
     allowTransparency: true,
     theme: {
       background: "rgba(0,0,0,0)"

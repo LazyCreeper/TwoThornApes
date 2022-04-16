@@ -57,6 +57,8 @@
               :value="`${valueCard.availableDaemon}/${valueCard.totalDaemon}`"
               style="height: 260px"
               font-class="el-icon-s-data"
+              v-loading="loading"
+              element-loading-background="rgba(0, 0, 0, 0.5)"
             >
             </ValueCard>
           </el-col>
@@ -67,16 +69,20 @@
               :value="`${valueCard.runningInstance}/${valueCard.totalInstance}`"
               style="height: 260px"
               font-class="el-icon-s-promotion"
+              v-loading="loading"
+              element-loading-background="rgba(0, 0, 0, 0.5)"
             >
             </ValueCard>
           </el-col>
-          <el-col :md="6" :xs="12" :offset="0">
+          <el-col :md="6" :xs="12" :offset="0" >
             <ValueCard
               title="用户登录次数"
               sub-title="登录失败次数 : 登录成功次数"
               :value="`${valueCard.failedLogin}:${valueCard.Logined}`"
               style="height: 260px"
               font-class="el-icon-upload"
+              v-loading="loading"
+              element-loading-background="rgba(0, 0, 0, 0.5)"
             >
             </ValueCard>
           </el-col>
@@ -87,6 +93,8 @@
               :value="`${valueCard.cpu}% ${valueCard.mem}%`"
               style="height: 260px"
               font-class="el-icon-s-flag"
+              v-loading="loading"
+              element-loading-background="rgba(0, 0, 0, 0.5)"
             >
             </ValueCard>
           </el-col>

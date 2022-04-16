@@ -20,8 +20,8 @@
 */
 /* 字体 */
 @font-face {
-  font-family:hmos;
-  src:url(../../../public/static/HarmonyOS_Sans_SC_Medium.ttf)
+  font-family:MiSans;
+  src:url(../../../public/static/MiSans.ttf)
 }
 
 /* 工具类 */

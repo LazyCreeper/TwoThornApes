@@ -114,11 +114,11 @@
             </div>
             <LineLabel>
               <template #title>主题发布地址<br>赞助二维码</template>
-              <template #default><a href="https://blog.imlazy.ink:233/index.php/archives/253/" target="_blank">点击前往</a><br><a href="https://s1.imlazy.ink:233/img/2020/07/07/f0d49c4bb6c8520200707.jpg" target="_blank">点击前往</a></template>
+              <template #default><a href="https://blog.imlazy.ink:233/index.php/archives/253/" target="_blank">点击前往</a><br><a href="https://pro-image.xiaoheiban.cn/ljt/47750d64-ba11-40b3-8bcf-d769a6fdf113.jpg" target="_blank">点击下载</a></template>
             </LineLabel>
             <LineLabel>
               <template #title>当前主题版本</template>
-              <template #default>2.1 beta&nbsp;&nbsp;<a href="javascript:checkUpdate();">检查更新</a><lazy id="lazy"></lazy></template>
+              <template #default>2.1&nbsp;&nbsp;<a href="javascript:checkUpdate();">检查更新</a><lazy id="lazy"></lazy></template>
             </LineLabel>
           </div>
         </template>
