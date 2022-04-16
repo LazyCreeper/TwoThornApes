@@ -358,14 +358,14 @@ button[disabled] {
   color: #b1ffe9!important;
 }
 
-.el-select__popper.el-popper[role=tooltip] {
+.el-select__popper.el-popper[role=tooltip],.el-dropdown__popper.el-popper[role=tooltip] {
   background: var(--select-bg-color);
   backdrop-filter: var(--select-blur);
   border: 1px solid var(--select-border-color);
   box-shadow: var(--select-shadow1);
 }
 
-.el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover,.el-dropdown-menu__item:not(.is-disabled):hover {
     background: var(--select-bg-hover-color);
     color: var(--select-hover-color);
 }
@@ -374,8 +374,12 @@ button[disabled] {
   color: var(--selected-color);
 }
 
-.el-select-dropdown__item {
+.el-select-dropdown__item,.el-dropdown-menu__item {
   color: var(--select-color);
+}
+
+.el-dropdown-menu {
+  background-color: unset;
 }
 
 .el-timeline-item__timestamp {

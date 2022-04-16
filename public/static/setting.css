@@ -2,7 +2,7 @@
 
     @FileName: MCSManager 9 二次元主题设置文件
     @SkinName: Summer
-    @Last Date: 2022.2.6
+    @Last Date: 2022.4.17
     @Create Date: 2022.2.5				
     @Author: Lazy
     @Description：在这里设置你的主题背景图片、颜色等
@@ -84,6 +84,12 @@
 	/*阴影效果*/
 	--card-blur: blur(0px);
 	/*背景模糊；默认0，需要请调大*/
+	--card-instance-bg-hover:rgba(0,45,35,0.6);
+	/*实例列表卡片当鼠标悬浮到上面时的 背景颜色*/
+	--card-instance-shadow-hover: 0 0 9px 0px rgba(11,85,68,0.6)!important;
+	/*实例列表卡片当鼠标悬浮到上面时的 阴影颜色*/
+	--card-instance-gray-filter: hue-rotate(323deg);
+	/*实例卡片 未运行时的效果*/
 
 	/*按钮*/
 	--btn-default-bg-color: hsla(0, 0%, 100%, .15);

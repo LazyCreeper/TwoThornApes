@@ -90,10 +90,16 @@
                   {{ loginText }}
                 </el-button>
               </div>
+              <div class="login-info-wrapper row-mt" v-if="loginInfo">
+                <span class="color-gray">
+                  {{ loginInfo }}
+                </span>
+              </div>
               <div class="login-info-wrapper row-mt">
                 <div>
                   <span class="color-gray" >
-                    <strong>Copyright © 2022 <a href="https://github.com/Suwings" target="_blank">Suwings</a> All Rights Reserved.<br>
+                    <strong>Powered by
+                    <a target="black" href="https://github.com/Suwings">MCSManager</a><br>
                     Theme by <a href="https://www.lazy.ink" target="_blank">Lazy</a></strong>
                   </span>
                 </div>
@@ -132,8 +138,9 @@
 import Panel from "../../components/Panel";
 // eslint-disable-next-line no-unused-vars
 // import router from "../router";
-import { API_USER_LOGIN, sleep } from "../service/common";
+import { API_USER_LOGIN, API_USER_LOGIN_INFO, sleep } from "../service/common";
 import { request, setupUserInfo } from "../service/protocol";
+
 export default {
   components: { Panel },
   data: function () {
@@ -146,7 +153,8 @@ export default {
       closeWindow: false,
       loginText: "登录",
       loading: false,
-      cause: ""
+      cause: "",
+      loginInfo: ""
     };
   },
   methods: {
@@ -209,13 +217,26 @@ export default {
       }
       await sleep(1500);
       // router.push({ path: `/` });
-      window.location.href = "/";
+     window.location.href = "/";
+    },
+    async requestLoginInfo() {
+      const res = await request({
+        method: "POST",
+        url: API_USER_LOGIN_INFO,
+        data: {
+          username: this.form.username,
+          password: this.form.password
+        }
+      });
+      this.loginInfo = res?.loginInfo ?? "";
     }
   },
   async mounted() {
     console.log("Welcome use MCSManager.");
     console.log("Copyright 2022 Suwings All rights reserved.");
-    console.log("%c%s","border:5px solid #00ff14;font-size:1em","Theme by Lazy(https://lazy.ink)");
+    // 请求登录界面文案
+    this.requestLoginInfo();
+
     // try {
     //   await setupUserInfo();
     //   if (this.$store.state?.userInfo?.uuid) {

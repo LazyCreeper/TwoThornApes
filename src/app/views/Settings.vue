@@ -1,28 +1,22 @@
 <!--
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+  Copyright (C) 2022 Suwings <Suwings@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
+  According to the AGPL, it is forbidden to delete all copyright notices, 
   and if you modify the source code, you must open source the
   modified source code.
 
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
+  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
 
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
+  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
+  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
 
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
+  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
+  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
 -->
 
 <template>
@@ -55,17 +49,39 @@
             <div class="config-item">
               <div class="sub-title">
                 <p class="sub-title-title">面板访问端口</p>
-                <p class="sub-title-info">建议修改成非默认端口以确保基本的安全性。</p>
+                <p class="sub-title-info">浏览器访问网页面板的端口，必须防火墙放行此端口。</p>
               </div>
-
               <el-input placeholder="请必须填入数字" v-model="settings.httpPort"> </el-input>
             </div>
+            <!-- <div class="config-item">
+              <div class="sub-title">
+                <p class="sub-title-title">面板数据转发端口</p>
+                <p class="sub-title-info">
+                  采用“面板端流量转发模式”时才使用此端口转发数据到守护进程端，必须开放此端口。
+                </p>
+              </div>
+              <el-input placeholder="请必须填入数字" v-model="settings.dataPort"> </el-input>
+            </div> -->
             <div class="config-item">
               <div class="sub-title">
                 <p class="sub-title-title">面板绑定IP</p>
                 <p class="sub-title-info">一般情况请保持默认值，一般适用于多个IP的场景。</p>
               </div>
               <el-input placeholder="默认 0.0.0.0 | 可不填" v-model="settings.httpIp"> </el-input>
+            </div>
+
+            <div class="config-item">
+              <div class="sub-title">
+                <p class="sub-title-title">登录界面简单说明</p>
+                <p class="sub-title-info">
+                  用于显示在登录界面公开简要说明文字，可以用于管理员身份介绍，备案信息介绍
+                </p>
+              </div>
+              <el-input
+                placeholder="请输入文案，列如：京ICP备00000001号"
+                v-model="settings.loginInfo"
+              >
+              </el-input>
             </div>
           </el-col>
 
@@ -232,6 +248,59 @@
         </el-row>
       </template>
     </Panel>
+    <!-- <Panel>
+      <template #title>远程守护进程数据传输模式</template>
+      <template #default>
+        <el-row :gutter="20">
+          <el-col :span="24" :offset="0">
+            <div class="sub-title">
+              <p class="sub-title-title">使用须知</p>
+              <p class="sub-title-info">
+                在您的用户量较少时，可以采用默认的“流量转发模式”，当您的用户量过大导致面板端运行缓慢时，请采用“守护进程直连模式”模式。<br />
+                为确保高可用性，建议中小型商业用户采用第二种转发模式，更改后需要重启面板端才可生效。
+              </p>
+            </div>
+          </el-col>
+
+          <el-col :md="6">
+            <SelectBlock
+              @click="changeForwardType(1)"
+              style="height: 240px"
+              :class="settings.forwardType === 1 ? 'selectedForwardMode' : ''"
+            >
+              <template #title>面板端流量转发模式</template>
+              <template #info>
+                <span>
+                  配置简单，所有流量都要经过面板端的数据端口做转发，但会增加中央面板端的流量压力。
+                </span>
+                <div style="margin-top: 8px">
+                  <img :src="require('../../assets/mode2.png')" style="width: 100%" />
+                </div>
+              </template>
+            </SelectBlock>
+          </el-col>
+
+          <el-col :md="6">
+            <SelectBlock
+              @click="changeForwardType(2)"
+              style="height: 240px"
+              :class="settings.forwardType === 2 ? 'selectedForwardMode' : ''"
+            >
+              <template #title>跨面板端远程守护进程直连模式</template>
+              <template #info>
+                <span style="margin-bottom: 4px">
+                  配置复杂，大量流量由远程守护进程与浏览器建立直接连接通道，以减小面板端的流量压力。
+                </span>
+                <div style="margin-top: 8px">
+                  <img :src="require('../../assets/mode1.png')" style="width: 100%" />
+                </div>
+              </template>
+            </SelectBlock>
+          </el-col>
+        </el-row>
+      </template>
+    </Panel> -->
+
     <Panel>
       <template #title>关于</template>
       <template #default>
@@ -240,7 +309,7 @@
             软件根据
             <a
               target="black"
-              href="https://github.com/Suwings/MCSManager-Daemon/blob/master/LICENSE"
+              href="https://github.com/MCSManager/MCSManager-Daemon/blob/master/LICENSE"
               >GPL-3.0</a
             >
             开源软件协议发行
@@ -285,7 +354,7 @@
                   <p style="margin: 0px; font-size: 13px">
                     <b>{{ item.name }}</b>
                   </p>
-                  <p style="margin: 0px; font-size: 12px; color: #c3fdda">
+                  <p style="margin: 0px; font-size: 12px; color: gray">
                     {{ item.message ? item.message : "--" }}
                   </p>
                 </el-card>
@@ -316,15 +385,22 @@
   </div>
 </template>
 
+<style scoped>
+.selectedForwardMode {
+  border: 1px solid #0450ff;
+  color: #409eff;
+}
+</style>
+
 <script>
 import Panel from "../../components/Panel";
 import SystemIndex from "../../components/SystemImage.vue";
 import { API_SETTINGS } from "../service/common";
 import { request } from "../service/protocol";
-
+import SelectBlock from "../../components/SelectBlock";
 export default {
   // eslint-disable-next-line vue/no-unused-components
-  components: { Panel, SystemIndex },
+  components: { Panel, SystemIndex, SelectBlock },
   data: function () {
     return {
       settings: {},
@@ -370,6 +446,19 @@ export default {
       } else {
         this.sponsorList = null;
       }
+    },
+    async changeForwardType(v) {
+      await this.$confirm(
+        "您确定要更改分布式流量转发类型吗？更改后某些配置可能需要重新调整，您随时可以调整回来。",
+        "最终确认",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      );
+      this.settings.forwardType = v;
+      this.$message({ message: "点击最上方保存按钮即可更改", type: "info" });
     }
   },
   async mounted() {

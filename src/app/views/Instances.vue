@@ -55,22 +55,38 @@
         </el-col>
         <el-col :md="12" :offset="0">
           <ItemGroup style="text-align: right">
+            <el-button
+              type=""
+              size="small"
+              plain
+              @click="changeView(1)"
+              v-show="showTableList"
+              >简单视图</el-button
+            >
+            <el-button
+              type=""
+              size="small"
+              plain
+              @click="changeView(2)"
+              v-show="!showTableList"
+              >批量操作视图</el-button
+            >
             <el-button size="small" type="success" @click="toNewInstance">
               <i class="el-icon-plus"></i> 新建实例
             </el-button>
-            <el-button size="small" @click="batOpen">
+            <el-button size="small" @click="batOpen" v-if="showTableList">
               <i class="el-icon-video-play"></i> 开启
             </el-button>
-            <el-button size="small" @click="batStop">
+            <el-button size="small" @click="batStop" v-if="showTableList">
               <i class="el-icon-video-pause"></i> 关闭
             </el-button>
-            <el-button size="small" @click="batKill">
+            <el-button size="small" @click="batKill" v-if="showTableList">
               <i class="el-icon-video-pause"></i> 终止
             </el-button>
-            <el-button size="small" type="danger" plain @click="batDelete(1)">
+            <el-button size="small" type="danger" plain @click="batDelete(1)" v-if="showTableList">
               <i class="el-icon-delete"></i> 移除
             </el-button>
-            <el-button size="small" type="danger" @click="batDelete(2)">
+            <el-button size="small" type="danger" @click="batDelete(2)" v-if="showTableList">
               <i class="el-icon-delete"></i> 删除
             </el-button>
           </ItemGroup>
@@ -100,7 +116,7 @@
         <!-- 未选择守护进程时显示 -->
         <div v-show="!currentRemoteUuid">
           <div class="notAnyInstanceTip">
-            <img src="../../assets/p.gif">
+            <i class="el-icon-guide" style="font-size: 190px"></i>
             <div class="sub-title">
               <div class="sub-title-title">请在左上方的下拉框中选择远程守护进程</div>
               <div class="sub-title-info">
@@ -124,77 +140,172 @@
             </div>
           </div>
         </div>
-
-        <el-table
-          :data="instances"
-          stripe
-          style="width: 100%"
-          size="mini"
-          ref="multipleTable"
-          @selection-change="selectionChange"
-          v-show="!notAnyInstance && currentRemoteUuid"
-        >
-          <el-table-column type="selection" width="55"> </el-table-column>
-          <el-table-column prop="nickname" label="实例昵称" min-width="240">
-            <template #default="scope">
-              <div
-                @click="toInstance(scope.row.serviceUuid, scope.row.instanceUuid)"
-                class="instanceTitle"
-              >
-                {{ scope.row.nickname }}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="currentPlayers" label="详细信息" width="240">
-            <template #default="scope">
-              <div>
-                <span v-if="scope.row.info && scope.row.info.currentPlayers >= 0">
-                  人数: {{ scope.row.info.currentPlayers }}/{{ scope.row.info.maxPlayers }}
-                </span>
-                <span v-if="scope.row.info && scope.row.version">
-                  &nbsp;版本: {{ scope.row.version }}
-                </span>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="status" label="运行状态" width="120">
-            <template #default="scope">
-              <div class="color-gray" v-if="scope.row.status == 0">
-                <i class="el-icon-video-pause"></i>
-                <span> 未运行</span>
-              </div>
-              <div class="color-green" v-else-if="scope.row.status == 3">
-                <i class="el-icon-video-play"></i>
-                <span> 运行中</span>
-              </div>
-              <span class="color-yellow" v-else-if="scope.row.status == 1">停止中</span>
-              <span class="color-yellow" v-else-if="scope.row.status == 2">启动中</span>
-
-              <span class="color-red" v-else-if="scope.row.status == -1">忙碌</span>
-              <span class="color-red" v-else>忙碌</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="type" label="实例类型" width="140"></el-table-column>
-          <el-table-column label="操作" style="text-align: center" width="180">
-            <template #default="scope">
-              <el-button
-                size="mini"
-                @click="editInstance(scope.row.serviceUuid, scope.row.instanceUuid)"
-              >
-                设置
-              </el-button>
-              <el-button
-                size="mini"
-                @click="toInstance(scope.row.serviceUuid, scope.row.instanceUuid)"
-              >
-                管理
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
       </div>
     </template>
   </Panel>
+
+  <!-- 卡片显示风格 -->
+  <el-row :gutter="20" class="row-mb" v-show="!showTableList">
+    <el-col :md="6" :offset="0" v-for="(item, index) in instances" :key="index">
+      <Panel
+        :class="{
+          instanceStatusGreen: item.status === 3,
+          instanceStatusGray: item.status !== 3,
+          CradInstance: true
+        }"
+      >
+        <template #title>
+          <div style="font-size: 13px" class="only-line-text">
+            {{ item.nickname }}
+          </div>
+          <div>
+            <el-dropdown trigger="click">
+              <span class="el-dropdown-link">
+                <i
+                  class="el-icon-more-outline"
+                  style="font-weight: 400; color: #409eff; font-size: 18px"
+                ></i>
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <!-- <el-dropdown-item>开启实例</el-dropdown-item>
+                  <el-dropdown-item>关闭实例</el-dropdown-item>
+                  <el-dropdown-item>重启实例</el-dropdown-item>
+                  <el-dropdown-item>终止实例</el-dropdown-item> -->
+                  <el-dropdown-item @click="editInstance(item.serviceUuid, item.instanceUuid)"
+                    >编辑配置</el-dropdown-item
+                  >
+                  <el-dropdown-item @click="toInstance(item.serviceUuid, item.instanceUuid)"
+                    >控制面板</el-dropdown-item
+                  >
+                  <el-dropdown-item @click="unlinkInstance(item.instanceUuid)"
+                    >移除实例</el-dropdown-item
+                  >
+                  <el-dropdown-item @click="unlinkInstance(item.instanceUuid, true)"
+                    >删除实例</el-dropdown-item
+                  >
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+        </template>
+        <template #default>
+          <div
+            class="instanceInfoArea only-line-text"
+            @click="toInstance(item.serviceUuid, item.instanceUuid)"
+          >
+            <div>
+              状态：
+              <span class="color-gray" v-if="item.status == 0">未运行</span>
+              <span class="color-green" v-else-if="item.status == 3">运行中</span>
+              <span class="color-yellow" v-else-if="item.status == 1">停止中</span>
+              <span class="color-yellow" v-else-if="item.status == 2">启动中</span>
+              <span class="color-red" v-else-if="item.status == -1">忙碌</span>
+              <span class="color-red" v-else>忙碌</span>
+            </div>
+            <div>
+              <span>启动时间：</span>
+              <span>{{ item.config.lastDatetime }}</span>
+            </div>
+            <div>
+              <span>到期时间：</span>
+              <span>{{ item.config.endTime }}</span>
+            </div>
+            <div>
+              <span>其他信息：</span>
+              <span>
+                <span v-if="item.info && item.info.currentPlayers >= 0">
+                  人数 {{ item.info.currentPlayers }}/{{ item.info.maxPlayers }}
+                </span>
+                <span v-else-if="item.info && item.version"> &nbsp;版本 {{ item.version }} </span>
+                <span v-else></span>
+              </span>
+            </div>
+          </div>
+          <div class="InstanceFunctionArea"></div>
+        </template>
+      </Panel>
+    </el-col>
+  </el-row>
+
+  <!-- 卡片显示风格 -->
+  <el-row :gutter="20" class="row-mb" v-show="showTableList">
+    <el-col :span="24" :offset="0">
+      <Panel>
+        <template #title>实例列表</template>
+        <template #default>
+          <!-- 表格显示 -->
+          <el-table
+            :data="instances"
+            stripe
+            style="width: 100%"
+            size="mini"
+            ref="multipleTable"
+            @selection-change="selectionChange"
+            v-show="!notAnyInstance && currentRemoteUuid && showTableList"
+          >
+            <el-table-column type="selection" width="55"> </el-table-column>
+            <el-table-column prop="nickname" label="实例昵称" min-width="240">
+              <template #default="scope">
+                <div
+                  @click="toInstance(scope.row.serviceUuid, scope.row.instanceUuid)"
+                  class="instanceTitle"
+                >
+                  {{ scope.row.nickname }}
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="currentPlayers" label="详细信息" width="240">
+              <template #default="scope">
+                <div>
+                  <span v-if="scope.row.info && scope.row.info.currentPlayers >= 0">
+                    人数: {{ scope.row.info.currentPlayers }}/{{ scope.row.info.maxPlayers }}
+                  </span>
+                  <span v-if="scope.row.info && scope.row.version">
+                    &nbsp;版本: {{ scope.row.version }}
+                  </span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="status" label="运行状态" width="120">
+              <template #default="scope">
+                <div class="color-gray" v-if="scope.row.status == 0">
+                  <i class="el-icon-video-pause"></i>
+                  <span> 未运行</span>
+                </div>
+                <div class="color-green" v-else-if="scope.row.status == 3">
+                  <i class="el-icon-video-play"></i>
+                  <span> 运行中</span>
+                </div>
+                <span class="color-yellow" v-else-if="scope.row.status == 1">停止中</span>
+                <span class="color-yellow" v-else-if="scope.row.status == 2">启动中</span>
+
+                <span class="color-red" v-else-if="scope.row.status == -1">忙碌</span>
+                <span class="color-red" v-else>忙碌</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="type" label="实例类型" width="140"></el-table-column>
+            <el-table-column label="操作" style="text-align: center" width="180">
+              <template #default="scope">
+                <el-button
+                  size="mini"
+                  @click="editInstance(scope.row.serviceUuid, scope.row.instanceUuid)"
+                >
+                  设置
+                </el-button>
+                <el-button
+                  size="mini"
+                  @click="toInstance(scope.row.serviceUuid, scope.row.instanceUuid)"
+                >
+                  管理
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </template>
+      </Panel>
+    </el-col>
+  </el-row>
 </template>
 
 <style scoped>
@@ -208,6 +319,28 @@
 .notAnyInstanceTip {
   text-align: center;
   margin: 100px 0px;
+}
+
+.instanceStatusGreen {
+  /*border-left: 4px solid rgb(8, 166, 8);*/
+}
+
+.instanceStatusGray {
+  filter: var(--card-instance-gray-filter);
+}
+
+.CradInstance {
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 1s;
+  height: 146px;
+}
+.CradInstance:hover {
+  background: var(--card-instance-bg-hover);
+  box-shadow: var(--card-instance-shadow-hover);
+}
+.instanceInfoArea > * {
+  margin-bottom: 6px;
 }
 </style>
 
@@ -242,10 +375,15 @@ export default {
 
       query: {
         instanceName: ""
-      }
+      },
+
+      // 批量处理模式
+      showTableList: false
     };
   },
   async mounted() {
+    // 初始化数据读取
+    this.showTableList = Number(localStorage.getItem("InstanceView")) === 2 ? true : false;
     await this.render();
   },
   beforeUnmount() {},
@@ -330,6 +468,7 @@ export default {
             info: instance.info,
             currentPlayers: instance.info ? instance.info.currentPlayers : "0",
             version: instance.info ? instance.info.version : "",
+            config: instance.config,
             type,
             status
           });
@@ -382,6 +521,25 @@ export default {
     toInstance(serviceUuid, instanceUuid) {
       console.log("访问实例:", serviceUuid, instanceUuid);
       router.push({ path: `/terminal/${serviceUuid}/${instanceUuid}/` });
+    },
+    async unlinkInstance(uuid, deleteFile = false) {
+      await this.$confirm("确定要进行移除/删除嘛？", "最终确认", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      });
+      await axios.request({
+        method: "DELETE",
+        url: API_INSTANCE,
+        params: {
+          remote_uuid: this.currentRemoteUuid
+        },
+        data: { uuids: [uuid], deleteFile }
+      });
+      this.$notify({
+        title: "删除成功",
+        message: "数据刷新可能存在一定延时"
+      });
     },
     // 批量删除
     async batDelete(type) {
@@ -461,6 +619,11 @@ export default {
         title: "关闭命令已发出",
         message: "已成功向各个远程主机发布命令，具体操作可能略有延时，请稍等一段时间后查看结果"
       });
+    },
+    changeView(type = 1) {
+      if (type === 1) this.showTableList = false;
+      if (type === 2) this.showTableList = true;
+      localStorage.setItem("InstanceView", type);
     }
   }
 };
