@@ -46,11 +46,6 @@ https://mcsm.lanzoui.com/b010ss66f 密码:`bpxr`
 ## 使用说明
 https://blog.imlazy.ink:233/index.php/archives/283/
 
-## 更新内容`v2.0`
- 1. 更改主题名称为二次元
- 2. 添加更多主题设置文件，在`/static/setting.css`
- 3. 支持使用此设置创建属于自己的皮肤
+## 更新内容
+请前往博客发布地址查看：https://blog.imlazy.ink:233/index.php/archives/253/
 
-## 已知BUG
- 1. 新增用户 的取消按钮无法点击
-![img](https://pro-image.xiaoheiban.cn/wum/a07ffc2a-667f-4d6f-9819-a11dc5f950e3.jpg)
