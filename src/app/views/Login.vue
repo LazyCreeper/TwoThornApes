@@ -1,22 +1,22 @@
 <!--
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+  Copyright (C) 2022 Suwings <Suwings@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
   
+  According to the AGPL, it is forbidden to delete all copyright notices, 
+  and if you modify the source code, you must open source the
+  modified source code.
 
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
+  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
 
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
+  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
+  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
+
+  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
+  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
 -->
 
 <template>
@@ -86,6 +86,7 @@
                   @click="login"
                   :disabled="close"
                   :loading="loading"
+                  element-loading-background="rgba(0, 0, 0, 0.5)"
                 >
                   {{ loginText }}
                 </el-button>
@@ -215,18 +216,15 @@ export default {
           duration: 0
         });
       }
+      // 等待动画效果完毕
       await sleep(1500);
-      // router.push({ path: `/` });
-     window.location.href = "/";
+      // 无缝切换，不采用刷新方法登录系统
+      this.$router.push({ path: `/` });
     },
     async requestLoginInfo() {
       const res = await request({
         method: "POST",
-        url: API_USER_LOGIN_INFO,
-        data: {
-          username: this.form.username,
-          password: this.form.password
-        }
+        url: API_USER_LOGIN_INFO
       });
       this.loginInfo = res?.loginInfo ?? "";
     }
@@ -327,7 +325,7 @@ export default {
 #login-layer-right,
 #login-layer-bottom {
   z-index: 998;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(0,0,0);
   position: fixed;
 }
 #login-layer-top {
@@ -360,11 +358,10 @@ export default {
   right: 0px;
   bottom: 0px;
   background: var(--background-login-image);
-  background-repeat: no-repeat;
-  background-size: cover;
   display: flex;
   align-items: center;
-
+  background-repeat: no-repeat;
+  background-size: cover;
   transition-property: all;
   transition-duration: 1.5s;
   transition-timing-function: cubic-bezier(1, 0.05, 0.84, 0.74);
@@ -395,7 +392,7 @@ export default {
 }
 
 .login-info-wrapper a {
-  color: #e9e4e4;
+  color: #cccccc;
   text-decoration: underline;
 }
 
@@ -406,7 +403,7 @@ export default {
 }
 
 /* 针对手机的登录界面 */
-@media (max-width: 888px) {
+@media (max-width: 900px) {
   #login-panel {
     text-align: center;
     margin: 0;
@@ -432,11 +429,6 @@ export default {
   #login-cause {
     margin-top: 12px;
     margin-right: 0px;
-  }
-  #login-panel-wrapper {
-    background: var(--background-login-image-phone);
-    background-repeat: no-repeat;
-    background-size: cover;
   }
   .login-info-wrapper {
     text-align: center;
