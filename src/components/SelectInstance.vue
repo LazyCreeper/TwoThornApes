@@ -26,7 +26,7 @@
 -->
 
 <template>
-  <div v-loading="loading">
+  <div v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
     <div style="display: block">
       <el-select
         v-model="selectedServiceUuid"

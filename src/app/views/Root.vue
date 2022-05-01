@@ -20,7 +20,7 @@
 -->
 
 <template>
-  <Panel v-loading="true">
+  <Panel v-loading="true" element-loading-background="rgba(0, 0, 0, 0.5)">
     <template #title>处理中...</template>
     <template #default>
       <el-skeleton :rows="12" />

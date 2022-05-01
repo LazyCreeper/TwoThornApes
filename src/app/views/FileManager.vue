@@ -1,33 +1,27 @@
 <!--
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+  Copyright (C) 2022 Suwings <Suwings@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
+  According to the AGPL, it is forbidden to delete all copyright notices, 
   and if you modify the source code, you must open source the
   modified source code.
 
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
+  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
 
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
+  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
+  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
 
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
+  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
+  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
 -->
 
 <template>
   <Panel>
-    <template #title>文件管理</template>
+    <template #title>文件管理 - {{ currentDir }}</template>
     <template #default>
       <el-row :gutter="20">
         <el-col :xs="24" :md="6" :offset="0">
@@ -76,6 +70,19 @@
         </el-col>
       </el-row>
 
+      <div class="row-mt page-pagination">
+        
+        <el-pagination
+          small
+          background
+          layout="prev, pager, next"
+          v-model:currentPage="pageParam.page"
+          :page-size="pageParam.pageSize"
+          :total="pageParam.total"
+          @current-change="currentChange"
+        />
+      </div>
+
       <div class="row-mt" v-show="percentComplete > 0">
         <el-progress
           :text-inside="true"
@@ -83,8 +90,6 @@
           :percentage="percentComplete"
         ></el-progress>
       </div>
-
-      <p>当前目录: {{ currentDir }}</p>
 
       <el-table
         :data="files"
@@ -185,6 +190,11 @@ export default {
         addr: "",
         password: ""
       },
+      pageParam: {
+        page: 1,
+        pageSize: 30,
+        total: 1
+      },
 
       paramPath: this.$route.query.path,
 
@@ -218,6 +228,7 @@ export default {
     async toDir(name) {
       try {
         const p = path.normalize(path.join(this.currentDir, name));
+        console.log("EN：", p);
         await this.list(p);
       } catch (error) {
         this.$message({ message: "错误，无法查看此目录或文件", type: "error" });
@@ -228,6 +239,12 @@ export default {
       const p = path.normalize(path.join(this.currentDir, "../"));
       await this.list(p);
     },
+
+    // 目录下一页或上一页事件
+    currentChange() {
+      this.toDir(".");
+    },
+
     // 目录 List 功能
     async list(cwd = ".") {
       this.$route.query.path = cwd;
@@ -237,11 +254,16 @@ export default {
         params: {
           remote_uuid: this.serviceUuid,
           uuid: this.instanceUuid,
-          target: cwd
+          target: cwd,
+          page: parseInt(this.pageParam.page) - 1,
+          page_size: this.pageParam.pageSize
         }
       });
+      const { items, total, page } = data;
       this.currentDir = path.normalize(cwd);
-      this.tableFilter(data);
+      this.tableFilter(items);
+      this.pageParam.total = total;
+      this.pageParam.page = page + 1;
     },
 
     // 表格数据处理
@@ -628,5 +650,9 @@ export default {
   line-height: 1.5;
   bottom: 20px;
   padding-left: 8px;
+}
+.page-pagination {
+  display: flex;
+  justify-content: right;
 }
 </style>

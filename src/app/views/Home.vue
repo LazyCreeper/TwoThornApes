@@ -1,107 +1,75 @@
 <!--
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+  Copyright (C) 2022 Suwings <Suwings@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
+  According to the AGPL, it is forbidden to delete all copyright notices, 
   and if you modify the source code, you must open source the
   modified source code.
 
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
+  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
 
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
+  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
+  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
 
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
+  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
+  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
 -->
 
 <template>
   <el-row :gutter="20">
     <!-- 左侧用户数据栏 -->
     <el-col :md="16" :offset="0">
-      <Panel style="min-height: 120px">
-        <template #title>数据总览</template>
-        <template #default>
-          <el-row :gutter="20">
-            <el-col :xs="12" :md="6" :offset="0">
-              <div class="overview-info-warpper">
-                <p class="overview-info-title">实例总计</p>
-                <p class="overview-info-value color-green">{{ this.info.total }}</p>
-              </div>
-            </el-col>
-            <el-col :xs="12" :md="6" :offset="0">
-              <div class="overview-info-warpper">
-                <p class="overview-info-title">正在运行</p>
-                <p class="overview-info-value color-green">{{ this.info.running }}</p>
-              </div>
-            </el-col>
-            <el-col :xs="12" :md="6" :offset="0">
-              <div class="overview-info-warpper">
-                <p class="overview-info-title">未运行</p>
-                <p class="overview-info-value color-green">{{ this.info.stopped }}</p>
-              </div>
-            </el-col>
-            <el-col :xs="12" :md="6" :offset="0">
-              <div class="overview-info-warpper">
-                <p class="overview-info-title">离线/不可用</p>
-                <p class="overview-info-value color-red">{{ this.info.unknown }}</p>
-              </div>
-            </el-col>
-            <el-col :md="6" :offset="0"></el-col>
-          </el-row>
-        </template>
-      </Panel>
-
-      <Panel style="min-height: 120px">
-        <template #title>快捷链接</template>
-        <template #default>
-          <el-row type="flex" class="row-bg" justify="space-between">
-            <el-col :span="6">
-              <div class="manual-link-block-wrapper">
-                <a class="manual-link-block" href="https://guide.mcsmanager.com/"
-                  ><i class="el-icon-link"></i> 用户手册</a
-                >
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div class="manual-link-block-wrapper">
-                <a class="manual-link-block" href="https://docs.mcsmanager.com/"
-                  ><i class="el-icon-link"></i> 接口文档</a
-                >
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div class="manual-link-block-wrapper">
-                <a class="manual-link-block" href="https://guide.mcsmanager.com/"
-                  ><i class="el-icon-link"></i> 常见问题</a
-                >
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div class="manual-link-block-wrapper">
-                <a class="manual-link-block" href="https://github.com/MCSManager/MCSManager/wiki"
-                  ><i class="el-icon-link"></i> 维基百科</a
-                >
-              </div>
-            </el-col>
-          </el-row>
-        </template>
-      </Panel>
+      <el-row :gutter="20">
+        <el-col :xs="12" :md="6" :offset="0">
+          <ValueCard
+            title="实例总计"
+            sub-title="管理员所分配给您的所有实例总数"
+            :value="this.info.total"
+            style="height: 260px"
+            font-class="el-icon-s-data"
+          >
+          </ValueCard>
+        </el-col>
+        <el-col :xs="12" :md="6" :offset="0">
+          <ValueCard
+            title="正在运行"
+            sub-title="实例正在运行中的数量"
+            :value="this.info.running"
+            style="height: 260px"
+            font-class="el-icon-s-promotion"
+          >
+          </ValueCard>
+        </el-col>
+        <el-col :xs="12" :md="6" :offset="0">
+          <ValueCard
+            title="未运行"
+            sub-title="实例未处于运行中的数量"
+            :value="this.info.stopped"
+            style="height: 260px"
+            font-class="el-icon-s-flag"
+          >
+          </ValueCard>
+        </el-col>
+        <el-col :xs="12" :md="6" :offset="0">
+          <ValueCard
+            title="维护中"
+            sub-title="因主机忙碌/维护而暂时不可使用的实例数"
+            :value="this.info.unknown"
+            style="height: 260px"
+            font-class="el-icon-s-opportunity"
+          >
+          </ValueCard>
+        </el-col>
+      </el-row>
     </el-col>
 
     <!-- 右侧用户信息栏 -->
     <el-col :md="8" :offset="0">
-      <Panel style="min-height: 240px">
+      <Panel style="height: 260px">
         <template #title>个人信息</template>
         <template #default>
           <LineLabel space="small">
@@ -138,7 +106,6 @@
         style="width: 100%"
         size="mini"
         v-loading="info.loading"
-        element-loading-background="rgba(0, 0, 0, 0.5)"
       >
         <el-table-column prop="nickname" label="实例昵称" min-width="240"></el-table-column>
         <el-table-column label="运行状态">
@@ -153,8 +120,8 @@
             </div>
             <span class="color-yellow" v-else-if="scope.row.status == 1">停止中</span>
             <span class="color-yellow" v-else-if="scope.row.status == 2">启动中</span>
-            <span class="color-red" v-else-if="scope.row.status == -1">离线</span>
-            <span class="color-red" v-else>离线</span>
+            <span class="color-red" v-else-if="scope.row.status == -1">维护中</span>
+            <span class="color-red" v-else>未知状态</span>
             <!-- {{ statusToText(scope.row.status) }} -->
           </template>
         </el-table-column>
@@ -193,16 +160,12 @@
   <!-- 版权信息 -->
   <div
     class="flex flex-space-center flex-align-items-center"
-    style="font-size: 12px;
-    color: rgb(195 219 122);
-    text-align: center;
-    margin-top: 40px;
-    text-shadow: 0 0 10px #65e54e;"
+    style="font-size: 12px; color: #cdcdcd; text-align: center; margin-top: 40px"
   >
     <div>
-      <span>MCSManager is released under the GPL-3.0 License</span>
+      <span>MCSManager is released under the AGPL-3.0 License</span>
       <br />
-      <span>Copyright © 2022 Suwings | Modify by <a href="https://lazy.ink" target="_blank">Lazy</a></span>
+      <span>Copyright © 2022 Suwings&nbsp;&nbsp;|&nbsp;&nbsp;Theme by <a target="black" href="https://www.lazy.ink">Lazy</a></span>
     </div>
   </div>
 
@@ -237,15 +200,18 @@
   </Dialog>
 </template>
 
+<style></style>
+
 <script>
 import Dialog from "../../components/Dialog";
 import Panel from "../../components/Panel";
+import ValueCard from "../../components/ValueCard";
 import LineLabel from "../../components/LineLabel";
 import { request, requestUserInfo } from "../service/protocol";
 import { API_INSTANCE_LOW_PERMISSION_PUT } from "../service/common";
 import { statusCodeToText } from "../service/instance_tools";
 export default {
-  components: { Panel, LineLabel, Dialog },
+  components: { Panel, LineLabel, Dialog, ValueCard },
   data: function () {
     return {
       editInstance: {

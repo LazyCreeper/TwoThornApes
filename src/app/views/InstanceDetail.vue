@@ -22,7 +22,7 @@
   <Panel>
     <template #title>实例详细信息设置</template>
     <template #default>
-      <div v-loading="loading" element-loading-text="获取中">
+      <div v-loading="loading" element-loading-text="获取中" element-loading-background="rgba(0, 0, 0, 0.5)">
         <el-row :gutter="20">
           <el-col :lg="6">
             <div class="only-pc-display" style="margin: 0 0 10px 0">
@@ -228,7 +228,7 @@
                 </div>
                 <el-select v-model="instanceInfo.config.processType" style="width: 100%">
                   <el-option label="默认类型" value="general"></el-option>
-                  <el-option label="Linux Docker 容器" value="docker"></el-option>
+                  <el-option label="虚拟化容器（Linux Docker）" value="docker"></el-option>
                 </el-select>
               </el-col>
             </el-row>

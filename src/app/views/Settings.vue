@@ -377,7 +377,7 @@
         <div>
           <p class="color-gray text-center">
             版权所有
-            <a target="black" href="https://github.com/Suwings">Suwings</a>
+            <a target="black" href="https://github.com/Suwings">Suwings</a>&nbsp;&nbsp;|&nbsp;&nbsp;主题作者 <a target="black" href="https://www.lazy.ink">Lazy</a>
           </p>
         </div>
       </template>
