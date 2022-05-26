@@ -1,28 +1,22 @@
 <!--
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+  Copyright (C) 2022 Suwings <Suwings@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
+  According to the AGPL, it is forbidden to delete all copyright notices, 
   and if you modify the source code, you must open source the
   modified source code.
 
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
+  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
 
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
+  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
+  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
 
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
+  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
+  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
 -->
 
 <template>
@@ -44,7 +38,7 @@
               <LineLabel>
                 <template #title>账号状态</template>
                 <template #default>
-                  <span>{{ moreUserInfo.safe }}</span>
+                  <span style="color: green">{{ moreUserInfo.safe }}</span>
                 </template>
               </LineLabel>
             </el-col>
@@ -70,66 +64,8 @@
     </el-col>
   </el-row>
   <el-row :gutter="20">
-    <el-col :md="16" :offset="0">
-      <Panel>
-        <template #title>用户名</template>
-        <template #default>
-          <div class="sub-title row-mt">
-            <p class="sub-title-title">更改用户名</p>
-            <p class="sub-title-info">支持中文和字母，长度为 2 到 18 个文字</p>
-          </div>
-          <el-input
-            size="small"
-            placeholder="保持原值"
-            v-model="userData.userName"
-            :readonly="readonly.a"
-            @focus="() => (readonly.a = false)"
-            autocomplete="off"
-          ></el-input>
-          <div style="text-align: right">
-            <el-button size="small" class="row-mt" @click="update(1)">更新用户名</el-button>
-          </div>
-        </template>
-      </Panel>
-      <Panel>
-        <template #title>访问密码</template>
-        <template #default>
-          <div class="sub-title row-mt">
-            <p class="sub-title-title">新密码</p>
-            <p class="sub-title-info">长度必须 6 到 18 位，尽可能包含字母数字加符号组合方式</p>
-          </div>
-          <el-input
-            size="small"
-            type="password"
-            v-model="userData.passWord"
-            autocomplete="off"
-            placeholder="保持原值"
-            :readonly="readonly.b"
-            @focus="() => (readonly.b = false)"
-          >
-          </el-input>
-          <div class="sub-title row-mt">
-            <p class="sub-title-title">确认新密码</p>
-            <p class="sub-title-info">为防止新密码误输入，您必须确认一次新密码</p>
-          </div>
-          <el-input
-            size="small"
-            type="password"
-            v-model="userData.passWord2"
-            placeholder="保持原值"
-            :readonly="readonly.c"
-            @focus="() => (readonly.c = false)"
-            autocomplete="off"
-          >
-          </el-input>
-          <div style="text-align: right">
-            <el-button size="small" class="row-mt" @click="update(2)">更新密码</el-button>
-          </div>
-        </template>
-      </Panel>
-    </el-col>
     <el-col :md="8" :offset="0">
-      <Panel>
+      <Panel style="height: 300px">
         <template #title>注意事项</template>
         <template #default>
           <div class="sub-title">
@@ -152,7 +88,79 @@
           </div>
         </template>
       </Panel>
-      <Panel>
+    </el-col>
+    <el-col :md="8" :offset="0">
+      <!-- <Panel>
+        <template #title>用户名</template>
+        <template #default>
+          <div class="sub-title row-mt">
+            <p class="sub-title-title require-field">更改用户名</p>
+            <p class="sub-title-info">支持中文和字母，长度为 2 到 18 个文字</p>
+          </div>
+          <el-input
+            size="small"
+            placeholder="保持原值"
+            v-model="userData.userName"
+            :readonly="readonly.a"
+            @focus="() => (readonly.a = false)"
+            autocomplete="off"
+          ></el-input>
+          <div style="text-align: right">
+            <el-button size="small" class="row-mt" @click="update(1)" type="danger" plain
+              >更新用户名</el-button
+            >
+          </div>
+        </template>
+      </Panel> -->
+      <Panel style="height: 300px">
+        <template #title>更新密码</template>
+        <template #default>
+          <el-form
+            :model="userData"
+            :rules="rules"
+            label-position="top"
+            size="small"
+            ref="ruleFormRef"
+          >
+            <el-form-item label="新密码" prop="passWord" required>
+              <el-input
+                size="small"
+                type="password"
+                v-model="userData.passWord"
+                autocomplete="off"
+                :readonly="readonly.b"
+                placeholder="长度必须 12 到 36 位，尽可能包含字母数字加符号组合方式"
+                @focus="() => (readonly.b = false)"
+              >
+              </el-input>
+            </el-form-item>
+
+            <el-form-item label="确认新密码" prop="passWord2" required>
+              <el-input
+                size="small"
+                type="password"
+                v-model="userData.passWord2"
+                placeholder="保持原值"
+                :readonly="readonly.c"
+                @focus="() => (readonly.c = false)"
+                autocomplete="off"
+              >
+              </el-input>
+            </el-form-item>
+            <div style="text-align: right">
+              <el-form-item>
+                <el-button size="small" type="danger" plain class="row-mt" @click="update(2)">
+                  更新密码
+                </el-button>
+              </el-form-item>
+            </div>
+          </el-form>
+        </template>
+      </Panel>
+    </el-col>
+
+    <el-col :md="8" :offset="0">
+      <Panel style="height: 300px">
         <template #title>API 接口密钥</template>
         <template #default>
           <div class="sub-title row-mt">
@@ -164,12 +172,11 @@
           <div
             class="row-mt"
             style="
-              padding: 8px 8px;
-              background: rgba(0, 0, 0, 0.2);
+              padding: 12px 8px;
+              background: rgba(0, 0, 0, 0.02);
               box-sizing: border-box;
+              border-radius: 2px;
               font-size: 13px;
-              border: 1px solid #aaaaaa;
-              border-radius: 4px;
             "
           >
             <span>{{ userInfo.apiKey ? userInfo.apiKey : "未启用" }}</span>
@@ -217,6 +224,10 @@ export default {
       api: {
         enable: false,
         key: ""
+      },
+      rules: {
+        passWord: [{ validator: this.validatePassword, trigger: "blur" }],
+        passWord2: [{ validator: this.validatePassword, trigger: "blur" }]
       }
     };
   },
@@ -228,45 +239,31 @@ export default {
 
   async mounted() {},
   methods: {
-    async update(type) {
-      await this.$confirm("确定要更改此信息吗？", "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+    async update() {
+      await this.$refs.ruleFormRef.validate(async (valid) => {
+        if (!valid) return;
+        await this.$confirm("确定要更改此信息吗？", "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        });
+        const passWord = this.userData.passWord;
+        try {
+          await request({
+            method: "PUT",
+            url: API_USER_UPDATE,
+            data: {
+              passWord
+            }
+          });
+          this.$message({ message: "用户数据已更新", type: "success" });
+        } catch (error) {
+          this.$message({
+            message: error.toString(),
+            type: "error"
+          });
+        }
       });
-      const userName = this.userData.userName;
-      const passWord = this.userData.passWord;
-      const checkPassWord = this.userData.passWord2;
-      if (type === 1) {
-        if (userName.length > 18 || userName < 2)
-          return this.$message({
-            message: "用户名规则不正确，请检查后重试",
-            type: "error"
-          });
-      }
-      if (type === 2) {
-        if (passWord.length > 18 || passWord.length < 6 || checkPassWord !== passWord)
-          return this.$message({
-            message: "密码规则不正确或两次密码不一致，请检查后重试",
-            type: "error"
-          });
-      }
-      try {
-        await request({
-          method: "PUT",
-          url: API_USER_UPDATE,
-          data: {
-            userName,
-            passWord
-          }
-        });
-        this.$message({ message: "用户数据已更新", type: "success" });
-      } catch (error) {
-        this.$message({
-          message: "用户资料更新失败，可能是用户名冲突或服务器暂时不可用",
-          type: "error"
-        });
-      }
     },
 
     async changeApi(enable) {
@@ -286,6 +283,19 @@ export default {
           type: "error"
         });
       }
+    },
+    validatePassword(rule, value = "", callback) {
+      if (!value) return callback(new Error("请输入密码值，若不输入则不进行密码修改"));
+      if (value.length < 10 || value.length > 36)
+        return callback(new Error("密码长度不规范，必须长度在 9 位到 36 位之间"));
+      // const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[0-9A-Za-z]{12,}$/;
+      // if (!reg.test(value)) return callback(new Error("您的密码必须包含：数字，大写和小写字母"));
+      callback();
+    },
+    validatePassword2(rule, value = "", callback) {
+      if (value !== this.passWord) return callback(new Error("两次密码不一致"));
+
+      callback();
     }
   },
   components: { Panel, LineLabel }

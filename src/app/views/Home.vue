@@ -160,12 +160,18 @@
   <!-- 版权信息 -->
   <div
     class="flex flex-space-center flex-align-items-center"
-    style="font-size: 12px; color: #cdcdcd; text-align: center; margin-top: 40px"
+    style="font-size: 12px; color: #e4ff8a; text-align: center; margin-top: 40px;text-shadow: 0px 0px 20px #000000;"
   >
     <div>
-      <span>MCSManager is released under the AGPL-3.0 License</span>
-      <br />
-      <span>Copyright © 2022 Suwings&nbsp;&nbsp;|&nbsp;&nbsp;Theme by <a target="black" href="https://www.lazy.ink">Lazy</a></span>
+      <span
+        >Powered by
+        <a
+          style="color: #b6ff6d; text-decoration: underline"
+          target="black"
+          href="https://github.com/MCSManager"
+          >MCSManager</a
+        >&nbsp;&nbsp;|&nbsp;&nbsp;Theme by <a style="color: #b6ff6d; text-decoration: underline" target="black" href="https://www.lazy.ink">Lazy</a><br>Released under the AGPL-3.0 License</span
+      >
     </div>
   </div>
 

@@ -49,7 +49,9 @@
             <div class="config-item">
               <div class="sub-title">
                 <p class="sub-title-title">面板访问端口</p>
-                <p class="sub-title-info">浏览器访问网页面板的端口，必须防火墙放行此端口。</p>
+                <p class="sub-title-info">
+                  浏览器访问网页面板的端口，必须防火墙放行此端口，重启面板生效。
+                </p>
               </div>
               <el-input placeholder="请必须填入数字" v-model="settings.httpPort"> </el-input>
             </div>
@@ -65,9 +67,12 @@
             <div class="config-item">
               <div class="sub-title">
                 <p class="sub-title-title">面板绑定IP</p>
-                <p class="sub-title-info">一般情况请保持默认值，一般适用于多个IP的场景。</p>
+                <p class="sub-title-info">
+                  一般情况请保持默认值，一般适用于多个IP，网卡绑定的场景。
+                </p>
               </div>
-              <el-input placeholder="默认 0.0.0.0 | 可不填" v-model="settings.httpIp"> </el-input>
+              <el-input placeholder="默认 0.0.0.0 | 默认情况无需填写" v-model="settings.httpIp">
+              </el-input>
             </div>
 
             <div class="config-item">
@@ -304,82 +309,123 @@
     <Panel>
       <template #title>关于</template>
       <template #default>
-        <div class="sub-title">
-          <p class="sub-title-title">
-            软件根据
-            <a
-              target="black"
-              href="https://github.com/MCSManager/MCSManager-Daemon/blob/master/LICENSE"
-              >GPL-3.0</a
-            >
-            开源软件协议发行
-          </p>
-          <p class="sub-title-info">
-            此协议准许每个人都可以复制和分发代码副本，并且可以对使用者收取服务费用。<br />
-            若对代码任何修改，则必须无偿提供软件的完整源代码下载。
-          </p>
-        </div>
-
-        <div class="sub-title">
-          <p class="sub-title-title">闭源商业许可证</p>
-          <p class="sub-title-info">
-            若您想二次开发并且闭源使用于任何活动（包括但不限于商业，个人）。<br />
-            请参考:
-            <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer">
-              相关许可证
-            </a>
-          </p>
-          <p class="sub-title-info"></p>
-        </div>
-
-        <div class="sub-title">
-          <p class="sub-title-title">项目赞助者</p>
-          <p class="sub-title-info">没有以下名单的重点支持，就不会有 MCSManager 的长期维护。</p>
-          <p class="sub-title-info"></p>
-        </div>
-
-        <div class="contributors">
-          <el-row :gutter="10" v-if="sponsorList">
-            <el-col :md="4" v-for="(item, index) in sponsorList" :key="index">
-              <a
-                :href="item.link || 'https://mcsmanager.com'"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <el-card
-                  shadow="hover"
-                  :body-style="{ padding: '16px' }"
-                  style="height: 70px; margin-bottom: 10px"
+        <el-row :gutter="20">
+          <el-col :md="12">
+            <div class="sub-title">
+              <p class="sub-title-title">
+                软件根据
+                <a
+                  target="black"
+                  href="https://github.com/MCSManager/MCSManager-Daemon/blob/master/LICENSE"
+                  >AGPL-3.0</a
                 >
-                  <p style="margin: 0px; font-size: 13px">
-                    <b>{{ item.name }}</b>
-                  </p>
-                  <p style="margin: 0px; font-size: 12px; color: gray">
-                    {{ item.message ? item.message : "--" }}
-                  </p>
-                </el-card>
-              </a>
-            </el-col>
-            <el-col :span="24">
-              <p class="color-gray text-center">
-                只含前 30 名赞助者，查看完整赞助名单或进行赞助支持请前往
-                <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer">
-                  MCSManager 官方网站
-                </a>
+                开源软件协议发行
               </p>
-            </el-col>
-          </el-row>
-          <div v-else>
-            <p>暂无数据</p>
-          </div>
-        </div>
+              <p class="sub-title-info">
+                此协议准许每个人都可以复制和分发代码副本，并且可以对使用者收取服务费用。<br />
+                若对代码任何修改，则必须无偿提供软件的完整源代码下载。
+              </p>
+            </div>
 
-        <div>
-          <p class="color-gray text-center">
-            版权所有
-            <a target="black" href="https://github.com/Suwings">Suwings</a>&nbsp;&nbsp;|&nbsp;&nbsp;主题作者 <a target="black" href="https://www.lazy.ink">Lazy</a>
-          </p>
-        </div>
+            <div class="sub-title">
+              <p class="sub-title-title">闭源商业许可证</p>
+              <p class="sub-title-info">
+                若您想二次开发并且闭源使用于任何活动（包括但不限于商业，个人）。
+              </p>
+            </div>
+            <div>
+              <ItemGroup>
+                <a
+                  href="https://mcsmanager.com/#app-download"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style="display: inline-block"
+                >
+                  <el-button type="" size="default">了解更多</el-button>
+                </a>
+                <a
+                  href="https://mcsmanager.com/agreement.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style="display: inline-block"
+                >
+                  <el-button type="" size="default">用户协议</el-button>
+                </a>
+              </ItemGroup>
+            </div>
+
+            <div class="contributors" v-if="sponsorList">
+              <div class="sub-title">
+                <p class="sub-title-title">开源项目赞助名单</p>
+                <p class="sub-title-info">
+                  只含前 40 名赞助者，查看完整赞助名单或进行赞助支持请前往
+                  <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer">
+                    MCSManager 官方网站 </a
+                  >。
+                </p>
+                <p class="sub-title-info"></p>
+              </div>
+              <el-row :gutter="10">
+                <el-col :span="24">
+                  <div
+                    v-for="(item, index) in sponsorList"
+                    :key="index"
+                    style="margin: 0px 8px 4px 0px; display: inline-block"
+                  >
+                    <a
+                      :href="item.link || 'https://mcsmanager.com'"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style="text-decoration: underline"
+                    >
+                      <span style="margin: 0px; font-size: 13px">
+                        {{ item.name }}
+                      </span>
+                    </a>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+          </el-col>
+          <el-col :md="4"></el-col>
+          <el-col :md="8">
+            <div>
+              <div class="sub-title">
+                <p class="sub-title">
+                  该主题由<a href="https://www.lazy.ink" target="_blank">Lazy</a>开发
+                </p>
+                <p class="sub-title-info">
+                  如果你在使用主题过程中遇到任何问题或发现错误，可反馈到我的邮箱：<a
+                    href="mailto:lazy_creeper@qq.com"
+                    >lazy_creeper@qq.com</a
+                  ><br />主题<span style="color: rgb(255, 97, 97)">完全免费！</span>严禁倒卖！
+                </p>
+              </div>
+              <div class="sub-title">
+                <p class="sub-title">
+                  主题发布地址：<a
+                    href="https://blog.imlazy.ink:233/index.php/archives/253/"
+                    target="_blank"
+                    >点击前往</a
+                  >
+                </p>
+
+                <p class="sub-title">
+                  赞助二维码：<a
+                    href="https://pro-image.xiaoheiban.cn/ljt/47750d64-ba11-40b3-8bcf-d769a6fdf113.jpg"
+                    target="_blank"
+                    >点击下载</a
+                  >
+                </p>
+
+                <p class="sub-title">
+                  当前主题版本：2.4 beta&nbsp;&nbsp;<a href="javascript:checkUpdate();">检查更新</a
+                  ><lazy id="lazy"></lazy>
+                </p>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
       </template>
     </Panel>
   </div>
@@ -442,7 +488,7 @@ export default {
             }
           }
         }
-        this.sponsorList = arr.slice(0, 30);
+        this.sponsorList = arr.slice(0, 40);
       } else {
         this.sponsorList = null;
       }
@@ -474,5 +520,8 @@ export default {
 }
 .config-item {
   margin-top: 10px;
+}
+.contributors {
+  margin: 10px 0px;
 }
 </style>

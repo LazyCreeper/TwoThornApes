@@ -21,7 +21,7 @@
 /* 字体 */
 @font-face {
   font-family:MiSans;
-  src:url(../../../public/static/MiSans.ttf)
+  src:url(./MiSans.ttf)
 }
 
 /* 工具类 */
