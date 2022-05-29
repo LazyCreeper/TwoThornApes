@@ -108,8 +108,13 @@
           <p class="sub-title-info">必须创建 /workspace 目录，此目录将自动挂载到实例的文件根目录</p>
         </div>
         <div class="row-mt">
-          <el-input type="textarea" :rows="14" placeholder="必填，请输入内容" v-model="dockerFile">
-          </el-input>
+          <el-input 
+            type="textarea" 
+            :rows="14" 
+            placeholder="必填，请输入内容" 
+            v-model="dockerFile"
+            style="word-break: break-all"
+          ></el-input>
         </div>
         <div class="sub-title row-mt">
           <p class="sub-title-title">创建后的镜像名与版本标识</p>
@@ -207,7 +212,7 @@ ENV LC_ALL=zh_CN.UTF-8
 ENV TZ=Asia/Shanghai
 WORKDIR /workspace
 `;
-        this.name = "mopenjdk";
+        this.name = "mcsm-openjdk";
         this.version = "8";
       }
       if (type === 2) {
@@ -216,7 +221,7 @@ RUN mkdir -p /workspace
 ENV TZ=Asia/Shanghai
 WORKDIR /workspace
 `;
-        this.name = "mopenjdk";
+        this.name = "mcsm-openjdk";
         this.version = "16";
       }
       if (type === 3) {
@@ -225,7 +230,7 @@ RUN mkdir -p /workspace
 RUN apt update
 WORKDIR /workspace
 `;
-        this.name = "mubuntu";
+        this.name = "mcsm-ubuntu";
         this.version = "latest";
       }
       if (type === 5) {
@@ -237,7 +242,7 @@ ENV LC_ALL=zh_CN.UTF-8
 ENV TZ=Asia/Shanghai
 WORKDIR /workspace
 `;
-        this.name = "mopenjdk";
+        this.name = "mcsm-openjdk";
         this.version = "17";
       }
       this.step = 2;

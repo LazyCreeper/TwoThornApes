@@ -283,7 +283,7 @@
     <el-col :md="18">
       <Panel v-loading="!available" element-loading-text="连接中" element-loading-background="rgba(0, 0, 0, 0.5)" class="blur">
         <template #title>
-          <div>实例操作终端</div>
+          <div>实例控制台</div>
           <div class="none">
             <el-tooltip class="item" effect="dark" content="新开全屏" placement="top">
               <span class="terminal-right-botton" @click="toFullTerminal(2)">
@@ -867,9 +867,15 @@ export default {
           url: API_INSTANCE_UPDATE,
           params: { remote_uuid: this.serviceUuid, uuid: this.instanceUuid },
           data: {
-            pingConfig: this.pingConfigForm,
-            eventTask: this.eventConfigPanel,
-            terminalOption: this.terminalSettingPanel
+            pingConfig: this.pingConfigForm.is
+              ? this.pingConfigForm
+              : this.instanceInfo.config.pingConfig,
+            eventTask: this.eventConfigPanel
+              ? this.eventConfigPanel
+              : this.instanceInfo.config.eventTask,
+            terminalOption: this.terminalSettingPanel.visible
+              ? this.terminalSettingPanel
+              : this.instanceInfo.config.terminalOption
           }
         });
         this.$message({
