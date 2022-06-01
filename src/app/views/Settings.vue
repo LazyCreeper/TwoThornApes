@@ -419,7 +419,7 @@
                 </p>
 
                 <p class="sub-title">
-                  当前主题版本：2.5 beta&nbsp;&nbsp;<a href="javascript:checkUpdate();">检查更新</a
+                  当前主题版本：2.5.1 beta&nbsp;&nbsp;<a href="javascript:checkUpdate();">检查更新</a
                   ><lazy id="lazy"></lazy>
                 </p>
               </div>
