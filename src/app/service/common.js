@@ -36,6 +36,7 @@ export const API_FILE_MKDIR = `${API_URL}/api/files/mkdir`;
 export const API_FILE_COPY = `${API_URL}/api/files/copy`;
 export const API_FILE_MOVE = `${API_URL}/api/files/move`;
 export const API_FILE_COMPRESS = `${API_URL}/api/files/compress`;
+export const API_FILE_STATUS = `${API_URL}/api/files/status`;
 
 export const API_USER = `${API_URL}/api/auth/`;
 export const API_SEARCH = `${API_URL}/api/auth/search`;
@@ -47,6 +48,7 @@ export const API_USER_TOKEN = `${API_URL}/api/auth/token`;
 export const API_USER_LOGOUT = `${API_URL}/api/auth/logout`;
 export const API_USER_DELETE = `${API_URL}/api/auth/delete`;
 export const API_USER_UPDATE = `${API_URL}/api/auth/update`;
+
 export const API_USER_API = `${API_URL}/api/auth/api`;
 
 export const API_OVERVIEW = `${API_URL}/api/overview`;
@@ -75,6 +77,22 @@ export const API_IMAGES = `${API_URL}/api/environment/image`;
 export const API_CONTAINERS = `${API_URL}/api/environment/containers`;
 export const API_NETWORK_MODES = `${API_URL}/api/environment/networkModes`;
 export const API_PROGRESS = `${API_URL}/api/environment/progress`;
+
+export const API_PANEL_STATUS = `${API_URL}/api/auth/status`;
+export const API_PANEL_INSTALL = `${API_URL}/api/auth/install`;
+
+
+export const TERMINAL_CODE = [
+  { label: "UTF-8（通用）", value: "UTF-8" },
+  { label: "GBK（中文）", value: "GBK" },
+  { label: "BIG5（繁中）", value: "BIG5" },
+  { label: "Shift_JIS（日文）", value: "Shift_JIS" },
+  { label: "KS_C_5601（韩文）", value: "KS_C_5601" },
+  { label: "GB2312（中文）", value: "GB2312" },
+  { label: "GB18030（中文）", value: "GB18030" },
+  { label: "Big5-HKSCS（繁中）", value: "Big5-HKSCS" },
+  { label: "UTF-16", value: "UTF-16" }
+]
 
 export function sleep(t) {
   return new Promise((s) => {

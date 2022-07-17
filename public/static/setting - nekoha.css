@@ -1,0 +1,191 @@
+/*
+
+    @FileName: MCSManager 9 二次元主题设置文件
+    @SkinName: Nekoha Shizuku
+    @Last Date: 2022.7.18
+    @Create Date: 2022.2.6			
+    @Author: Lazy
+    @Description：在这里设置你的主题背景图片、颜色等
+
+*/
+:root {
+	--selection-background-color: rgba(187, 226, 255, 0.7);
+	/*鼠标选择后的 背景颜色*/
+	--selection-color: #3e4958;
+	/*鼠标选择后的 文本颜色*/
+
+	/*登陆/安装界面背景图片*/
+	--background-login-image: url(https://api.imlazy.ink/img);
+	/*电脑端登录页背景图（来自 雫 API 的随机图片API）*/
+	--background-image: url(https://tvax2.sinaimg.cn/large/008qLT8ggy1gxr0800hf9j31jk0z24qp.jpg);
+	/*电脑端首页背景图*/
+	--background-login-image-phone: url(https://api.imlazy.ink/img-phone);
+	/*手机端登录页背景图（来自 雫 API 的随机图片API）*/
+	--background-image-phone: url(https://store-g1.seewo.com/17eaa50ae558499c85f719725d96b721164276898823564);
+	/*手机端首页背景图*/
+
+	/*终端*/
+	--terminal-full-bg: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(48,48,48,0.5) 100%),url(//api.imlazy.ink/img/);
+	/*全屏终端下的背景样式*/
+	--terminal-full-bg-phone: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(28, 103, 146, 0.7) 100%),url(//api.imlazy.ink/img-phone/);
+	/*手机全屏终端下的背景样式*/
+
+	--terminal-backdrop-filter: blur(4px);
+	/*终端背景模糊程度，越大越模糊。不需要就改为0*/
+
+	/*顶部导航栏*/
+	--header-title-color: #bcffa7;
+	/*文本颜色*/
+	--header-title-font-weight: 700;
+	/*字体粗细*/
+	--header-info-color: #63cbd0;
+	/*链接颜色*/
+	--tip-color: #82bbe1;
+	/*文字左边那个叫做啥玩意一时半会想不起来的颜色*/
+
+	/*菜单*/
+	--drawer-bg-color: rgba(108, 122, 139, 0.5);
+	/*手机端菜单的背景颜色*/
+	--menu-bg-color: rgba(0, 0, 0, 0.5);
+	/*电脑端菜单背景颜色*/
+	--cd-bg-color: rgba(18, 51, 64, 0.7);
+	/*菜单被选中时的 背景颜色*/
+	--cd-color: #d3f3ff;
+	/*菜单被选中时的 文本颜色*/
+	--cd-bg-hover-color: rgba(22, 57, 70, 0.5);
+	/*当鼠标悬浮到菜单上时的背景颜色*/
+	--cd-title-color: #d0c8ff;
+	/*菜单标题颜色*/
+	--cd-border-left: 5px solid #20b9c1;
+	/*菜单左侧边框样式*/
+	--cd-box-shadow: rgb(0, 43, 60) 0px 0px 10px 0px;
+	/*菜单阴影样式*/
+	--cd-blur: blur(3px);
+	/*菜单背景模糊程度，越大越模糊。不需要就改为0*/
+
+	--tab-color: #e8efd2;
+	/*Tab菜单默认颜色*/
+
+	--subtitle-color: #ffefdc;
+	/*标题颜色*/
+	--subtitle-info-color: #dcd5ff;
+	/*副标题颜色*/
+	--overview-info-title: #f1f1f1;
+	/*实例详情页面的标题颜色*/
+
+	/*链接*/
+	--a-color: #dfedff;
+	/*链接的颜色*/
+	--a-hover-color: #6fd6f1;
+	/*当鼠标悬浮到连接上时的颜色*/
+	--manual-link-bg-color: rgba(76, 217, 204, 0.4);
+	/*快捷链接的背景颜色*/
+	--manual-link-bg-hover-color: rgba(22, 189, 167, 0.5);
+	/*当鼠标悬浮到快捷链接时背景颜色*/
+
+	/*卡片*/
+	--card-bg-color: rgba(0, 0, 0, 0.5);
+	/*卡片背景颜色*/
+	--card-color: #b1d9ff;
+	/*文本颜色*/
+	--card-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
+	/*卡片阴影效果*/
+	--card-blur: unset;
+	/*卡片背景模糊；默认unset，需要请设置为blur(数字px)。注意！设置后终端将无法全屏！*/
+	--card-instance-bg-hover:rgba(0,25,45,0.6);
+	/*实例列表卡片当鼠标悬浮到上面时的 背景颜色*/
+	--card-instance-shadow-hover: 0 0 9px 0px rgba(11,49,85,0.6)!important;
+	/*实例列表卡片当鼠标悬浮到上面时的 阴影颜色*/
+	--card-instance-gray-filter: hue-rotate(323deg);
+	/*实例卡片 未运行时的效果*/
+
+	/*按钮*/
+	--btn-default-bg-color: hsla(0, 0%, 100%, .15);
+	/*默认按钮的 背景 颜色*/
+	--btn-default-color: #cbe5ff;
+	/*默认按钮的 文本 颜色*/
+	--btn-default-bg-hover-color: hsla(0, 0%, 100%, .3);
+	/*当鼠标悬浮在默认按钮时的  背景 颜色*/
+	--btn-default-hover-color: #92c9ff;
+	/*当~~~~~~~~~~~默认按钮的 文本 颜色*/
+	--btn-success-bg-color: rgba(120, 183, 90, 0.78);
+	/*绿色按钮的 背景 颜色*/
+	--btn-danger-bg-color: rgba(101, 12, 12, 0.5);
+	/*深红色按钮的 背景 颜色*/
+	--btn-danger-color: #fbc4c4;
+	/*深红色按钮的 文本 颜色*/
+	--btn-q-danger-color: rgba(167, 114, 114, 0.5);
+	/*浅红色按钮的 背景 颜色*/
+	--btn-q-warning-color: rgba(253, 246, 236, 0.3);
+	/*浅黄色按钮的 背景 颜色*/
+	--btn-disabled-filter: brightness(0.6);
+	/*按钮禁用时的效果*/
+
+	/*表格*/
+	--tr-bg-color: rgba(0, 0, 0, .5);
+	/*表格背景颜色*/
+	--table-color: #a3fff9;
+	/*表格内容文本颜色*/
+	--td-2bg-color: rgba(38, 60, 79, .5);
+	/*表格内容背景颜色*/
+	--th-bg-color: rgba(50, 78, 88, .5);
+	/*表格头部 背景颜色*/
+	--th-color: #a3fff9;
+	/*表格头部 文本颜色*/
+	--td-bg-hover-color: rgba(58, 118, 121, .5);
+	/*当鼠标悬浮在表格内容上时表格的背景颜色*/
+
+	/*输入框*/
+	--input-bg-color: rgba(0, 0, 0, .3);
+	/*输入框 背景颜色*/
+	--input-color: #b9efff;
+	/*输入框 文本颜色*/
+	--input-focus-border-color: unset;
+	/*点击时边框的颜色*/
+
+	/*对话框*/
+	--dl-blur: blur(5px);
+	/*对话框背景模糊。默认5，不喜欢就改为0*/
+
+	/*消息框*/
+	--msgbox-blur: blur(4px);
+	/*背景模糊。默认4，不喜欢就改为0*/
+	--msgbox-bg-color: rgba(217, 255, 241, 0.5);
+	/*背景颜色*/
+	--msgbox-border: 2px solid #7ca399;
+	/*边框样式*/
+	--msgbox-title-color: #a4ffe2;
+	/*内容文本颜色*/
+	--msgbox-content-color: #b5ffd3;
+	/*标题颜色*/
+
+	/*下拉选择*/
+	--select-border-color: #7ce0b1;
+	/*边框颜色*/
+	--select-color: #eafff6;
+	/*文本颜色*/
+	--selected-color: #7ee5b5;
+	/*被选中の文本の颜色*/
+	--select-shadow: 0 0 7px #62feb5;
+	/*阴影样式*/
+	--select-bg-color: rgba(0, 0, 0, 0.5);
+	/*背景颜色*/
+	--select-blur: blur(5px);
+	/*背景模糊。默认5，不喜欢就改为0*/
+	--select-bg-hover-color: rgba(68, 83, 80, .3);
+	/*当鼠标悬浮到上面时的 背景颜色*/
+	--select-hover-color: #d0ffe2;
+	/*当鼠标悬浮到上面时的 文本颜色*/
+	--select-shadow1: 0 0 5px #7ce0b1;
+	/*忘记了是哪个的阴影样式*/
+
+	/*提示框*/
+	--alert-info-bg-color: rgba(244, 244, 245, .3);
+	/*白色提示框的 背景颜色*/
+	--alert-info-color: #fff;
+	/*白色提示框的 文本颜色*/
+	--alert-desc-color: #e4edff;
+	/*白色提示框的 文本颜色2*/
+	--alert-error-bg-color: rgba(255, 190, 190, 0.3);
+	/*警告框的背景颜色*/
+}

@@ -36,7 +36,7 @@
         <template #default>
           <div class="sub-title">什么是环境镜像？</div>
           <div class="sub-title-info">
-            由于 Minecraft 或其他程序需要特定的运行环境，比如 Java/Python/.Net 等等，
+            由于 Minecraft 或其他程序需要特定的运行环境，比如 Java/Python/.NET 等等，
             不同版本在同一台机器上安装管理十分复杂，使用不同的环境镜像可以很方便的管理不同版本不同类型的服务环境。
           </div>
           <div class="sub-title row-mt">什么是 Docker？为什么需要它？</div>
@@ -202,14 +202,16 @@ export default {
     },
     selectType(type) {
       if (type === 1) {
-        this.dockerFile = `FROM openjdk:8
-RUN mkdir -p /workspace
+        this.dockerFile = `FROM openjdk:8-jre
+# 如果服务器在中国，可以取消下面的注释（删去下面一行最前面的井号空格：# ）以切换到 国内源 达到加速构建过程
+# RUN sed -i -E 's/http:\\/\\/(deb|security).debian.org/http:\\/\\/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
 RUN apt update && apt install -y locales
 RUN echo "zh_CN.UTF-8 UTF-8">/etc/locale.gen && locale-gen
 ENV LANG=zh_CN.UTF-8
 ENV LANGUAGE=zh_CN.UTF-8
 ENV LC_ALL=zh_CN.UTF-8
 ENV TZ=Asia/Shanghai
+RUN mkdir -p /workspace
 WORKDIR /workspace
 `;
         this.name = "mcsm-openjdk";
@@ -225,13 +227,17 @@ WORKDIR /workspace
         this.version = "16";
       }
       if (type === 3) {
-        this.dockerFile = `FROM ubuntu:latest
+        this.dockerFile = `FROM ubuntu:18.04
+ENV TZ=Asia/Shanghai
+# 如果服务器在中国，可以取消下面的注释（删去下面一行最前面的井号空格：# ）以切换到 国内源 达到加速构建过程
+# RUN sed -i -E 's/http:\\/\\/(archive|security).ubuntu.com/http:\\/\\/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
+RUN apt update && apt -y install libcurl4 && DEBIAN_FRONTEND="noninteractive" apt -y install tzdata
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN mkdir -p /workspace
-RUN apt update
 WORKDIR /workspace
 `;
         this.name = "mcsm-ubuntu";
-        this.version = "latest";
+        this.version = "18.04";
       }
       if (type === 5) {
         this.dockerFile = `FROM openjdk:17

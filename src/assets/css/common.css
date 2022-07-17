@@ -24,7 +24,7 @@
   color: var(--selection-color);
 }
 
-body {
+body, button, input, textarea {
   font-family: MiSans;
 }
 
@@ -142,6 +142,10 @@ a:hover {
   font-size: 14px;
   margin: 8px 0px;
   display: inline-block;
+}
+
+.el-form-item__label {
+  color: var(--input-color);
 }
 
 /* 列表项目栏 */
@@ -273,7 +277,7 @@ a:hover {
 
 
 /* 输入框 */
-.el-input--small .el-input__inner, .el-input__inner {
+.el-input--small .el-input__inner, .el-input__inner,.el-textarea__inner {
   background: var(--input-bg-color);
   color: var(--input-color);
 }

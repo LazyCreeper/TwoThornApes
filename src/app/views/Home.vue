@@ -77,7 +77,7 @@
             <template #default>{{ userInfo.uuid }}</template>
           </LineLabel>
           <LineLabel space="small">
-            <template #title>用户昵称</template>
+            <template #title>用户名</template>
             <template #default>{{ userInfo.userName }}</template>
           </LineLabel>
           <LineLabel space="small">
@@ -107,7 +107,7 @@
         size="mini"
         v-loading="info.loading"
       >
-        <el-table-column prop="nickname" label="实例昵称" min-width="240"></el-table-column>
+        <el-table-column prop="nickname" label="实例名称" min-width="240"></el-table-column>
         <el-table-column label="运行状态">
           <template #default="scope">
             <div class="color-gray" v-if="scope.row.status == 0">
@@ -160,7 +160,7 @@
   <!-- 版权信息 -->
   <div
     class="flex flex-space-center flex-align-items-center"
-    style="font-size: 12px; color: #e4ff8a; text-align: center; margin-top: 40px;text-shadow: 0px 0px 20px #000000;"
+    style="font-size: 12px; color: #e4ff8a; text-align: center; margin-top: 40px; margin-top: 40px;text-shadow: 0px 0px 20px #000000;"
   >
     <div>
       <span
@@ -168,10 +168,9 @@
         <a
           style="color: #b6ff6d; text-decoration: underline"
           target="black"
-          href="https://github.com/MCSManager"
-          >MCSManager</a
-        >&nbsp;&nbsp;|&nbsp;&nbsp;Theme by <a style="color: #b6ff6d; text-decoration: underline" target="black" href="https://www.lazy.ink">Lazy</a><br>Released under the AGPL-3.0 License</span
-      >
+          href="https://github.com/MCSManager">MCSManager</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;Theme by <a style="color: #b6ff6d; text-decoration: underline" target="black" href="https://www.lazy.ink">Lazy</a><br>
+          Released under the AGPL-3.0 License</span>
     </div>
   </div>
 
@@ -189,7 +188,7 @@
         </div>
         <div class="sub-title row-mt">
           <p class="sub-title-title">输入/输出编码</p>
-          <p class="sub-title-info">当控制台出现乱码时可以尝试调整，列如: GBK，UTF-8 等</p>
+          <p class="sub-title-info">当控制台出现乱码时可以尝试调整，例如: GBK，UTF-8 等</p>
         </div>
         <div class="flex">
           <ItemGroup :lr="true">

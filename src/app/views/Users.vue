@@ -31,7 +31,7 @@
                 <el-input
                   v-model="query.userName"
                   type="text"
-                  placeholder="根据名字搜索"
+                  placeholder="根据名称搜索"
                   size="small"
                   style="width: 180px; margin-right: 10px"
                   autocomplete="off"
@@ -39,7 +39,7 @@
                   @focus="() => (readonly = false)"
                 ></el-input>
                 <el-button size="small" type="primary" @click="refresh">
-                  <i class="el-icon-refresh"></i> 刷新/搜索
+                  <i class="el-icon-refresh"></i> 搜索
                 </el-button>
               </el-col>
               <el-col :md="12" :offset="0" class="text-align-right col-md-responsive">
@@ -99,8 +99,8 @@
       <template #default>
         <div>
           <div class="sub-title">
-            <p class="sub-title-title">用户昵称</p>
-            <p class="sub-title-info">必填，6到12个字符，支持中文，英文和字符</p>
+            <p class="sub-title-title">用户名</p>
+            <p class="sub-title-info">必填，6 到 12 个字符，支持中文，英文和字符</p>
           </div>
           <el-input
             v-model="newUserInfo.userName"
@@ -109,11 +109,11 @@
           ></el-input>
           <div class="sub-title row-mt">
             <p class="sub-title-title">用户密码</p>
-            <p class="sub-title-info">必填，9到18个字符，不支持中文，只限于字母，数字和符号</p>
+            <p class="sub-title-info">必填，9 到 36 个字符，不支持中文，只限于字母，数字和符号</p>
           </div>
           <el-input
             v-model="newUserInfo.password"
-            placeholder="请输入密码，9到18位"
+            placeholder="请输入密码"
             size="small"
             type="text"
           ></el-input>
@@ -156,8 +156,8 @@
       <template #default>
         <div>
           <div class="sub-title">
-            <p class="sub-title-title require-field">用户昵称</p>
-            <p class="sub-title-info">必填，6到12个字符，支持中文，英文和字符</p>
+            <p class="sub-title-title require-field">用户名</p>
+            <p class="sub-title-info">必填，6 到 12 个字符，支持中文，英文和字符</p>
           </div>
           <el-input
             v-model="editUserInfo.userName"

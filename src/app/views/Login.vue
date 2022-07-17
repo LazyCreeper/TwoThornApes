@@ -89,7 +89,6 @@
                   @click="login"
                   :disabled="close"
                   :loading="loading"
-                  element-loading-background="rgba(0, 0, 0, 0.5)"
                 >
                   {{ loginText }}
                 </el-button>
@@ -103,7 +102,7 @@
                 <div>
                   <span class="color-gray" >
                     <strong>Powered by
-                    <a target="black" href="https://github.com/Suwings">MCSManager</a><br>
+                    <a target="black" href="https://github.com/Suwings">MCSManager</a>&nbsp;&nbsp;|&nbsp;&nbsp;
                     Theme by <a href="https://www.lazy.ink" target="_blank">Lazy</a></strong>
                   </span>
                 </div>
@@ -370,9 +369,9 @@ export default {
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background: var(--background-login-image);
   display: flex;
   align-items: center;
+  background: var(--background-login-image);
   background-repeat: no-repeat;
   background-size: cover;
   transition-property: all;

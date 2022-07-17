@@ -1,11 +1,16 @@
 {
   "name": "mcsmanager-ui",
-  "version": "1.9.0",
+  "version": "1.12.0",
+  "description": "ui for mcsmanager",
+  "homepage": "https://mcsmanager.com/",
+  "author": "https://github.com/Suwings",
+  "license": "AGPL-3.0",
   "scripts": {
     "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "dev": "webpack-dev-server --disableHostCheck=true --inline --progress --config build/webpack.dev.conf.js"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@element-plus/icons": "0.0.11",
@@ -13,7 +18,6 @@
     "core-js": "^3.6.5",
     "echarts": "^5.2.2",
     "element-plus": "^1.1.0-beta.15",
-    "fontfaceobserver": "^2.1.0",
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.1.2",
     "vue": "^3.2.9",

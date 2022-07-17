@@ -2,7 +2,7 @@
 
     @FileName: MCSManager 9 二次元主题设置文件
     @SkinName: Summer
-    @Last Date: 2022.4.17
+    @Last Date: 2022.7.18
     @Create Date: 2022.2.5				
     @Author: Lazy
     @Description：在这里设置你的主题背景图片、颜色等
@@ -14,7 +14,7 @@
 	--selection-color: #3b4856;
 	/*鼠标选择后的 文本颜色*/
 
-	/*背景图片*/
+	/*登陆/安装界面背景图片*/
 	--background-login-image: url(https://api.imlazy.ink/img);
 	/*电脑端登录页背景图（来自 雫 API 的随机图片API）*/
 	--background-image: url(https://tva4.sinaimg.cn/large/006MpbfMgy1gsiwf1tnt6j31be0qoqdm.jpg);
@@ -23,6 +23,12 @@
 	/*手机端登录页背景图（来自 雫 API 的随机图片API）*/
 	--background-image-phone: url(https://tvax2.sinaimg.cn/large/008qLT8ggy1gxqzv16v0sj31m02oo4qt.jpg);
 	/*手机端首页背景图*/
+
+	/*终端*/
+	--terminal-full-bg: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(48,48,48,0.5) 100%),url(//api.imlazy.ink/img/);
+	/*全屏终端下的背景样式*/
+	--terminal-full-bg-phone: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(28, 103, 146, 0.7) 100%),url(//api.imlazy.ink/img-phone/);
+	/*手机全屏终端下的背景样式*/
 
 	--terminal-backdrop-filter: blur(4px);
 	/*终端背景模糊程度，越大越模糊。不需要就改为0*/
@@ -34,6 +40,8 @@
 	/*字体粗细*/
 	--header-info-color: #63cbd0;
 	/*链接颜色*/
+	--tip-color: #8fe182;
+	/*文字左边那个叫做啥玩意一时半会想不起来的颜色*/
 
 	/*菜单*/
 	--drawer-bg-color: rgba(127, 131, 125, 0.5);
@@ -82,8 +90,8 @@
 	/*文本颜色*/
 	--card-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
 	/*阴影效果*/
-	--card-blur: blur(0px);
-	/*背景模糊；默认0，需要请调大*/
+	--card-blur: unset;
+	/*背景模糊；默认unset，需要请设置为blur(数字px)。注意！设置后终端将无法全屏！*/
 	--card-instance-bg-hover:rgba(0,45,35,0.6);
 	/*实例列表卡片当鼠标悬浮到上面时的 背景颜色*/
 	--card-instance-shadow-hover: 0 0 9px 0px rgba(11,85,68,0.6)!important;

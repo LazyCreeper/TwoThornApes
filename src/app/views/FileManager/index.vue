@@ -20,148 +20,165 @@
 -->
 
 <template>
-  <Panel>
-    <template #title>文件管理 - {{ currentDir }}</template>
-    <template #default>
-      <el-row :gutter="20">
-        <el-col :xs="24" :md="6" :offset="0">
-          <ItemGroup>
-            <el-button size="small" @click="back">
-              <i class="el-icon-pie-chart"></i> 回到控制台
-            </el-button>
-            <el-button size="small" @click="refresh">
-              <i class="el-icon-refresh"></i> 刷新
-            </el-button>
-          </ItemGroup>
-        </el-col>
-        <el-col :xs="24" :md="18" :offset="0" class="text-align-right">
-          <ItemGroup>
-            <el-button size="small" @click="toUpDir">
-              <i class="el-icon-pie-chart"></i> 上层目录
-            </el-button>
-            <el-button size="small" @click="mkdir">
-              <i class="el-icon-folder-add"></i> 新建目录
-            </el-button>
-            <el-button size="small" @click="compress(1)">
-              <i class="el-icon-box"></i> 压缩
-            </el-button>
-            <el-button size="small" @click="compress(2)">
-              <i class="el-icon-files"></i> 解压
-            </el-button>
-            <el-button size="small" @click="rename">
-              <i class="el-icon-document"></i> 重命名
-            </el-button>
-            <el-button size="small" @click="move">
-              <i class="el-icon-scissors"></i> 剪切
-            </el-button>
-            <el-button size="small" @click="copy">
-              <i class="el-icon-document-copy"></i> 复制
-            </el-button>
-            <el-button size="small" @click="paste">
-              <i class="el-icon-tickets"></i> 粘贴
-            </el-button>
-            <el-button size="small" type="success" @click="upload">
-              <i class="el-icon-plus"></i> 上传文件
-            </el-button>
-            <el-button size="small" type="danger" @click="deleteFiles">
-              <i class="el-icon-document-delete"></i> 删除
-            </el-button>
-          </ItemGroup>
-        </el-col>
-      </el-row>
+  <div>
+    <Panel>
+      <template #title>文件管理 - {{ currentDir }}</template>
+      <template #default>
+        <el-row :gutter="20">
+          <el-col :xs="24" :md="6" :offset="0">
+            <ItemGroup>
+              <el-button size="small" @click="back">
+                <i class="el-icon-pie-chart"></i> 回到控制台
+              </el-button>
+              <el-button size="small" @click="refresh">
+                <i class="el-icon-refresh"></i> 刷新
+              </el-button>
+            </ItemGroup>
+          </el-col>
+          <el-col :xs="24" :md="18" :offset="0" class="text-align-right">
+            <ItemGroup>
+              <el-button size="small" @click="toUpDir">
+                <i class="el-icon-pie-chart"></i> 上层目录
+              </el-button>
+              <el-button size="small" @click="mkdir">
+                <i class="el-icon-folder-add"></i> 新建目录
+              </el-button>
+              <el-button size="small" @click="compress(1)">
+                <i class="el-icon-box"></i> 压缩
+              </el-button>
+              <el-button size="small" @click="compress(2)">
+                <i class="el-icon-files"></i> 解压
+              </el-button>
+              <el-button size="small" @click="rename">
+                <i class="el-icon-document"></i> 重命名
+              </el-button>
+              <el-button size="small" @click="move">
+                <i class="el-icon-scissors"></i> 剪切
+              </el-button>
+              <el-button size="small" @click="copy">
+                <i class="el-icon-document-copy"></i> 复制
+              </el-button>
+              <el-button size="small" @click="paste">
+                <i class="el-icon-tickets"></i> 粘贴
+              </el-button>
+              <el-button size="small" type="success" @click="upload">
+                <i class="el-icon-plus"></i> 上传文件
+              </el-button>
+              <el-button size="small" type="danger" @click="deleteFiles">
+                <i class="el-icon-document-delete"></i> 删除
+              </el-button>
+            </ItemGroup>
+          </el-col>
+        </el-row>
 
-      <div class="row-mt page-pagination">
-        
-        <el-pagination
-          small
-          background
-          layout="prev, pager, next"
-          v-model:currentPage="pageParam.page"
-          :page-size="pageParam.pageSize"
-          :total="pageParam.total"
-          @current-change="currentChange"
-        />
-      </div>
-
-      <div class="row-mt" v-show="percentComplete > 0">
-        <el-progress
-          :text-inside="true"
-          :stroke-width="14"
-          :percentage="percentComplete"
-        ></el-progress>
-      </div>
-
-      <el-table
-        :data="files"
-        stripe
-        style="width: 100%"
-        size="mini"
-        ref="multipleTable"
-        @selection-change="selectionChange"
-      >
-        <el-table-column type="selection" width="55"> </el-table-column>
-        <el-table-column prop="name" label="文件命令" min-width="240">
-          <template #default="scope">
-            <div
-              v-if="scope.row.type == 0"
-              class="filemanager-item-dir"
-              @click="toDir(scope.row.name)"
-            >
-              <i class="el-icon-folder"></i>
-              <span>{{ scope.row.name }}</span>
+        <div class="row-mt page-pagination">
+          <div>
+            <div v-if="statusInfo.instanceFileTask">
+              <span>
+                <i class="el-icon-loading"></i>
+              </span>
+              <span> 有 {{ statusInfo.instanceFileTask }} 个文件解压/压缩任务正在进行中...</span>
             </div>
-            <div v-if="scope.row.type == 1" class="filemanager-item-file">
-              <i class="el-icon-document"></i>
-              <span>{{ scope.row.name }}</span>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="typeText"
-          label="文件类型"
-          width="120"
-          class="only-pc-display"
-        ></el-table-column>
-        <el-table-column label="文件大小" width="140">
-          <template #default="scope">
-            <span v-if="scope.row.size > 1024 * 1024"
-              >{{ Number(Number(scope.row.size) / 1024 / 1024).toFixed(0) }} MB</span
-            >
-            <span v-else-if="scope.row.size > 1024"
-              >{{ Number(Number(scope.row.size) / 1024).toFixed(0) }} KB</span
-            >
-            <span v-else-if="scope.row.size > 0"
-              >{{ Number(Number(scope.row.size)).toFixed(0) }} B</span
-            >
-          </template>
-        </el-table-column>
-        <el-table-column prop="timeText" label="最后修改" width="160"></el-table-column>
-        <el-table-column label="操作" style="text-align: center" width="180">
-          <template #default="scope">
-            <el-button
-              size="mini"
-              :disabled="scope.row.type != 1"
-              @click="toEditFilePage(scope.row)"
-            >
-              编辑
-            </el-button>
-            <el-button size="mini" :disabled="scope.row.type != 1" @click="download(scope.row)">
-              下载
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </template>
-  </Panel>
+          </div>
 
-  <!-- 隐藏的文件上传按钮 -->
-  <form ref="fileForm" action="" method="post">
-    <input type="file" ref="fileButtonHidden" @change="selectedFile" hidden="hidden" />
-  </form>
+          <div>
+            <el-pagination
+              small
+              background
+              layout="prev, pager, next"
+              v-model:currentPage="pageParam.page"
+              :page-size="pageParam.pageSize"
+              :total="pageParam.total"
+              @current-change="currentChange"
+            />
+          </div>
+        </div>
+
+        <div class="row-mt" v-show="percentComplete > 0">
+          <el-progress
+            :text-inside="true"
+            :stroke-width="14"
+            :percentage="percentComplete"
+          ></el-progress>
+        </div>
+
+        <p>
+        </p>
+
+        <el-table
+          :data="files"
+          stripe
+          style="width: 100%"
+          size="mini"
+          ref="multipleTable"
+          @selection-change="selectionChange"
+        >
+          <el-table-column type="selection" width="55"> </el-table-column>
+          <el-table-column prop="name" label="文件命令" min-width="240">
+            <template #default="scope">
+              <div
+                v-if="scope.row.type == 0"
+                class="filemanager-item-dir"
+                @click="toDir(scope.row.name)"
+              >
+                <i class="el-icon-folder"></i>
+                <span>{{ scope.row.name }}</span>
+              </div>
+              <div v-if="scope.row.type == 1" class="filemanager-item-file">
+                <i class="el-icon-document"></i>
+                <span>{{ scope.row.name }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="typeText"
+            label="文件类型"
+            width="120"
+            class="only-pc-display"
+          ></el-table-column>
+          <el-table-column label="文件大小" width="140">
+            <template #default="scope">
+              <span v-if="scope.row.size > 1024 * 1024"
+                >{{ Number(Number(scope.row.size) / 1024 / 1024).toFixed(0) }} MB</span
+              >
+              <span v-else-if="scope.row.size > 1024"
+                >{{ Number(Number(scope.row.size) / 1024).toFixed(0) }} KB</span
+              >
+              <span v-else-if="scope.row.size > 0"
+                >{{ Number(Number(scope.row.size)).toFixed(0) }} B</span
+              >
+            </template>
+          </el-table-column>
+          <el-table-column prop="timeText" label="最后修改" width="160"></el-table-column>
+          <el-table-column label="操作" style="text-align: center" width="180">
+            <template #default="scope">
+              <el-button
+                size="mini"
+                :disabled="scope.row.type != 1"
+                @click="toEditFilePage(scope.row)"
+              >
+                编辑
+              </el-button>
+              <el-button size="mini" :disabled="scope.row.type != 1" @click="download(scope.row)">
+                下载
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </template>
+    </Panel>
+
+    <!-- 隐藏的文件上传按钮 -->
+    <form ref="fileForm" action="" method="post">
+      <input type="file" ref="fileButtonHidden" @change="selectedFile" hidden="hidden" />
+    </form>
+
+    <SelecctUnzipCode ref="selecctUnzipCode"></SelecctUnzipCode>
+  </div>
 </template>
 
 <script>
-import Panel from "../../components/Panel";
+import Panel from "@/components/Panel";
 import axios from "axios";
 import {
   API_FILE_COMPRESS,
@@ -172,12 +189,14 @@ import {
   API_FILE_MOVE,
   API_FILE_UPLOAD,
   API_FILE_URL
-} from "../service/common";
+} from "@/app/service/common";
 import path from "path";
-import { parseforwardAddress, request } from "../service/protocol";
+import { parseforwardAddress, request } from "@/app/service/protocol";
+import SelecctUnzipCode from "./selecctUnzipCode";
+import { API_FILE_STATUS } from "../../service/common";
 
 export default {
-  components: { Panel },
+  components: { Panel, SelecctUnzipCode },
   data() {
     return {
       serviceUuid: this.$route.params.serviceUuid,
@@ -203,7 +222,10 @@ export default {
         tmpFileNames: null,
         tmpOperationMode: -1,
         tmpDir: null
-      }
+      },
+
+      statusInfo: {},
+      statusRequestTask: null
     };
   },
   async mounted() {
@@ -211,8 +233,16 @@ export default {
       this.currentDir = this.paramPath;
     }
     await this.render();
+
+    // 开始文件管理状态查询定时器
+    this.requestFileManagerStatus();
+    this.statusRequestTask = setInterval(() => {
+      this.requestFileManagerStatus();
+    }, 3000);
   },
-  unmounted() {},
+  beforeUnmount() {
+    clearInterval(this.statusRequestTask);
+  },
   methods: {
     back() {
       this.$router.push({ path: `/terminal/${this.serviceUuid}/${this.instanceUuid}/` });
@@ -228,7 +258,6 @@ export default {
     async toDir(name) {
       try {
         const p = path.normalize(path.join(this.currentDir, name));
-        //console.log("EN：", p);
         await this.list(p);
       } catch (error) {
         this.$message({ message: "错误，无法查看此目录或文件", type: "error" });
@@ -248,22 +277,26 @@ export default {
     // 目录 List 功能
     async list(cwd = ".") {
       this.$route.query.path = cwd;
-      const data = await request({
-        method: "GET",
-        url: API_FILE_LIST,
-        params: {
-          remote_uuid: this.serviceUuid,
-          uuid: this.instanceUuid,
-          target: cwd,
-          page: parseInt(this.pageParam.page) - 1,
-          page_size: this.pageParam.pageSize
-        }
-      });
-      const { items, total, page } = data;
-      this.currentDir = path.normalize(cwd);
-      this.tableFilter(items);
-      this.pageParam.total = total;
-      this.pageParam.page = page + 1;
+      try {
+        const data = await request({
+          method: "GET",
+          url: API_FILE_LIST,
+          params: {
+            remote_uuid: this.serviceUuid,
+            uuid: this.instanceUuid,
+            target: cwd,
+            page: parseInt(this.pageParam.page) - 1,
+            page_size: this.pageParam.pageSize
+          }
+        });
+        const { items, total, page } = data;
+        this.currentDir = path.normalize(cwd);
+        this.tableFilter(items);
+        this.pageParam.total = total;
+        this.pageParam.page = page + 1;
+      } catch (error) {
+        this.$message({ message: error, type: "error" });
+      }
     },
 
     // 表格数据处理
@@ -320,7 +353,9 @@ export default {
         if (this.multipleSelection.length !== 1) throw new Error("必须选择一个文件进行重命名操作");
         const file = this.multipleSelection[0];
         let { value } = await this.$prompt("新的名字", "重命名", {
-          inputValue: file.name
+          inputValue: file.name,
+          confirmButtonText: "确定",
+          cancelButtonText: "取消"
         });
         if (!value) throw new Error("请输入一个有效值");
         const oldFilePath = path.join(this.currentDir, file.name);
@@ -412,7 +447,10 @@ export default {
 
     // 新建目录
     async mkdir() {
-      const { value } = await this.$prompt("新建目录名");
+      const { value } = await this.$prompt("新建目录名", undefined, {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      });
       try {
         if (!value) throw new Error("请输入一个有效值");
         const p = path.normalize(path.join(this.currentDir, value));
@@ -468,7 +506,10 @@ export default {
             targets
           }
         });
-        this.$message({ message: "文件已删除", type: "success" });
+        this.$message({
+          message: "文件删除任务开始，如果文件数量过多，则需要一定时间",
+          type: "success"
+        });
         this.render();
       } catch (error) {
         this.$message({ message: `错误:${error}`, type: "error" });
@@ -505,12 +546,14 @@ export default {
             data: {
               type: 1,
               source: path.join(cwd, `${zipName}.zip`),
-              targets
+              targets,
+              code: "utf-8" // 解压文件功能模块暂时不支持其他编码
             }
           });
           this.$notify({
             title: "压缩任务已经开始",
-            message: "异步压缩需要一段时间，可以利用刷新文件列表查看 zip 大小来判断是否压缩完毕"
+            message:
+              "异步压缩需要一段时间，可以利用刷新文件列表查看 ZIP 大小来判断是否压缩完毕，压缩编码为 UTF-8"
           });
         } else {
           if (fileNames.length !== 1)
@@ -521,6 +564,8 @@ export default {
             cancelButtonText: "取消"
           });
           if (!text.value) throw new Error("请输入一个有效值");
+          const selected = await this.$refs.selecctUnzipCode.prompt();
+          if (!selected) return;
           const dirName = text.value;
           await request({
             method: "POST",
@@ -532,16 +577,17 @@ export default {
             data: {
               type: 2,
               source: path.join(cwd, fileNames[0]),
-              targets: path.join(cwd, dirName)
+              targets: path.join(cwd, dirName),
+              code: selected
             }
           });
           this.$notify({
-            title: "解压任务已经开始",
+            title: "解压任务已开始",
             message: "异步解压需要一段时间，可以利用刷新文件列表查看目录内容来判断是否压缩完毕"
           });
         }
       } catch (error) {
-        this.$message({ message: `${error}`, type: "error" });
+        this.$message({ message: error.message || error, type: "error" });
       }
     },
 
@@ -603,6 +649,18 @@ export default {
       const addr = parseforwardAddress(cfg.addr, "http");
       const password = cfg.password;
       window.open(`${addr}/download/${password}/${fileName}`);
+    },
+
+    async requestFileManagerStatus() {
+      const status = await request({
+        method: "GET",
+        url: API_FILE_STATUS,
+        params: {
+          remote_uuid: this.serviceUuid,
+          uuid: this.instanceUuid
+        }
+      });
+      this.statusInfo = status;
     }
   }
 };
@@ -653,6 +711,8 @@ export default {
 }
 .page-pagination {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
+  align-items: center;
+  color: #409eff;
 }
 </style>

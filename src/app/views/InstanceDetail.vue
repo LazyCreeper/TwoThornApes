@@ -23,7 +23,7 @@
     <Panel>
       <template #title>实例详细信息设置</template>
       <template #default>
-        <div v-loading="loading" element-loading-text="获取中" lement-loading-background="rgba(0, 0, 0, 0.5)">
+        <div v-loading="loading" element-loading-text="获取中" element-loading-background="rgba(0, 0, 0, 0.5)">
           <el-row :gutter="20">
             <el-col :lg="6">
               <div class="only-pc-display" style="margin: 0 0 10px 0">
@@ -69,7 +69,7 @@
                   <div class="sub-title">
                     <div class="sub-title-title require-field">实例类型</div>
                     <div class="sub-title-info">
-                      不同类型会导致功能不同，若无需求类型，可以选择较为抽象的通用类型，列如 Java
+                      不同类型会导致功能不同，若无需求类型，可以选择较为抽象的通用类型，例如 Java
                       通用版服务端
                     </div>
                   </div>
@@ -93,22 +93,34 @@
                     <div class="sub-title-title require-field">启动命令</div>
                     <div class="sub-title-info">
                       <span>
-                        适用于任何程序命令，若程序路径或附加参数中含有空格可使用引号作为边界，包含的文本将视作一段整体
+                        适用于任何程序命令，若程序路径或附加参数中含有空格可使用引号作为边界，包含的文本将视作一段整体。整条命令不可有换行。
                       </span>
                       <br />
                       <span>
-                        通常情况下，建议使用命令助手生成启动命令，如果有额外需求可以自定义启动命令
+                        如果您输入命令无反应，或者终端排版错乱，可以开启 控制台-终端设置-伪终端
+                        进行尝试。
                       </span>
                       <br />
                       <span>
-                        列如 "C:\Program Files\Java\bin\java.exe" -Dfile.encoding=utf-8 -jar "my
-                        server.jar" -nogui
+                        通常情况下，建议使用命令助手生成启动命令，如果有额外需求可以自定义启动命令。
                       </span>
+                      <br />
+                      <span>
+                        列如 "C:\Program Files\Java\bin\java.exe" -Dfile.encoding=utf-8
+                        -Djline.terminal=jline.UnsupportedTerminal -jar "my server.jar" -nogui
+                      </span>
+                      <br />
                     </div>
                   </div>
                   <div class="flex">
-                    <el-input v-model="instanceInfo.config.startCommand" type="text"></el-input>
-                    <el-button type="default" @click="openCommandAssistCall(1)">
+                    <el-input
+                      v-model="instanceInfo.config.startCommand"
+                      :rows="3"
+                      type="textarea"
+                      resize="none"
+                      placeholder='例如 "C:\Program Files\Java\bin\java.exe" -Dfile.encoding=utf-8 -jar "myserver.jar" -nogui'
+                    ></el-input>
+                    <el-button type="success" @click="openCommandAssistCall(1)">
                       命令生成
                     </el-button>
                   </div>
@@ -121,7 +133,7 @@
                   <el-input
                     v-model="instanceInfo.config.cwd"
                     type="text"
-                    placeholder="列如: D:/MyServers/0001"
+                    placeholder="例如: D:/MyServers/0001"
                   ></el-input>
                 </el-col>
                 <el-col :md="24" class="row-mt">
@@ -135,7 +147,7 @@
                   <el-input
                     v-model="instanceInfo.config.updateCommand"
                     type="text"
-                    placeholder='列如: "D:/SteamCMD/steamcmd.exe" +login anonymous +force_install_dir "${mcsm_workspace}" "+app_update 380870 validate" +quit'
+                    placeholder='例如: "D:/SteamCMD/steamcmd.exe" +login anonymous +force_install_dir "${mcsm_workspace}" "+app_update 380870 validate" +quit'
                   ></el-input>
                 </el-col>
                 <el-col :lg="8" class="row-mt">
@@ -229,7 +241,7 @@
                   <div class="sub-title">
                     <div class="sub-title-title require-field">进程启动方式（推荐）</div>
                     <div class="sub-title-info">
-                      通常默认即可，如果从事商业活动必须则使用虚拟化容器启动方式，否则主机可能被入侵。
+                      通常默认即可，如果从事商业活动则应当使用虚拟化容器启动方式，否则主机将可能被入侵。
                     </div>
                   </div>
                   <el-select v-model="instanceInfo.config.processType" style="width: 100%">
@@ -289,7 +301,7 @@
                         placeholder="选填，示例 25565:25565/tcp 3380:3380/udp"
                       >
                       </el-input>
-                      <el-button type="default" @click="toEditDockerPort">快速编辑</el-button>
+                      <el-button type="primary" plain @click="toEditDockerPort">快速编辑</el-button>
                     </div>
                   </el-col>
                 </el-row>
@@ -308,7 +320,7 @@
                         placeholder="示例 /backups/test1:/workspace/backups /var/logs/test1:/workspace/logs"
                       >
                       </el-input>
-                      <el-button type="default" @click="toEditDockerVolumes"
+                      <el-button type="primary" plain @click="toEditDockerVolumes"
                         >快速编辑</el-button
                       >
                     </div>
@@ -404,13 +416,13 @@
                     <el-tooltip
                       class="box-item"
                       effect="dark"
-                      content="指定进程在某些核心上运行，合理分配可以更好的利用您的系统硬件资源，列如 0,1 代表在第1，2核心上运作，逗号隔开"
+                      content="指定进程在某些核心上运行，合理分配可以更好的利用您的系统硬件资源，例如 0,1 代表在第1，2核心上运作，逗号隔开"
                       placement="bottom"
                     >
                       <el-input
                         v-model="instanceInfo.config.docker.cpusetCpus"
                         type="text"
-                        placeholder="选填，列如 0,1,2,3"
+                        placeholder="选填，例如 0,1,2,3"
                       >
                       </el-input>
                     </el-tooltip>
@@ -418,13 +430,13 @@
                   <el-col :md="8" class="row-mt">
                     <div class="sub-title">
                       <div class="sub-title-title">最大内存（单位 MB）</div>
-                      <div class="sub-title-info">列如 1024，2048 等，请勿加单位</div>
+                      <div class="sub-title-info">例如 1024，2048 等，请勿加单位</div>
                     </div>
 
                     <el-input
                       v-model="instanceInfo.config.docker.memory"
                       type="text"
-                      placeholder="选填，列如 1024"
+                      placeholder="选填，例如 1024"
                     >
                     </el-input>
                   </el-col>
@@ -467,7 +479,7 @@
 </template>
 
 <script>
-import { API_IMAGES, API_INSTANCE, API_NETWORK_MODES } from "../service/common";
+import { API_IMAGES, API_INSTANCE, API_NETWORK_MODES, TERMINAL_CODE } from "../service/common";
 import { processTypeList, statusCodeToText } from "../service/instance_tools";
 import Panel from "../../components/Panel";
 import router from "../router";
@@ -501,8 +513,8 @@ export default {
       tableDict1: [
         {
           prop: "protocol",
-          label: "通信协议",
-          width: "120px"
+          label: "通信协议(tcp/udp)",
+          width: "140px"
         },
         {
           prop: "port1",
@@ -529,17 +541,7 @@ export default {
       ],
 
       // 可选的字符编码
-      characters: [
-        { label: "UTF-8（通用）", value: "UTF-8" },
-        { label: "GBK（中文）", value: "GBK" },
-        { label: "BIG5（繁中）", value: "BIG5" },
-        { label: "Shift_JIS（日文）", value: "Shift_JIS" },
-        { label: "KS_C_5601（韩文）", value: "KS_C_5601" },
-        { label: "GB2312（中文）", value: "GB2312" },
-        { label: "GB18030（中文）", value: "GB18030" },
-        { label: "Big5-HKSCS（繁中）", value: "Big5-HKSCS" },
-        { label: "UTF-16", value: "UTF-16" }
-      ]
+      characters: TERMINAL_CODE
     };
   },
   methods: {
@@ -559,6 +561,13 @@ export default {
       router.push({ path: `/terminal/${this.serviceUuid}/${this.instanceUuid}/` });
     },
     async saveConfig() {
+      if (this.instanceInfo?.config?.startCommand.includes("\n")) {
+        return this.$message({
+          message: "启动命令中不可包含换行，这并非脚本文件，不可执行多条命令，请检查",
+          type: "error"
+        });
+      }
+
       // 保存实例配置文件
       try {
         const postData = JSON.parse(JSON.stringify(this.instanceInfo.config));
@@ -644,7 +653,7 @@ export default {
         });
       } catch (error) {
         this.$message({
-          message: "无法获得远程主机网络列表，建议检查docker配置",
+          message: "无法获得远程主机网络列表，建议检查 Docker 配置",
           type: "error"
         });
       } finally {
@@ -742,7 +751,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .bt {

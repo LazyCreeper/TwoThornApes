@@ -8,27 +8,76 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
   <meta name="renderer" content="webkit" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="MCSManager Panel" />
+  <meta name="description" content="233 Found MCSManager Panel" />
   <link rel="icon" href="favicon.ico" />
   <link rel="stylesheet" href="./static/setting.css" />
+  <style>
+    #_app-loading {
+      background-color: rgb(0,0,0,0.8);
+      backdrop-filter: blur(4px);
+      position: fixed;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      top: 0px;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #_app-loading-text {
+      text-align: center;
+    }
+
+    ._nb-spinner {
+      width: 32px;
+      height: 32px;
+      margin: 0 auto;
+      background: transparent;
+      border-top: 4px solid #90efcc;
+      border-right: 4px solid transparent;
+      border-radius: 50%;
+      animation: 1s _spin linear infinite;
+    }
+
+    @keyframes _spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <script>
+    window.addEventListener("load", function () {
+      document.getElementById("_app-loading").setAttribute("style", "display: none;");
+    });
+  </script>
   <title>控制面板 | MCSManager</title>
 </head>
 
 <body>
   <noscript>
     <div style="text-align: center;margin-top: 10%;">
-      <h2>很抱歉，网页需要 Javascript 运行时环境，请准许运行脚本或使用新版现代浏览器。</h2>
-      <p>Sorry, the web page requires a Javascript runtime environment, please allow you to run scripts or use a new
-        version of the modern browser.</p>
-      <p>推荐使用 <a href="https://www.google.cn/chrome/">Chrome</a> 现代浏览器</p>
+      <h4>Sorry, the web page requires a Javascript runtime environment, please allow you to run scripts or use a new
+        version of the modern browser.</h4>
       <p>It is recommended to use <a href="https://www.google.cn/chrome/">Chrome</a> modern browser.</p>
     </div>
   </noscript>
-  <div id="app" class="app"></div>
+  <div id="_app-loading" data-component-type="loading">
+    <div id="_app-loading-text">
+      <div class="_nb-spinner"></div>
+      <!--<img src="https://store-g1.seewo.com/0a533be125d04b318a6029ef9016422e15927297713026">-->
+      <div style="margin: 12px; color:#aaa">少女祈祷中...</div>
+    </div>
+  </div>
+  <div id="app" class="app" data-component-type="vue-root"></div>
 </body>
 
-
-<!-- 编辑器依赖库 -->
+<!-- Editor dependency library -->
 <script src="/static/editor/ace.js" type="text/javascript" charset="utf-8"></script>
 <!-- Sponsors -->
 <script async="true" src="https://mcsmanager.com/sponsor.js" type="text/javascript" charset="utf-8"></script>
@@ -36,7 +85,7 @@
 <script crossorigin="anonymous" integrity="sha512-YXld82fwBSmWdqBekCK0oFyquMBiHZGGQnvGjFMwwx4+uxTdHP7DSisFWoFQiZ+G/43mnAmrY/fMdXuDVDdAKQ==" src="https://lib.baomitu.com/limonte-sweetalert2/11.4.17/sweetalert2.all.min.js"></script>
 <script>
   function checkUpdate(){
-    var ver1 = {"summer": "2.5.1 beta"}//请勿修改版本号
+    var ver1 = {"summer": "2.6"}//请勿修改版本号
     if (ver1.summer == ver2.summer) {
       Swal.fire({
         icon : 'success',

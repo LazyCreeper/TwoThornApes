@@ -1,28 +1,22 @@
 <!--
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+  Copyright (C) 2022 Suwings <Suwings@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
+  it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
   
-  According to the GPL, it is forbidden to delete all copyright notices, 
+  According to the AGPL, it is forbidden to delete all copyright notices, 
   and if you modify the source code, you must open source the
   modified source code.
 
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
+  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
 
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
+  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
+  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
 
-  根据协议，您必须保留所有版权声明，如果修改源码则必须开源修改后的源码。
-  前往 https://mcsmanager.com/ 申请闭源开发授权或了解更多。
+  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
+  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
 -->
 
 <template>
@@ -47,7 +41,6 @@
           </el-row>
         </template>
       </Panel>
-
       <div>
         <el-row :gutter="20">
           <el-col :md="6" :xs="12" :offset="0">
@@ -74,7 +67,7 @@
             >
             </ValueCard>
           </el-col>
-          <el-col :md="6" :xs="12" :offset="0" >
+          <el-col :md="6" :xs="12" :offset="0">
             <ValueCard
               title="用户登录次数"
               sub-title="登录失败次数 : 登录成功次数"
@@ -105,14 +98,14 @@
         <template #title>分布式服务总览</template>
         <template #default>
           <p>
-            确保所有远程服务均在线，离线状态将导致此远程服务以及相关功能不可用，可能会影响使用体验与数据。
+            确保所有守护进程均在线，离线状态将导致此守护进程以及相关功能不可用，可能会影响使用体验与数据。
             <br />
-            面板端 {{ panelVersion }} 所需最低守护进程版本：{{ specifiedDaemonVersion }}
+            面板端 {{ panelVersion }} 必须对应守护进程 {{ specifiedDaemonVersion }} 版本
           </p>
           <el-table :data="servicesStatus" style="width: 100%" size="small">
             <el-table-column prop="ip" label="地址" width="180"> </el-table-column>
-            <el-table-column prop="port" label="端口" > </el-table-column>
-            <el-table-column prop="remarks" label="备注" width="180"> </el-table-column>
+            <el-table-column prop="port" label="端口"> </el-table-column>
+            <el-table-column prop="remarks" label="备注" width="240"> </el-table-column>
             <el-table-column prop="cpu" label="CPU"> </el-table-column>
             <el-table-column prop="mem" label="内存"> </el-table-column>
             <el-table-column prop="instance" label="已有实例"> </el-table-column>
@@ -128,7 +121,7 @@
                 <span class="color-red">
                   <el-tooltip
                     effect="dark"
-                    v-if="scope.row.version !== specifiedDaemonVersion"
+                    v-if="scope.row.version !== specifiedDaemonVersion && scope.row.status"
                     placement="top"
                     content="与面板端要求版本不一致"
                   >
@@ -143,7 +136,7 @@
                   <i class="el-icon-circle-check"></i> 在线
                 </span>
                 <span class="color-red" v-if="!scope.row.status">
-                  <el-tooltip effect="dark" content="无法连接到指定ip或者密钥错误" placement="top">
+                  <el-tooltip effect="dark" content="无法连接到指定 IP 或者密钥错误" placement="top">
                     <span><i class="el-icon-warning-outline"></i> 离线</span>
                   </el-tooltip>
                 </span>
@@ -152,13 +145,12 @@
           </el-table>
         </template>
       </Panel>
-
       <el-row :gutter="20">
         <el-col :md="12" :offset="0">
           <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
             <template #title>面板端接口请求量</template>
             <template #default>
-              <p>每1分钟统计间隔，总计1小时的请求历史</p>
+              <p>每 1 分钟统计间隔，总计 1 小时的请求历史</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main3" style="width: 100%; height: 200px"></div>
               </div>
@@ -169,7 +161,7 @@
           <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
             <template #title>面板端 CPU 使用率</template>
             <template #default>
-              <p>每10秒统计间隔，总十分钟的 CPU 历史使用率</p>
+              <p>每 10 秒统计间隔，总计 10 分钟的 CPU 历史使用率</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main" style="width: 100%; height: 200px"></div>
               </div>
@@ -180,9 +172,9 @@
       <el-row :gutter="20">
         <el-col :md="12" :offset="0">
           <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
-            <template #title>分布式应用实例状态</template>
+            <template #title>分布式实例运行量</template>
             <template #default>
-              <p>每1分钟统计间隔，总计1小时的实例状态历史</p>
+              <p>每 1 分钟统计间隔，总计 1 小时的实例状态历史</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main4" style="width: 100%; height: 200px"></div>
               </div>
@@ -193,7 +185,7 @@
           <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
             <template #title>面板端内存使用率</template>
             <template #default>
-              <p>每10秒统计间隔，总十分钟的内存历史使用率</p>
+              <p>每 10 秒统计间隔，总计 10 分钟的内存历史使用率</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main2" style="width: 100%; height: 200px"></div>
               </div>
@@ -201,7 +193,6 @@
           </Panel>
         </el-col>
       </el-row>
-
     </el-col>
   </el-row>
 
@@ -222,14 +213,11 @@
       </el-row>
     </template>
   </Panel>
-
-  <UserInit v-model:visible="initUserVisible"></UserInit>
 </template>
 
 <script>
 import * as echarts from "echarts";
 import Panel from "../../components/Panel";
-import UserInit from "../../components/UserInit";
 import { request } from "../service/protocol";
 import { API_OVERVIEW } from "../service/common";
 import {
@@ -239,7 +227,7 @@ import {
 } from "../service/chart_option";
 import ValueCard from "../../components/ValueCard";
 export default {
-  components: { Panel, ValueCard, UserInit },
+  components: { Panel, ValueCard },
   data() {
     return {
       loading: true,
@@ -445,7 +433,6 @@ export default {
       }
     },
     initChart() {
-      //console.log("正在初始化表格....");
       // 基于准备好的dom，初始化echarts实例
       this.systemChart = echarts.init(document.getElementById("echart-wrapper-main"));
       this.systemChart.setOption(getDefaultOption());
@@ -468,7 +455,7 @@ export default {
         textStyle: {color:"#dad6a1"},
         dataset: {
           dimensions: ["time", "value"],
-          source,
+          source
         },
         //接口请求量
         color: [
@@ -477,11 +464,14 @@ export default {
       });
       this.systemChart4.setOption({
         textStyle: {color:"#dad6a1"},
+        yAxis: {
+          max: this.forChartTotalInstance <= 1 ? 1 : this.forChartTotalInstance
+        },
         dataset: {
-          dimensions: ["time", "totalInstance", "runningInstance"],
+          dimensions: ["time", "runningInstance"],
           source
         },
-        //总数，运行书
+        //总数，运行数
         color: [
         '#99f5bd','#dbff95'
         ]
@@ -529,13 +519,6 @@ export default {
     this.loading = false;
     this.manualLink = window.onlineMCSManagerNotice ? window.onlineMCSManagerNotice() : null;
     this.startInterval();
-
-    setTimeout(() => {
-      const { isInit, permission } = this.$store.state.userInfo;
-      if (isInit === false && permission === 10) {
-        this.initUserVisible = true;
-      }
-    }, 1000);
   },
   beforeUnmount() {
     this.stopInterval();
