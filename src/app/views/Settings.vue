@@ -21,17 +21,19 @@
 
 <template>
   <Panel>
-    <template #title>配置操作</template>
+    <template #title>{{ $t("settings.setOperate") }}</template>
     <template #default>
       <div class="flex flex-space-between flex-align-items-center">
         <div>
           <ItemGroup>
-            <el-button type="success" size="small" @click="updateSettings">更新配置</el-button>
-            <el-button type="" size="small" @click="refresh">刷新</el-button>
+            <el-button type="success" size="small" @click="updateSettings">{{
+              $t("settings.updateSet")
+            }}</el-button>
+            <el-button type="" size="small" @click="refresh">{{ $t("general.refresh") }}</el-button>
           </ItemGroup>
         </div>
         <span class="color-gray hidden-md-and-down"
-          >部分配置可能需要重启面板才能生效&nbsp;&nbsp;</span
+          >{{ $t("settings.updateSetInfo") }}&nbsp;&nbsp;</span
         >
       </div>
     </template>
@@ -39,7 +41,7 @@
 
   <div v-if="settings">
     <Panel>
-      <template #title>基础设置</template>
+      <template #title>{{ $t("settings.basicSetting") }}</template>
       <template #default>
         <el-row :gutter="20">
           <el-col :md="12">
@@ -48,12 +50,13 @@
             </div> -->
             <div class="config-item">
               <div class="sub-title">
-                <p class="sub-title-title">面板访问端口</p>
+                <p class="sub-title-title">{{ $t("settings.accessPort") }}</p>
                 <p class="sub-title-info">
-                  浏览器访问网页面板的端口，必须防火墙放行此端口，重启面板生效。
+                  {{ $t("settings.accessPortInfo") }}
                 </p>
               </div>
-              <el-input placeholder="请必须填入数字" v-model="settings.httpPort"> </el-input>
+              <el-input :placeholder="$t('settings.inputNum')" v-model="settings.httpPort">
+              </el-input>
             </div>
             <!-- <div class="config-item">
               <div class="sub-title">
@@ -66,26 +69,22 @@
             </div> -->
             <div class="config-item">
               <div class="sub-title">
-                <p class="sub-title-title">面板绑定 IP</p>
+                <p class="sub-title-title">{{ $t("settings.bindIP") }}</p>
                 <p class="sub-title-info">
-                  一般情况请保持默认值，一般适用于多个 IP，网卡绑定的场景。
+                  {{ $t("settings.bindIPInfo") }}
                 </p>
               </div>
-              <el-input placeholder="默认 0.0.0.0 | 默认情况无需填写" v-model="settings.httpIp">
-              </el-input>
+              <el-input :placeholder="$t('settings.inputIP')" v-model="settings.httpIp"> </el-input>
             </div>
 
             <div class="config-item">
               <div class="sub-title">
-                <p class="sub-title-title">登录界面简单说明</p>
+                <p class="sub-title-title">{{ $t("settings.loginPage") }}</p>
                 <p class="sub-title-info">
-                  用于显示在登录界面公开简要说明文字，可以用于管理员身份介绍，备案信息介绍。
+                  {{ $t("settings.loginPageInfo") }}
                 </p>
               </div>
-              <el-input
-                placeholder="请输入文案，例如：京ICP备00000001号"
-                v-model="settings.loginInfo"
-              >
+              <el-input :placeholder="$t('settings.inputCopy')" v-model="settings.loginInfo">
               </el-input>
             </div>
           </el-col>
@@ -94,11 +93,10 @@
           <el-col :md="8">
             <div>
               <div class="sub-title">
-                <p class="sub-title">相关参考链接</p>
+                <p class="sub-title">{{ $t("settings.referenceLink") }}</p>
                 <p class="sub-title-info">
-                  面板的大部分设置十分重要，在一般情况下，绝大部分参数都无需更改，如果某个参数您并不知晓代表什么，那么建议您不要对其进行修改。
+                  {{ $t("settings.referenceLinksInfo") }}
                 </p>
-                <p class="sub-title-info">或者，您可以考虑阅读以下链接。</p>
               </div>
               <!-- <a class="alink" href="http://">
                 <p>面板设置配置手册</p>
@@ -112,7 +110,7 @@
       </template>
     </Panel>
     <Panel>
-      <template #title>限制与安全</template>
+      <template #title>{{ $t("settings.limitAndSecurity") }}</template>
       <template #default>
         <el-row :gutter="20">
           <el-col :md="12">
@@ -128,124 +126,52 @@
             </div> -->
             <div class="config-item">
               <div class="sub-title">
-                <p class="sub-title-title">准许普通用户使用文件管理功能</p>
+                <p class="sub-title-title">{{ $t("settings.canFileManager") }}</p>
                 <p class="sub-title-info">
-                  文件管理是一个较为消耗资源且不易控制的功能，如果您的普通用户没有文件管理的任何需求，可以禁止用户使用文件管理。
+                  {{ $t("settings.canFileManagerInfo") }}
                 </p>
               </div>
-              <el-select v-model="settings.canFileManager" placeholder="请选择">
-                <el-option label="准许" :value="true"></el-option>
-                <el-option label="禁止" :value="false"></el-option>
+              <el-select
+                v-model="settings.canFileManager"
+                :placeholder="$t('general.pleaseSelect')"
+              >
+                <el-option :label="$t('general.allow')" :value="true"></el-option>
+                <el-option :label="$t('general.forbid')" :value="false"></el-option>
               </el-select>
             </div>
             <div class="config-item">
               <div class="sub-title">
-                <p class="sub-title-title">跨域请求 API 接口</p>
+                <p class="sub-title-title">{{ $t("settings.crossAPI") }}</p>
                 <p class="sub-title-info">
-                  HTTP 响应将会加入 access-control-allow-origin:
-                  *，可能会降低安全性，但是会提高开发扩展性。
+                  {{ $t("settings.crossAPIInfo") }}
                 </p>
               </div>
-              <el-select v-model="settings.crossDomain" placeholder="请选择">
-                <el-option label="启用" :value="true"></el-option>
-                <el-option label="禁止" :value="false"></el-option>
+              <el-select v-model="settings.crossDomain" :placeholder="$t('general.pleaseSelect')">
+                <el-option :label="$t('general.enable')" :value="true"></el-option>
+                <el-option :label="$t('general.forbid')" :value="false"></el-option>
               </el-select>
             </div>
             <div class="config-item">
               <div class="sub-title">
-                <p class="sub-title-title">同 IP 登录次数限制</p>
+                <p class="sub-title-title">{{ $t("settings.loginCheckIp") }}</p>
                 <p class="sub-title-info">
-                  此功能将保护您的面板不被单个主机暴力破解密码，每个 IP 只有 10 次密码错误次数。
+                  {{ $t("settings.loginCheckIpInfo") }}
                 </p>
               </div>
-              <el-select v-model="settings.loginCheckIp" placeholder="请选择">
-                <el-option label="启用" :value="true"></el-option>
-                <el-option label="禁止" :value="false"></el-option>
+              <el-select v-model="settings.loginCheckIp" :placeholder="$t('general.pleaseSelect')">
+                <el-option :label="$t('general.enable')" :value="true"></el-option>
+                <el-option :label="$t('general.forbid')" :value="false"></el-option>
               </el-select>
             </div>
-            <!-- <div class="config-item">
-              <div class="sub-title">
-                <p class="sub-title-title">使用 Gzip 静态文件压缩</p>
-                <p class="sub-title-info">
-                  如果你使用反向代理或某 HTTP 服务自带的 Gzip，请关闭它，否则可以使用默认值。
-                </p>
-              </div>
-              <el-select v-model="settings.gzip" placeholder="请选择">
-                <el-option label="启用" :value="true"></el-option>
-                <el-option label="禁止" :value="false"></el-option>
-              </el-select>
-            </div>
-            <div class="config-item">
-              <div class="sub-title">
-                <p class="sub-title-title">解压缩最大并发任务</p>
-                <p class="sub-title-info">
-                  对于机械硬盘请略调小此值，对于高性能硬盘和 CPU 可以适当提高。
-                </p>
-              </div>
-              <el-select v-model="settings.maxCompress" placeholder="请选择">
-                <el-option label="无限制" :value="-1"></el-option>
-                <el-option label="最大并发 1 个" :value="1"></el-option>
-                <el-option label="最大并发 2 个" :value="2"></el-option>
-                <el-option label="最大并发 3 个" :value="3"></el-option>
-                <el-option label="最大并发 5 个" :value="5"></el-option>
-                <el-option label="最大并发 8 个" :value="8"></el-option>
-                <el-option label="最大并发 10 个" :value="10"></el-option>
-                <el-option label="最大并发 15 个" :value="15"></el-option>
-                <el-option label="最大并发 20 个" :value="20"></el-option>
-                <el-option label="最大并发 30 个" :value="30"></el-option>
-                <el-option label="最大并发 40 个" :value="40"></el-option>
-                <el-option label="最大并发 60 个" :value="60"></el-option>
-                <el-option label="最大并发 80 个" :value="80"></el-option>
-                <el-option label="最大并发 100 个" :value="100"></el-option>
-                <el-option label="最大并发 200 个" :value="200"></el-option>
-              </el-select>
-            </div>
-            <div class="config-item">
-              <div class="sub-title">
-                <p class="sub-title-title">最大并发下载文件</p>
-                <p class="sub-title-info">所有用户最多可同时下载多少个文件，根据宽带自主调整</p>
-              </div>
-              <el-select v-model="settings.maxDonwload" placeholder="请选择">
-                <el-option label="无限制" value=""></el-option>
-                <el-option label="最大并发 1 个" :value="1"></el-option>
-                <el-option label="最大并发 5 个" :value="5"></el-option>
-                <el-option label="最大并发 10 个" :value="10"></el-option>
-                <el-option label="最大并发 15 个" :value="15"></el-option>
-                <el-option label="最大并发 20 个" :value="20"></el-option>
-                <el-option label="最大并发 30 个" :value="30"></el-option>
-                <el-option label="最大并发 40 个" :value="40"></el-option>
-                <el-option label="最大并发 60 个" :value="60"></el-option>
-                <el-option label="最大并发 80 个" :value="80"></el-option>
-                <el-option label="最大并发 100 个" :value="100"></el-option>
-                <el-option label="最大并发 200 个" :value="200"></el-option>
-              </el-select>
-            </div>
-            <div class="config-item">
-              <div class="sub-title">
-                <p class="sub-title-title">下载限速</p>
-                <p class="sub-title-info">对于小宽度服务器可以适当调小。</p>
-              </div>
-              <el-select v-model="value3" placeholder="请选择">
-                <el-option label="无限制" value=""></el-option>
-                <el-option label="100kb/s" value="100kb"></el-option>
-                <el-option label="200kb/s" value="200kb"></el-option>
-                <el-option label="300kb/s" value="300kb"></el-option>
-                <el-option label="500kb/s" value="500kb"></el-option>
-                <el-option label="1mb/s" value="1mb"></el-option>
-                <el-option label="2mb/s" value="2mb"></el-option>
-                <el-option label="5mb/s" value="5mb"></el-option>
-                <el-option label="10mb/s" value="10mb"></el-option>
-              </el-select>
-            </div> -->
           </el-col>
 
           <el-col :md="4"></el-col>
           <el-col :md="8">
             <div>
               <div class="sub-title">
-                <p class="sub-title">注意事项</p>
+                <p class="sub-title">{{ $t("settings.attention") }}</p>
                 <p class="sub-title-info">
-                  这些配置设置需要一部分专业知识，您可以根据您的硬件设备来大概猜测哪些值适合您。<br />一般情况下，默认值可以满足个人日常的使用场景，如果规模一旦更大，对硬件的要求更高，为了不过分损失用户体验，一个合适的阈值是十分重要的。
+                  <span v-html="$t('settings.attentionInfo')"></span>
                 </p>
               </div>
               <!-- <div class="sub-title">
@@ -265,84 +191,25 @@
         </el-row>
       </template>
     </Panel>
-    <!-- <Panel>
-      <template #title>远程守护进程数据传输模式</template>
-      <template #default>
-        <el-row :gutter="20">
-          <el-col :span="24" :offset="0">
-            <div class="sub-title">
-              <p class="sub-title-title">使用须知</p>
-              <p class="sub-title-info">
-                在您的用户量较少时，可以采用默认的“流量转发模式”，当您的用户量过大导致面板端运行缓慢时，请采用“守护进程直连模式”模式。<br />
-                为确保高可用性，建议中小型商业用户采用第二种转发模式，更改后需要重启面板端才可生效。
-              </p>
-            </div>
-          </el-col>
-
-          <el-col :md="6">
-            <SelectBlock
-              @click="changeForwardType(1)"
-              style="height: 240px"
-              :class="settings.forwardType === 1 ? 'selectedForwardMode' : ''"
-            >
-              <template #title>面板端流量转发模式</template>
-              <template #info>
-                <span>
-                  配置简单，所有流量都要经过面板端的数据端口做转发，但会增加中央面板端的流量压力。
-                </span>
-                <div style="margin-top: 8px">
-                  <img :src="require('../../assets/mode2.png')" style="width: 100%" />
-                </div>
-              </template>
-            </SelectBlock>
-          </el-col>
-
-          <el-col :md="6">
-            <SelectBlock
-              @click="changeForwardType(2)"
-              style="height: 240px"
-              :class="settings.forwardType === 2 ? 'selectedForwardMode' : ''"
-            >
-              <template #title>跨面板端远程守护进程直连模式</template>
-              <template #info>
-                <span style="margin-bottom: 4px">
-                  配置复杂，大量流量由远程守护进程与浏览器建立直接连接通道，以减小面板端的流量压力。
-                </span>
-                <div style="margin-top: 8px">
-                  <img :src="require('../../assets/mode1.png')" style="width: 100%" />
-                </div>
-              </template>
-            </SelectBlock>
-          </el-col>
-        </el-row>
-      </template>
-    </Panel> -->
 
     <Panel>
-      <template #title>关于</template>
+      <template #title>{{ $t("settings.about") }}</template>
       <template #default>
         <el-row :gutter="20">
           <el-col :md="12">
             <div class="sub-title">
               <p class="sub-title-title">
-                软件根据
-                <a
-                  target="black"
-                  href="https://github.com/MCSManager/MCSManager-Daemon/blob/master/LICENSE"
-                  >AGPL-3.0</a
-                >
-                开源软件协议发行
+                <span v-html="$t('settings.aboutTitle')"></span>
               </p>
               <p class="sub-title-info">
-                此协议准许每个人都可以复制和分发代码副本，并且可以对使用者收取服务费用。<br />
-                若对代码任何修改，则必须无偿提供软件的完整源代码下载。
+                <span v-html="$t('settings.aboutTitleInfo')"></span>
               </p>
             </div>
 
             <div class="sub-title">
-              <p class="sub-title-title">闭源商业许可证</p>
+              <p class="sub-title-title">{{ $t("settings.closedSource") }}</p>
               <p class="sub-title-info">
-                若您想二次开发并且闭源使用于任何活动（包括但不限于商业，个人）。
+                {{ $t("settings.closedSourceInfo") }}
               </p>
             </div>
             <div>
@@ -353,7 +220,7 @@
                   rel="noopener noreferrer"
                   style="display: inline-block"
                 >
-                  <el-button type="" size="default">了解更多</el-button>
+                  <el-button type="" size="medium">{{ $t("settings.learnMore") }}</el-button>
                 </a>
                 <a
                   href="https://mcsmanager.com/agreement.html"
@@ -361,83 +228,49 @@
                   rel="noopener noreferrer"
                   style="display: inline-block"
                 >
-                  <el-button type="" size="default">用户协议</el-button>
+                  <el-button type="" size="medium">{{ $t("settings.userAgreement") }}</el-button>
                 </a>
               </ItemGroup>
-            </div>
-
-            <div class="contributors" v-if="sponsorList">
-              <div class="sub-title">
-                <p class="sub-title-title">开源项目赞助名单</p>
-                <p class="sub-title-info">
-                  只含前 40 名赞助者，查看完整赞助名单或进行赞助支持请前往
-                  <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer">
-                    MCSManager 官方网站 </a
-                  >。
-                </p>
-                <p class="sub-title-info"></p>
-              </div>
-              <el-row :gutter="10">
-                <el-col :span="24">
-                  <div
-                    v-for="(item, index) in sponsorList"
-                    :key="index"
-                    style="margin: 0px 8px 4px 0px; display: inline-block"
-                  >
-                    <a
-                      :href="item.link || 'https://mcsmanager.com'"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style="text-decoration: underline"
-                    >
-                      <span style="margin: 0px; font-size: 13px">
-                        {{ item.name }}
-                      </span>
-                    </a>
-                  </div>
-                </el-col>
-              </el-row>
             </div>
           </el-col>
           <el-col :md="4"></el-col>
           <el-col :md="8">
-            <div>
-              <div class="sub-title">
-                <p class="sub-title">
-                  该主题由<a href="https://www.lazy.ink" target="_blank">Lazy</a>开发
-                </p>
-                <p class="sub-title-info">
-                  如果你在使用主题过程中遇到任何问题或发现错误，可反馈到我的邮箱：<a
-                    href="mailto:lazy_creeper@qq.com"
-                    >lazy_creeper@qq.com</a
-                  ><br />主题<span style="color: rgb(255, 97, 97)">完全免费！</span>严禁倒卖！
-                </p>
-              </div>
-              <div class="sub-title">
-                <p class="sub-title">
-                  主题发布地址：<a
-                    href="https://blog.imlazy.ink:233/index.php/archives/253/"
-                    target="_blank"
-                    >点击前往</a
-                  >
-                </p>
-
-                <p class="sub-title">
-                  赞助二维码：<a
-                    href="https://pro-image.xiaoheiban.cn/ljt/47750d64-ba11-40b3-8bcf-d769a6fdf113.jpg"
-                    target="_blank"
-                    >点击下载</a
-                  >
-                </p>
-
-                <p class="sub-title">
-                  当前主题版本：2.6&nbsp;&nbsp;<a href="javascript:checkUpdate();">检查更新</a
-                  ><lazy id="lazy"></lazy>
-                </p>
-              </div>
-            </div>
+            <div v-html="$t('settings.lazy')"></div>
+            
           </el-col>
         </el-row>
+        <div class="contributors" v-if="sponsorList">
+          <div class="sub-title">
+            <p class="sub-title-title">{{ $t("settings.sponsorList") }}</p>
+            <p class="sub-title-info">
+              {{ $t("settings.sponsorListInfo") }}
+              <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer">
+                MCSManager.com </a
+              >。
+            </p>
+            <p class="sub-title-info"></p>
+          </div>
+          <el-row :gutter="10">
+            <el-col :span="24">
+              <div
+                v-for="(item, index) in sponsorList"
+                :key="index"
+                style="margin: 0px 8px 4px 0px; display: inline-block"
+              >
+                <a
+                  :href="item.link || 'https://mcsmanager.com'"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style="text-decoration: underline"
+                >
+                  <span style="margin: 0px; font-size: 13px">
+                    {{ item.name }}
+                  </span>
+                </a>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
       </template>
     </Panel>
   </div>
@@ -468,7 +301,7 @@ export default {
   methods: {
     async refresh() {
       await this.render();
-      this.$message({ message: "已刷新", type: "success" });
+      this.$message({ message: this.$t("general.refreshFinish"), type: "success" });
     },
     async render() {
       this.settings = await request({
@@ -483,7 +316,7 @@ export default {
           url: API_SETTINGS,
           data: this.settings
         });
-        this.$message({ message: "已更新，部分选项生效可能需要重启面板", type: "success" });
+        this.$message({ message: this.$t("settings.settingUpdate"), type: "success" });
       } catch (error) {
         this.$message({ message: error, type: "error" });
       }
@@ -504,20 +337,9 @@ export default {
       } else {
         this.sponsorList = null;
       }
-    },
-    async changeForwardType(v) {
-      await this.$confirm(
-        "您确定要更改分布式流量转发类型吗？更改后某些配置可能需要重新调整，您随时可以调整回来。",
-        "最终确认",
-        {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }
-      );
-      this.settings.forwardType = v;
-      this.$message({ message: "点击最上方保存按钮即可更改", type: "info" });
     }
+    //async changeForwardType(v) {
+    //}
   },
   async mounted() {
     await this.render();
