@@ -24,33 +24,39 @@
     <div class="bg"></div>
     <div class="panel-wrapper" v-if="step == 0">
       <Panel class="panel tc" body-style="padding:40px;">
-        <h1 class="title">欢迎使用，MCSManager 管理面板</h1>
-        <p>我们支持 Minecraft，其他部分游戏服务端以及通用控制台程序的交互和管理。</p>
+        <h1 class="title">{{ $t("install.welcome") }}</h1>
+        <p>{{ $t("install.desc") }}</p>
         <div style="margin-top: 48px">
-          <el-button type="primary" @click="next">现在安装</el-button>
+          <el-button type="primary" @click="next" v-loading="isLoading">{{
+            $t("install.start")
+          }}</el-button>
         </div>
         <div class="panel-bottom">
-          <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer"
-            >官方网站: https://mcsmanager.com/</a
-          >
+          <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer">
+            Reference: https://mcsmanager.com/
+          </a>
+          <br />
+          <span>Released under the AGPL-3.0 License.</span>
         </div>
       </Panel>
     </div>
 
     <div class="panel-wrapper" v-if="step == 1">
       <Panel class="panel" body-style="padding:40px;">
-        <h1 class="title">创建一个访问面板的管理员账号</h1>
-        <p>用户名支持任何语言，请务必保证您的密码安全。</p>
+        <h1 class="title">{{ $t("install.createAdminAccount") }}</h1>
+        <p>{{ $t("install.createAdminAccountInfo") }}</p>
         <div>
           <el-form ref="form" :model="initUser" :rules="rules" label-width="66px">
-            <el-form-item label="用户名" prop="userName">
+            <el-form-item :label="$t('users.userName')" prop="userName">
               <el-input v-model="initUser.userName" />
             </el-form-item>
-            <el-form-item label="密码" prop="passWord">
+            <el-form-item :label="$t('install.passWord')" prop="passWord">
               <el-input v-model="initUser.passWord" />
             </el-form-item>
             <el-form-item label="">
-              <el-button type="primary" @click="createUser">创建账号</el-button>
+              <el-button type="primary" @click="createUser" v-loading="isLoading">
+                {{ $t("install.createAccount") }}
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -78,16 +84,16 @@
 
     <div class="panel-wrapper" v-if="step == 2">
       <Panel class="panel" body-style="padding:40px;" v-loading="isLoading">
-        <h1 class="title">完成！</h1>
-        <p>最后，您是第一次使用此软件吗？</p>
+        <h1 class="title">{{ $t("install.ohhh") }}</h1>
+        <p>{{ $t("install.ohhhInfo") }}</p>
         <ItemGroup>
           <SelectBlock @click="toQuickStart">
-            <template #title>首次使用</template>
+            <template #title>{{ $t("install.firstTime") }}</template>
           </SelectBlock>
         </ItemGroup>
         <ItemGroup>
           <SelectBlock @click="toOverview">
-            <template #title>老用户</template>
+            <template #title>{{ $t("install.oldUSer") }}</template>
           </SelectBlock>
         </ItemGroup>
       </Panel>
@@ -111,14 +117,26 @@ export default {
         passWord: ""
       },
       rules: {
-        userName: { required: true, message: "请输入内容", trigger: "blur" },
-        passWord: { required: true, message: "请输入内容", trigger: "blur" }
+        userName: {
+          required: true,
+          message: this.$t("users.newUserDialog.inputSth"),
+          trigger: "blur"
+        },
+        passWord: {
+          required: true,
+          message: this.$t("users.newUserDialog.inputSth"),
+          trigger: "blur"
+        }
       }
     };
   },
   methods: {
     next() {
-      this.step++;
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+        this.step++;
+      }, 2000);
     },
     async createUser() {
       this.$refs["form"].validate(async (valid) => {
@@ -133,7 +151,7 @@ export default {
             }
           });
           this.next();
-          this.$message({ message: "管理员已创建", type: "success" });
+          this.$message({ message: this.$t("install.adminOK"), type: "success" });
         } catch (err) {
           this.$message({ message: err, type: "error" });
         }
@@ -216,5 +234,11 @@ export default {
 .title {
   font-size: 24px;
   margin: 0px 0px 12px 0px;
+}
+
+@media (max-width: 780px) {
+  .bg {
+    background-image: var(--background-login-image-phone);
+  }
 }
 </style>
