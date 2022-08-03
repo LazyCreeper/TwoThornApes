@@ -60,4 +60,8 @@ export default {
   backdrop-filter: blur(3px);
 }
 
+.sub-title {
+  color: gray;
+  font-size: 13px;
+}
 </style>
