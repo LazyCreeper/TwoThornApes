@@ -24,14 +24,14 @@
     <el-row :gutter="20">
       <el-col :span="24">
         <Panel>
-          <template #title>{{ $t("users.userList") }}</template>
+          <template #title>用户列表</template>
           <template #default>
             <el-row :gutter="20" class="row-mb">
               <el-col :md="12" :offset="0" class="col-md-responsive">
                 <el-input
                   v-model="query.userName"
                   type="text"
-                  :placeholder="$t('general.searchName')"
+                  placeholder="根据名称搜索"
                   size="small"
                   style="width: 180px; margin-right: 10px"
                   autocomplete="off"
@@ -39,15 +39,15 @@
                   @focus="() => (readonly = false)"
                 ></el-input>
                 <el-button size="small" type="primary" @click="refresh">
-                  <i class="el-icon-refresh"></i> {{ $t("general.search") }}
+                  <i class="el-icon-refresh"></i> 搜索
                 </el-button>
               </el-col>
               <el-col :md="12" :offset="0" class="text-align-right col-md-responsive">
                 <el-button size="small" type="success" @click="toNewUserPanel">
-                  <i class="el-icon-plus"></i> {{ $t("users.newUser") }}
+                  <i class="el-icon-plus"></i> 新建用户
                 </el-button>
                 <el-button size="small" type="danger" @click="deleteUser">
-                  <i class="el-icon-delete"></i> {{ $t("users.delUser") }}
+                  <i class="el-icon-delete"></i> 删除用户
                 </el-button>
               </el-col>
             </el-row>
@@ -77,25 +77,14 @@
             >
               <el-table-column type="selection" width="55"> </el-table-column>
               <el-table-column prop="uuid" label="UUID" width="240"></el-table-column>
-              <el-table-column prop="userName" :label="$t('users.userName')"></el-table-column>
-              <el-table-column
-                prop="permission"
-                :label="$t('users.permit.permissionLevel')"
-              ></el-table-column>
-              <el-table-column prop="registerTime" :label="$t('users.regTime')"></el-table-column>
-              <el-table-column prop="loginTime" :label="$t('users.lastTime')"></el-table-column>
-              <el-table-column
-                :label="$t('general.operate')"
-                style="text-align: center"
-                width="180"
-              >
+              <el-table-column prop="userName" label="用户名"></el-table-column>
+              <el-table-column prop="permission" label="权限等级"></el-table-column>
+              <el-table-column prop="registerTime" label="注册时间"></el-table-column>
+              <el-table-column prop="loginTime" label="最后登录"></el-table-column>
+              <el-table-column label="操作" style="text-align: center" width="180">
                 <template #default="scope">
-                  <el-button size="mini" @click="toEditUserPanel(scope.row)">{{
-                    $t("general.edit")
-                  }}</el-button>
-                  <el-button size="mini" @click="toAssignPanel(scope.row)">{{
-                    $t("general.allocation")
-                  }}</el-button>
+                  <el-button size="mini" @click="toEditUserPanel(scope.row)">编辑</el-button>
+                  <el-button size="mini" @click="toAssignPanel(scope.row)">分配资源</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -106,62 +95,56 @@
 
     <!-- 新增用户弹框 -->
     <Dialog v-model="isNewUser">
-      <template #title>{{ $t("users.newUser") }}</template>
+      <template #title>新增用户</template>
       <template #default>
         <div>
           <div class="sub-title">
-            <p class="sub-title-title">{{ $t("users.userName") }}</p>
-            <p class="sub-title-info">{{ $t("users.userNameInfo") }}</p>
+            <p class="sub-title-title">用户名</p>
+            <p class="sub-title-info">必填，6 到 12 个字符，支持中文，英文和字符</p>
           </div>
           <el-input
             v-model="newUserInfo.userName"
-            :placeholder="$t('users.newUserDialog.inputSth')"
+            placeholder="请输入内容..."
             size="small"
-          >
-          </el-input>
+          ></el-input>
           <div class="sub-title row-mt">
-            <p class="sub-title-title">{{ $t("users.newUserDialog.userPasswd") }}</p>
-            <p class="sub-title-info">{{ $t("users.newUserDialog.userPasswdInfo") }}</p>
+            <p class="sub-title-title">用户密码</p>
+            <p class="sub-title-info">必填，9 到 36 个字符，不支持中文，只限于字母，数字和符号</p>
           </div>
           <el-input
             v-model="newUserInfo.password"
-            :placeholder="$t('users.newUserDialog.inputPasswd')"
+            placeholder="请输入密码"
             size="small"
             type="text"
           ></el-input>
           <div class="sub-title row-mt">
-            <p class="sub-title-title">{{ $t("users.permit.permission") }}</p>
-            <p class="sub-title-info">{{ $t("users.permit.permissionInfo") }}</p>
+            <p class="sub-title-title">权限</p>
+            <p class="sub-title-info">普通权限适用于商业用户，最高权限适用于管理人员</p>
           </div>
-          <el-select
-            v-model="newUserInfo.permission"
-            :placeholder="$t('general.pleaseSelect')"
-            size="small"
-          >
-            <el-option :label="$t('users.permit.normal')" :value="1"></el-option>
-            <el-option :label="$t('users.permit.admin')" :value="10"></el-option>
-            <el-option :label="$t('users.permit.ban')" :value="-1"></el-option>
+          <el-select v-model="newUserInfo.permission" placeholder="请选择" size="small">
+            <el-option label="普通权限" :value="1"></el-option>
+            <el-option label="最高权限" :value="10"></el-option>
+            <el-option label="禁封" :value="-1"></el-option>
           </el-select>
 
           <div class="sub-title row-mt">
-            <p class="sub-title-title">{{ $t("users.ps") }}</p>
+            <p class="sub-title-title">注意事项</p>
             <p class="sub-title-info">
-              {{ $t("users.psInfo") }}
+              若您从事出租商业活动，请务必保证应用实例运行在 Linux 的 Docker
+              虚拟容器中，否则将有安全隐患。
               <br />
               <a
                 class="color-blue"
                 href="https://docs.mcsmanager.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                >{{ $t("users.infoReference") }}</a
+                >具体信息参考</a
               >
             </p>
           </div>
           <div class="row-mt">
-            <el-button type="success" size="small" @click="createUser">{{
-              $t("general.add")
-            }}</el-button>
-            <el-button @click="cancelNewPanel" size="small">{{ $t("general.cancel") }}</el-button>
+            <el-button type="success" size="small" @click="createUser">新增</el-button>
+            <el-button @click="cancelNewPanel" size="small">取消</el-button>
           </div>
         </div>
       </template>
@@ -169,46 +152,35 @@
 
     <!-- 编辑用户弹框 -->
     <Dialog v-model="isEditUser">
-      <template #title>{{ $t("users.editUser") }}</template>
+      <template #title>编辑用户</template>
       <template #default>
         <div>
           <div class="sub-title">
-            <p class="sub-title-title require-field">{{ $t("users.userName") }}</p>
-            <p class="sub-title-info">{{ $t("users.userNameInfo") }}</p>
+            <p class="sub-title-title require-field">用户名</p>
+            <p class="sub-title-info">必填，6 到 12 个字符，支持中文，英文和字符</p>
           </div>
           <el-input
             v-model="editUserInfo.userName"
-            :placeholder="$t('users.newUserDialog.inputSth')"
-            size="medium"
-          >
-          </el-input>
-          <div class="sub-title row-mt">
-            <p class="sub-title-title require-field">{{ $t("users.resetPasswd") }}</p>
-            <p class="sub-title-info">{{ $t("users.resetPasswdInfo") }}</p>
-          </div>
-          <el-input
-            v-model="editUserInfo.passWord"
-            :placeholder="$t('users.originalSet')"
+            placeholder="请输入内容..."
             size="medium"
           ></el-input>
           <div class="sub-title row-mt">
-            <p class="sub-title-title require-field">{{ $t("users.permit.permission") }}</p>
-            <p class="sub-title-info">{{ $t("users.permit.permissionInfo") }}</p>
+            <p class="sub-title-title require-field">重置密码</p>
+            <p class="sub-title-info">不填写则不更变原有值</p>
           </div>
-          <el-select
-            v-model="editUserInfo.permission"
-            :placeholder="$t('general.pleaseSelect')"
-            size="medium"
-          >
-            <el-option :label="$t('users.permit.normal')" :value="1"></el-option>
-            <el-option :label="$t('users.permit.admin')" :value="10"></el-option>
-            <el-option :label="$t('users.permit.ban')" :value="-1"></el-option>
+          <el-input v-model="editUserInfo.passWord" placeholder="原值" size="medium"></el-input>
+          <div class="sub-title row-mt">
+            <p class="sub-title-title require-field">权限</p>
+            <p class="sub-title-info">普通权限适用于商业用户，最高权限适用于管理人员</p>
+          </div>
+          <el-select v-model="editUserInfo.permission" placeholder="请选择" size="medium">
+            <el-option label="普通权限" :value="1"></el-option>
+            <el-option label="最高权限" :value="10"></el-option>
+            <el-option label="禁封" :value="-1"></el-option>
           </el-select>
           <div class="row-mt">
-            <el-button type="success" size="small" @click="updateUser">{{
-              $t("users.updateData")
-            }}</el-button>
-            <el-button @click="cancelEditPanel" size="small">{{ $t("general.cancel") }}</el-button>
+            <el-button type="success" size="small" @click="updateUser">更新数据</el-button>
+            <el-button @click="cancelEditPanel" size="small">取消</el-button>
           </div>
         </div>
       </template>
@@ -360,13 +332,13 @@ export default {
             config: this.editUserInfo
           }
         });
-        this.$message({ type: "success", message: this.$t("notify.editSuccess") });
+        this.$message({ type: "success", message: "修改成功" });
         this.isEditUser = false;
         this.isAssign = false;
       } catch (error) {
         this.$message({
           type: "error",
-          message: `Error: ${error.message}`
+          message: `错误: ${error.message}`
         });
       }
       this.refresh();
@@ -382,12 +354,12 @@ export default {
             permission: this.newUserInfo.permission
           }
         });
-        this.$message({ type: "success", message: this.$t("notify.createSuccess") });
+        this.$message({ type: "success", message: "创建成功" });
         this.isNewUser = !this.isNewUser;
       } catch (error) {
         this.$message({
           type: "error",
-          message: `Error: ${error.message}`
+          message: `错误: ${error.message}`
         });
       }
       this.refresh();
@@ -399,18 +371,18 @@ export default {
           uuids.push(v.uuid);
         }
         if (!uuids.length) {
-          throw new Error(this.$t("users.selectAUser"));
+          throw new Error("请至少选择一个用户");
         }
         await request({
           method: "DELETE",
           url: API_USER,
           data: uuids
         });
-        this.$message({ type: "success", message: this.$t('notify.delSuccess') });
+        this.$message({ type: "success", message: "删除成功" });
       } catch (error) {
         this.$message({
           type: "error",
-          message: `Error: ${error.message}`
+          message: `错误: ${error.message}`
         });
       }
       this.refresh();

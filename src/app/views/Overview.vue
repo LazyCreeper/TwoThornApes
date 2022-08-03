@@ -22,9 +22,8 @@
 <template>
   <el-row :gutter="20">
     <el-col :span="24">
-      <Panel v-loading="loading">
-        <!-- 多语言HTML处示例代码，基础玩法 -->
-        <template #title>{{ $t("overview.systemInfoTable") }}</template>
+      <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+        <template #title>面板端详细数据</template>
         <template #default>
           <el-row :gutter="20">
             <el-col :xs="12" :md="6" v-for="(item, index) in computerInfoA" :key="index">
@@ -45,67 +44,73 @@
       <div>
         <el-row :gutter="20">
           <el-col :md="6" :xs="12" :offset="0">
-            <!-- 多语言HTML处示例代码，绑定属性内部的话，需要在属性名前加冒号。里面的双引号变单引号 -->
             <ValueCard
-              :title="$t('overview.daemonStatus')"
-              :sub-title="$t('overview.daemonAvailable')"
+              title="守护进程状态"
+              sub-title="已正确连接数 / 已配置总数"
               :value="`${valueCard.availableDaemon}/${valueCard.totalDaemon}`"
               style="height: 260px"
               font-class="el-icon-s-data"
               v-loading="loading"
+              element-loading-background="rgba(0, 0, 0, 0.5)"
             >
             </ValueCard>
           </el-col>
           <el-col :md="6" :xs="12" :offset="0">
             <ValueCard
-              :title="$t('overview.instanceStatus')"
-              :sub-title="$t('overview.runningAndTotalInstance')"
+              title="实例运行状态"
+              sub-title="正在运行数 / 全部实例总数"
               :value="`${valueCard.runningInstance}/${valueCard.totalInstance}`"
               style="height: 260px"
               font-class="el-icon-s-promotion"
               v-loading="loading"
+              element-loading-background="rgba(0, 0, 0, 0.5)"
             >
             </ValueCard>
           </el-col>
           <el-col :md="6" :xs="12" :offset="0">
             <ValueCard
-              :title="$t('overview.userLogin')"
-              :sub-title="$t('overview.failedLogin')"
+              title="用户登录次数"
+              sub-title="登录失败次数 : 登录成功次数"
               :value="`${valueCard.failedLogin}:${valueCard.Logined}`"
               style="height: 260px"
               font-class="el-icon-upload"
               v-loading="loading"
+              element-loading-background="rgba(0, 0, 0, 0.5)"
             >
             </ValueCard>
           </el-col>
           <el-col :md="6" :xs="12" :offset="0">
             <ValueCard
-              :title="$t('overview.systemLoad')"
-              :sub-title="$t('overview.systemLoadPercentage')"
+              title="系统负载"
+              sub-title="面板所在主机 CPU，RAM 百分比"
               :value="`${valueCard.cpu}% ${valueCard.mem}%`"
               style="height: 260px"
               font-class="el-icon-s-flag"
               v-loading="loading"
+              element-loading-background="rgba(0, 0, 0, 0.5)"
             >
             </ValueCard>
           </el-col>
         </el-row>
       </div>
 
-      <Panel v-loading="loading">
-        <template #title>{{ $t('overview.daemonOverview') }}</template>
+      <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+        <template #title>分布式服务总览</template>
         <template #default>
-          <p v-html="$t('overview.daemonOverviewInfo',{ panelVersion,specifiedDaemonVersion} )">
+          <p>
+            确保所有守护进程均在线，离线状态将导致此守护进程以及相关功能不可用，可能会影响使用体验与数据。
+            <br />
+            面板端 {{ panelVersion }} 必须对应守护进程 {{ specifiedDaemonVersion }} 版本
           </p>
           <el-table :data="servicesStatus" style="width: 100%" size="small">
-            <el-table-column prop="ip" :label="$t('overview.addr')" width="180"> </el-table-column>
-            <el-table-column prop="remarks" :label="$t('overview.remarks')" width="240"> </el-table-column>
-            <el-table-column prop="port" :label="$t('overview.port')" width="180"> </el-table-column>
+            <el-table-column prop="ip" label="地址" width="180"> </el-table-column>
+            <el-table-column prop="port" label="端口"> </el-table-column>
+            <el-table-column prop="remarks" label="备注" width="240"> </el-table-column>
             <el-table-column prop="cpu" label="CPU"> </el-table-column>
-            <el-table-column prop="mem" :label="$t('overview.mem')"> </el-table-column>
-            <el-table-column prop="instance" :label="$t('overview.instance')"> </el-table-column>
-            <el-table-column prop="started" :label="$t('overview.runningInstance')"> </el-table-column>
-            <el-table-column prop="version" :label="$t('overview.daemonVersion')">
+            <el-table-column prop="mem" label="内存"> </el-table-column>
+            <el-table-column prop="instance" label="已有实例"> </el-table-column>
+            <el-table-column prop="started" label="运行实例"> </el-table-column>
+            <el-table-column prop="version" label="守护进程版本">
               <template #default="scope">
                 <span
                   class="color-green"
@@ -118,25 +123,21 @@
                     effect="dark"
                     v-if="scope.row.version !== specifiedDaemonVersion && scope.row.status"
                     placement="top"
-                    :content="$t('overview.lowDaemonVersion')"
+                    content="与面板端要求版本不一致"
                   >
                     <span><i class="el-icon-warning-outline"></i> {{ scope.row.version }}</span>
                   </el-tooltip>
                 </span>
               </template>
             </el-table-column>
-            <el-table-column prop="status" :label="$t('overview.connectStatus')">
+            <el-table-column prop="status" label="连接状态">
               <template #default="scope">
                 <span class="color-green" v-if="scope.row.status">
-                  <i class="el-icon-circle-check"></i> {{ $t('overview.online') }}
+                  <i class="el-icon-circle-check"></i> 在线
                 </span>
                 <span class="color-red" v-if="!scope.row.status">
-                  <el-tooltip
-                    effect="dark"
-                    :content="$t('overview.errorConnect')"
-                    placement="top"
-                  >
-                    <span><i class="el-icon-warning-outline"></i> {{ $t('overview.offline') }}</span>
+                  <el-tooltip effect="dark" content="无法连接到指定 IP 或者密钥错误" placement="top">
+                    <span><i class="el-icon-warning-outline"></i> 离线</span>
                   </el-tooltip>
                 </span>
               </template>
@@ -146,10 +147,10 @@
       </Panel>
       <el-row :gutter="20">
         <el-col :md="12" :offset="0">
-          <Panel v-loading="loading">
-            <template #title>{{ $t('overview.panelApiRequestCount') }}</template>
+          <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+            <template #title>面板端接口请求量</template>
             <template #default>
-              <p>{{ $t('overview.panelApiRequestInfo') }}</p>
+              <p>每 1 分钟统计间隔，总计 1 小时的请求历史</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main3" style="width: 100%; height: 200px"></div>
               </div>
@@ -157,10 +158,10 @@
           </Panel>
         </el-col>
         <el-col :md="12" :offset="0">
-          <Panel v-loading="loading">
-            <template #title>{{ $t('overview.panelCpuUsage') }}</template>
+          <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+            <template #title>面板端 CPU 使用率</template>
             <template #default>
-              <p>{{ $t('overview.panelCpuUsageInfo') }}</p>
+              <p>每 10 秒统计间隔，总计 10 分钟的 CPU 历史使用率</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main" style="width: 100%; height: 200px"></div>
               </div>
@@ -170,10 +171,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :md="12" :offset="0">
-          <Panel v-loading="loading">
-            <template #title>{{ $t('overview.runningInstances') }}</template>
+          <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+            <template #title>分布式实例运行量</template>
             <template #default>
-              <p>{{ $t('overview.runningInstancesInfo') }}</p>
+              <p>每 1 分钟统计间隔，总计 1 小时的实例状态历史</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main4" style="width: 100%; height: 200px"></div>
               </div>
@@ -181,10 +182,10 @@
           </Panel>
         </el-col>
         <el-col :md="12" :offset="0">
-          <Panel v-loading="loading">
-            <template #title>{{ $t('overview.panelMemoryUsage') }}</template>
+          <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+            <template #title>面板端内存使用率</template>
             <template #default>
-              <p>{{ $t('overview.panelMemoryUsageInfo') }}</p>
+              <p>每 10 秒统计间隔，总计 10 分钟的内存历史使用率</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main2" style="width: 100%; height: 200px"></div>
               </div>
@@ -196,7 +197,7 @@
   </el-row>
 
   <Panel v-if="manualLink">
-    <template #title>{{ $t('overview.docs') }}</template>
+    <template #title>帮助文档</template>
     <template #default>
       <el-row :gutter="20">
         <el-col :md="6" :offset="0" v-for="(item, index) in manualLink['helpLink']" :key="index">
@@ -204,7 +205,7 @@
         </el-col>
 
         <el-col :span="24">
-          <div class="box-card-title-more">{{ $t('overview.Q&A') }}</div>
+          <div class="box-card-title-more">常见问题</div>
         </el-col>
         <el-col :md="6" :offset="0" v-for="(item, index) in manualLink['faq']" :key="index">
           <a class="manualLink" :href="item.link" v-text="item.title" target="_black"></a>
@@ -327,32 +328,31 @@ export default {
       // const uptime = Number(system.uptime / 60 / 60).toFixed(0);
       this.computerInfoA = [
         {
-          // 在Javascript代码中的用法，记得加this，单双引号灵活使用
-          name: this.$t("overview.systemType"),
+          name: "系统类型",
           value: `${system.type} ${system.platform}`
         },
         {
-          name: this.$t("overview.systemName"),
+          name: "系统版本",
           value: `${system.version} ${system.release}`
         },
         {
-          name: this.$t("overview.webPanelTime"),
+          name: "面板端时间",
           value: system.time
         },
         {
-          name: this.$t("overview.localTime"),
+          name: "本地时间",
           value: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString()
         },
         {
-          name: this.$t("overview.computerName"),
+          name: "计算机名称",
           value: system.hostname
         },
         {
-          name: this.$t("overview.systemUserName"),
+          name: "进程权限用户",
           value: system.user.username
         },
         {
-          name: this.$t("overview.memoryUsage"),
+          name: "内存使用数值",
           value: `${used}GB/${total}GB`,
           warn: used / total > 0.9
         },
@@ -363,11 +363,11 @@ export default {
         // }
 
         {
-          name: this.$t("overview.nodeVersion"),
+          name: "Node 版本",
           value: system.node
         },
         {
-          name: this.$t("overview.panelVersion"),
+          name: "面板版本",
           value: data.version
         },
         // {
@@ -381,11 +381,11 @@ export default {
         // },
 
         {
-          name: this.$t("overview.specifiedDaemonVersion"),
+          name: "对应守护进程版本",
           value: this.specifiedDaemonVersion
         },
         {
-          name: this.$t("overview.illegalAccess"),
+          name: "阻挡请求次数",
           value: data.record.illegalAccess
         },
         // {
@@ -393,7 +393,7 @@ export default {
         //   value: `${data.record.loginFailed}/${data.record.logined}`
         // },
         {
-          name: this.$t("overview.banips"),
+          name: "封禁 IP 数",
           value: data.record.banips,
           warn: data.record.banips > 0
         }
@@ -449,41 +449,61 @@ export default {
       const MAX_TIME = this.systemChartData["request"].length - 1;
       const source = this.systemChartData["request"];
       for (const key in source) {
-        source[key]["time"] = `${MAX_TIME - key * 1}` + this.$t("overview.minBefore");
+        source[key]["time"] = `${MAX_TIME - key * 1} 分前`;
       }
       this.systemChart3.setOption({
+        textStyle: {color:"#dad6a1"},
         dataset: {
           dimensions: ["time", "value"],
           source
-        }
+        },
+        //接口请求量
+        color: [
+          '#fff493'
+        ]
       });
       this.systemChart4.setOption({
+        textStyle: {color:"#dad6a1"},
         yAxis: {
           max: this.forChartTotalInstance <= 1 ? 1 : this.forChartTotalInstance
         },
         dataset: {
           dimensions: ["time", "runningInstance"],
           source
-        }
+        },
+        //总数，运行数
+        color: [
+        '#99f5bd','#dbff95'
+        ]
       });
     },
     setSystemChart() {
       const MAX_TIME = this.systemChartData["system"].length - 1;
       const source = this.systemChartData["system"];
       for (const key in source) {
-        source[key]["time"] = `${(MAX_TIME - key) * 10}` + this.$t("overview.secBefore");
+        source[key]["time"] = `${(MAX_TIME - key) * 10} 秒前`;
       }
       this.systemChart.setOption({
+        textStyle: {color:"#8ec7ff"},
         dataset: {
           dimensions: ["time", "cpu"],
           source
-        }
+        },
+        //CPU
+        color: [
+          '#87c2fe'
+        ]
       });
       this.systemChart2.setOption({
+        textStyle: {color:"#d79aff"},
         dataset: {
           dimensions: ["time", "mem"],
           source
-        }
+        },
+        ///面板段内存使用率
+        color: [
+          '#d58dff'
+        ]
       });
     },
     setChartSource() {

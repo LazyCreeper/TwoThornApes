@@ -20,8 +20,8 @@
 -->
 
 <template>
-  <Panel v-loading="true">
-    <template #title>{{ $t("root.title") }}</template>
+  <Panel v-loading="true" element-loading-background="rgba(0, 0, 0, 0.5)">
+    <template #title>处理中...</template>
     <template #default>
       <el-skeleton :rows="12" />
     </template>
@@ -44,8 +44,10 @@ export default {
       const userInfo = this.$store.state.userInfo;
       if (!userInfo || !userInfo.uuid) throw new Error(`userInfo status error: ${userInfo}`);
       if (userInfo.permission >= 10) {
+        console.log("辅助链接 - 导航跳转至高权限界面");
         router.push({ path: "/overview" });
       } else {
+        console.log("辅助链接 - 导航跳转至普通界面");
         router.push({ path: "/home" });
       }
       return;

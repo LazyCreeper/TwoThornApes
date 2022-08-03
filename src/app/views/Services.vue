@@ -21,38 +21,44 @@
 
 <template>
   <Panel>
-    <template #title>{{ $t("services.remoteDaemonManage") }}</template>
+    <template #title>远程守护进程管理</template>
     <template #default>
       <div class="flex flex-space-between">
         <ItemGroup>
           <el-button type="success" size="small" @click="openNewServiceDialog">
-            {{ $t("services.addDaemon") }}
+            新增远程守护进程
           </el-button>
-          <el-button size="small" @click="refresh">{{ $t("general.refresh") }}</el-button>
+          <el-button size="small" @click="refresh">刷新</el-button>
         </ItemGroup>
         <ItemGroup>
-          <el-button size="small" @click="openPrinciplePanel">{{ $t("services.learnHowItWork") }}</el-button>
+          <el-button size="small" @click="openPrinciplePanel">了解工作原理</el-button>
         </ItemGroup>
       </div>
     </template>
   </Panel>
   <Panel>
-    <template #title>{{ $t("services.Daemons") }}</template>
+    <template #title>已配置的守护进程</template>
     <template #default>
-      <p v-html="$t('services.remoteInfo', { specifiedDaemonVersion })">
+      <p>
+        远程守护进程（在任何物理主机上）必须确保全部在线且互相网络畅通，面板连接需公开放行守护进程端口与配置密钥。
+        <br />
+        网页需要能直接连接远程守护进程（上传，下载与控制台），避免使用除 localhost
+        外的局域网段任何 IP，必须使用外网 IP 或域名进行连接。
+        <br />
+        面板端对应的守护进程版本：{{ specifiedDaemonVersion }}
       </p>
       <el-table :data="services" style="width: 100%" size="small">
-        <el-table-column :label="$t('overview.addr')" width="170">
+        <el-table-column label="地址" width="170">
           <template #default="scope">
-            <el-input size="small" v-model="scope.row.ip" :placeholder="$t('general.required')"></el-input>
+            <el-input size="small" v-model="scope.row.ip" placeholder="必填"></el-input>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('overview.port')" width="110">
+        <el-table-column label="端口" width="110">
           <template #default="scope">
-            <el-input size="small" v-model="scope.row.port" :placeholder="$t('general.required')"></el-input>
+            <el-input size="small" v-model="scope.row.port" placeholder="必填"></el-input>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('overview.remarks')" width="210">
+        <el-table-column label="备注" width="210">
           <template #default="scope">
             <span
               >{{ scope.row.remarks }}
@@ -61,7 +67,7 @@
             <!-- <el-input size="small" v-model="scope.row.remarks"></el-input> -->
           </template>
         </el-table-column>
-        <el-table-column :label="$t('services.platform')" width="100">
+        <el-table-column label="平台" width="100">
           <template #default="scope">
             <div v-if="scope.row.system">{{ scope.row.system.platform }}</div>
           </template>
@@ -73,19 +79,19 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('overview.mem')" width="160">
+        <el-table-column label="内存" width="160">
           <template #default="scope">
             <div v-if="scope.row.system">{{ scope.row.system.memText }}</div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('services.instanceStatus')">
+        <el-table-column label="实例状态">
           <template #default="scope">
             <div v-if="scope.row.instance">
               {{ scope.row.instance.running }}/{{ scope.row.instance.total }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('services.version')">
+        <el-table-column label="版本">
           <template #default="scope">
             <span
               class="color-green"
@@ -98,33 +104,33 @@
                 effect="dark"
                 v-if="scope.row.version !== specifiedDaemonVersion"
                 placement="top"
-                :content="$t('overview.lowDaemonVersion')"
+                content="与面板端要求版本不一致"
               >
                 <span><i class="el-icon-warning-outline"></i> {{ scope.row.version }}</span>
               </el-tooltip>
             </span>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('overview.connectStatus')">
+        <el-table-column label="连接状态">
           <template #default="scope">
             <span class="color-green" v-if="scope.row.available">
-              <i class="el-icon-circle-check"></i> {{ $t("overview.online") }}
+              <i class="el-icon-circle-check"></i> 在线
             </span>
             <span class="color-red" v-if="!scope.row.available">
-              <el-tooltip effect="dark" :content="$t('overview.errorConnect')" placement="top">
-                <span><i class="el-icon-warning-outline"></i> {{ $t("overview.offline") }}</span>
+              <el-tooltip effect="dark" content="无法连接到指定 IP 或者密钥错误" placement="top">
+                <span><i class="el-icon-warning-outline"></i> 离线</span>
               </el-tooltip>
             </span>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('general.operate')" style="text-align: center" width="260px">
+        <el-table-column label="操作" style="text-align: center" width="260px">
           <template #default="scope">
             <el-button size="mini" @click="linkService(scope.row, true)">
-              {{ scope.row.available ? $t("services.update") : $t("services.connect") }}
+              {{ scope.row.available ? "更新" : "连接" }}
             </el-button>
-            <el-button size="mini" @click="updateKey(scope.row, true)">{{ $t("services.changeKey") }}</el-button>
+            <el-button size="mini" @click="updateKey(scope.row, true)">修改密钥</el-button>
             <el-button size="mini" type="danger" plain @click="deleteService(scope.row.uuid)"
-              >{{ $t("general.delete") }}</el-button
+              >删除</el-button
             >
           </template>
         </el-table-column>
@@ -133,49 +139,49 @@
   </Panel>
 
   <Dialog v-model="isNewService">
-    <template #title>{{ $t("services.addDaemon") }}</template>
+    <template #title>新增远程守护进程</template>
     <template #default>
       <div>
-        <div class="sub-title">{{ $t("services.remarks") }}</div>
+        <div class="sub-title">备注信息</div>
         <el-input
           v-model="newServiceInfo.remarks"
-          :placeholder="$t('services.remarksInfo')"
+          placeholder="选填，支持中文，用于填写相关备注信息"
           size="small"
         ></el-input>
         <div class="sub-title row-mt">
-          <div class="sub-title-title">{{ $t("services.remoteIP") }}</div>
+          <div class="sub-title-title">守护进程所在主机的 IP 地址</div>
           <div class="sub-title-info">
-            <span v-html="$t('services.remoteIPSub')"></span>
+            <b>必须使用外网地址</b>或 localhost 地址，否则将导致远程实例无法连接
           </div>
         </div>
         <el-input
           v-model="newServiceInfo.ip"
-          :placeholder="$t('services.remoteIPInfo')"
+          placeholder="必填，例如 mcsmanager.com，43.123.211.12"
           size="small"
         ></el-input>
-        <div class="sub-title row-mt">{{ $t("services.daemonPort") }}</div>
+        <div class="sub-title row-mt">守护进程端口</div>
         <el-input
           v-model="newServiceInfo.port"
-          :placeholder="$t('services.daemonPortInfo')"
+          placeholder="必填，例如 24444"
           size="small"
         ></el-input>
         <div class="sub-title row-mt">
-          <div class="sub-title-title">{{ $t("services.verifyKey") }}</div>
+          <div class="sub-title-title">验证密钥</div>
           <div class="sub-title-info">
-            {{ $t("services.keySub") }}
+            在守护进程启动时控制台上会输出显示，务必确保密钥安全
             <br />
-            <a href="https://docs.mcsmanager.com/" class="color-blue"> {{ $t("services.getKey") }} </a>
+            <a href="https://docs.mcsmanager.com/" class="color-blue"> 如何获取密钥？ </a>
           </div>
         </div>
         <el-input
           v-model="newServiceInfo.apiKey"
-          :placeholder="$t('services.keyInfo')"
+          placeholder="必填，例如 6ff0fa1ef9a943f3c6f2fe0e4564a2fa383d35c4b78ccb5"
           size="small"
         ></el-input>
         <div class="row-mt">
           <ItemGroup>
-            <el-button type="success" size="small" @click="toNewService(false)">{{ $t("general.add") }}</el-button>
-            <el-button @click="isNewService = !isNewService" size="small">{{ $t("general.cancel") }}</el-button>
+            <el-button type="success" size="small" @click="toNewService(false)">新增</el-button>
+            <el-button @click="isNewService = !isNewService" size="small"> 取消 </el-button>
           </ItemGroup>
         </div>
       </div>
@@ -183,36 +189,36 @@
   </Dialog>
 
   <Dialog v-model="isNewServiceWarning">
-    <template #title>{{ $t("services.addNewWarn.title") }}</template>
+    <template #title>新增远程主机警告</template>
     <template #default>
       <div class="sub-title">
         <div class="sub-title-title">
-          <span v-html="$t('services.addNewWarn.ip', { newServiceInfo: newServiceInfo.ip } )">
-          </span>
+          检测到您的连接 IP 为 :{{ newServiceInfo.ip }}，似乎是一个内网地址？
         </div>
         <div class="sub-title-info">
-          {{ $t("services.addNewWarn.outerNet") }}
+          面板与守护进程端均要能够让用户访问，以此行为设计即可实现流量分流减轻中心面板端的压力。
         </div>
       </div>
       <div class="sub-title">
-        <div class="sub-title-title">{{ $t("services.addNewWarn.whyOuterNet") }}</div>
+        <div class="sub-title-title">为什么必须使用外网 IP 连接远程节点</div>
         <div class="sub-title-info">
-          <span v-html="$t('services.addNewWarn.because')"></span>
+          为了减轻中心控制端（Web 面板端）的流量压力，我们必须将流量分流到各自的远程主机，<br />
+          这样就必须保证每个远程主机均要能够使用外网访问，所以您也必须使用外网 IP 地址来访问这个主机的实例
         </div>
       </div>
-      <div class="sub-title">{{ $t("services.addNewWarn.workingPrinciple") }}</div>
+      <div class="sub-title">分布式服务数据传输工作原理</div>
       <div style="text-align: center">
         <img :src="require('../../assets/connect.png')" alt="" srcset="" style="height: 230px" />
       </div>
       <div class="sub-title row-mt">
-        <div class="sub-title-title">{{ $t("services.addNewWarn.KeepIntranet") }}</div>
-        <div class="sub-title-info">{{ $t("services.addNewWarn.ifTrueThen") }}</div>
+        <div class="sub-title-title">请问您是否依然要坚持使用内网 IP 连接？</div>
+        <div class="sub-title-info">如果强制使用，则实例的部分功能不可用。</div>
       </div>
       <div class="row-mt">
         <ItemGroup>
-          <el-button type="danger" size="small" @click="toNewService(true)">{{ $t("services.addNewWarn.yeah") }}</el-button>
+          <el-button type="danger" size="small" @click="toNewService(true)">强制执行</el-button>
           <el-button @click="isNewServiceWarning = !isNewServiceWarning" size="small"
-            >{{ $t("services.addNewWarn.cancel") }}</el-button
+            >取消执行</el-button
           >
         </ItemGroup>
       </div>
@@ -220,27 +226,29 @@
   </Dialog>
 
   <Dialog v-model="isOpenPrinciplePanel">
-    <template #title>{{ $t("services.principlePanel.title") }}</template>
+    <template #title>分布式服务工作原理</template>
     <template #default>
       <div class="sub-title">
         <div class="sub-title-info">
-          <span v-html="$t('services.principlePanel.desc')"></span>
+          为了减轻中心控制端（Web 面板端）的流量压力与计算压力，我们采用 “数据走直连，指令走转发”
+          的设计概念。<br />
+          这样的设计会暴露各个守护进程，但您守护进程主机上的服务本应就会暴露，再加上可控的权限识别，无需担忧各个主机安全问题。
         </div>
       </div>
-      <div class="sub-title">{{ $t("services.principlePanel.principleImage") }}</div>
+      <div class="sub-title">分布式服务工作原理图</div>
       <div style="text-align: center">
         <img :src="require('../../assets/principle.png')" alt="" srcset="" style="height: 460px" />
       </div>
 
       <div class="sub-title">
         <div class="sub-title-info">
-          {{ $t("services.principlePanel.onlyOne") }}
+          如果您只有一个主机，则可以无视此工作原理，按正常使用方式即可。
         </div>
       </div>
       <div class="row-mt">
         <ItemGroup>
           <el-button type="success" size="small" @click="isOpenPrinciplePanel = false">
-            {{ $t("general.confirm") }}
+            确定
           </el-button>
         </ItemGroup>
       </div>
@@ -281,7 +289,7 @@ export default {
     // 刷新按钮
     async refresh() {
       await this.render();
-      this.$message({ type: "info", message: this.$t("general.refreshFinish"), duration: 400 });
+      this.$message({ type: "info", message: "已刷新", duration: 400 });
     },
     // 渲染数据方法
     async render() {
@@ -359,9 +367,9 @@ export default {
     },
     // 删除服务
     async deleteService(uuid) {
-      await this.$confirm(this.$t("services.delDaemonWarn"), this.$t("general.warn"), {
-        confirmButtonText: this.$t("general.delete"),
-        cancelButtonText: this.$t("general.cancel"),
+      await this.$confirm("此操作将永久删除该守护进程，是否继续？", "警告", {
+        confirmButtonText: "删除",
+        cancelButtonText: "取消",
         type: "warning"
       });
       try {
@@ -374,23 +382,23 @@ export default {
     },
     // 修改备注信息
     async updateRemarks(row) {
-      const text = await this.$prompt(this.$t("services.inputNewRemark"), this.$t("overview.remarks"), {
-        confirmButtonText: this.$t("general.confirm"),
-        cancelButtonText: this.$t("general.cancel")
+      const text = await this.$prompt("请输入新的备注内容", "备注", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
       });
       row.remarks = text.value;
       try {
         await this.updateService(row);
-        this.$message({ type: "success", message: this.$t("services.updateRemarkSuccess") });
+        this.$message({ type: "success", message: "更新备注信息成功" });
       } catch (error) {
         this.$message({ type: "error", message: error });
       }
     },
     // 修改密钥信息
     async updateKey(row) {
-      let text = await this.$prompt(this.$t("services.inputNewKey"), this.$t("services.key"), {
-        confirmButtonText: this.$t("general.confirm"),
-        cancelButtonText: this.$t("general.cancel")
+      let text = await this.$prompt("请输入新密钥，设置后将自动尝试连接", "密钥", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
       });
       text = String(text.value);
       text = text.trim();
