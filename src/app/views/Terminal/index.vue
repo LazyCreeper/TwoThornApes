@@ -72,7 +72,7 @@
         <Panel>
           <template #title>{{ $t("terminal.controlGroup") }}</template>
           <template #default>
-            <div v-loading="busy">
+            <div v-loading="busy" element-loading-background="rgba(0, 0, 0, 0.5)">
               <el-row type="flex" justify="space-between" :gutter="10">
                 <el-col :lg="24" v-show="instanceInfo.status === 0">
                   <el-popconfirm :title="$t('terminal.confirmOperate')" @confirm="openInstance">
