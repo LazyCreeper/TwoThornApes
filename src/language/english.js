@@ -894,7 +894,9 @@ export default {
         sponsorList: "开源项目赞助名单",
         sponsorListInfo: "只含前 40 名赞助者，查看完整赞助名单或进行赞助支持请前往",
 
-        settingUpdate: "已更新，部分选项生效可能需要重启面板"
+        settingUpdate: "已更新，部分选项生效可能需要重启面板",
+
+        lazy: '<div class="sub-title"><p class="sub-title">This theme was made by <a href="https://www.lazy.ink"target="_blank">Lazy</a></p><p class="sub-title-info">If you encounter any problems or find errors in the process of using the theme,you can feedback to my mailbox：<a href="mailto:lazy_creeper@qq.com">lazy_creeper@qq.com</a><br/>This theme<span style="color: rgb(255, 97, 97)">is free！</span>Do not sell it</p></div><div class="sub-title"><p class="sub-title">Blog links：<a href="https://blog.imlazy.ink:233/index.php/archives/253/"target="_blank">Click here</a></p><p class="sub-title">Donate for me：<a href="https://qn-store-pub-tx.seewo.com/676b69a1b8ad4f9391555c127a2331c7165760252223383"target="_blank">Click here</a></p><p class="sub-title">Theme version：2.7&nbsp;&nbsp;<a href="javascript:checkUpdate();">Check Update</a><lazy id="lazy"></lazy></p></div>',
     },
     home: {
         totalInstance: "实例总计",
