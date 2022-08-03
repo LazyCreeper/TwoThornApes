@@ -286,6 +286,10 @@ a:hover {
 	border-color: var(--input-focus-border-color);
 }
 
+.el-input.is-disabled,.el-input-group__append,.el-input.is-disabled .el-input__inner {
+  background-color: var(--input-disabled-bg-color);
+  color: var(--input-disabled-color);
+}
 /* 按钮 */
 .el-button.el-button--default,.el-button--small {
   background: var(--btn-default-bg-color);

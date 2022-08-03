@@ -142,6 +142,10 @@
 	/*文本颜色*/
 	--input-focus-border-color: unset;
 	/*点击时边框的颜色*/
+	--input-disabled-bg-color: rgb(84 138 120 / 50%);
+	/*输入框禁用状态时的 背景颜色*/
+	--input-disabled-color: #8ea794;
+	/*输入框禁用状态时的 文本颜色*/
 
 	/*对话框*/
 	--dl-blur: blur(5px);
