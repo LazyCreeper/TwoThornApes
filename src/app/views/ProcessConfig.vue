@@ -1,22 +1,5 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
@@ -26,7 +9,9 @@
       <el-row :gutter="20">
         <el-col :span="24" :offset="0">
           <ItemGroup class="row-mb">
-            <el-button type="primary" size="small" @click="rf">{{ $t("general.refresh") }}</el-button>
+            <el-button type="primary" size="small" @click="rf">{{
+              $t("general.refresh")
+            }}</el-button>
             <el-button size="small" @click="back">{{ $t("schedule.backToConsole") }}</el-button>
           </ItemGroup>
           <div class="sub-title">
@@ -41,7 +26,7 @@
         <el-alert
           :title="$t('processConfig.noConfigFile')"
           type="info"
-          :description="$t('processConfig.noConfigFileInfo', {type})"
+          :description="$t('processConfig.noConfigFileInfo', { type })"
           show-icon
         >
         </el-alert>
@@ -50,18 +35,25 @@
         <BlockButton v-if="item.check" style="padding: 8px 0px">
           <template #title
             >{{ item.fileName }}
-            <el-tag size="mini" type="warning" v-if="item.conflict">{{ $t("processConfig.sameFile") }}</el-tag>
+            <el-tag size="mini" type="warning" v-if="item.conflict">{{
+              $t("processConfig.sameFile")
+            }}</el-tag>
           </template>
           <template #default>
             <div>
-              {{ $t("processConfig.author") }}：<a class="alink" target="_black" :href="item.github">{{ item.author }}</a>
+              {{ $t("processConfig.author") }}：<a
+                class="alink"
+                target="_black"
+                :href="item.github"
+                >{{ item.author }}</a
+              >
             </div>
             <div class="row-mt">
               <span>{{ item.info }}</span>
               <br />
-              <span class="color-red" v-if="item.conflict"
-                >{{ $t("processConfig.unknownCompatible") }}</span
-              >
+              <span class="color-red" v-if="item.conflict">{{
+                $t("processConfig.unknownCompatible")
+              }}</span>
             </div>
           </template>
           <template #link>
@@ -84,7 +76,6 @@ import BlockButton from "../../components/BlockButton";
 import { getInstanceConfigByType } from "../service/process_config";
 import { request } from "../service/protocol";
 import { API_PROCESS_CONFIG_LIST } from "../service/common";
-
 export default {
   components: { Panel, BlockButton },
   data: function () {
@@ -134,12 +125,12 @@ export default {
       });
       this.configs = [];
       this.isNotConfig = true;
-      // 通过实际文件名和特定类型的配置列表进行比较
+      // Compare by actual filename and type-specific configuration list
       realFiles.forEach((v) => {
         configFiles.forEach((z) => {
           if (z.path === v.file) {
             this.isNotConfig = false;
-            // 检查是否已存在同名配置文件，存在则显示冲突
+            // Check if a configuration file with the same name already exists, if it exists, display a conflict
             configFiles.forEach((p) => {
               if (p.path == z.path && p.check) z.conflict = true;
             });

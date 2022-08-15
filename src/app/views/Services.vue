@@ -1,22 +1,5 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
@@ -31,7 +14,9 @@
           <el-button size="small" @click="refresh">{{ $t("general.refresh") }}</el-button>
         </ItemGroup>
         <ItemGroup>
-          <el-button size="small" @click="openPrinciplePanel">{{ $t("services.learnHowItWork") }}</el-button>
+          <el-button size="small" @click="openPrinciplePanel">{{
+            $t("services.learnHowItWork")
+          }}</el-button>
         </ItemGroup>
       </div>
     </template>
@@ -39,17 +24,24 @@
   <Panel>
     <template #title>{{ $t("services.Daemons") }}</template>
     <template #default>
-      <p v-html="$t('services.remoteInfo', { specifiedDaemonVersion })">
-      </p>
+      <p v-html="$t('services.remoteInfo', { specifiedDaemonVersion })"></p>
       <el-table :data="services" style="width: 100%" size="small">
         <el-table-column :label="$t('overview.addr')" width="170">
           <template #default="scope">
-            <el-input size="small" v-model="scope.row.ip" :placeholder="$t('general.required')"></el-input>
+            <el-input
+              size="small"
+              v-model="scope.row.ip"
+              :placeholder="$t('general.required')"
+            ></el-input>
           </template>
         </el-table-column>
         <el-table-column :label="$t('overview.port')" width="110">
           <template #default="scope">
-            <el-input size="small" v-model="scope.row.port" :placeholder="$t('general.required')"></el-input>
+            <el-input
+              size="small"
+              v-model="scope.row.port"
+              :placeholder="$t('general.required')"
+            ></el-input>
           </template>
         </el-table-column>
         <el-table-column :label="$t('overview.remarks')" width="210">
@@ -122,10 +114,12 @@
             <el-button size="mini" @click="linkService(scope.row, true)">
               {{ scope.row.available ? $t("services.update") : $t("services.connect") }}
             </el-button>
-            <el-button size="mini" @click="updateKey(scope.row, true)">{{ $t("services.changeKey") }}</el-button>
-            <el-button size="mini" type="danger" plain @click="deleteService(scope.row.uuid)"
-              >{{ $t("general.delete") }}</el-button
-            >
+            <el-button size="mini" @click="updateKey(scope.row, true)">{{
+              $t("services.changeKey")
+            }}</el-button>
+            <el-button size="mini" type="danger" plain @click="deleteService(scope.row.uuid)">{{
+              $t("general.delete")
+            }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -164,7 +158,9 @@
           <div class="sub-title-info">
             {{ $t("services.keySub") }}
             <br />
-            <a href="https://docs.mcsmanager.com/" class="color-blue"> {{ $t("services.getKey") }} </a>
+            <a href="https://docs.mcsmanager.com/" class="color-blue">
+              {{ $t("services.getKey") }}
+            </a>
           </div>
         </div>
         <el-input
@@ -174,8 +170,12 @@
         ></el-input>
         <div class="row-mt">
           <ItemGroup>
-            <el-button type="success" size="small" @click="toNewService(false)">{{ $t("general.add") }}</el-button>
-            <el-button @click="isNewService = !isNewService" size="small">{{ $t("general.cancel") }}</el-button>
+            <el-button type="success" size="small" @click="toNewService(false)">{{
+              $t("general.add")
+            }}</el-button>
+            <el-button @click="isNewService = !isNewService" size="small">{{
+              $t("general.cancel")
+            }}</el-button>
           </ItemGroup>
         </div>
       </div>
@@ -187,7 +187,7 @@
     <template #default>
       <div class="sub-title">
         <div class="sub-title-title">
-          <span v-html="$t('services.addNewWarn.ip', { newServiceInfo: newServiceInfo.ip } )">
+          <span v-html="$t('services.addNewWarn.ip', { newServiceInfo: newServiceInfo.ip })">
           </span>
         </div>
         <div class="sub-title-info">
@@ -210,10 +210,12 @@
       </div>
       <div class="row-mt">
         <ItemGroup>
-          <el-button type="danger" size="small" @click="toNewService(true)">{{ $t("services.addNewWarn.yeah") }}</el-button>
-          <el-button @click="isNewServiceWarning = !isNewServiceWarning" size="small"
-            >{{ $t("services.addNewWarn.cancel") }}</el-button
-          >
+          <el-button type="danger" size="small" @click="toNewService(true)">{{
+            $t("services.addNewWarn.yeah")
+          }}</el-button>
+          <el-button @click="isNewServiceWarning = !isNewServiceWarning" size="small">{{
+            $t("services.addNewWarn.cancel")
+          }}</el-button>
         </ItemGroup>
       </div>
     </template>
@@ -278,12 +280,12 @@ export default {
     };
   },
   methods: {
-    // 刷新按钮
+    // refresh button
     async refresh() {
       await this.render();
       this.$message({ type: "info", message: this.$t("general.refreshFinish"), duration: 400 });
     },
-    // 渲染数据方法
+    // render data method
     async render() {
       const result = await request({
         method: "GET",
@@ -291,7 +293,7 @@ export default {
       });
       result.remote.forEach((element) => {
         if (element.system) {
-          // 计算内存
+          // compute memory
           const free = Number(element.system.freemem / 1024 / 1024 / 1024).toFixed(1);
           const total = Number(element.system.totalmem / 1024 / 1024 / 1024).toFixed(1);
           const used = Number(total - free).toFixed(1);
@@ -299,11 +301,11 @@ export default {
         }
       });
       this.services = result.remote;
-      // 版本相关数据渲染
+      // Version related data rendering
       this.specifiedDaemonVersion = result.specifiedDaemonVersion;
       this.panelVersion = result.version;
     },
-    // 新增服务
+    // add service
     async toNewService(enforce = false) {
       const addr = this.newServiceInfo.ip;
       if (addr.indexOf("192.168") === 0 || addr.indexOf("10.") === 0) {
@@ -328,11 +330,11 @@ export default {
         this.$message({ type: "error", message: ERROR_TEXT });
       }
     },
-    // 打开新增服务面板
+    // Open the new service panel
     openNewServiceDialog() {
       this.isNewService = true;
     },
-    // 连接服务
+    // connect to the service
     async linkService(row, isNeedSave) {
       try {
         if (isNeedSave) await this.updateService(row);
@@ -347,7 +349,7 @@ export default {
         this.$message({ type: "error", message: error.message });
       }
     },
-    // 更新服务
+    // update service
     async updateService(row) {
       await axios.put(
         API_SERVICE_CURD,
@@ -357,7 +359,7 @@ export default {
         }
       );
     },
-    // 删除服务
+    // delete service
     async deleteService(uuid) {
       await this.$confirm(this.$t("services.delDaemonWarn"), this.$t("general.warn"), {
         confirmButtonText: this.$t("general.delete"),
@@ -372,12 +374,16 @@ export default {
         this.$message({ type: "error", message: ERROR_TEXT });
       }
     },
-    // 修改备注信息
+    // modify the remark information
     async updateRemarks(row) {
-      const text = await this.$prompt(this.$t("services.inputNewRemark"), this.$t("overview.remarks"), {
-        confirmButtonText: this.$t("general.confirm"),
-        cancelButtonText: this.$t("general.cancel")
-      });
+      const text = await this.$prompt(
+        this.$t("services.inputNewRemark"),
+        this.$t("overview.remarks"),
+        {
+          confirmButtonText: this.$t("general.confirm"),
+          cancelButtonText: this.$t("general.cancel")
+        }
+      );
       row.remarks = text.value;
       try {
         await this.updateService(row);
@@ -386,7 +392,7 @@ export default {
         this.$message({ type: "error", message: error });
       }
     },
-    // 修改密钥信息
+    // modify key information
     async updateKey(row) {
       let text = await this.$prompt(this.$t("services.inputNewKey"), this.$t("services.key"), {
         confirmButtonText: this.$t("general.confirm"),
@@ -404,7 +410,7 @@ export default {
             params: { uuid: row.uuid }
           }
         );
-        // this.$message({ type: "success", message: "更新密钥成功" });
+        // this.$message({ type: "success", message: "Update key successfully" });
         await this.linkService(row, false);
       } catch (error) {
         this.$message({ type: "error", message: error });

@@ -25,7 +25,12 @@ export default {
         yes: "是",
         no: "否",
         save: "保存",
+        error: "操作错误",
+        success: "操作成功",
+        config: "配置",
+        operation: "操作"
     },
+
     root: {
         title: "处理中...",
         private: "个人资料",
@@ -45,7 +50,7 @@ export default {
         login: "登录",
         logging: "登录中",
         isNull: "账号或密码不能为空值",
-        errorUOrP: "账号或密码错误，请检查后重试",
+        errorCause: "账号或密码错误，请检查后重试",
         logBackIn: "重新登录",
         loginSuccess: "登录成功",
 
@@ -169,7 +174,14 @@ export default {
             inputOrOutputCodeInfo: "当控制台出现乱码时可以尝试调整，例如: GBK，UTF-8 等",
             update: "更新",
             close: "关闭"
-        }
+        },
+
+
+        open: "实例已启动",
+        exit: "实例已退出",
+        failed: "操作失败",
+        UnableToConnect: "无法与终端建立连接",
+        UnableToConnectInfo: "身份验证失败，请刷新页面重试"
     },
     newInstances: {
         selectType: "请选择您要创建的应用类型",
@@ -212,7 +224,7 @@ export default {
         instanceNameInfo: "支持中文，尽可能保证唯一性",
         instanceNameInfo2: "实例名，尽可能确保唯一性",
         commandTemplate: "启动命令模板",
-        commandTemplateText: "其中 {{ProgramName}} 代表您接下来上传的文件名，一般情况下无需进行修改",
+        commandTemplateText: "其中 &#36;&#123;&#80;&#114;&#111;&#103;&#114;&#97;&#109;&#78;&#97;&#109;&#101;&#125; 代表您接下来上传的文件名，一般情况下无需进行修改",
         cmdInfo: "如 java -jar server.jar",
         cmdAssist: "命令助手",
         fileDir: "服务端文件目录",
@@ -371,10 +383,10 @@ export default {
 
     },
     instanceTypeList: {
-        "控制台通用程序": "控制台通用程序",
-        "Steam 服务端通用": "Steam 服务端通用",
-        "MC Java 版通用": "MC Java 版通用",
-        "MC 基岩版通用": "MC 基岩版通用",
+        "universal": "控制台通用程序",
+        "Steam": "Steam 服务端通用",
+        "MC Java": "MC Java 版通用",
+        "MC BDS": "MC 基岩版通用",
         "MC Spigot": "MC Spigot",
         "MC Paper": "MC Paper",
         "MC BungeeCord": "MC BungeeCord",
@@ -545,7 +557,7 @@ export default {
         month: "月",
         day: "日",
     },
-    fileManager: { 
+    fileManager: {
         title: "文件管理",
         upperDir: "上层目录",
         mkdir: "新建目录",
@@ -850,6 +862,8 @@ export default {
         updateSet: "更新配置",
         updateSetInfo: "部分配置可能需要重启面板才能生效",
 
+        languageSetting: "语言设置",
+        languageSettingInfo: "改变语言后，控制面板将会把所有节点，界面等全部同步为同一种语言。",
         basicSetting: "基础设置",
         accessPort: "面板访问端口",
         accessPortInfo: "浏览器访问网页面板的端口，必须防火墙放行此端口，重启面板生效。",
@@ -863,7 +877,7 @@ export default {
         loginPageInfo: "用于显示在登录界面公开简要说明文字，可以用于管理员身份介绍，备案信息介绍。",
         inputCopy: "请输入文案，例如：京ICP备00000001号",
 
-        referenceLink: "相关参考链接",
+        referenceLink: "注意事项",
         referenceLinksInfo:
             "面板的大部分设置十分重要，在一般情况下，绝大部分参数都无需更改，如果某个参数您并不知晓代表什么，那么建议您不要对其进行修改。",
 
@@ -884,7 +898,7 @@ export default {
 
         about: "关于",
         aboutTitle:
-            "软件根据<a target='black' href='https://github.com/MCSManager/MCSManager-Daemon/blob/master/LICENSE'>AGPL-3.0</a>开源软件协议发行",
+            "软件根据<a target='black' href='https://github.com/MCSManager/MCSManager-Daemon/blob/master/LICENSE'>Apache-2.0</a>开源软件协议发行",
         aboutTitleInfo:
             "此协议准许每个人都可以复制和分发代码副本，并且可以对使用者收取服务费用。<br />若对代码任何修改，则必须无偿提供软件的完整源代码下载。",
         closedSource: "闭源商业许可证",
@@ -894,9 +908,7 @@ export default {
         sponsorList: "开源项目赞助名单",
         sponsorListInfo: "只含前 40 名赞助者，查看完整赞助名单或进行赞助支持请前往",
 
-        settingUpdate: "已更新，部分选项生效可能需要重启面板",
-
-        lazy: '<div class="sub-title"><p class="sub-title">该主题由<a href="https://www.lazy.ink"target="_blank">Lazy</a>开发</p><p class="sub-title-info">如果你在使用主题过程中遇到任何问题或发现错误，可反馈到我的邮箱：<a href="mailto:lazy_creeper@qq.com">lazy_creeper@qq.com</a><br/>主题<span style="color: rgb(255, 97, 97)">完全免费！</span>严禁倒卖！</p></div><div class="sub-title"><p class="sub-title">主题发布地址：<a href="https://blog.imlazy.ink:233/index.php/archives/253/"target="_blank">点击前往</a></p><p class="sub-title">赞助二维码：<a href="https://qn-store-pub-tx.seewo.com/676b69a1b8ad4f9391555c127a2331c7165760252223383"target="_blank">点击打开</a></p><p class="sub-title">当前主题版本：2.7&nbsp;&nbsp;<a href="javascript:checkUpdate();">检查更新</a><lazy id="lazy"></lazy></p></div>',
+        settingUpdate: "已更新，部分选项生效可能需要重启面板"
     },
     home: {
         totalInstance: "实例总计",
@@ -918,7 +930,8 @@ export default {
         unknownStatus: "未知状态",
         updateSuccess: "更新成功",
         admin: "管理用户",
-        user: "普通用户"
+        user: "普通用户",
+
     },
     quickStart: {
         title: "您希望使用 MCSManager 面板做什么？",
@@ -1046,7 +1059,7 @@ export default {
         inputBinaryFileName: "如 bedrock_server.exe (Windows) 或 bedrock_server (Linux)",
         summonWin: "生成适用于 Windows 的命令",
         summonLinux: "生成适用于 Linux 的命令",
-        
+
         program: "通用控制台程序",
         programName2: "可执行程序文件名",
         programName2Info: "程序必须已经存在实例文件目录或环境变量中，如 cmd.exe，bash，program.exe 等",

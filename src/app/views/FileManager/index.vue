@@ -1,28 +1,11 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
   <div>
     <Panel>
-      <template #title>{{ $t("fileManager.title") }} - {{ currentDir }}</template>
+      <template #title>{{ $t("fileManager.title") }}</template>
       <template #default>
         <el-row :gutter="20">
           <el-col :xs="24" :md="6" :offset="0">
@@ -77,7 +60,9 @@
               <span>
                 <i class="el-icon-loading"></i>
               </span>
-              <span> {{ $t("fileManager.unzipInfo", {tasks: statusInfo.instanceFileTask}) }}</span>
+              <span>
+                {{ $t("fileManager.unzipInfo", { tasks: statusInfo.instanceFileTask }) }}</span
+              >
             </div>
           </div>
 
@@ -101,6 +86,12 @@
             :percentage="percentComplete"
           ></el-progress>
         </div>
+
+        <p>
+          <el-tag type="success" size="small">{{ $t("fileManager.dir") }}</el-tag>
+          &nbsp;
+          <el-tag type="info" size="small"> {{ currentDir }}</el-tag>
+        </p>
 
         <el-table
           :data="files"
@@ -146,7 +137,11 @@
               >
             </template>
           </el-table-column>
-          <el-table-column prop="timeText" :label="$t('fileManager.lastEdit')" width="160"></el-table-column>
+          <el-table-column
+            prop="timeText"
+            :label="$t('fileManager.lastEdit')"
+            width="160"
+          ></el-table-column>
           <el-table-column :label="$t('general.operate')" style="text-align: center" width="180">
             <template #default="scope">
               <el-button
@@ -165,12 +160,12 @@
       </template>
     </Panel>
 
-    <!-- 隐藏的文件上传按钮 -->
+    <!-- Hidden file upload button -->
     <form ref="fileForm" action="" method="post">
       <input type="file" ref="fileButtonHidden" @change="selectedFile" hidden="hidden" />
     </form>
 
-    <SelecctUnzipCode ref="selecctUnzipCode"></SelecctUnzipCode>
+    <SelectUnzipCode ref="selectUnzipCode"></SelectUnzipCode>
   </div>
 </template>
 
@@ -189,11 +184,11 @@ import {
 } from "@/app/service/common";
 import path from "path";
 import { parseforwardAddress, request } from "@/app/service/protocol";
-import SelecctUnzipCode from "./selecctUnzipCode";
+import SelectUnzipCode from "./selectUnzipCode";
 import { API_FILE_STATUS } from "../../service/common";
 
 export default {
-  components: { Panel, SelecctUnzipCode },
+  components: { Panel, SelectUnzipCode },
   data() {
     return {
       serviceUuid: this.$route.params.serviceUuid,
@@ -214,7 +209,7 @@ export default {
 
       paramPath: this.$route.query.path,
 
-      // 移动，复制，粘贴文件所需数据
+      // Move, copy, paste the required data of the file
       tmpFile: {
         tmpFileNames: null,
         tmpOperationMode: -1,
@@ -231,7 +226,7 @@ export default {
     }
     await this.render();
 
-    // 开始文件管理状态查询定时器
+    // Start the file management status query timer
     this.requestFileManagerStatus();
     this.statusRequestTask = setInterval(() => {
       this.requestFileManagerStatus();
@@ -251,7 +246,7 @@ export default {
     async render() {
       await this.list(this.currentDir);
     },
-    // 进入某目录
+    // enter a directory
     async toDir(name) {
       try {
         const p = path.normalize(path.join(this.currentDir, name));
@@ -260,18 +255,18 @@ export default {
         this.$message({ message: this.$t("fileManager.noSee"), type: "error" });
       }
     },
-    // 返回上层目录
+    // return to the upper directory
     async toUpDir() {
       const p = path.normalize(path.join(this.currentDir, "../"));
       await this.list(p);
     },
 
-    // 目录下一页或上一页事件
+    // Directory next page or previous page event
     currentChange() {
       this.toDir(".");
     },
 
-    // 目录 List 功能
+    // Directory List function
     async list(cwd = ".") {
       this.$route.query.path = cwd;
       try {
@@ -296,12 +291,13 @@ export default {
       }
     },
 
-    // 表格数据处理
+    // table data processing
     tableFilter(filesData) {
       this.files = [];
 
       for (const iterator of filesData) {
-        const typeText = iterator.type == 1 ? this.$t("fileManager.file") : this.$t("fileManager.directory");
+        const typeText =
+          iterator.type == 1 ? this.$t("fileManager.file") : this.$t("fileManager.directory");
         const timeText =
           new Date(iterator.time).toLocaleDateString() +
           " " +
@@ -316,12 +312,12 @@ export default {
       }
     },
 
-    // 表格多选函数
+    // table multi-select function
     selectionChange(v) {
       this.multipleSelection = v;
     },
 
-    // 表格文件数据转名字列表
+    // table file data to name list
     multipleFileToNames(arr = []) {
       const res = [];
       arr.forEach((v) => res.push(v.name));
@@ -344,16 +340,21 @@ export default {
       return res;
     },
 
-    // 重命名文件
+    // rename the file
     async rename() {
       try {
-        if (this.multipleSelection.length !== 1) throw new Error(this.$t("fileManager.selectFileToRename"));
+        if (this.multipleSelection.length !== 1)
+          throw new Error(this.$t("fileManager.selectFileToRename"));
         const file = this.multipleSelection[0];
-        let { value } = await this.$prompt(this.$t("fileManager.newName"), this.$t("fileManager.rename"), {
-          inputValue: file.name,
-          confirmButtonText: this.$t("general.confirm"),
-          cancelButtonText: this.$t("general.cancel")
-        });
+        let { value } = await this.$prompt(
+          this.$t("fileManager.newName"),
+          this.$t("fileManager.rename"),
+          {
+            inputValue: file.name,
+            confirmButtonText: this.$t("general.confirm"),
+            cancelButtonText: this.$t("general.cancel")
+          }
+        );
         if (!value) throw new Error(this.$t("fileManager.inputValidValues"));
         const oldFilePath = path.join(this.currentDir, file.name);
         const newFilePath = path.join(this.currentDir, value);
@@ -376,14 +377,14 @@ export default {
       }
     },
 
-    // 复制文件
+    // copy the file
     async copy() {
       this.tmpFile.tmpFileNames = this.multipleFileToNames(this.multipleSelection);
       this.tmpFile.tmpDir = this.currentDir;
       this.tmpFile.tmpOperationMode = 1;
       this.$message({ message: this.$t("fileManager.fileCopied"), type: "info" });
     },
-    // 移动文件
+    // move the file
     async move() {
       this.tmpFile.tmpFileNames = this.multipleFileToNames(this.multipleSelection);
       this.tmpFile.tmpDir = this.currentDir;
@@ -391,7 +392,7 @@ export default {
       this.$message({ message: this.$t("fileManager.fileMoved"), type: "info" });
     },
 
-    // 粘贴文件（根据模式发送不同的指令）
+    // Paste the file (send different commands according to the mode)
     async paste() {
       try {
         if (this.tmpFile.tmpOperationMode === -1) {
@@ -442,7 +443,7 @@ export default {
       }
     },
 
-    // 新建目录
+    // create a new directory
     async mkdir() {
       const { value } = await this.$prompt(this.$t("fileManager.newDirName"), undefined, {
         confirmButtonText: this.$t("general.confirm"),
@@ -469,7 +470,7 @@ export default {
       }
     },
 
-    // 编辑文件
+    // edit the file
     async toEditFilePage(row) {
       const target = path.normalize(path.join(this.currentDir, row.name));
       this.$router.push({
@@ -480,7 +481,7 @@ export default {
       });
     },
 
-    // 删除文件
+    // Delete Files
     async deleteFiles() {
       await this.$confirm(this.$t("fileManager.confirmDelFile"), this.$t("general.warn"), {
         confirmButtonText: this.$t("general.confirm"),
@@ -514,7 +515,7 @@ export default {
       }
     },
 
-    // 压缩/解压文件
+    // compress/decompress the file
     async compress(type) {
       const cwd = this.currentDir;
       try {
@@ -523,11 +524,15 @@ export default {
           return this.$message({ message: this.$t("fileManager.selectAFile"), type: "error" });
         const targets = this.fileNamesToPaths(fileNames);
         if (type === 1) {
-          //压缩
-          const text = await this.$prompt(this.$t("fileManager.newZipName"), this.$t("fileManager.fileName"), {
-            confirmButtonText: this.$t("general.confirm"),
-            cancelButtonText: this.$t("general.cancel"),
-          });
+          //compression
+          const text = await this.$prompt(
+            this.$t("fileManager.newZipName"),
+            this.$t("fileManager.fileName"),
+            {
+              confirmButtonText: this.$t("general.confirm"),
+              cancelButtonText: this.$t("general.cancel")
+            }
+          );
           if (!text.value) throw new Error(this.$t("fileManager.inputValidValues"));
           const zipName = text.value;
           for (const k in fileNames) {
@@ -544,7 +549,7 @@ export default {
               type: 1,
               source: path.join(cwd, `${zipName}.zip`),
               targets,
-              code: "utf-8" // 解压文件功能模块暂时不支持其他编码
+              code: "utf-8" // The decompression file function module does not support other encodings temporarily
             }
           });
           this.$notify({
@@ -554,13 +559,17 @@ export default {
         } else {
           if (fileNames.length !== 1)
             return this.$message({ message: this.$t("fileManager.onlyUnzipOne"), type: "error" });
-          //解压
-          const text = await this.$prompt(this.$t("fileManager.inputUnzipDirName"), this.$t("fileManager.fileName"), {
-            confirmButtonText: this.$t("general.confirm"),
-            cancelButtonText: this.$t("general.cancel"),
-          });
+          // decompress
+          const text = await this.$prompt(
+            this.$t("fileManager.inputUnzipDirName"),
+            this.$t("fileManager.fileName"),
+            {
+              confirmButtonText: this.$t("general.confirm"),
+              cancelButtonText: this.$t("general.cancel")
+            }
+          );
           if (!text.value) throw new Error(this.$t("fileManager.inputValidValues"));
-          const selected = await this.$refs.selecctUnzipCode.prompt();
+          const selected = await this.$refs.selectUnzipCode.prompt();
           if (!selected) return;
           const dirName = text.value;
           await request({
@@ -587,7 +596,7 @@ export default {
       }
     },
 
-    // 文件已选择，开始上传
+    // file is selected, start uploading
     async selectedFile() {
       try {
         const file = this.$refs.fileButtonHidden.files[0];
@@ -597,7 +606,7 @@ export default {
         formData.append("time", new Date().toUTCString());
         const fullAddress = `${this.uploadConfig.addr}/upload/${this.uploadConfig.password}`;
         console.log("Upload File", fullAddress);
-        // 上传文件
+        // upload files
         await axios.post(fullAddress, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
@@ -615,7 +624,7 @@ export default {
       }
     },
 
-    // 上传文件
+    // upload files
     async upload() {
       const result = await axios.get(API_FILE_UPLOAD, {
         params: {
@@ -630,7 +639,7 @@ export default {
       this.$refs.fileButtonHidden.click();
     },
 
-    //下载
+    //download
     async download(row) {
       const fileName = row.name;
       const filePath = path.normalize(path.join(this.currentDir, fileName));

@@ -1,22 +1,5 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
@@ -104,7 +87,7 @@
           </div>
         </div>
 
-        <!-- 上传单个服务端软件创建新实例 -->
+        <!-- Upload a single server software to create a new instance -->
         <div v-show="page == 2 && typeB == 1" class="panel-context row-mt">
           <div class="">
             <div class="sub-title">
@@ -121,9 +104,7 @@
           <div class="row-mt">
             <div class="sub-title">
               <p class="sub-title-title">{{ $t("newInstances.commandTemplate") }}</p>
-              <p
-                class="sub-title-info"
-              >{{ $t("newInstances.commandTemplateText") }}</p>
+              <p class="sub-title-info" v-html="$t('newInstances.commandTemplateText')"></p>
             </div>
             <div class="flex">
               <el-input
@@ -131,7 +112,9 @@
                 :placeholder="$t('newInstances.cmdInfo')"
                 :disabled="assist.creating"
               ></el-input>
-              <el-button @click="openCommandAssistCall(1)">{{ $t("newInstances.cmdAssist") }}</el-button>
+              <el-button @click="openCommandAssistCall(1)">{{
+                $t("newInstances.cmdAssist")
+              }}</el-button>
             </div>
           </div>
           <div class="row-mt">
@@ -155,19 +138,23 @@
                 {{ $t("newInstances.uploadFileInfo") }}
               </p>
             </div>
-            <el-button @click="uploadFile(1)" :disabled="assist.creating">{{ $t("newInstances.uploadFile") }}</el-button>
+            <el-button @click="uploadFile(1)" :disabled="assist.creating">{{
+              $t("newInstances.uploadFile")
+            }}</el-button>
             <div v-if="percentComplete > 0">
               <el-progress :percentage="percentComplete"></el-progress>
             </div>
             <p>{{ $t("newInstances.afterUpload") }}</p>
           </div>
           <div class="row-mt" style="text-align: center">
-            <el-button @click="up" size="small" :disabled="assist.creating">{{ $t("newInstances.back") }}</el-button>
-            <!-- <el-button @click="down" size="small">下一步</el-button> -->
+            <el-button @click="up" size="small" :disabled="assist.creating">{{
+              $t("newInstances.back")
+            }}</el-button>
+            <!-- <el-button @click="down" size="small">Next</el-button> -->
           </div>
         </div>
 
-        <!-- 上传服务端压缩包创建新实例 -->
+        <!-- Upload a server-side compressed package to create a new instance -->
         <div v-show="page == 2 && typeB == 2" class="panel-context row-mt">
           <div class="row-mt">
             <div class="sub-title">
@@ -192,7 +179,9 @@
                 :placeholder="$t('newInstances.cmdInfo')"
                 :disabled="assist.creating"
               ></el-input>
-              <el-button @click="openCommandAssistCall(2)">{{ $t("newInstances.cmdAssist") }}</el-button>
+              <el-button @click="openCommandAssistCall(2)">{{
+                $t("newInstances.cmdAssist")
+              }}</el-button>
             </div>
           </div>
           <div class="row-mt">
@@ -214,26 +203,31 @@
               <p class="sub-title-title">{{ $t("newInstances.uploadZip") }}</p>
               <p class="sub-title-info">{{ $t("newInstances.uploadZipInfo") }}</p>
             </div>
-            <el-button @click="uploadFile(2)" :disabled="assist.creating">{{ $t("newInstances.uploadZipButton") }}</el-button>
+            <el-button @click="uploadFile(2)" :disabled="assist.creating">{{
+              $t("newInstances.uploadZipButton")
+            }}</el-button>
             <div v-if="percentComplete > 0">
               <el-progress :percentage="percentComplete"></el-progress>
             </div>
             <p>{{ $t("newInstances.upFileInfo") }}</p>
           </div>
           <div class="row-mt" style="text-align: center">
-            <el-button @click="up" size="small" :disabled="assist.creating">{{ $t("newInstances.back") }}</el-button>
-            <!-- <el-button @click="createInstance" size="small">创建实例</el-button> -->
+            <el-button @click="up" size="small" :disabled="assist.creating">{{
+              $t("newInstances.back")
+            }}</el-button>
+            <!-- <el-button @click="createInstance" size="small">Create instance</el-button> -->
           </div>
         </div>
 
-        <!-- 从已存在的文件选择服务端 -->
+        <!-- Select server from existing file -->
         <div v-show="page == 2 && typeB == 3" class="panel-context row-mt">
           <div>
             <div class="sub-title">
               <p class="sub-title-title">{{ $t("newInstances.selectFromExist") }}</p>
               <p class="sub-title-info">{{ $t("newInstances.selectFromExistInfo") }}</p>
             </div>
-            <el-input :placeholder="$t('newInstances.instanceNameInfo2')" v-model="form.nickname"> </el-input>
+            <el-input :placeholder="$t('newInstances.instanceNameInfo2')" v-model="form.nickname">
+            </el-input>
           </div>
           <div class="row-mt">
             <div class="sub-title">
@@ -245,7 +239,9 @@
                 v-model="form.startCommand"
                 :placeholder="$t('newInstances.cmd2')"
               ></el-input>
-              <el-button @click="openCommandAssistCall(2)">{{ $t("newInstances.cmdAssist") }}</el-button>
+              <el-button @click="openCommandAssistCall(2)">{{
+                $t("newInstances.cmdAssist")
+              }}</el-button>
             </div>
           </div>
           <div class="row-mt">
@@ -255,17 +251,15 @@
                 {{ $t("newInstances.fileDirInfo") }}
               </p>
             </div>
-            <el-input
-              :placeholder="$t('newInstances.fileDirInfo')"
-              v-model="form.cwd"
-            >
-            </el-input>
+            <el-input :placeholder="$t('newInstances.fileDirInfo')" v-model="form.cwd"> </el-input>
           </div>
           <p>{{ $t("newInstances.afterFlieName") }}</p>
           <div class="row-mt" style="text-align: center">
             <ItemGroup>
               <el-button @click="up" size="small">{{ $t("newInstances.back") }}</el-button>
-              <el-button @click="createInstance" size="small">{{ $t("newInstances.createInstant") }}</el-button></ItemGroup
+              <el-button @click="createInstance" size="small">{{
+                $t("newInstances.createInstant")
+              }}</el-button></ItemGroup
             >
           </div>
         </div>
@@ -289,7 +283,7 @@
       </template>
     </Panel>
 
-    <!-- 命令助手 -->
+    <!-- Command Assistant -->
     <CommandAssist
       v-model="commandAssistPanel"
       :result="commandAssistCallback"
@@ -297,17 +291,17 @@
     >
     </CommandAssist>
 
-    <!-- 隐藏的文件上传按钮 -->
+    <!-- Hidden file upload button -->
     <input type="file" ref="fileButtonHidden" @change="selectedFile" hidden="hidden" />
 
-    <selecct-unzip-code ref="selecctUnzipCode"></selecct-unzip-code>
+    <SelectUnzipCode ref="selectUnzipCode"></SelectUnzipCode>
   </div>
 </template>
 
 <script>
 import path from "path";
 import axios from "axios";
-import SelecctUnzipCode from "@/app/views/FileManager/selecctUnzipCode";
+import SelectUnzipCode from "@/app/views/FileManager/selectUnzipCode";
 import Panel from "@/components/Panel";
 import CommandAssist from "@/components/CommandAssist";
 import SelectBlock from "@/components/SelectBlock";
@@ -320,7 +314,7 @@ import {
 import { parseforwardAddress, request } from "@/app/service/protocol";
 
 export default {
-  components: { Panel, SelectBlock, CommandAssist, SelecctUnzipCode },
+  components: { Panel, SelectBlock, CommandAssist, SelectUnzipCode },
   data: function () {
     return {
       title: this.$t("newInstances.newInstanceGuide"),
@@ -361,34 +355,35 @@ export default {
     };
   },
   methods: {
-    // 创建实例并上传文件
+    // create instance and upload file
     async uploadFile(type) {
       if (!this.form.nickname || (!this.assist.commandtemplate && !this.form.startCommand)) {
         return this.$message({ message: this.$t("newInstances.pleaseFinish"), type: "error" });
       }
-      this.zipCode = await this.$refs.selecctUnzipCode.prompt();
-      await this.$confirm(this.$t("newInstances.uploadAndCreate"),this.$t("notify.confirmDelTitle"), {
-        confirmButtonText: this.$t("general.confirm"),
-        cancelButtonText: this.$t("general.cancel"),
-        type: "warning"
-      });
+      this.zipCode = await this.$refs.selectUnzipCode.prompt();
+      await this.$confirm(
+        this.$t("newInstances.uploadAndCreate"),
+        this.$t("notify.confirmDelTitle"),
+        {
+          confirmButtonText: this.$t("general.confirm"),
+          cancelButtonText: this.$t("general.cancel"),
+          type: "warning"
+        }
+      );
       this.assist.uploadFileType = type;
       this.$refs.fileButtonHidden.click();
     },
-    // 文件已选择，开始上传
+    // file is selected, start uploading
     async selectedFile() {
       try {
         this.assist.creating = true;
         const file = this.$refs.fileButtonHidden.files[0];
-        // 命令模板替换
+        // command template substitution
         if (this.assist.uploadFileType === 1) {
-          this.form.startCommand = this.assist.commandtemplate.replace(
-            "{{ProgramName}}",
-            file.name
-          );
+          this.form.startCommand = this.assist.commandtemplate.replace("${ProgramName}", file.name);
         }
         if (!this.form.cwd) this.form.cwd = ".";
-        // 上传文件式创建实例 & 请求守护进程直连上传
+        // Create an instance by uploading a file & request the daemon to upload directly
         const cfg = await request({
           method: "POST",
           url: API_INSTANCE_UPLOAD,
@@ -401,17 +396,17 @@ export default {
         this.uploadConfig.addr = parseforwardAddress(cfg.addr, "http");
         this.uploadConfig.password = cfg.password;
         this.newInstanceUuid = cfg.instanceUuid;
-        // 上传文件参数准备
+        // prepare upload file parameters
         const formData = new FormData();
         formData.append("file", file);
         const fullAddress = `${this.uploadConfig.addr}/upload/${this.uploadConfig.password}`;
         console.log("NewInstance - FileUpload:", fullAddress, "\n", file);
-        // 上传文件
+        // upload files
         const fileName = file.name;
         const extName = path.extname(fileName);
         await axios.post(fullAddress, formData, {
           params: {
-            // 根据后缀自动解压文件
+            // Automatically decompress the file according to the suffix
             unzip: extName === ".zip" ? 1 : null,
             code: this.zipCode
           },
@@ -427,15 +422,22 @@ export default {
         this.$message({ message: `Error: ${error.message}`, type: "error" });
       }
     },
-    // 非上传文件式的创建实例
+    // Create instance without uploading file
     async createInstance() {
-      await this.$confirm(this.$t("newInstances.instantWillBeCreate"), this.$t("notify.confirmDelTitle"), {
-        confirmButtonText: this.$t("general.confirm"),
-        cancelButtonText: this.$t("general.cancel"),
-        type: "warning"
-      });
+      await this.$confirm(
+        this.$t("newInstances.instantWillBeCreate"),
+        this.$t("notify.confirmDelTitle"),
+        {
+          confirmButtonText: this.$t("general.confirm"),
+          cancelButtonText: this.$t("general.cancel"),
+          type: "warning"
+        }
+      );
       if (this.form.nickname === "" || this.form.startCommand === "") {
-        return this.$message({ message: this.$t("newInstances.parameterNotFinish"), type: "error" });
+        return this.$message({
+          message: this.$t("newInstances.parameterNotFinish"),
+          type: "error"
+        });
       }
       try {
         if (!this.form.cwd) this.form.cwd = ".";
@@ -451,7 +453,7 @@ export default {
       } catch (err) {
         this.$message({
           type: "error",
-          message:  this.$t("newInstances.createFailed")+`${err.message}`
+          message: this.$t("newInstances.createFailed") + `${err.message}`
         });
         console.error(this.$t("newInstances.createFailed"), err);
       }
@@ -459,17 +461,17 @@ export default {
     selectTypeA(v) {
       if (v === 1) {
         this.form.type = TYPE_MINECRAFT_JAVA;
-        this.assist.commandtemplate = "java -jar {{ProgramName}}";
+        this.assist.commandtemplate = "java -jar ${ProgramName}";
         this.form.stopCommand = "stop";
       }
       if (v === 2) {
         this.form.type = TYPE_MINECRAFT_BEDROCK;
-        this.assist.commandtemplate = "{{ProgramName}}";
+        this.assist.commandtemplate = "${ProgramName}";
         this.form.stopCommand = "stop";
       }
       if (v === 3) {
         this.form.type = TYPE_UNIVERSAL;
-        this.assist.commandtemplate = "{{ProgramName}}";
+        this.assist.commandtemplate = "${ProgramName}";
         this.form.stopCommand = "^c";
       }
       this.title = this.$t("newInstances.selectCreateType");
@@ -493,7 +495,7 @@ export default {
     },
     openCommandAssistCall(type) {
       if (type === 1) {
-        this.assist.defaultProgramName = "{{ProgramName}}";
+        this.assist.defaultProgramName = "${ProgramName}";
       } else {
         this.assist.defaultProgramName = "";
       }
@@ -510,13 +512,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.container {
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 90vh;
-  height: calc(100% - 80px) !important; */
-}
-</style>

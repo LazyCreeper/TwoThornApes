@@ -1,29 +1,11 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
   <el-row :gutter="20">
     <el-col :span="24">
       <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
-        <!-- 多语言HTML处示例代码，基础玩法 -->
         <template #title>{{ $t("overview.systemInfoTable") }}</template>
         <template #default>
           <el-row :gutter="20">
@@ -45,7 +27,6 @@
       <div>
         <el-row :gutter="20">
           <el-col :md="6" :xs="12" :offset="0">
-            <!-- 多语言HTML处示例代码，绑定属性内部的话，需要在属性名前加冒号。里面的双引号变单引号 -->
             <ValueCard
               :title="$t('overview.daemonStatus')"
               :sub-title="$t('overview.daemonAvailable')"
@@ -97,18 +78,22 @@
       </div>
 
       <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
-        <template #title>{{ $t('overview.daemonOverview') }}</template>
+        <template #title>{{ $t("overview.daemonOverview") }}</template>
         <template #default>
-          <p v-html="$t('overview.daemonOverviewInfo',{ panelVersion,specifiedDaemonVersion} )">
-          </p>
+          <p
+            v-html="$t('overview.daemonOverviewInfo', { panelVersion, specifiedDaemonVersion })"
+          ></p>
           <el-table :data="servicesStatus" style="width: 100%" size="small">
             <el-table-column prop="ip" :label="$t('overview.addr')" width="180"> </el-table-column>
-            <el-table-column prop="remarks" :label="$t('overview.remarks')" width="240"> </el-table-column>
-            <el-table-column prop="port" :label="$t('overview.port')" width="180"> </el-table-column>
+            <el-table-column prop="remarks" :label="$t('overview.remarks')" width="240">
+            </el-table-column>
+            <el-table-column prop="port" :label="$t('overview.port')" width="180">
+            </el-table-column>
             <el-table-column prop="cpu" label="CPU"> </el-table-column>
             <el-table-column prop="mem" :label="$t('overview.mem')"> </el-table-column>
             <el-table-column prop="instance" :label="$t('overview.instance')"> </el-table-column>
-            <el-table-column prop="started" :label="$t('overview.runningInstance')"> </el-table-column>
+            <el-table-column prop="started" :label="$t('overview.runningInstance')">
+            </el-table-column>
             <el-table-column prop="version" :label="$t('overview.daemonVersion')">
               <template #default="scope">
                 <span
@@ -132,15 +117,13 @@
             <el-table-column prop="status" :label="$t('overview.connectStatus')">
               <template #default="scope">
                 <span class="color-green" v-if="scope.row.status">
-                  <i class="el-icon-circle-check"></i> {{ $t('overview.online') }}
+                  <i class="el-icon-circle-check"></i> {{ $t("overview.online") }}
                 </span>
                 <span class="color-red" v-if="!scope.row.status">
-                  <el-tooltip
-                    effect="dark"
-                    :content="$t('overview.errorConnect')"
-                    placement="top"
-                  >
-                    <span><i class="el-icon-warning-outline"></i> {{ $t('overview.offline') }}</span>
+                  <el-tooltip effect="dark" :content="$t('overview.errorConnect')" placement="top">
+                    <span
+                      ><i class="el-icon-warning-outline"></i> {{ $t("overview.offline") }}</span
+                    >
                   </el-tooltip>
                 </span>
               </template>
@@ -151,9 +134,9 @@
       <el-row :gutter="20">
         <el-col :md="12" :offset="0">
           <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
-            <template #title>{{ $t('overview.panelApiRequestCount') }}</template>
+            <template #title>{{ $t("overview.panelApiRequestCount") }}</template>
             <template #default>
-              <p>{{ $t('overview.panelApiRequestInfo') }}</p>
+              <p>{{ $t("overview.panelApiRequestInfo") }}</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main3" style="width: 100%; height: 200px"></div>
               </div>
@@ -162,9 +145,9 @@
         </el-col>
         <el-col :md="12" :offset="0">
           <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
-            <template #title>{{ $t('overview.panelCpuUsage') }}</template>
+            <template #title>{{ $t("overview.panelCpuUsage") }}</template>
             <template #default>
-              <p>{{ $t('overview.panelCpuUsageInfo') }}</p>
+              <p>{{ $t("overview.panelCpuUsageInfo") }}</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main" style="width: 100%; height: 200px"></div>
               </div>
@@ -175,9 +158,9 @@
       <el-row :gutter="20">
         <el-col :md="12" :offset="0">
           <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
-            <template #title>{{ $t('overview.runningInstances') }}</template>
+            <template #title>{{ $t("overview.runningInstances") }}</template>
             <template #default>
-              <p>{{ $t('overview.runningInstancesInfo') }}</p>
+              <p>{{ $t("overview.runningInstancesInfo") }}</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main4" style="width: 100%; height: 200px"></div>
               </div>
@@ -186,9 +169,9 @@
         </el-col>
         <el-col :md="12" :offset="0">
           <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
-            <template #title>{{ $t('overview.panelMemoryUsage') }}</template>
+            <template #title>{{ $t("overview.panelMemoryUsage") }}</template>
             <template #default>
-              <p>{{ $t('overview.panelMemoryUsageInfo') }}</p>
+              <p>{{ $t("overview.panelMemoryUsageInfo") }}</p>
               <div class="echart-wrapper">
                 <div id="echart-wrapper-main2" style="width: 100%; height: 200px"></div>
               </div>
@@ -200,7 +183,7 @@
   </el-row>
 
   <Panel v-if="manualLink">
-    <template #title>{{ $t('overview.docs') }}</template>
+    <template #title>{{ $t("overview.docs") }}</template>
     <template #default>
       <el-row :gutter="20">
         <el-col :md="6" :offset="0" v-for="(item, index) in manualLink['helpLink']" :key="index">
@@ -208,7 +191,7 @@
         </el-col>
 
         <el-col :span="24">
-          <div class="box-card-title-more">{{ $t('overview.Q&A') }}</div>
+          <div class="box-card-title-more">{{ $t("overview.Q&A") }}</div>
         </el-col>
         <el-col :md="6" :offset="0" v-for="(item, index) in manualLink['faq']" :key="index">
           <a class="manualLink" :href="item.link" v-text="item.title" target="_black"></a>
@@ -456,18 +439,16 @@ export default {
         source[key]["time"] = `${MAX_TIME - key * 1}` + this.$t("overview.minBefore");
       }
       this.systemChart3.setOption({
-        textStyle: {color:"#dad6a1"},
+        textStyle: { color: "#dad6a1" },
         dataset: {
           dimensions: ["time", "value"],
           source
         },
         //接口请求量
-        color: [
-          '#fff493'
-        ]
+        color: ["#fff493"]
       });
       this.systemChart4.setOption({
-        textStyle: {color:"#dad6a1"},
+        textStyle: { color: "#dad6a1" },
         yAxis: {
           max: this.forChartTotalInstance <= 1 ? 1 : this.forChartTotalInstance
         },
@@ -476,9 +457,7 @@ export default {
           source
         },
         //总数，运行数
-        color: [
-        '#99f5bd','#dbff95'
-        ]
+        color: ["#99f5bd", "#dbff95"]
       });
     },
     setSystemChart() {
@@ -488,26 +467,22 @@ export default {
         source[key]["time"] = `${(MAX_TIME - key) * 10}` + this.$t("overview.secBefore");
       }
       this.systemChart.setOption({
-        textStyle: {color:"#8ec7ff"},
+        textStyle: { color: "#8ec7ff" },
         dataset: {
           dimensions: ["time", "cpu"],
           source
         },
         //CPU
-        color: [
-          '#87c2fe'
-        ]
+        color: ["#87c2fe"]
       });
       this.systemChart2.setOption({
-        textStyle: {color:"#d79aff"},
+        textStyle: { color: "#d79aff" },
         dataset: {
           dimensions: ["time", "mem"],
           source
         },
         ///面板段内存使用率
-        color: [
-          '#d58dff'
-        ]
+        color: ["#d58dff"]
       });
     },
     setChartSource() {

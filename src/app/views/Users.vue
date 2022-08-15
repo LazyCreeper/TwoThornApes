@@ -1,22 +1,5 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
@@ -87,7 +70,7 @@
               <el-table-column
                 :label="$t('general.operate')"
                 style="text-align: center"
-                width="180"
+                width="260"
               >
                 <template #default="scope">
                   <el-button size="mini" @click="toEditUserPanel(scope.row)">{{
@@ -104,7 +87,7 @@
       </el-col>
     </el-row>
 
-    <!-- 新增用户弹框 -->
+    <!-- create user dialog -->
     <Dialog v-model="isNewUser">
       <template #title>{{ $t("users.newUser") }}</template>
       <template #default>
@@ -167,7 +150,7 @@
       </template>
     </Dialog>
 
-    <!-- 编辑用户弹框 -->
+    <!-- edit user dialog -->
     <Dialog v-model="isEditUser">
       <template #title>{{ $t("users.editUser") }}</template>
       <template #default>
@@ -242,9 +225,9 @@ export default {
       // isAssignLoading: true,
       editUserInfo: {},
       objects: [],
-      remoteObjects: [], // 以守护进程为主键的列表
-      instances: [], // 以实例为主键的列表
-      multipleSelection: [], // 表格多选属性
+      remoteObjects: [], // list with daemon as primary key
+      instances: [], // list with instance as primary key
+      multipleSelection: [], // table multiple selection properties
 
       readonly: true,
 
@@ -253,13 +236,13 @@ export default {
   },
   async mounted() {
     this.businessWarning = true;
-    // 请求并渲染所有用户
+    // request and render all users
     await this.render();
-    // 异步请求所有实例缓存结果
+    // Asynchronously request all instances to cache the result
     this.renderServices();
   },
   methods: {
-    // 用户数据渲染
+    // user data rendering
     async render() {
       const result = await request({
         method: "GET",
@@ -300,11 +283,11 @@ export default {
         }
       });
     },
-    // 页码点击事件
+    // page number click event
     handleCurrentChange() {
       this.refresh();
     },
-    // 表格多选函数
+    // table multi-select function
     selectionChange(v) {
       this.multipleSelection = v;
     },
@@ -329,7 +312,7 @@ export default {
       // this.isAssign = true;
       // this.isAssignLoading = true;
       // this.editUserInfo = {};
-      // // 请求选择的用户详细信息
+      // // Request selected user details
       // this.editUserInfo = await this.requestUserInfo(row.uuid);
       // this.isAssignLoading = false;
     },
@@ -406,7 +389,7 @@ export default {
           url: API_USER,
           data: uuids
         });
-        this.$message({ type: "success", message: this.$t('notify.delSuccess') });
+        this.$message({ type: "success", message: this.$t("notify.delSuccess") });
       } catch (error) {
         this.$message({
           type: "error",
