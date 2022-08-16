@@ -92,7 +92,7 @@
       </el-row>
 
       <div>
-        <div class="instance-table-warpper">
+        <div class="instance-table-wrapper">
           <div>
             <div class="color-red" v-if="!currentRemoteUuid">
               &nbsp;Error: {{ $t("instances.selectRemoteError") }}
