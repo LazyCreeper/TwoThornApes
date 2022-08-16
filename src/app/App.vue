@@ -29,7 +29,7 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
             <Header v-bind:breadcrumbsList="breadCrumbs" :aside="toAside" />
           </el-col>
         </el-row>
-        <div v-loading="loading" style="min-height: 50px">
+        <div v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)" style="min-height: 50px" image.png>
           <router-view v-if="!loading"></router-view>
         </div>
       </el-main>
