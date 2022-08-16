@@ -147,7 +147,7 @@
         :class="{
           instanceStatusGreen: item.status === 3,
           instanceStatusGray: item.status !== 3,
-          CradInstance: true
+          runningInstanceCard: true
         }"
         :tipType="0"
       >
@@ -282,7 +282,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="status" :label="$t('instances.status.runStatus')" width="120">
+            <el-table-column prop="status" :label="$t('instances.status.runStatus')" width="180">
               <template #default="scope">
                 <div class="color-gray" v-if="scope.row.status == 0">
                   <i class="el-icon-video-pause"></i>
@@ -300,17 +300,17 @@
                 }}</span>
 
                 <span class="color-red" v-else-if="scope.row.status == -1">{{
-                  $t("instances.status.budy")
+                  $t("instances.status.busy")
                 }}</span>
-                <span class="color-red" v-else>{{ $t("instances.status.budy") }}</span>
+                <span class="color-red" v-else>{{ $t("instances.status.busy") }}</span>
               </template>
             </el-table-column>
             <el-table-column
               prop="type"
               :label="$t('instances.table.instanceType')"
-              width="140"
+              width="220"
             ></el-table-column>
-            <el-table-column :label="$t('general.operate')" style="text-align: center" width="180">
+            <el-table-column :label="$t('general.operate')" style="text-align: center" width="240">
               <template #default="scope">
                 <el-button
                   size="mini"
@@ -354,13 +354,13 @@
   filter: var(--card-instance-gray-filter);
 }
 
-.CradInstance {
+.runningInstanceCard {
   overflow: hidden;
   cursor: pointer;
   transition: all 1s;
   height: 146px;
 }
-.CradInstance:hover {
+.runningInstanceCard:hover {
   background: var(--card-instance-bg-hover);
   box-shadow: var(--card-instance-shadow-hover);
 }
@@ -541,7 +541,7 @@ export default {
       if (!this.currentRemoteUuid) {
         return this.$message({ type: "info", message: this.$t("instances.selectRemoteTitle") });
       }
-      router.push({ path: `/new_instace/${this.currentRemoteUuid}` });
+      router.push({ path: `/new_instance/${this.currentRemoteUuid}` });
     },
     toInstance(serviceUuid, instanceUuid) {
       console.log("View Instance:", serviceUuid, instanceUuid);

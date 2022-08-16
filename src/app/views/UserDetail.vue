@@ -1,22 +1,5 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
@@ -77,7 +60,7 @@
           <div class="sub-title">
             <p class="sub-title">{{ $t("userDetail.aboutPasswd") }}</p>
             <p class="sub-title-info">
-              {{ $t("userDetail.aboutPasswd") }}
+              {{ $t("userDetail.aboutPasswdInfo") }}
             </p>
           </div>
           <div class="sub-title">
@@ -91,15 +74,15 @@
     </el-col>
     <el-col :md="8" :offset="0">
       <!-- <Panel>
-        <template #title>用户名</template>
+        <template #title>Username</template>
         <template #default>
           <div class="sub-title row-mt">
-            <p class="sub-title-title require-field">更改用户名</p>
-            <p class="sub-title-info">支持中文和字母，长度为 2 到 18 个文字</p>
+            <p class="sub-title-title require-field">Change username</p>
+            <p class="sub-title-info">Support Chinese and alphabet, 2 to 18 characters in length</p>
           </div>
           <el-input
             size="small"
-            placeholder="保持原值"
+            placeholder="Keep the original value"
             v-model="userData.userName"
             :readonly="readonly.a"
             @focus="() => (readonly.a = false)"
@@ -107,7 +90,7 @@
           ></el-input>
           <div style="text-align: right">
             <el-button size="small" class="row-mt" @click="update(1)" type="danger" plain
-              >更新用户名</el-button
+              >Update Username</el-button
             >
           </div>
         </template>
@@ -183,12 +166,12 @@
           </div>
           <div style="text-align: right">
             <ItemGroup>
-              <el-button size="small" class="row-mt" @click="changeApi(true)"
-                >{{ $t("userDetail.createApiKey") }}</el-button
-              >
-              <el-button size="small" class="row-mt" @click="changeApi(false)"
-                >{{ $t("userDetail.disableApiKey") }}</el-button
-              >
+              <el-button size="small" class="row-mt" @click="changeApi(true)">{{
+                $t("userDetail.createApiKey")
+              }}</el-button>
+              <el-button size="small" class="row-mt" @click="changeApi(false)">{{
+                $t("userDetail.disableApiKey")
+              }}</el-button>
             </ItemGroup>
           </div>
         </template>
@@ -289,7 +272,7 @@ export default {
       if (value.length < 9 || value.length > 36)
         return callback(new Error(this.$t("userDetail.notStandard")));
       // const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[0-9A-Za-z]{12,}$/;
-      // if (!reg.test(value)) return callback(new Error("您的密码必须包含：数字，大写和小写字母"));
+      // if (!reg.test(value)) return callback(new Error("Your password must contain: numbers, uppercase and lowercase letters"));
       callback();
     },
     validatePassword2(rule, value = "", callback) {

@@ -1,22 +1,5 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
@@ -28,11 +11,13 @@
         <el-table-column prop="port" :label="$t('overview.port')"></el-table-column>
         <el-table-column :label="$t('container.status')">
           <template #default="scope">
-            <span>{{ scope.row.available ? this.$t("overview.online") : this.$t("overview.offline") }}</span>
+            <span>{{
+              scope.row.available ? this.$t("overview.online") : this.$t("overview.offline")
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="remarks" :label="$t('overview.remarks')"></el-table-column>
-        <el-table-column :label="$t('general.operate')" style="text-align: center" width="140px">
+        <el-table-column :label="$t('general.operate')" style="text-align: center" width="260px">
           <template #default="scope">
             <el-button
               size="mini"
@@ -40,14 +25,13 @@
               :disabled="!scope.row.available"
               >{{ $t("container.imagesManage") }}</el-button
             >
-            <!-- <el-button size="mini" @click="deleteImage(scope.row)" :disabled="!scope.row.available">主机本地环境</el-button> -->
           </template>
         </el-table-column>
       </el-table>
     </template>
   </Panel>
 
-  <Panel>
+  <Panel v-iszh>
     <template #title>{{ $t("container.relevantInfo") }}</template>
     <template #default>
       <el-row :gutter="10">

@@ -1,33 +1,37 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
   <div class="contanier">
     <div class="bg"></div>
+
+    <div class="panel-wrapper" v-if="step == -1">
+      <Panel class="panel tc" body-style="padding:40px;">
+        <h1 class="title">
+          <i class="el-icon-guide"></i>
+          Select Language
+        </h1>
+        <div style="margin-top: 48px" v-loading="isLoading" element-loading-background="rgba(0, 0, 0, 0.5)">
+          <ItemGroup>
+            <SelectBlock
+              v-for="(item, index) in language"
+              :key="index"
+              @click="selectLanguage(item.value)"
+            >
+              <template #title> {{ item.label }}</template>
+            </SelectBlock>
+          </ItemGroup>
+        </div>
+      </Panel>
+    </div>  
+
     <div class="panel-wrapper" v-if="step == 0">
       <Panel class="panel tc" body-style="padding:40px;">
         <h1 class="title">{{ $t("install.welcome") }}</h1>
         <p>{{ $t("install.desc") }}</p>
         <div style="margin-top: 48px">
-          <el-button type="primary" @click="next" v-loading="isLoading">{{
+          <el-button type="primary" @click="next" v-loading="isLoading" element-loading-background="rgba(0, 0, 0, 0.5)">{{
             $t("install.start")
           }}</el-button>
         </div>
@@ -36,7 +40,7 @@
             Reference: https://mcsmanager.com/
           </a>
           <br />
-          <span>Released under the AGPL-3.0 License.</span>
+          <span>Released under the Apache-2.0 License.</span>
         </div>
       </Panel>
     </div>
@@ -46,7 +50,7 @@
         <h1 class="title">{{ $t("install.createAdminAccount") }}</h1>
         <p>{{ $t("install.createAdminAccountInfo") }}</p>
         <div>
-          <el-form ref="form" :model="initUser" :rules="rules" label-width="66px">
+          <el-form ref="form" :model="initUser" :rules="rules" label-width="80px">
             <el-form-item :label="$t('users.userName')" prop="userName">
               <el-input v-model="initUser.userName" />
             </el-form-item>
@@ -54,7 +58,7 @@
               <el-input v-model="initUser.passWord" />
             </el-form-item>
             <el-form-item label="">
-              <el-button type="primary" @click="createUser" v-loading="isLoading">
+              <el-button type="primary" @click="createUser" v-loading="isLoading" element-loading-background="rgba(0, 0, 0, 0.5)">
                 {{ $t("install.createAccount") }}
               </el-button>
             </el-form-item>
@@ -63,27 +67,8 @@
       </Panel>
     </div>
 
-    <!-- <div class="panel-wrapper" v-if="step == 2">
-      <Panel class="panel" body-style="padding:40px;" v-loading="isLoading">
-        <h1 class="title">我们需要一些时间安装依赖程序</h1>
-        <p>
-          我们将下载约5MB左右的二进制程序辅助 MCSManager
-          的运行，为您提供最真实的终端交互功能，这是一个可选功能。
-        </p>
-        <div style="margin-top: 48px">
-          <ItemGroup>
-            <el-button type="primary" @click="installLib">安装依赖库</el-button>
-            <el-button @click="next">跳过</el-button>
-          </ItemGroup>
-          <p class="color-gray" style="font-size: 12px">
-            <small>如果此安装失败或者跳过，面板依然可以正常使用，只是缺少仿真控制台能力。 </small>
-          </p>
-        </div>
-      </Panel>
-    </div> -->
-
     <div class="panel-wrapper" v-if="step == 2">
-      <Panel class="panel" body-style="padding:40px;" v-loading="isLoading">
+      <Panel class="panel" body-style="padding:40px;" v-loading="isLoading" element-loading-background="rgba(0, 0, 0, 0.5)">
         <h1 class="title">{{ $t("install.ohhh") }}</h1>
         <p>{{ $t("install.ohhhInfo") }}</p>
         <ItemGroup>
@@ -105,17 +90,27 @@
 import SelectBlock from "@/components/SelectBlock";
 import Panel from "@/components/Panel";
 import { request } from "../../service/protocol";
-import { API_PANEL_INSTALL } from "../../service/common";
+import { API_PANEL_INSTALL, API_UPDATE_SETTING_WHEN_INSTALL } from "../../service/common";
 export default {
   components: { Panel, SelectBlock },
   data: function () {
     return {
       isLoading: false,
-      step: 0,
+      step: -1,
       initUser: {
         userName: "",
         passWord: ""
       },
+      language: [
+        {
+          label: "English",
+          value: "en_us"
+        },
+        {
+          label: "简体中文",
+          value: "zh_cn"
+        }
+      ],
       rules: {
         userName: {
           required: true,
@@ -166,6 +161,26 @@ export default {
     installLib() {
       console.log("install....");
       this.next();
+    },
+    async selectLanguage(lang) {
+      try {
+        this.isLoading = true;
+        await this.updateSettings({ language: lang });
+        this.$message({ message: this.$t("settings.settingUpdate"), type: "success" });
+        this.$i18n.locale = lang;
+        this.next();
+      } catch (error) {
+        this.$message({ message: error, type: "error" });
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async updateSettings(cfg) {
+      return await request({
+        method: "PUT",
+        url: API_UPDATE_SETTING_WHEN_INSTALL,
+        data: cfg
+      });
     }
   }
 };
@@ -232,6 +247,7 @@ export default {
 }
 
 .title {
+  font-weight: 400;
   font-size: 24px;
   margin: 0px 0px 12px 0px;
 }

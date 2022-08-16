@@ -34,7 +34,7 @@
       </el-row>
     </template>
   </Panel>
-  <Panel v-loading="loading">
+  <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
     <template #title>{{ $t("userResources.resourceManage") }}</template>
     <template #default>
       <div class="sub-title row-mt">

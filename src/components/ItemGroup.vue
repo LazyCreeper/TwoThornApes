@@ -20,7 +20,7 @@
 -->
 
 <template>
-  <div class="item-group-warpper">
+  <div class="item-group-wrapper">
     <div :class="classz" :style="style">
       <slot></slot>
     </div>

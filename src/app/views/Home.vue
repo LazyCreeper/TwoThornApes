@@ -1,27 +1,10 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
   <el-row :gutter="20">
-    <!-- 左侧用户数据栏 -->
+    <!-- User data column on the left -->
     <el-col :md="16" :offset="0">
       <el-row :gutter="20">
         <el-col :xs="12" :md="6" :offset="0">
@@ -67,7 +50,7 @@
       </el-row>
     </el-col>
 
-    <!-- 右侧用户信息栏 -->
+    <!-- User information bar on the right -->
     <el-col :md="8" :offset="0">
       <Panel style="height: 260px">
         <template #title>{{ $t("home.personalInfo") }}</template>
@@ -108,7 +91,6 @@
         style="width: 100%"
         size="mini"
         v-loading="info.loading"
-        element-loading-background="rgba(0, 0, 0, 0.5)"
       >
         <el-table-column
           prop="nickname"
@@ -117,25 +99,7 @@
         ></el-table-column>
         <el-table-column :label="$t('instances.status.runStatus')">
           <template #default="scope">
-            <div class="color-gray" v-if="scope.row.status == 0">
-              <i class="el-icon-video-pause"></i>
-              <span>{{ $t("home.outOfRunning") }}</span>
-            </div>
-            <div class="color-green" v-else-if="scope.row.status == 3">
-              <i class="el-icon-video-play"></i>
-              <span> {{ $t("home.running") }}</span>
-            </div>
-            <span class="color-yellow" v-else-if="scope.row.status == 1">{{
-              $t("home.stopping")
-            }}</span>
-            <span class="color-yellow" v-else-if="scope.row.status == 2">{{
-              $t("home.starting")
-            }}</span>
-            <span class="color-red" v-else-if="scope.row.status == -1">{{
-              $t("home.maintaining")
-            }}</span>
-            <span class="color-red" v-else>{{ $t("home.unknownStatus") }}</span>
-            <!-- {{ statusToText(scope.row.status) }} -->
+            {{ statusToText(scope.row.status) }}
           </template>
         </el-table-column>
 
@@ -177,17 +141,9 @@
     </template>
   </Panel>
 
-  <!-- 版权信息 -->
   <div
     class="flex flex-space-center flex-align-items-center"
-    style="
-      font-size: 12px;
-      color: #e4ff8a;
-      text-align: center;
-      margin-top: 40px;
-      margin-top: 40px;
-      text-shadow: 0px 0px 20px #000000;
-    "
+    style="font-size: 12px; color: #cdcdcd; text-align: center; margin-top: 40px"
   >
     <div>
       <span
@@ -204,12 +160,12 @@
           href="https://www.lazy.ink"
           >Lazy</a
         ><br />
-        Released under the AGPL-3.0 License</span
+        Released under the Apache-2.0 License</span
       >
     </div>
   </div>
 
-  <!-- 实例详情编辑框 -->
+  <!-- Instance details dialog -->
   <Dialog v-model="editInstance.is">
     <template #title>{{ $t("instance.Dialog.instanceParameterEdit") }}</template>
     <template #default>
