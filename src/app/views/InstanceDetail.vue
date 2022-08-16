@@ -292,6 +292,7 @@
                       @focus="loadImages"
                       style="width: 100%"
                       v-loading="imageListLoading"
+                      element-loading-background="rgba(0, 0, 0, 0.5)"
                       @change="selectImage"
                     >
                       <el-option
@@ -386,6 +387,7 @@
                       @focus="loadNetworkModes"
                       style="width: 100%"
                       v-loading="networkModeListLoading"
+                      element-loading-background="rgba(0, 0, 0, 0.5)"
                     >
                       <el-option
                         v-for="item in networkModes"

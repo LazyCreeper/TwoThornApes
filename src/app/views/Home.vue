@@ -91,6 +91,7 @@
         style="width: 100%"
         size="mini"
         v-loading="info.loading"
+        element-loading-background="rgba(0, 0, 0, 0.5)"
       >
         <el-table-column
           prop="nickname"
