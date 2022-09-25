@@ -144,19 +144,19 @@
 
   <div
     class="flex flex-space-center flex-align-items-center"
-    style="font-size: 12px; color: #cdcdcd; text-align: center; margin-top: 40px"
+    style="font-size: 12px; color: #000; text-align: center; margin-top: 40px"
   >
     <div>
       <span
         >Powered by
         <a
-          style="color: #b6ff6d; text-decoration: underline"
+          style="color: #009159; text-decoration: underline"
           target="black"
           href="https://github.com/MCSManager"
           >MCSManager</a
         >&nbsp;&nbsp;|&nbsp;&nbsp;Theme by
         <a
-          style="color: #b6ff6d; text-decoration: underline"
+          style="color: #009159; text-decoration: underline"
           target="black"
           href="https://www.lazy.ink"
           >Lazy</a

@@ -198,7 +198,7 @@ export default {
     async failed(error) {
       this.cause = error.message;
       if (this.cause == "null") {
-        this.cause = this.$t("login.errorUOrP");
+        this.cause = this.$t("login.errorCause");
       }
       this.loginText = this.$t("login.logBackIn");
       this.close = true;
@@ -213,12 +213,7 @@ export default {
       try {
         await setupUserInfo();
       } catch (error) {
-        this.$notify({
-          title: this.$t("login.notify.title"),
-          message: this.$t("login.notify.message"),
-          type: "error",
-          duration: 0
-        });
+        this.$alert(this.$t("login.notify.message"), this.$t("login.notify.title"));
       }
       // 等待动画效果完毕
       await sleep(1500);
@@ -241,7 +236,8 @@ export default {
   },
   async mounted() {
     console.log("Welcome use MCSManager.");
-    console.log("Copyright 2022 Suwings All rights reserved.");
+    console.log("Copyright 2022 MCSManager All rights reserved.");
+    console.error("%c%s", "border:5px solid #ff6372;font-size:1em", "Theme by Lazy | https://blog.imlazy.ink:233/index.php/archives/253");
     // 请求登录界面文案
     this.requestLoginInfo();
 

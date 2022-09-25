@@ -22,15 +22,18 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
         <Aside />
       </el-aside>
     </div>
+
     <el-container>
       <el-main>
-        <el-row>
-          <el-col>
-            <Header v-bind:breadcrumbsList="breadCrumbs" :aside="toAside" />
-          </el-col>
-        </el-row>
-        <div v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)" style="min-height: 50px" image.png>
-          <router-view v-if="!loading"></router-view>
+        <div :class="{ 'max-width-limit': !isTopPermission }">
+          <el-row>
+            <el-col>
+              <Header v-bind:breadcrumbsList="breadCrumbs" :aside="toAside" />
+            </el-col>
+          </el-row>
+          <div v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)" style="min-height: 50px">
+            <router-view v-if="!loading"></router-view>
+          </div>
         </div>
       </el-main>
     </el-container>
@@ -40,6 +43,7 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 <script>
 import Aside from "../components/Aside";
 import Header from "../components/Header";
+// eslint-disable-next-line no-unused-vars
 import { requestPanelStatus, setupUserInfo } from "./service/protocol.js";
 import router from "./router";
 
@@ -70,7 +74,25 @@ export default {
 
   async created() {
     let needToRoot = false;
-    let needInstall = false;
+
+    try {
+      // Get current panel status information
+      const statusInfo = await requestPanelStatus();
+      if (statusInfo.language) {
+        console.log("SET_LANGUAGE:", statusInfo.language, statusInfo);
+        this.$i18n.locale = statusInfo.language;
+      } else {
+        this.$i18n.locale = "en_us";
+      }
+      // If not installed, must route to /install
+      if (statusInfo?.isInstall === false) {
+        this.loading = false;
+        setTimeout(() => router.push({ path: "/install" }), 1200);
+        return;
+      }
+    } catch (error) {
+      alert(`Err: ${error}, Please refresh!`);
+    }
 
     try {
       // After the first refresh, try to get user data once
@@ -79,27 +101,11 @@ export default {
       const userInfo = this.$store.state.userInfo;
       if (!userInfo || !userInfo.uuid) throw new Error("userInfo.uuid is null");
     } catch (error) {
-      console.log(error);
+      console.log("App.vue redirected to root.vue");
       needToRoot = true;
     }
 
-    try {
-      // Get current panel status information
-      const statusInfo = await requestPanelStatus();
-      if (statusInfo.language) {
-        console.log("SET_LANGUAGE:", statusInfo.language);
-        this.$i18n.locale = statusInfo.language;
-      } else {
-        this.$i18n.locale = "en_us";
-      }
-      // If not installed, must route to /install
-      if (statusInfo?.isInstall === false) needInstall = true;
-    } catch (error) {
-      alert(error + " Please refresh!");
-    }
-
     this.loading = false;
-    if (needInstall) return router.push({ path: "/install" });
     if (needToRoot) return router.push({ path: "/" });
   },
 
@@ -118,3 +124,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.max-width-limit {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+</style>

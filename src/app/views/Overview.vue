@@ -85,16 +85,17 @@
           ></p>
           <el-table :data="servicesStatus" style="width: 100%" size="small">
             <el-table-column prop="ip" :label="$t('overview.addr')" width="180"> </el-table-column>
-            <el-table-column prop="remarks" :label="$t('overview.remarks')" width="240">
-            </el-table-column>
+            <el-table-column prop="remarks" :label="$t('overview.remarks')"> </el-table-column>
             <el-table-column prop="port" :label="$t('overview.port')" width="180">
             </el-table-column>
             <el-table-column prop="cpu" label="CPU"> </el-table-column>
             <el-table-column prop="mem" :label="$t('overview.mem')"> </el-table-column>
-            <el-table-column prop="instance" :label="$t('overview.instance')"> </el-table-column>
-            <el-table-column prop="started" :label="$t('overview.runningInstance')">
+            <el-table-column prop="instance" :label="$t('overview.instance')" width="160">
             </el-table-column>
-            <el-table-column prop="version" :label="$t('overview.daemonVersion')">
+            <el-table-column prop="started" :label="$t('overview.runningInstance')" width="160">
+            </el-table-column
+            >0
+            <el-table-column prop="version" :label="$t('overview.daemonVersion')" width="160">
               <template #default="scope">
                 <span
                   class="color-green"
@@ -112,9 +113,9 @@
                     <span><i class="el-icon-warning-outline"></i> {{ scope.row.version }}</span>
                   </el-tooltip>
                 </span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="status" :label="$t('overview.connectStatus')">
+              </template> </el-table-column
+            >0
+            <el-table-column prop="status" :label="$t('overview.connectStatus')" width="160">
               <template #default="scope">
                 <span class="color-green" v-if="scope.row.status">
                   <i class="el-icon-circle-check"></i> {{ $t("overview.online") }}
@@ -249,7 +250,6 @@ export default {
         Logined: 0
       },
 
-      // 初始化用户密码窗口
       initUserVisible: false
     };
   },
@@ -271,16 +271,17 @@ export default {
       });
     },
     render(data) {
-      // 版本相关数据渲染
+      // Version related data rendering
       this.specifiedDaemonVersion = data.specifiedDaemonVersion;
       this.panelVersion = data.version;
 
       const system = data.system;
-      // 表格数据渲染
+      // table data rendering
       if (data.chart) this.systemChartData = data.chart;
       const remoteCount = data.remoteCount;
       const remote = data.remote;
-      // 计算总实例与运行实例数
+
+      // Count the total instances and running instances
       let totalInstance = 0;
       let runningInstance = 0;
       for (const iterator of remote) {
@@ -292,12 +293,12 @@ export default {
 
       this.forChartTotalInstance = totalInstance;
 
-      // 计算内存
+      // compute memory
       const free = Number(system.freemem / 1024 / 1024 / 1024).toFixed(1);
       const total = Number(system.totalmem / 1024 / 1024 / 1024).toFixed(1);
       const used = Number(total - free).toFixed(1);
 
-      // 数值卡片列表赋值
+      // Value card list assignment
       this.valueCard.totalInstance = totalInstance;
       this.valueCard.runningInstance = runningInstance;
       this.valueCard.freemem = free;
@@ -310,11 +311,9 @@ export default {
       this.valueCard.Logined = data.record.logined;
       this.valueCard.cpu = Number(system.cpu * 100).toFixed(0);
       this.valueCard.mem = Number((used / total) * 100).toFixed(0);
-      // 计算已正常运行时间
-      // const uptime = Number(system.uptime / 60 / 60).toFixed(0);
+
       this.computerInfoA = [
         {
-          // 在Javascript代码中的用法，记得加this，单双引号灵活使用
           name: this.$t("overview.systemType"),
           value: `${system.type} ${system.platform}`
         },
@@ -344,7 +343,7 @@ export default {
           warn: used / total > 0.9
         },
         // {
-        //   name: "系统 CPU 使用率",
+        //   name: "CPU",
         //   value: `${Number(system.cpu * 100).toFixed(1)}%`,
         //   warn: system.cpu * 100 > 90
         // }
@@ -357,15 +356,6 @@ export default {
           name: this.$t("overview.panelVersion"),
           value: data.version
         },
-        // {
-        //   name: "分布式在线",
-        //   value: `${remoteCount.available}/${remoteCount.total}`,
-        //   warn: remoteCount.available !== remoteCount.total
-        // },
-        // {
-        //   name: "实例运行数",
-        //   value: `${runningInstance}/${totalInstance}`
-        // },
 
         {
           name: this.$t("overview.specifiedDaemonVersion"),
@@ -375,17 +365,14 @@ export default {
           name: this.$t("overview.illegalAccess"),
           value: data.record.illegalAccess
         },
-        // {
-        //   name: "登录失败与总次数",
-        //   value: `${data.record.loginFailed}/${data.record.logined}`
-        // },
+
         {
           name: this.$t("overview.banips"),
           value: data.record.banips,
           warn: data.record.banips > 0
         }
       ];
-      // 装载守护进程信息
+      // Load daemon information
       this.servicesStatus = [];
       for (const iterator of remote) {
         if (iterator.system) {
@@ -420,10 +407,8 @@ export default {
       }
     },
     initChart() {
-      // 基于准备好的dom，初始化echarts实例
       this.systemChart = echarts.init(document.getElementById("echart-wrapper-main"));
       this.systemChart.setOption(getDefaultOption());
-      // this.systemChart.resize({});
       this.systemChart2 = echarts.init(document.getElementById("echart-wrapper-main2"));
       this.systemChart2.setOption(getDefaultOption());
       this.systemChart3 = echarts.init(document.getElementById("echart-wrapper-main3"));

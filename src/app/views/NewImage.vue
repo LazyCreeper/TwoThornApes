@@ -1,22 +1,5 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
@@ -184,9 +167,19 @@
 import Panel from "../../components/Panel";
 import LineOption from "../../components/LineOption";
 import SelectBlock from "../../components/SelectBlock";
-import axios from "axios";
-import { API_IMAGES, API_PROGRESS, API_SERVICE } from "../service/common";
+
+import { API_IMAGES, API_PROGRESS } from "../service/common";
 import { request } from "../service/protocol";
+import {
+  openjdk16,
+  openjdk16CN,
+  openjdk17,
+  openjdk17CN,
+  openjdk8,
+  openjdk8CN,
+  ubuntu18,
+  ubuntu18CN
+} from "../service/build_dockerfile";
 
 export default {
   components: { Panel, SelectBlock, LineOption },
@@ -200,57 +193,36 @@ export default {
       progress: null
     };
   },
+  computed: {
+    isEN() {
+      return this.$i18n.locale === "en_us";
+    },
+    isCN() {
+      return this.$i18n.locale === "zh_cn";
+    }
+  },
   methods: {
     forward(v) {
       this.step = v;
     },
     selectType(type) {
       if (type === 1) {
-        this.dockerFile = `FROM openjdk:8-jre
-# RUN sed -i -E 's/http:\\/\\/(deb|security).debian.org/http:\\/\\/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
-RUN apt update && apt install -y locales
-RUN echo "zh_CN.UTF-8 UTF-8">/etc/locale.gen && locale-gen
-ENV LANG=zh_CN.UTF-8
-ENV LANGUAGE=zh_CN.UTF-8
-ENV LC_ALL=zh_CN.UTF-8
-ENV TZ=Asia/Shanghai
-RUN mkdir -p /workspace
-WORKDIR /workspace
-`;
+        this.dockerFile = this.isCN ? openjdk8CN : openjdk8;
         this.name = "mcsm-openjdk";
         this.version = "8";
       }
       if (type === 2) {
-        this.dockerFile = `FROM openjdk:16.0.2
-RUN mkdir -p /workspace
-ENV TZ=Asia/Shanghai
-WORKDIR /workspace
-`;
+        this.dockerFile = this.isCN ? openjdk16CN : openjdk16;
         this.name = "mcsm-openjdk";
         this.version = "16";
       }
       if (type === 3) {
-        this.dockerFile = `FROM ubuntu:18.04
-ENV TZ=Asia/Shanghai
-# 
-# RUN sed -i -E 's/http:\\/\\/(archive|security).ubuntu.com/http:\\/\\/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
-RUN apt update && apt -y install libcurl4 && DEBIAN_FRONTEND="noninteractive" apt -y install tzdata
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN mkdir -p /workspace
-WORKDIR /workspace
-`;
+        this.dockerFile = this.dockerFile = this.isCN ? ubuntu18CN : ubuntu18;
         this.name = "mcsm-ubuntu";
         this.version = "18.04";
       }
       if (type === 5) {
-        this.dockerFile = `FROM openjdk:17
-RUN mkdir -p /workspace
-ENV LANG=zh_CN.UTF-8
-ENV LANGUAGE=zh_CN.UTF-8
-ENV LC_ALL=zh_CN.UTF-8
-ENV TZ=Asia/Shanghai
-WORKDIR /workspace
-`;
+        this.dockerFile = this.dockerFile = this.isCN ? openjdk17CN : openjdk17;
         this.name = "mcsm-openjdk";
         this.version = "17";
       }
@@ -286,7 +258,7 @@ WORKDIR /workspace
     },
     async createViaDockerFile() {
       if (!this.name || !this.version || !this.dockerFile) {
-        return this.$message({ type: "error", message:  this.$t("newImage.pleaseFinish") });
+        return this.$message({ type: "error", message: this.$t("newImage.pleaseFinish") });
       }
       // eslint-disable-next-line no-unreachable
       await this.$confirm(this.$t("newImage.buildTip"), this.$t("imageManager.tip"), {
@@ -323,13 +295,7 @@ WORKDIR /workspace
       }
     }
   },
-  async mounted() {
-    const result = await axios.get(API_SERVICE);
-    const responseObjects = result.data.data;
-    responseObjects.forEach((v) => {
-      this.services.push(v);
-    });
-  }
+  async mounted() {}
 };
 </script>
 

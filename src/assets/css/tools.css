@@ -19,10 +19,10 @@
   也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
 */
 /* 字体 */
-@font-face {
+/*@font-face {
   font-family:MiSans;
   src:url(./MiSans.ttf)
-}
+}*/
 
 /* 工具类 */
 .row-mb {
