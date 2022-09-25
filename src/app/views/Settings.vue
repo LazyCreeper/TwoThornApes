@@ -10,14 +10,12 @@
         <div>
           <ItemGroup>
             <el-button type="success" size="small" @click="updateSettings">{{
-              $t("settings.updateSet")
+            $t("settings.updateSet")
             }}</el-button>
             <el-button type="" size="small" @click="refresh">{{ $t("general.refresh") }}</el-button>
           </ItemGroup>
         </div>
-        <span class="color-gray hidden-md-and-down"
-          >{{ $t("settings.updateSetInfo") }}&nbsp;&nbsp;</span
-        >
+        <span class="color-gray hidden-md-and-down">{{ $t("settings.updateSetInfo") }}&nbsp;&nbsp;</span>
       </div>
     </template>
   </Panel>
@@ -105,10 +103,7 @@
                   {{ $t("settings.canFileManagerInfo") }}
                 </p>
               </div>
-              <el-select
-                v-model="settings.canFileManager"
-                :placeholder="$t('general.pleaseSelect')"
-              >
+              <el-select v-model="settings.canFileManager" :placeholder="$t('general.pleaseSelect')">
                 <el-option :label="$t('general.allow')" :value="true"></el-option>
                 <el-option :label="$t('general.forbid')" :value="false"></el-option>
               </el-select>
@@ -157,47 +152,71 @@
     <Panel>
       <template #title>{{ $t("settings.about") }}</template>
       <template #default>
-        <div class="sub-title">
-          <p class="sub-title-title">
-            <span v-html="$t('settings.aboutTitle')"></span>
-          </p>
-          <p class="sub-title-info">
-            <span v-html="$t('settings.aboutTitleInfo')"></span>
-          </p>
-        </div>
+        <el-row :gutter="20">
+          <el-col :md="12">
+            <div class="sub-title">
+              <p class="sub-title-title">
+                <span v-html="$t('settings.aboutTitle')"></span>
+              </p>
+              <p class="sub-title-info">
+                <span v-html="$t('settings.aboutTitleInfo')"></span>
+              </p>
+            </div>
 
-        <div class="contributors" v-if="sponsorList" v-iszh>
-          <div class="sub-title">
-            <p class="sub-title-title">{{ $t("settings.sponsorList") }}</p>
-            <p class="sub-title-info">
-              {{ $t("settings.sponsorListInfo") }}
-              <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer">
-                MCSManager.com </a
-              >.
-            </p>
-            <p class="sub-title-info"></p>
-          </div>
-          <el-row :gutter="10">
-            <el-col :span="24">
-              <div
-                v-for="(item, index) in sponsorList"
-                :key="index"
-                style="margin: 0px 8px 4px 0px; display: inline-block"
-              >
-                <a
-                  :href="item.link || 'https://mcsmanager.com'"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style="text-decoration: underline"
-                >
-                  <span style="margin: 0px; font-size: 13px">
-                    {{ item.name }}
-                  </span>
-                </a>
+            <div class="contributors" v-if="sponsorList" v-iszh>
+              <div class="sub-title">
+                <p class="sub-title-title">{{ $t("settings.sponsorList") }}</p>
+                <p class="sub-title-info">
+                  {{ $t("settings.sponsorListInfo") }}
+                  <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer">
+                    MCSManager.com </a>.
+                </p>
+                <p class="sub-title-info"></p>
               </div>
-            </el-col>
-          </el-row>
-        </div>
+              <el-row :gutter="10">
+                <el-col :span="24">
+                  <div v-for="(item, index) in sponsorList" :key="index"
+                    style="margin: 0px 8px 4px 0px; display: inline-block">
+                    <a :href="item.link || 'https://mcsmanager.com'" target="_blank" rel="noopener noreferrer"
+                      style="text-decoration: underline">
+                      <span style="margin: 0px; font-size: 13px">
+                        {{ item.name }}
+                      </span>
+                    </a>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+          </el-col>
+          <el-col :md="4"></el-col>
+          <el-col :md="8">
+            <div class="contributors">
+              <div class="sub-title">
+                <p class="sub-title-title">{{ $t("settings.aboutTheme.title") }}</p>
+                <p class="sub-title-info">
+                  {{ $t("settings.aboutTheme.info") }}<br>
+                  {{ $t("settings.aboutTheme.info2") }}
+                  <a href="mailto:lazy_creeper@qq.com">lazy_creeper@qq.com</a>
+                </p>
+                <br />
+                <p class="sub-title-title">{{ $t("settings.aboutTheme.blog") }}<a
+                    href="https://blog.imlazy.ink:233/index.php/archives/253/"
+                    target="_blank"
+                    >{{ $t("settings.aboutTheme.goLink") }}</a
+                  ></p>
+
+                <p class="sub-title-title">{{ $t("settings.aboutTheme.qrCode") }}<a
+                    href="https://qn-store-pub-tx.seewo.com/676b69a1b8ad4f9391555c127a2331c7165760252223383"
+                    target="_blank"
+                    >{{ $t("settings.aboutTheme.goLink") }}</a
+                  ></p>
+
+                <p class="sub-title-title">{{ $t("settings.aboutTheme.ver") }} 2.8&nbsp;&nbsp;<a href="javascript:checkUpdate();">{{ $t("settings.aboutTheme.checkVer") }}</a
+                  ><lazy id="lazy"></lazy></p>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
       </template>
     </Panel>
   </div>
@@ -280,9 +299,11 @@ export default {
 .system-index-block {
   margin: 0px 0px 24px 0px;
 }
+
 .config-item {
   margin-top: 10px;
 }
+
 .contributors {
   margin: 10px 0px;
 }
