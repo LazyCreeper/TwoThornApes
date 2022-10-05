@@ -119,3 +119,4 @@ src/app/views/1FileManager.vue
 src/app/views/1NewInstance.vue
 
 .zip
+vue.config.js
