@@ -14,6 +14,13 @@
 	--selection-color: #3b4856;
 	/*鼠标选择后的 文本颜色*/
 
+	--scrool-width: 5px;
+	/* 滚动条宽度 */
+	--scrool-bg: #0000001a;
+	/* 滚动条背景颜色 */
+	--scrool-color: #fff;
+	/* 滚动条里面的条的颜色 */
+
 	/*登陆/安装界面背景图片*/
 	--background-login-image: url(https://api.imlazy.ink/img);
 	/*电脑端登录页背景图（来自 雫 API 的随机图片API）*/

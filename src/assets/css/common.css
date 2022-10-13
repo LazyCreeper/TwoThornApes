@@ -24,6 +24,20 @@
   color: var(--selection-color);
 }
 
+::-webkit-scrollbar {
+  width: var(--scrool-width);
+}
+
+/* 滚动条 */
+::-webkit-scrollbar-track {
+  background-color: var(--scrool-bg);
+}
+
+/* 滚动条里面的条 */
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px var(--scrool-color);
+}
+
 body, button, input, textarea {
   font-family: MiSans;
 }
