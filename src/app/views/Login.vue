@@ -97,7 +97,7 @@
               </div>
               <div class="login-info-wrapper row-mt" v-if="loginInfo">
                 <span class="color-gray">
-                  {{ loginInfo }}
+                    {{ loginInfo }}
                 </span>
               </div>
               <div class="login-info-wrapper row-mt">
@@ -379,11 +379,12 @@ export default {
 #login-panel {
   min-height: 330px;
   width: 430px;
-  transition: all 1s;
+  transition: all 0.4s 0.2s;
 }
 
 #login-panel:hover {
-  border: 1px solid #77797c;
+  border: 1px solid #828487;
+  transform: scale(1.04);
 }
 
 .login-btn-wrapper {
