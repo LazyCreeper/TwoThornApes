@@ -39,7 +39,7 @@
 }
 
 body, button, input, textarea {
-  font-family: MiSans;
+  font-family: var(--font-family);
 }
 
 a {
