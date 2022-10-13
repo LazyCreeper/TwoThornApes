@@ -3,6 +3,7 @@
 -->
 
 <template>
+  <!-- Admin Navigation Bar -->
   <el-card
     v-if="isTopPermission"
     class="box-card"
@@ -20,28 +21,18 @@
           :to="{ path: item.path }"
           :key="index"
         >
-          <span class="only-pc-display"
-            >{{ $t("router.panel") }}&nbsp;/&nbsp;{{ $t("router." + item.title) }}</span
-          >
+          <span class="only-pc-display">
+            {{ $t("router.panel") }}&nbsp;/&nbsp;{{ $t("router." + item.title) }}
+          </span>
         </div>
       </el-col>
-      <el-col :span="12" style="text-align: right; line-height: 28px">
-        <el-dropdown style="margin: 0px 10px">
-          <span class="el-dropdown-link">
-            {{ userInfo.userName }}
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click="toPrivate">{{ $t("root.private") }}</el-dropdown-item>
-              <el-dropdown-item @click="logout">{{ $t("root.logout") }}</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+      <el-col :span="12" style="text-align: right; line-height: 28px; color: #409eff">
+        <headerItems></headerItems>
       </el-col>
     </el-row>
   </el-card>
 
+  <!-- User Navigation Bar -->
   <el-card
     v-if="!isTopPermission"
     class="box-card page-header-img"
@@ -56,28 +47,23 @@
           </div>
         </div>
       </router-link>
+
       <div style="height: 36px; line-height: 36px">
-        <ItemGroup :lr="true">
-          <router-link to="/home">
-            <el-link :underline="false" class="only-pc-display header-a">{{
-              userInfo.userName
-            }}</el-link>
-          </router-link>
-          <el-link @click="toPrivate" class="header-a">{{ $t("root.private") }}</el-link>
-          <el-link @click="logout" class="header-a">{{ $t("root.logout") }}</el-link>
-        </ItemGroup>
+        <headerItems></headerItems>
       </div>
     </div>
   </el-card>
 </template>
 
 <script>
-import router from "../app/router";
-import { API_USER_LOGOUT } from "../app/service/common";
-import { request } from "../app/service/protocol";
-import Logo from "./Logo.vue";
+import router from "@/app/router";
+import { API_USER_LOGOUT } from "@/app/service/common";
+import { request } from "@/app/service/protocol";
+import Logo from "../Logo";
+import headerItems from "./HeaderItems";
 
 export default {
+  components: { Logo, headerItems },
   props: {
     breadcrumbsList: Array,
     breadcrumbs: String,
@@ -95,6 +81,15 @@ export default {
     }
   },
   methods: {
+    setTheme(v = "") {
+      localStorage.setItem("theme", v);
+      document.body.setAttribute("class", v);
+      this.$message({ message: this.$t("fileManager.setSuccess"), type: "success" });
+    },
+    async refresh() {
+      await this.render();
+      this.$message({ message: this.$t("general.refreshFinish"), type: "success" });
+    },
     toAside() {
       this.$props.aside();
     },
@@ -122,21 +117,11 @@ export default {
         });
       }
     }
-  },
-  components: { Logo }
+  }
 };
 </script>
 
 <style scoped>
-.el-dropdown-link {
-  cursor: pointer;
-  color: #409eff;
-  font-weight: 400;
-}
-.el-icon-arrow-down {
-  font-size: 12px;
-}
-
 .header-left-button {
   line-height: 28px;
   font-size: 22px;
@@ -144,7 +129,7 @@ export default {
 }
 
 .page-header-img {
-  background: url("../assets/side.png");
+  background: url("../../assets/side.png");
   background-position-y: 40px;
   transition: all 1s;
 }

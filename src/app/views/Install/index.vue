@@ -217,7 +217,6 @@ export default {
 }
 
 .panel {
-  background-color: white;
   min-height: 340px;
   width: 520px;
   transition: all 0.4s;
