@@ -88,6 +88,8 @@ export function getPlayersOption() {
         areaStyle: {},
         symbol: "none"
       }
-    ]
+    ],
+    textStyle: { color: "#ffffff" },
+    color: ["#ffffffa6"]
   };
 }
