@@ -20,7 +20,11 @@
 	/* 滚动条背景颜色 */
 	--scrool-color: #fff;
 	/* 滚动条里面的条的颜色 */
-	
+
+	--font-family: MiSans;
+	/* 控制面板字体 */
+
+
 	/*登陆/安装界面背景图片*/
 	--background-login-image: url(https://api.imlazy.ink/img);
 	/*电脑端登录页背景图（来自 雫 API 的随机图片API）*/
