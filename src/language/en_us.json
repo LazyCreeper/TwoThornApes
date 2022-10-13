@@ -588,7 +588,7 @@
   },
   "fileManagerEditor": {
     "title": "Edit file",
-    "updateFile": "Update File",
+    "updateFile": "Save File",
     "backToFileManager": "Back",
     "backViaHistory": "Back",
     "editError": "Error editing file",
