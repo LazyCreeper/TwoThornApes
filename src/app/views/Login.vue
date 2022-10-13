@@ -20,25 +20,15 @@
 -->
 
 <template>
-  <div
-    id="login-layer-top"
-    :class="{ 'login-layer-fadeout-top': close, 'login-layer-fadein-top': !close }"
-  ></div>
-  <div
-    id="login-layer-left"
-    :class="{ 'login-layer-fadeout-left': close, 'login-layer-fadein-left': !close }"
-  ></div>
-  <div
-    id="login-layer-right"
-    :class="{ 'login-layer-fadeout-right': close, 'login-layer-fadein-right': !close }"
-  ></div>
-  <div
-    id="login-layer-bottom"
-    :class="{ 'login-layer-fadeout-bottom': close, 'login-layer-fadein-bottom': !close }"
-  ></div>
+  <div id="login-layer-top" :class="{ 'login-layer-fadeout-top': close, 'login-layer-fadein-top': !close }"></div>
+  <div id="login-layer-left" :class="{ 'login-layer-fadeout-left': close, 'login-layer-fadein-left': !close }"></div>
+  <div id="login-layer-right" :class="{ 'login-layer-fadeout-right': close, 'login-layer-fadein-right': !close }"></div>
+  <div id="login-layer-bottom" :class="{ 'login-layer-fadeout-bottom': close, 'login-layer-fadein-bottom': !close }">
+  </div>
 
   <div id="login-panel-wrapper" :class="{ 'login-panel-wrapper-out': closeWindow }">
-    <Panel id="login-panel" body-style="padding:44px;" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+    <Panel id="login-panel" body-style="padding:44px;" v-loading="loading"
+      element-loading-background="rgba(0, 0, 0, 0.5)">
       <template #default>
         <form action="/login" method="post">
           <div style="font-size: 24px; font-weight: 600">{{ $t("login.title") }}</div>
@@ -46,30 +36,16 @@
           <form action="/" method="post">
             <div style="margin-top: 22px">
               <div>
-                <el-input
-                  type="text"
-                  name="mcsm_username"
-                  v-model="form.username"
-                  :placeholder="$t('login.account')"
-                  autocomplete="on"
-                  :disabled="close"
-                  @keyup.enter="submit"
-                >
+                <el-input type="text" name="mcsm_username" v-model="form.username" :placeholder="$t('login.account')"
+                  autocomplete="on" :disabled="close" @keyup.enter="submit">
                   <template #suffix>
                     <i class="el-icon-user"></i>
                   </template>
                 </el-input>
               </div>
               <div class="row-mt">
-                <el-input
-                  type="password"
-                  name="mcsm_password"
-                  v-model="form.password"
-                  :placeholder="$t('login.passWord')"
-                  autocomplete="on"
-                  :disabled="close"
-                  @keyup.enter="submit"
-                >
+                <el-input type="password" name="mcsm_password" v-model="form.password"
+                  :placeholder="$t('login.passWord')" autocomplete="on" :disabled="close" @keyup.enter="submit">
                   <template #suffix>
                     <i class="el-icon-lock"></i>
                   </template>
@@ -84,28 +60,22 @@
                     </a>
                   </div>
                 </transition>
-                <el-button
-                  type="primary"
-                  size="small"
-                  style="width: 110px"
-                  @click="login"
-                  :disabled="close"
-                  :loading="loading"
-                >
+                <el-button type="primary" size="small" style="width: 110px" @click="login" :disabled="close"
+                  :loading="loading">
                   {{ loginText }}
                 </el-button>
               </div>
               <div class="login-info-wrapper row-mt" v-if="loginInfo">
                 <span class="color-gray">
-                    {{ loginInfo }}
+                  {{ loginInfo }}
                 </span>
               </div>
               <div class="login-info-wrapper row-mt">
                 <div>
-                  <span class="color-gray" >
+                  <span class="color-gray">
                     <strong>Powered by
-                    <a target="black" href="https://github.com/Suwings">MCSManager</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                    Theme by <a href="https://www.lazy.ink" target="_blank">Lazy</a></strong>
+                      <a target="black" href="https://github.com/MCSManager">MCSManager</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                      Theme by <a href="https://www.lazy.ink" target="_blank">Lazy</a></strong>
                   </span>
                 </div>
               </div>
@@ -331,9 +301,10 @@ export default {
 #login-layer-right,
 #login-layer-bottom {
   z-index: 998;
-  background-color: rgb(0,0,0);
+  background-color: rgb(0, 0, 0);
   position: fixed;
 }
+
 #login-layer-top {
   top: 0px;
   left: 0px;
@@ -345,11 +316,13 @@ export default {
   left: 0px;
   right: 0px;
 }
+
 #login-layer-left {
   top: 0px;
   right: 0px;
   bottom: 0px;
 }
+
 #login-layer-right {
   top: 0px;
   left: 0px;
@@ -423,6 +396,7 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
   }
+
   #login-panel {
     text-align: center;
     margin: 0;
@@ -435,9 +409,11 @@ export default {
     align-items: center;
     border-radius: 0px;
   }
+
   #login-panel:hover {
     border: none;
   }
+
   .login-btn-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -445,10 +421,12 @@ export default {
     flex-direction: column-reverse;
     text-align: center;
   }
+
   #login-cause {
     margin-top: 12px;
     margin-right: 0px;
   }
+
   .login-info-wrapper {
     text-align: center;
     display: flex;
