@@ -129,7 +129,6 @@ export default {
 }
 
 .page-header-img {
-  background: url("../../assets/side.png");
   background-position-y: 40px;
   transition: all 1s;
 }
