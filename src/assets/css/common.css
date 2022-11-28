@@ -76,7 +76,7 @@ a:hover {
   background-color: var(--drawer-bg-color);
 }
 
-.is-active {
+.el-menu-item.is-active {
   background-color: var(--cd-bg-color)!important;
   border-left: var(--cd-border-left);
   color: var(--cd-color)!important;
@@ -312,6 +312,12 @@ a:hover {
   background-color: var(--input-disabled-bg-color);
   color: var(--input-disabled-color);
 }
+
+.el-input-number__decrease, .el-input-number__increase {
+  background: unset;
+  color: unset;
+}
+
 /* 按钮 */
 .el-button.el-button--default,.el-button--small {
   background: var(--btn-default-bg-color);
@@ -404,7 +410,7 @@ button[disabled] {
   color: var(--selected-color);
 }
 
-.el-select-dropdown__item,.el-dropdown-menu__item {
+.el-select-dropdown__item,.el-dropdown-menu__item,.el-switch__label {
   color: var(--select-color);
 }
 
