@@ -18,7 +18,9 @@
 <script>
 export default {
   props: {
-    style: String
+    size: String,
+    space: String,
+    style: Object
   },
   data: function () {
     return {};
