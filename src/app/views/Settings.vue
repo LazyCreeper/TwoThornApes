@@ -1,7 +1,3 @@
-<!--
-  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
--->
-
 <template>
   <Panel>
     <template #title>{{ $t("settings.setOperate") }}</template>
@@ -9,10 +5,12 @@
       <div class="flex flex-space-between flex-align-items-center">
         <div>
           <ItemGroup>
-            <el-button type="success" size="small" @click="updateSettings">{{
-            $t("settings.updateSet")
-            }}</el-button>
-            <el-button type="" size="small" @click="refresh">{{ $t("general.refresh") }}</el-button>
+            <el-button type="success" size="small" @click="updateSettings">
+              {{
+              $t("settings.updateSet")
+              }}
+            </el-button>
+            <el-button type size="small" @click="refresh">{{ $t("general.refresh") }}</el-button>
           </ItemGroup>
         </div>
         <span class="color-gray hidden-md-and-down">{{ $t("settings.updateSetInfo") }}&nbsp;&nbsp;</span>
@@ -28,18 +26,16 @@
           <el-col :md="12">
             <!-- <div class="system-index-block">
               <SystemIndex></SystemIndex>
-            </div> -->
+            </div>-->
 
             <div class="config-item" style="margin-top: 0px">
               <div class="sub-title">
                 <p class="sub-title-title">{{ $t("settings.languageSetting") }}</p>
-                <p class="sub-title-info">
-                  {{ $t("settings.languageSettingInfo") }}
-                </p>
+                <p class="sub-title-info">{{ $t("settings.languageSettingInfo") }}</p>
               </div>
               <el-select v-model="settings.language" :placeholder="$t('general.pleaseSelect')">
                 <el-option label="English" value="en_us"></el-option>
-                <el-option label="简体中文" value="zh_cn"></el-option>
+                <el-option value="zh_cn" :label="$t('CommonText.011')"></el-option>
                 <!-- <el-option label="Japanese" value="jp" disabled></el-option> -->
               </el-select>
             </div>
@@ -47,33 +43,33 @@
             <div class="config-item">
               <div class="sub-title">
                 <p class="sub-title-title">{{ $t("settings.accessPort") }}</p>
-                <p class="sub-title-info">
-                  {{ $t("settings.accessPortInfo") }}
-                </p>
+                <p class="sub-title-info">{{ $t("settings.accessPortInfo") }}</p>
               </div>
-              <el-input :placeholder="$t('settings.inputNum')" v-model="settings.httpPort">
-              </el-input>
+              <el-input :placeholder="$t('settings.inputNum')" v-model="settings.httpPort"></el-input>
             </div>
 
             <div class="config-item">
               <div class="sub-title">
                 <p class="sub-title-title">{{ $t("settings.bindIP") }}</p>
-                <p class="sub-title-info">
-                  {{ $t("settings.bindIPInfo") }}
-                </p>
+                <p class="sub-title-info">{{ $t("settings.bindIPInfo") }}</p>
               </div>
-              <el-input :placeholder="$t('settings.inputIP')" v-model="settings.httpIp"> </el-input>
+              <el-input :placeholder="$t('settings.inputIP')" v-model="settings.httpIp"></el-input>
             </div>
 
             <div class="config-item">
               <div class="sub-title">
                 <p class="sub-title-title">{{ $t("settings.loginPage") }}</p>
-                <p class="sub-title-info">
-                  {{ $t("settings.loginPageInfo") }}
-                </p>
+                <p class="sub-title-info">{{ $t("settings.loginPageInfo") }}</p>
               </div>
-              <el-input :placeholder="$t('settings.inputCopy')" v-model="settings.loginInfo">
-              </el-input>
+              <el-input :placeholder="$t('settings.inputCopy')" v-model="settings.loginInfo"></el-input>
+            </div>
+
+            <div class="config-item" v-iszh>
+              <div class="sub-title">
+                <p class="sub-title-title">{{ $t("views.Settings.001") }}</p>
+                <p class="sub-title-info">{{ $t("views.Settings.002") }}</p>
+              </div>
+              <el-input placeholder="https://..." v-model="settings.quickInstallAddr"></el-input>
             </div>
           </el-col>
 
@@ -82,9 +78,7 @@
             <div>
               <div class="sub-title">
                 <p class="sub-title">{{ $t("settings.referenceLink") }}</p>
-                <p class="sub-title-info">
-                  {{ $t("settings.referenceLinksInfo") }}
-                </p>
+                <p class="sub-title-info">{{ $t("settings.referenceLinksInfo") }}</p>
               </div>
             </div>
           </el-col>
@@ -99,11 +93,12 @@
             <div class="config-item" style="margin-top: 0px">
               <div class="sub-title">
                 <p class="sub-title-title">{{ $t("settings.canFileManager") }}</p>
-                <p class="sub-title-info">
-                  {{ $t("settings.canFileManagerInfo") }}
-                </p>
+                <p class="sub-title-info">{{ $t("settings.canFileManagerInfo") }}</p>
               </div>
-              <el-select v-model="settings.canFileManager" :placeholder="$t('general.pleaseSelect')">
+              <el-select
+                v-model="settings.canFileManager"
+                :placeholder="$t('general.pleaseSelect')"
+              >
                 <el-option :label="$t('general.allow')" :value="true"></el-option>
                 <el-option :label="$t('general.forbid')" :value="false"></el-option>
               </el-select>
@@ -111,9 +106,7 @@
             <div class="config-item">
               <div class="sub-title">
                 <p class="sub-title-title">{{ $t("settings.crossAPI") }}</p>
-                <p class="sub-title-info">
-                  {{ $t("settings.crossAPIInfo") }}
-                </p>
+                <p class="sub-title-info">{{ $t("settings.crossAPIInfo") }}</p>
               </div>
               <el-select v-model="settings.crossDomain" :placeholder="$t('general.pleaseSelect')">
                 <el-option :label="$t('general.enable')" :value="true"></el-option>
@@ -123,9 +116,7 @@
             <div class="config-item">
               <div class="sub-title">
                 <p class="sub-title-title">{{ $t("settings.loginCheckIp") }}</p>
-                <p class="sub-title-info">
-                  {{ $t("settings.loginCheckIpInfo") }}
-                </p>
+                <p class="sub-title-info">{{ $t("settings.loginCheckIpInfo") }}</p>
               </div>
               <el-select v-model="settings.loginCheckIp" :placeholder="$t('general.pleaseSelect')">
                 <el-option :label="$t('general.enable')" :value="true"></el-option>
@@ -158,9 +149,7 @@
               <p class="sub-title-title">
                 <span v-html="$t('settings.aboutTitle')"></span>
               </p>
-              <p class="sub-title-info">
-                <span v-html="$t('settings.aboutTitleInfo')"></span>
-              </p>
+              <p class="sub-title-info">{{ $t("settings.aboutTitle2") }}</p>
             </div>
 
             <div class="contributors" v-if="sponsorList" v-iszh>
@@ -168,20 +157,28 @@
                 <p class="sub-title-title">{{ $t("settings.sponsorList") }}</p>
                 <p class="sub-title-info">
                   {{ $t("settings.sponsorListInfo") }}
-                  <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer">
-                    MCSManager.com </a>.
+                  <a
+                    href="https://mcsmanager.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >MCSManager.com</a>.
                 </p>
                 <p class="sub-title-info"></p>
               </div>
               <el-row :gutter="10">
                 <el-col :span="24">
-                  <div v-for="(item, index) in sponsorList" :key="index"
-                    style="margin: 0px 8px 4px 0px; display: inline-block">
-                    <a :href="item.link || 'https://mcsmanager.com'" target="_blank" rel="noopener noreferrer"
-                      style="text-decoration: underline">
-                      <span style="margin: 0px; font-size: 13px">
-                        {{ item.name }}
-                      </span>
+                  <div
+                    v-for="(item, index) in sponsorList"
+                    :key="index"
+                    style="margin: 0px 8px 4px 0px; display: inline-block"
+                  >
+                    <a
+                      :href="item.link || 'https://mcsmanager.com'"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style="text-decoration: underline"
+                    >
+                      <span style="margin: 0px; font-size: 13px">{{ item.name }}</span>
                     </a>
                   </div>
                 </el-col>
@@ -194,25 +191,33 @@
               <div class="sub-title">
                 <p class="sub-title-title">{{ $t("settings.aboutTheme.title") }}</p>
                 <p class="sub-title-info">
-                  {{ $t("settings.aboutTheme.info") }}<br>
+                  {{ $t("settings.aboutTheme.info") }}
+                  <br />
                   {{ $t("settings.aboutTheme.info2") }}
-                  <a href="mailto:lazy_creeper@qq.com">lazy_creeper@qq.com</a>
+                  <a
+                    href="mailto:lazy_creeper@qq.com"
+                  >lazy_creeper@qq.com</a>
                 </p>
                 <br />
-                <p class="sub-title-title">{{ $t("settings.aboutTheme.blog") }}<a
+                <p class="sub-title-title">
+                  {{ $t("settings.aboutTheme.blog") }}
+                  <a
                     href="https://blog.imlazy.ink:233/index.php/archives/253/"
                     target="_blank"
-                    >{{ $t("settings.aboutTheme.goLink") }}</a
-                  ></p>
-
-                <p class="sub-title-title">{{ $t("settings.aboutTheme.qrCode") }}<a
+                  >{{ $t("settings.aboutTheme.goLink") }}</a>
+                </p>
+                <p class="sub-title-title">
+                  {{ $t("settings.aboutTheme.qrCode") }}
+                  <a
                     href="https://qn-store-pub-tx.seewo.com/676b69a1b8ad4f9391555c127a2331c7165760252223383"
                     target="_blank"
-                    >{{ $t("settings.aboutTheme.goLink") }}</a
-                  ></p>
-
-                <p class="sub-title-title">{{ $t("settings.aboutTheme.ver") }} 2.8.3build&nbsp;&nbsp;<a href="javascript:checkUpdate();">{{ $t("settings.aboutTheme.checkVer") }}</a
-                  ><lazy id="lazy"></lazy></p>
+                  >{{ $t("settings.aboutTheme.goLink") }}</a>
+                </p>
+                <p class="sub-title-title">
+                  {{ $t("settings.aboutTheme.ver") }} 2.9&nbsp;&nbsp;
+                  <a href="javascript:checkUpdate();">{{ $t("settings.aboutTheme.checkVer") }}</a>
+                  <lazy id="lazy"></lazy>
+                </p>
               </div>
             </div>
           </el-col>
@@ -222,22 +227,15 @@
   </div>
 </template>
 
-<style scoped>
-.selectedForwardMode {
-  border: 1px solid #0450ff;
-  color: #409eff;
-}
-</style>
-
 <script>
 import Panel from "../../components/Panel";
-import SystemIndex from "../../components/SystemImage.vue";
 import { API_SETTINGS } from "../service/common";
 import { request } from "../service/protocol";
-import SelectBlock from "../../components/SelectBlock";
 export default {
   // eslint-disable-next-line vue/no-unused-components
-  components: { Panel, SystemIndex, SelectBlock },
+  components: {
+    Panel
+  },
   data: function () {
     return {
       settings: {},
@@ -247,14 +245,19 @@ export default {
   methods: {
     async refresh() {
       await this.render();
-      this.$message({ message: this.$t("general.refreshFinish"), type: "success" });
+      this.$message({
+        message: this.$t("general.refreshFinish"),
+        type: "success"
+      });
     },
+
     async render() {
       this.settings = await request({
         method: "GET",
         url: API_SETTINGS
       });
     },
+
     async updateSettings() {
       try {
         await request({
@@ -263,14 +266,22 @@ export default {
           data: this.settings
         });
         window.location.reload();
-        this.$message({ message: this.$t("settings.settingUpdate"), type: "success" });
+        this.$message({
+          message: this.$t("settings.settingUpdate"),
+          type: "success"
+        });
       } catch (error) {
-        this.$message({ message: error, type: "error" });
+        this.$message({
+          message: error,
+          type: "error"
+        });
       }
     },
+
     loadSponsorList() {
       if (window.sponsorList) {
         const arr = window.sponsorList();
+
         for (const i in arr) {
           for (const j in arr) {
             if (arr[i].price > arr[j].price) {
@@ -280,14 +291,15 @@ export default {
             }
           }
         }
+
         this.sponsorList = arr.slice(0, 40);
       } else {
         this.sponsorList = null;
       }
-    }
-    //async changeForwardType(v) {
+    } //async changeForwardType(v) {
     //}
   },
+
   async mounted() {
     await this.render();
     setTimeout(this.loadSponsorList, 3000);
@@ -296,14 +308,19 @@ export default {
 </script>
 
 <style scoped>
+.selectedForwardMode {
+  border: 1px solid #0450ff;
+  color: #409eff;
+}
+</style>
+
+<style scoped>
 .system-index-block {
   margin: 0px 0px 24px 0px;
 }
-
 .config-item {
   margin-top: 10px;
 }
-
 .contributors {
   margin: 10px 0px;
 }
