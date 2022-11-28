@@ -1,22 +1,5 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
@@ -39,31 +22,49 @@
             </div>
           </div>
 
-          <div class="row-mt">
-            <div class="sub-title">
-              <p class="sub-title-title">{{ $t("termSet.ptySize") }}</p>
-              <p class="sub-title-info">
-                {{ $t("termSet.ptySizeInfo") }}
-                <br />
-                {{ $t("termSet.ifHaveProblems") }}
-              </p>
-            </div>
+          <div>
             <div class="row-mt">
-              <span>{{ $t("termSet.col") }}</span>
-              <el-input
-                v-model="options.ptyWindowCol"
-                :disabled="!options.pty"
-                size="small"
-                style="width: 80px"
-              ></el-input>
-              &nbsp;
-              <span>{{ $t("termSet.line") }}</span>
-              <el-input
-                :disabled="!options.pty"
-                v-model="options.ptyWindowRow"
-                size="small"
-                style="width: 80px"
-              ></el-input>
+              <div class="sub-title">
+                <p class="sub-title-title">{{ $t("termSet.ptySize") }}</p>
+                <p class="sub-title-info">
+                  {{ $t("termSet.ptySizeInfo") }}
+                  <br />
+                  {{ $t("termSet.ifHaveProblems") }}
+                </p>
+              </div>
+              <div class="row-mt">
+                <span>{{ $t("termSet.col") }}</span>
+                <el-input
+                  v-model="options.ptyWindowCol"
+                  :disabled="!options.pty || isDisable"
+                  size="small"
+                  style="width: 80px"
+                >
+                </el-input>
+                &nbsp;
+                <span>{{ $t("termSet.line") }}</span>
+                <el-input
+                  :disabled="!options.pty || isDisable"
+                  v-model="options.ptyWindowRow"
+                  size="small"
+                  style="width: 80px"
+                >
+                </el-input>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="row-mt">
+              <div class="sub-title">
+                <p class="sub-title-title">{{ $t("views.Terminal_TermSetting.001") }}</p>
+                <p class="sub-title-info">{{ $t("views.Terminal_TermSetting.002") }}</p>
+              </div>
+              <div class="row-mt">
+                <el-input v-model="options.fontSize" size="small" style="width: 80px"> </el-input>
+                &nbsp;
+                <span>px</span>
+              </div>
             </div>
           </div>
 
@@ -160,10 +161,11 @@
           </div>
         </el-col>
       </el-row>
-
       <div class="row-mt">
         <ItemGroup>
-          <el-button type="success" size="small" @click="submit">{{ $t("general.save") }}</el-button>
+          <el-button type="success" size="small" @click="submit">{{
+            $t("general.save")
+          }}</el-button>
           <el-button size="small" @click="close">{{ $t("general.cancel") }}</el-button>
         </ItemGroup>
       </div>
@@ -177,7 +179,9 @@ import { request } from "@/app//service/protocol";
 import { API_INSTANCE_UPDATE } from "@/app/service/common";
 import { TERMINAL_CODE } from "../../service/common";
 export default {
-  components: { Dialog },
+  components: {
+    Dialog
+  },
   props: {
     visible: {
       type: Boolean,
@@ -191,6 +195,10 @@ export default {
     },
     instanceUuid: {
       type: String
+    },
+    isDisable: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -206,10 +214,10 @@ export default {
       this.init();
     }
   },
-
   methods: {
     init() {
       this.options = this.config;
+      this.options.fontSize = parseInt(localStorage.getItem("terminalFontSize") || 12);
     },
     show() {
       this.$emit("update:visible", true);
@@ -217,25 +225,26 @@ export default {
     close() {
       this.$emit("update:visible", false);
     },
-    // 普通用户更新配置
     async submit() {
       try {
         await request({
           method: "PUT",
           url: API_INSTANCE_UPDATE,
-          params: { remote_uuid: this.serviceUuid, uuid: this.instanceUuid },
+          params: {
+            remote_uuid: this.serviceUuid,
+            uuid: this.instanceUuid
+          },
           data: {
             terminalOption: {
               ...this.options
             },
-            pingConfig: {},
-            eventTask: {},
             crlf: this.options.crlf,
             ie: this.options.ie,
             oe: this.options.oe,
             stopCommand: this.options.stopCommand
           }
         });
+        localStorage.setItem("terminalFontSize", this.options.fontSize);
         this.options = {};
         this.close();
         this.$message({

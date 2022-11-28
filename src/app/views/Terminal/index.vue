@@ -14,39 +14,88 @@
             </div>
             <div v-else>
               <LineInfo>
-                <i class="el-icon-edit"></i> {{ $t("terminal.name") }}:
+                <i class="el-icon-edit"></i>
+                {{ $t("terminal.name") }}:
                 {{ instanceInfo.config.nickname }}
               </LineInfo>
               <LineInfo>
-                <i class="el-icon-tickets"></i> {{ $t("terminal.type") }}:
+                <i class="el-icon-tickets"></i>
+                {{ $t("terminal.type") }}:
                 {{ typeToText(instanceInfo.config.type) }}
               </LineInfo>
-              <LineInfo
-                ><i class="el-icon-finished"></i> {{ $t("imageManager.status") }}:
-                <span v-if="instanceInfo.status === -1" class="color-red">{{
-                  $t("home.maintaining")
-                }}</span>
-                <span v-else-if="instanceInfo.status === 0" class="color-gray">{{
-                  $t("home.outOfRunning")
-                }}</span>
-                <span v-else-if="instanceInfo.status === 1" class="color-yellow">{{
-                  $t("home.stopping")
-                }}</span>
-                <span v-else-if="instanceInfo.status === 2" class="color-yellow">{{
-                  $t("home.starting")
-                }}</span>
-                <span v-else-if="instanceInfo.status === 3" class="color-green">{{
-                  $t("home.running")
-                }}</span>
+              <LineInfo v-if="instanceInfo.info?.openFrpStatus">
+                <i class="el-icon-share"></i>
+                {{ $t("terminal.openfrp") }}:
+                <span
+                  class="color-green"
+                >{{ $t("instances.status.running") }}</span>
+              </LineInfo>
+
+              <LineInfo v-if="hasDocker">
+                <i class="el-icon-tickets"></i>
+                {{ $t("terminal.limit") }}:
+                <span
+                  class="color-blue"
+                  style="cursor: pointer"
+                  @click="openDockerInfoDialog"
+                >{{ $t("general.read") }}</span>
+              </LineInfo>
+
+              <LineInfo v-if="hasDocker && instanceInfo.config.docker.ports">
+                <i class="el-icon-money"></i>
+
+                {{ $t("terminal.dockerPort") }}:
+                <div style="padding: 10px 0px 0px 16px">
+                  <div
+                    style="margin-bottom: 2px"
+                    v-for="(item, index) in dockerPortsParse(instanceInfo.config.docker.ports)"
+                    :key="index"
+                  >
+                    <template v-if="!item.more">
+                      <span>{{ $t("CommonText.029") }}: {{ item.p1 }}</span>
+                      <span style="margin-left: 6px">{{ $t("CommonText.030") }}: {{ item.p2 }}</span>
+                      <span style="margin-left: 8px">
+                        <el-tag type="success" size="mini">{{ item.protocol }}</el-tag>
+                      </span>
+                    </template>
+                    <template v-else>...</template>
+                  </div>
+                </div>
+              </LineInfo>
+              <LineInfo>
+                <i class="el-icon-finished"></i>
+                {{ $t("imageManager.status") }}:
+                <span
+                  v-if="instanceInfo.status === -1"
+                  class="color-red"
+                >{{ $t("home.maintaining") }}</span>
+                <span
+                  v-else-if="instanceInfo.status === 0"
+                  class="color-gray"
+                >{{ $t("home.outOfRunning") }}</span>
+                <span
+                  v-else-if="instanceInfo.status === 1"
+                  class="color-yellow"
+                >{{ $t("home.stopping") }}</span>
+                <span
+                  v-else-if="instanceInfo.status === 2"
+                  class="color-yellow"
+                >{{ $t("home.starting") }}</span>
+                <span
+                  v-else-if="instanceInfo.status === 3"
+                  class="color-green"
+                >{{ $t("instances.status.running") }}</span>
                 <span v-else class="color-red">{{ $t("terminal.unknown") }}</span>
               </LineInfo>
               <LineInfo v-if="instanceInfo.info && instanceInfo.info.currentPlayers != -1">
-                <i class="el-icon-user"></i> {{ $t("terminal.currentPlayers") }}:
+                <i class="el-icon-user"></i>
+                {{ $t("terminal.currentPlayers") }}:
                 {{ instanceInfo.info.currentPlayers }} /
                 {{ instanceInfo.info.maxPlayers }}
               </LineInfo>
               <LineInfo v-if="instanceInfo.info && instanceInfo.info.version">
-                <i class="el-icon-user"></i> {{ $t("services.version") }}:
+                <i class="el-icon-collection"></i>
+                {{ $t("services.version") }}:
                 {{ instanceInfo.info.version }}
               </LineInfo>
             </div>
@@ -66,9 +115,7 @@
                         style="width: 100%"
                         size="small"
                         plain
-                      >
-                        {{ $t("terminal.start") }}
-                      </el-button>
+                      >{{ $t("terminal.start") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -80,8 +127,7 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                        >{{ $t("terminal.stop") }}
-                      </el-button>
+                      >{{ $t("terminal.stop") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -93,9 +139,7 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                      >
-                        {{ $t("terminal.restart") }}
-                      </el-button>
+                      >{{ $t("terminal.restart") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -109,8 +153,7 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                        >{{ $t("terminal.kill") }}
-                      </el-button>
+                      >{{ $t("terminal.kill") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -127,8 +170,7 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                        >{{ $t("terminal.killTask") }}
-                      </el-button>
+                      >{{ $t("terminal.killTask") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -144,8 +186,7 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                        >{{ $t("terminal.updateInstance") }}
-                      </el-button>
+                      >{{ $t("terminal.updateInstance") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -164,8 +205,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toTerminalSettingPanel"
-                  >{{ $t("terminal.termSet") }}
-                </el-button>
+                >{{ $t("terminal.termSet") }}</el-button>
               </el-col>
 
               <el-col :lg="12" :offset="0" class="row-mb">
@@ -175,8 +215,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toSchedule"
-                  >{{ $t("router.schedule") }}
-                </el-button>
+                >{{ $t("router.schedule") }}</el-button>
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
                 <el-button
@@ -185,8 +224,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toPingPanel"
-                  >{{ $t("terminal.statusQuery") }}
-                </el-button>
+                >{{ $t("terminal.statusQuery") }}</el-button>
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
                 <el-button
@@ -195,8 +233,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toEventPanel"
-                  >{{ $t("terminal.eventTask") }}
-                </el-button>
+                >{{ $t("terminal.eventTask") }}</el-button>
               </el-col>
               <el-col :lg="24" :offset="0" class="row-mb">
                 <el-button
@@ -205,8 +242,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toFileManager"
-                  >{{ $t("instancesDetail.fileManager") }}
-                </el-button>
+                >{{ $t("instancesDetail.fileManager") }}</el-button>
               </el-col>
               <el-col :lg="24" :offset="0" class="row-mb" v-iszh>
                 <el-button
@@ -215,8 +251,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toProcessConfig"
-                  >{{ $t("terminal.processConfig") }}
-                </el-button>
+                >{{ $t("terminal.processConfig") }}</el-button>
               </el-col>
               <el-col :lg="24" :offset="0" v-if="isTopPermission">
                 <el-button
@@ -225,8 +260,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toInstanceDetail"
-                  >{{ $t("terminal.instanceDetail") }}
-                </el-button>
+                >{{ $t("terminal.instanceDetail") }}</el-button>
               </el-col>
             </el-row>
           </template>
@@ -241,31 +275,36 @@
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
-                  <span style="font-size: 12px"> GID {{ serviceUuid }}</span>
+                  <span style="font-size: 12px">GID {{ serviceUuid }}</span>
                 </div>
               </LineInfo>
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
-                  <span class="text-overflow-ellipsis" style="font-size: 12px">
-                    UID {{ instanceInfo.instanceUuid }}</span
-                  >
+                  <span
+                    class="text-overflow-ellipsis"
+                    style="font-size: 12px"
+                  >UID {{ instanceInfo.instanceUuid }}</span>
                 </div>
               </LineInfo>
               <LineInfo>
-                <i class="el-icon-date"></i> {{ $t("instances.endTime") }}:
+                <i class="el-icon-date"></i>
+                {{ $t("instances.endTime") }}:
                 {{ instanceInfo.config.endTime || $t("instancesDetail.unlimited") }}
               </LineInfo>
               <LineInfo>
-                <i class="el-icon-date"></i> {{ $t("instancesDetail.createDateTime") }}:
+                <i class="el-icon-date"></i>
+                {{ $t("instancesDetail.createDateTime") }}:
                 {{ instanceInfo.config.createDatetime }}
               </LineInfo>
               <LineInfo>
-                <i class="el-icon-date"></i> {{ $t("terminal.lastDatetime") }}:
+                <i class="el-icon-date"></i>
+                {{ $t("terminal.lastDatetime") }}:
                 {{ instanceInfo.config.lastDatetime }}
               </LineInfo>
-              <LineInfo
-                ><i class="el-icon-document"></i> {{ $t("terminal.ie") }}:
+              <LineInfo>
+                <i class="el-icon-document"></i>
+                {{ $t("terminal.ie") }}:
                 {{ instanceInfo.config.ie }} {{ $t("terminal.oe") }}:
                 {{ instanceInfo.config.oe }}
               </LineInfo>
@@ -306,24 +345,17 @@
             <!-- Logo display in full screen mode -->
             <!-- <div v-if="isFull" class="full-terminal-logo only-pc-display">
              <Logo></Logo>
-           </div> -->
+            </div>-->
             <!-- Action button in full screen mode -->
             <div v-show="isFull" class="full-terminal-button-wrapper">
-              <div class="full-terminal-button" @click="openInstance">
-                {{ $t("instances.start") }}
-              </div>
-              <div class="full-terminal-button" @click="stopInstance">
-                {{ $t("instances.stop") }}
-              </div>
-              <div class="full-terminal-button" @click="restartInstance">
-                {{ $t("terminal.restart2") }}
-              </div>
-              <div class="full-terminal-button" @click="killInstance">
-                {{ $t("instances.kill") }}
-              </div>
-              <div class="full-terminal-button" @click="backTerminal">
-                {{ $t("terminal.exit") }}
-              </div>
+              <div class="full-terminal-button" @click="openInstance">{{ $t("instances.start") }}</div>
+              <div class="full-terminal-button" @click="stopInstance">{{ $t("instances.stop") }}</div>
+              <div
+                class="full-terminal-button"
+                @click="restartInstance"
+              >{{ $t("terminal.restart2") }}</div>
+              <div class="full-terminal-button" @click="killInstance">{{ $t("instances.kill") }}</div>
+              <div class="full-terminal-button" @click="backTerminal">{{ $t("terminal.exit") }}</div>
             </div>
             <!-- Fullscreen and non-fullscreen terminal windows -->
             <div :class="{ 'terminal-wrapper': true, 'full-terminal-wrapper': isFull }">
@@ -337,8 +369,7 @@
                 v-model="command"
                 ref="terminalCommandInput"
                 @keyup.enter="sendCommand(command)"
-              >
-              </el-input>
+              ></el-input>
             </div>
           </template>
         </Panel>
@@ -353,14 +384,12 @@
             <div v-if="commandhistory.length > 0">
               <ItemGroup>
                 <div
-                v-for="(item, index) in commandhistory"
-                :key="index"
-                @click="selectHistoryCommand(item)"
-                class="text-overflow-ellipsis cmdhistory"
-                style="max-width: 23%; cursor: pointer; font-size: 13px"
-              >
-                {{ item }}
-              </div>
+                  v-for="(item, index) in commandhistory"
+                  :key="index"
+                  @click="selectHistoryCommand(item)"
+                  class="text-overflow-ellipsis cmdhistory"
+                  style="max-width: 23%; cursor: pointer; font-size: 13px"
+                >{{ item }}</div>
               </ItemGroup>
             </div>
             <div v-else>
@@ -392,15 +421,11 @@
       <template #default>
         <div class="sub-title">
           <p class="sub-title-title">{{ $t("terminal.pingConfig.title2") }}</p>
-          <p class="sub-title-info">
-            {{ $t("terminal.pingConfig.title2Info") }}
-          </p>
+          <p class="sub-title-info">{{ $t("terminal.pingConfig.title2Info") }}</p>
         </div>
         <div class="sub-title">
           <p class="sub-title-title">{{ $t("terminal.pingConfig.addr") }}</p>
-          <p class="sub-title-info">
-            {{ $t("terminal.pingConfig.inputAddr") }}
-          </p>
+          <p class="sub-title-info">{{ $t("terminal.pingConfig.inputAddr") }}</p>
         </div>
         <el-input
           v-model="pingConfigForm.ip"
@@ -418,12 +443,16 @@
         ></el-input>
         <div class="row-mt">
           <ItemGroup>
-            <el-button type="success" size="small" @click="instanceConfigUpdate">{{
+            <el-button type="success" size="small" @click="instanceConfigUpdate">
+              {{
               $t("users.updateData")
-            }}</el-button>
-            <el-button @click="pingConfigForm.is = !pingConfigForm.is" size="small">{{
+              }}
+            </el-button>
+            <el-button @click="pingConfigForm.is = !pingConfigForm.is" size="small">
+              {{
               $t("general.cancel")
-            }}</el-button>
+              }}
+            </el-button>
           </ItemGroup>
         </div>
       </template>
@@ -454,38 +483,37 @@
 
         <div class="row-mt">
           <ItemGroup>
-            <el-button type="success" size="small" @click="instanceConfigUpdate">{{
+            <el-button type="success" size="small" @click="instanceConfigUpdate">
+              {{
               $t("general.save")
-            }}</el-button>
-            <el-button size="small" @click="eventConfigPanel.visible = false">{{
+              }}
+            </el-button>
+            <el-button size="small" @click="eventConfigPanel.visible = false">
+              {{
               $t("general.cancel")
-            }}</el-button>
+              }}
+            </el-button>
           </ItemGroup>
         </div>
       </template>
     </Dialog>
 
     <Dialog v-model="unavailableTerminal" style="z-index: 9999">
-      <template #title>
-        {{ $t("terminal.unavailableTerminal.title") }}
-      </template>
+      <template #title>{{ $t("terminal.unavailableTerminal.title") }}</template>
       <template #default>
         <div class="sub-title">
           <p class="sub-title-title">
-            {{
-              unavailableIp
-                ? $t("terminal.unavailableTerminal.browserCannotConnect")` ${unavailableIp}`
-                : $t("terminal.unavailableTerminal.browserCannotConnect2")
-            }}
+            <span
+              v-if="unavailableIp"
+            >{{ $t("terminal.unavailableTerminal.browserCannotConnect") }} {{ unavailableIp }}</span>
+            <span v-else>{{ $t("terminal.unavailableTerminal.browserCannotConnect2") }}</span>
           </p>
-          <p class="sub-title-info">
-            {{ $t("terminal.unavailableTerminal.maybe") }}
-          </p>
+          <p class="sub-title-info">{{ $t("terminal.unavailableTerminal.maybe") }}</p>
           <div style="text-align: center; margin: 20px">
             <img
               :src="require('@/assets/daemon_connection_error.png')"
-              alt=""
-              srcset=""
+              alt
+              srcset
               style="width: 460px"
             />
           </div>
@@ -502,9 +530,22 @@
       v-model:visible="terminalSettingPanel.visible"
       v-model:config="terminalSettingPanel"
       :serviceUuid="serviceUuid"
+      :isDisable="instanceInfo.status != 0"
       :instanceUuid="instanceUuid"
-    >
-    </TermSetting>
+    ></TermSetting>
+
+    <NetworkTip
+      ref="networkTip"
+      :extraServiceConfig="instanceInfo.config.extraServiceConfig"
+      :instanceUuid="instanceUuid"
+      :serviceUuid="serviceUuid"
+    ></NetworkTip>
+
+    <DockerInfo
+      v-if="instanceInfo.config.docker"
+      ref="dockerInfoDialog"
+      :dockerInfo="instanceInfo.config.docker"
+    ></DockerInfo>
   </div>
 </template>
 
@@ -537,10 +578,12 @@ import { statusCodeToText, typeTextToReadableText } from "../../service/instance
 import { initTerminalWindow, textToTermText } from "../../service/term";
 import { getPlayersOption } from "../../service/chart_option";
 import TermSetting from "./TermSetting";
+import DockerInfo from "./DockerInfo";
+import NetworkTip from "@/components/NetworkTip";
 
 export default {
   // eslint-disable-next-line vue/no-unused-components
-  components: { Panel, LineInfo, LineButton, Dialog, Logo, TermSetting },
+  components: { Panel, LineInfo, LineButton, Dialog, Logo, TermSetting, NetworkTip, DockerInfo },
   data: function () {
     return {
       input1: "",
@@ -550,6 +593,7 @@ export default {
       term: null,
       terminalWidth: 0,
       terminalHeight: 0,
+      visibleNetworkTip: false,
       command: "",
       available: false,
       socket: null,
@@ -604,6 +648,9 @@ export default {
     },
     ptyRow() {
       return this.instanceInfo.config.terminalOption.ptyWindowRow ?? 40;
+    },
+    hasDocker() {
+      return this.instanceInfo.config?.docker?.image ? true : false;
     }
   },
   methods: {
@@ -623,7 +670,9 @@ export default {
     // Request data source (Websocket)
     async renderFromSocket() {
       this.sendResize(this.terminalWidth, this.terminalHeight);
-      this.socket.emit("stream/detail", {});
+      if (this.socket) {
+        this.socket.emit("stream/detail", {});
+      }
     },
     // establish a connection with the daemon
     async setUpWebsocket() {
@@ -724,10 +773,17 @@ export default {
     initTerm() {
       // Create window and pass input event
       const terminalContainer = document.getElementById("terminal-container");
+      const ft = localStorage.getItem("terminalFontSize");
+      if (!ft) {
+        this.term = initTerminalWindow(terminalContainer, {
+          fontSize: 12
+        });
+      } else {
+        this.term = initTerminalWindow(terminalContainer, {
+          fontSize: localStorage.getItem("terminalFontSize")
+        });
+      }
 
-      this.term = initTerminalWindow(terminalContainer, {
-        fontSize: 12
-      });
       this.term.onData(this.sendInput);
       this.onChangeTerminalContainerHeight();
     },
@@ -935,9 +991,8 @@ export default {
           url: API_INSTANCE_UPDATE,
           params: { remote_uuid: this.serviceUuid, uuid: this.instanceUuid },
           data: {
-            pingConfig: this.pingConfigForm.is ? this.pingConfigForm : {},
-            eventTask: this.eventConfigPanel.visible ? this.eventConfigPanel : {},
-            terminalOption: {}
+            pingConfig: this.pingConfigForm.is ? this.pingConfigForm : null,
+            eventTask: this.eventConfigPanel.visible ? this.eventConfigPanel : null
           }
         });
         this.$message({
@@ -1014,7 +1069,6 @@ export default {
       const date = new Date(now - time);
       return `${date.getHours()}:${(Array(2).join(0) + date.getMinutes()).slice(-2)}`;
     },
-
     toFullTerminal(type = 1) {
       if (type === 1) {
         this.isFull = true;
@@ -1058,10 +1112,44 @@ export default {
           this.$nextTick(() => this.term.fitAddon.fit());
         }
       }
+    },
+
+    openDockerInfoDialog() {
+      this.$refs.dockerInfoDialog.open();
+    },
+
+    // [ "25565:25565/tcp", "27766:27766/tcp" ]
+    dockerPortsParse(list = []) {
+      let line = [];
+      list.forEach((v, index) => {
+        if (index >= 2) return;
+        const tmp = v.split("/");
+        if (tmp.length != 2) return;
+        const protocol = tmp[1];
+        const p = tmp[0].split(":");
+        if (p.length >= 2) {
+          line.push({
+            p1: p[0],
+            p2: p[1],
+            protocol: String(protocol).toUpperCase()
+          });
+        }
+      });
+      if (list.length >= 2) {
+        line.push({
+          p1: null,
+          p2: null,
+          protocol: null,
+          more: true
+        });
+      }
+      return line;
     }
   },
   async mounted() {
     try {
+      this.visibleNetworkTip = this.$route.query.network_tip ? true : false;
+
       // Initialize web local storage
       this.initStorage();
 
@@ -1081,6 +1169,10 @@ export default {
     } catch (error) {
       console.error(error);
       // neglect
+    } finally {
+      if (this.visibleNetworkTip) {
+        this.$refs.networkTip.open();
+      }
     }
 
     // Listen for window change events
@@ -1129,6 +1221,7 @@ export default {
   padding: 5px 12px 5px 12px;
   transition: all 0.3s;
 }
+
 .terminal-wrapper {
   backdrop-filter: var(--terminal-backdrop-filter);
   padding: 4px;
@@ -1193,7 +1286,7 @@ export default {
   margin: 6px;
   padding: 8px 14px;
   color: white;
-  background-color: rgb(54, 54, 54,0.6);
+  background-color: rgba(54, 54, 54, 0.6);
   border-radius: 4px;
   box-shadow: 0px 0px 12px rgba(25, 25, 25, 0.6);
   border: 1px solid rgb(73, 73, 73);
@@ -1217,8 +1310,7 @@ export default {
 #terminal-container {
   height: 580px;
   width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: auto;
 }
 
 @media (max-width:790px) {
