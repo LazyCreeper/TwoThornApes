@@ -2,7 +2,7 @@
 Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 <template>
-  <el-container>
+  <el-container v-loading="viewLoading">
     <!-- Manage users phone screen menu bar -->
     <el-drawer
       v-if="isTopPermission"
@@ -31,7 +31,7 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
               <Header v-bind:breadcrumbsList="breadCrumbs" :aside="toAside" />
             </el-col>
           </el-row>
-          <div v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)" style="min-height: 50px">
+          <div v-loading="loading" style="min-height: 50px" element-loading-background="rgba(0, 0, 0, 0.5)" >
             <router-view v-if="!loading"></router-view>
           </div>
         </div>
@@ -50,12 +50,20 @@ import router from "./router";
 export default {
   name: "App",
   components: { Aside, Header },
-  data: function () {
+  data() {
     return {
       loading: true,
+      viewLoading: false,
       breadCrumbs: [],
       mode: 1,
       drawer: false
+    };
+  },
+  provide() {
+    return {
+      appLoading: (v) => {
+        this.viewLoading = v;
+      }
     };
   },
   computed: {
