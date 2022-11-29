@@ -887,6 +887,13 @@
       "light": "浅色",
       "dark": "深色"
     },
+    "selectSkin": {
+      "title": "选择皮肤",
+      "shizuku": "猫羽雫",
+      "LuoTianyi": "洛天依",
+      "custom": "自定义",
+      "customUrl": "请输入自定义主题 css 文件地址"
+    },
     "aboutTheme": {
       "title": "关于主题",
       "info": "该主题由 Lazy 开发",

@@ -5,6 +5,29 @@
 <template>
   <ItemGroup :lr="true">
     <div class="el-dropdown-link">
+      <el-tooltip
+        class="item"
+        effect="dark"
+        :content="$t('settings.selectSkin.title')"
+        placement="bottom"
+      >
+        <el-dropdown style="margin: 0px 0px" :lr="true">
+          <span>
+            <i class="el-icon-brush"></i>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="setSkin('summer')">Summer</el-dropdown-item>
+              <el-dropdown-item @click="setSkin('shizuku')">{{ $t("settings.selectSkin.shizuku") }}</el-dropdown-item>
+              <el-dropdown-item @click="setSkin('LuoTianyi')">{{ $t("settings.selectSkin.LuoTianyi") }}</el-dropdown-item>
+              <el-dropdown-item @click="setCustomSkin()">{{ $t("settings.selectSkin.custom") }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </el-tooltip>
+    </div>
+
+    <div class="el-dropdown-link">
       <el-tooltip class="item" effect="dark" :content="$t('root.private')" placement="bottom">
         <el-link :underline="false" @click="toPrivate">
           <i class="el-icon-user"></i>
@@ -34,10 +57,29 @@ export default {
   },
   computed: {},
   methods: {
-    setTheme(v = "") {
-      localStorage.setItem("theme", v);
-      document.body.setAttribute("class", v);
+    setSkin(v = "") {
+      localStorage.setItem("skin", v);
+      document.getElementById(
+        "linkSkinCss"
+      ).innerHTML = `<link type="text/css" rel="stylesheet" href="./static/setting - ${v}.css">`;
+      localStorage.setItem("customSkin", '');
       this.$message({ message: this.$t("fileManager.setSuccess"), type: "success" });
+    },
+    setCustomSkin() {
+      // window.$t("")
+      this.$prompt(window.$t("settings.selectSkin.customUrl"), window.$t("CommonText.040"), {
+        confirmButtonText: window.$t("CommonText.041"),
+        cancelButtonText: window.$t("CommonText.042")
+      }).then(({ value }) => {
+        this.$message({
+          type: "success",
+          message: window.$t("fileManager.setSuccess")
+        });
+        document.getElementById(
+          "linkSkinCss"
+        ).innerHTML = `<link type="text/css" rel="stylesheet" href="${value}">`;
+        localStorage.setItem("customSkin", value);
+      });
     },
     async refresh() {
       await this.render();

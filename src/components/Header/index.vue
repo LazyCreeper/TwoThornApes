@@ -81,11 +81,6 @@ export default {
     }
   },
   methods: {
-    setTheme(v = "") {
-      localStorage.setItem("theme", v);
-      document.body.setAttribute("class", v);
-      this.$message({ message: this.$t("fileManager.setSuccess"), type: "success" });
-    },
     async refresh() {
       await this.render();
       this.$message({ message: this.$t("general.refreshFinish"), type: "success" });
