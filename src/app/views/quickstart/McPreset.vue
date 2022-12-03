@@ -3,9 +3,9 @@
 -->
 <template>
   <div class="quick-container-install">
-    <div v-if="!installView" v-loading="requestLoading">
+    <div v-if="!installView" v-loading="requestLoading" element-loading-background="rgba(0, 0, 0, 0.5)">
       <Panel>
-        <template #title>注意事项</template>
+        <template #title>{{ $t("users.ps") }}</template>
         <template #default>
           <p>
             {{ $t("views.quickstart_McPreset.eulaReadTitle") }}
