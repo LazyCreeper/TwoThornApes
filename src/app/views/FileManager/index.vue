@@ -22,7 +22,11 @@
                     <i class="el-icon-refresh"></i> {{ $t("general.refresh") }}
                   </el-button>
                 </FunctionComponent>
-
+                <FunctionComponent>
+                    <el-button size="small" @click="touch">
+                      <i class="el-icon-document-add"></i> {{ $t("fileManager.touch") }}
+                    </el-button>
+                </FunctionComponent>
                 <FunctionGroup align="right">
                   <FunctionComponent>
                     <el-button size="small" @click="toUpDir">
@@ -228,7 +232,8 @@ import {
   API_FILE_MKDIR,
   API_FILE_MOVE,
   API_FILE_UPLOAD,
-  API_FILE_URL
+  API_FILE_URL,
+  API_FILE_TOUCH
 } from "@/app/service/common";
 import path from "path";
 import { parseforwardAddress, request } from "@/app/service/protocol";
@@ -577,6 +582,38 @@ export default defineComponent({
         this.tmpFile.tmpOperationMode = -1;
         this.tmpFile.tmpFileNames = null;
         this.tmpFile.tmpDir = null;
+      }
+    },
+    // create a new file
+    async touch(){
+      const { value } = await this.$prompt(this.$t("fileManager.newFileName"), undefined, {
+        confirmButtonText: this.$t("general.confirm"),
+        cancelButtonText: this.$t("general.cancel")
+      });
+      try {
+        if (!value) throw new Error(this.$t("fileManager.inputValidValues"));
+        const p = path.normalize(path.join(this.currentDir, value));
+        await request({
+          method: "POST",
+          url: API_FILE_TOUCH,
+          params: {
+            remote_uuid: this.serviceUuid,
+            uuid: this.instanceUuid
+          },
+          data: {
+            target: p
+          }
+        });
+        this.$message({
+          message: this.$t("notify.createSuccess"),
+          type: "success"
+        });
+        this.render();
+      } catch (err) {
+        this.$message({
+          message: err,
+          type: "error"
+        });
       }
     },
     // create a new directory
