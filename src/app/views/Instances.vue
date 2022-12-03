@@ -43,7 +43,7 @@
             <FunctionGroup align="right">
               <FunctionComponent
                 component="button"
-                type="success"
+                type="primary"
                 size="small"
                 v-if="showTableList"
                 @click="changeView(1)"
@@ -107,6 +107,7 @@
               <FunctionComponent
                 component="button"
                 size="small"
+                type="danger"
                 :plain="true"
                 v-if="showTableList"
                 @click="batDelete(2)"
@@ -634,7 +635,7 @@ export default {
     async batDelete(type) {
       if (type === 1) {
         await this.$confirm(
-          this.$t("notify.confirmBatchDelFileContent"),
+          this.$t("notify.confirmBatchDelContent"),
           this.$t("notify.confirmDelTitle"),
           {
             confirmButtonText: this.$t("general.confirm"),
@@ -644,10 +645,10 @@ export default {
         );
       } else {
         await this.$confirm(
-          this.$t("notify.confirmBatchDelContent"),
+          this.$t("notify.confirmDelContent2"),
           this.$t("notify.confirmDelTitle"),
           {
-            confirmButtonText: this.$t("general.confirm"),
+            confirmButtonText: this.$t("general.confirm2"),
             cancelButtonText: this.$t("general.cancel"),
             type: "warning"
           }
