@@ -108,7 +108,7 @@
 	/*实例列表卡片当鼠标悬浮到上面时的 背景颜色*/
 	--card-instance-shadow-hover: 0 0 9px 0px rgba(11,49,85,0.6)!important;
 	/*实例列表卡片当鼠标悬浮到上面时的 阴影颜色*/
-	--card-instance-gray-filter: hue-rotate(323deg);
+	--card-instance-gray-filter:grayscale(1) opacity(0.8);
 	/*实例卡片 未运行时的效果*/
 
 	/*<按钮>*/
