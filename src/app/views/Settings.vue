@@ -214,7 +214,7 @@
                   >{{ $t("settings.aboutTheme.goLink") }}</a>
                 </p>
                 <p class="sub-title-title">
-                  {{ $t("settings.aboutTheme.ver") }} 2.9.1&nbsp;&nbsp;
+                  {{ $t("settings.aboutTheme.ver") }} 2.9.2&nbsp;&nbsp;
                   <a href="javascript:checkUpdate();">{{ $t("settings.aboutTheme.checkVer") }}</a>
                   <lazy id="lazy"></lazy>
                 </p>
