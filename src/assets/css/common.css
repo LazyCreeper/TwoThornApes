@@ -440,3 +440,7 @@ button[disabled] {
 .blur {
   backdrop-filter: var(--terminal-backdrop-filter);
 }
+
+.el-progress__text{
+  color: inherit!important;
+}
