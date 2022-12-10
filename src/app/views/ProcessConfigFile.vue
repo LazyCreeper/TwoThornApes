@@ -6,7 +6,7 @@
   <Panel>
     <template #title>{{ $t("processConfigFile.title") }}</template>
     <template #default>
-      <div v-if="!failure" v-loading="loading" style="min-height: 600px">
+      <div v-if="!failure" v-loading="loading" style="min-height: 600px" element-loading-background="rgba(0, 0, 0, 0.5)">
         <el-row :gutter="20">
           <el-col :span="12" :offset="0">
             <div class="row-mb">
