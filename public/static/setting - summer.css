@@ -2,7 +2,7 @@
 
     @FileName: MCSManager 9 二次元主题设置文件
     @SkinName: Summer
-    @Last Date: 2022.10.13
+    @Last Date: 2023.1.5
     @Create Date: 2022.2.5				
     @Author: Lazy
     @Description：在这里设置你的主题背景图片、颜色等
@@ -29,11 +29,11 @@
 	/*登陆/安装界面背景图片*/
 	--background-login-image: url(https://api.imlazy.ink/img);
 	/*电脑端登录页背景图（来自 雫 API 的随机图片API）*/
-	--background-image: url(https://tva4.sinaimg.cn/large/006MpbfMgy1gsiwf1tnt6j31be0qoqdm.jpg);
+	--background-image: url(https://easicare.seewo.com/easicare-v2/663a987afdd9412397e5e14a3cbf00d8);
 	/*电脑端首页背景图*/
 	--background-login-image-phone: url(https://api.imlazy.ink/img-phone);
 	/*手机端登录页背景图（来自 雫 API 的随机图片API）*/
-	--background-image-phone: url(https://tvax2.sinaimg.cn/large/008qLT8ggy1gxqzv16v0sj31m02oo4qt.jpg);
+	--background-image-phone: url('./images/88152202_p0.jpg');
 	/*手机端首页背景图*/
 
 	/*终端*/

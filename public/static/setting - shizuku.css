@@ -2,7 +2,7 @@
 
     @FileName: MCSManager 9 二次元主题设置文件
     @SkinName: Nekoha Shizuku
-    @Last Date: 2022.10.13
+    @Last Date: 2023.1.5
     @Create Date: 2022.2.6			
     @Author: Lazy
     @Description：在这里设置你的主题背景图片、颜色等
@@ -29,7 +29,7 @@
 	/*<登陆/安装界面背景图片>*/
 	--background-login-image: url(https://api.imlazy.ink/img);
 	/*电脑端登录页背景图（来自 雫 API 的随机图片API）*/
-	--background-image: url(https://tvax2.sinaimg.cn/large/008qLT8ggy1gxr0800hf9j31jk0z24qp.jpg);
+	--background-image: url(https://easicare.seewo.com/easicare-v2/171f36fe756d470fa97360bc21c9c720);
 	/*电脑端首页背景图*/
 	--background-login-image-phone: url(https://api.imlazy.ink/img-phone);
 	/*手机端登录页背景图（来自 雫 API 的随机图片API）*/
