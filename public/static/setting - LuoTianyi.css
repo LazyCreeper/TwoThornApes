@@ -29,7 +29,7 @@
 	/*登陆/安装界面背景图片*/
 	--background-login-image: url(https://api.imlazy.ink/img);
 	/*电脑端登录页背景图（来自 雫 API 的随机图片API）*/
-	--background-image: url('./images/006MpbfMgy1grosiqpn7pj33o322au17.jpg');
+	--background-image: url('../static/images/006MpbfMgy1grosiqpn7pj33o322au17.jpg');
 	/*电脑端首页背景图*/
 	--background-login-image-phone: url(https://api.imlazy.ink/img-phone);
 	/*手机端登录页背景图（来自 雫 API 的随机图片API）*/
