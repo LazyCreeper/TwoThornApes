@@ -33,7 +33,7 @@
 	/*电脑端首页背景图*/
 	--background-login-image-phone: url(https://api.imlazy.ink/img-phone);
 	/*手机端登录页背景图（来自 雫 API 的随机图片API）*/
-	--background-image-phone: url('./images/88152202_p0.jpg');
+	--background-image-phone: url('../static/images/88152202_p0.jpg');
 	/*手机端首页背景图*/
 
 	/*终端*/
