@@ -43,8 +43,9 @@
             <FunctionGroup align="right">
               <FunctionComponent
                 component="button"
-                type="primary"
+                type="success"
                 size="small"
+                :plain="true"
                 v-if="showTableList"
                 @click="changeView(1)"
               >
@@ -55,6 +56,7 @@
                 component="button"
                 size="small"
                 type="primary"
+                :plain="true"
                 v-if="!showTableList"
                 @click="changeView(2)"
               >
@@ -180,9 +182,13 @@
         :tipType="0"
       >
         <template #title>
-          <span style="font-size: 13px" class="only-line-text">
+          <div
+            style="font-size: 13px"
+            class="only-line-text"
+            @click="toInstance(item.serviceUuid, item.instanceUuid)"
+          >
             {{ item.nickname }}
-          </span>
+          </div>
         </template>
         <template #rtitle>
           <div>
@@ -355,39 +361,24 @@
       </Panel>
     </el-col>
   </el-row>
-
-  <el-row :gutter="20">
-    <el-col :span="24" :offset="0">
-      <div class="instance-table-wrapper">
-        <div>
-          <div class="color-red" v-if="!currentRemoteUuid">
-            &nbsp;Error: {{ $t("instances.selectRemoteError") }}
-          </div>
-        </div>
-        <div>
-          <el-pagination
-            background
-            layout="prev, pager, next"
-            :total="maxPage"
-            v-model:currentPage="page"
-            :page-size="1"
-            @current-change="handleCurrentChange"
-            small
-          ></el-pagination>
-        </div>
-      </div>
-    </el-col>
-  </el-row>
 </template>
 
 <style scoped>
+.only-line-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.only-line-text:hover {
+  filter: sepia(1);
+}
+
 .instanceTitle {
   cursor: pointer;
 }
 
-.instanceTitle:hover {
-  color: rgb(20, 128, 230);
-}
 .notAnyInstanceTip {
   text-align: center;
   margin: 100px 0px;
