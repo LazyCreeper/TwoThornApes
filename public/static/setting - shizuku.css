@@ -120,16 +120,36 @@
 	/*当鼠标悬浮在默认按钮时的  背景 颜色*/
 	--btn-default-hover-color: #92c9ff;
 	/*当~~~~~~~~~~~默认按钮的 文本 颜色*/
+	--btn-primary-bg-color: #409eff82;
+	/* 蓝色按钮的 背景 颜色 */
+
+	--btn-primary-plain-bg-color: hsl(212deg 100% 81% / 25%);
+	/* 浅蓝色按钮的 背景 颜色 */
+
+	--btn-primary-plain-text-color: #81caff;
+	/* 浅蓝色按钮的 文本 颜色 */
+
 	--btn-success-bg-color: rgba(120, 183, 90, 0.78);
 	/*绿色按钮的 背景 颜色*/
+
+	--btn-success-plain-color: #f0f9eb40;
+	/* 浅绿色按钮的 背景 颜色 */
+
+	--btn-success-plain-text-color: #bcff9b;
+	/* 浅绿色按钮的 文本 颜色 */
+
 	--btn-danger-bg-color: rgba(101, 12, 12, 0.5);
 	/*深红色按钮的 背景 颜色*/
+
 	--btn-danger-color: #fbc4c4;
 	/*深红色按钮的 文本 颜色*/
+
 	--btn-q-danger-color: rgba(167, 114, 114, 0.5);
 	/*浅红色按钮的 背景 颜色*/
-	--btn-q-warning-color: rgba(253, 246, 236, 0.3);
+
+	--btn-q-warning-color: rgba(253,246,236,0.3);
 	/*浅黄色按钮的 背景 颜色*/
+	
 	--btn-disabled-filter: brightness(0.6);
 	/*按钮禁用时的效果*/
 
