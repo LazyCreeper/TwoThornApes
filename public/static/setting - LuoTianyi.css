@@ -9,9 +9,9 @@
 
 */
 :root {
-	--selection-background-color: rgba(187, 226, 255, 0.7);
+	--selection-background-color: rgb(255 187 236 / 70%);
 	/*鼠标选择后的 背景颜色*/
-	--selection-color: #3e4958;
+	--selection-color: #403349;
 	/*鼠标选择后的 文本颜色*/
 
 	--scrool-width: 8px;
@@ -20,7 +20,7 @@
 	/* 滚动条高度 */
 	--scrool-bg: #0000001a;
 	/* 滚动条背景颜色 */
-	--scrool-color: #fff;
+	--scrool-color: #ffaef7;
 	/* 滚动条里面的条的颜色 */
 
 	--font-family: MiSans;
@@ -157,15 +157,15 @@
 	/*表格*/
 	--tr-bg-color: rgba(0, 0, 0, .5);
 	/*表格背景颜色*/
-	--table-color: #a3fff9;
+	--table-color: #ffecf9;
 	/*表格内容文本颜色*/
-	--td-2bg-color: rgba(38, 60, 79, .5);
+	--td-2bg-color: rgb(88 71 85 / 32%);
 	/*表格内容背景颜色*/
-	--th-bg-color: rgba(50, 78, 88, .5);
+	--th-bg-color: rgb(255 158 227 / 36%);
 	/*表格头部 背景颜色*/
-	--th-color: #a3fff9;
+	--th-color: #ffecf9;
 	/*表格头部 文本颜色*/
-	--td-bg-hover-color: rgba(58, 118, 121, .5);
+	--td-bg-hover-color: rgb(255 185 234 / 21%);
 	/*当鼠标悬浮在表格内容上时表格的背景颜色*/
 
 	/*输入框*/
