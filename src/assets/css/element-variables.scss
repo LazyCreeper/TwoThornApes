@@ -1,35 +1,10 @@
-/*
-  Copyright (C) 2022 Suwings(https://github.com/Suwings)
+// Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-
-  版权所有 (C) 2022 Suwings(https://github.com/Suwings)
-
-  本程序为自由软件，你可以依据 GPL 的条款（第三版或者更高），再分发和/或修改它。
-  该程序以具有实际用途为目的发布，但是并不包含任何担保，
-  也不包含基于特定商用或健康用途的默认担保。具体细节请查看 GPL 协议。
-*/
-
-/*
-Write your variables here. All available variables can be
-found in element-plus/packages/theme-chalk/src/common/var.scss.
-For example, to overwrite the theme color:
-*/
-$--color-primary: #2764a1;
+$--color-primary: #409eff;
 
 body,
 html {
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
-    Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   margin: 0;
   height: 100%;
   background-color: #eef1f5;
@@ -40,6 +15,10 @@ html {
 a {
   text-decoration: none;
   color: #333;
+}
+
+p {
+  font-size: 13px;
 }
 
 .app {
@@ -63,6 +42,11 @@ a {
   margin: 4px 0px;
 }
 
+.el-menu-item [class^="el-icon-"] {
+  vertical-align: text-top;
+  line-height: 16px;
+}
+
 .el-menu-item:hover {
   background-color: rgb(66, 66, 66);
 }
@@ -73,6 +57,7 @@ a {
 // }
 
 .el-card {
+  background-color: #fff;
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
@@ -89,7 +74,7 @@ $item-group-margin: 5px;
   margin-left: $item-group-margin;
 }
 
-.item-group-warpper {
+.item-group-wrapper {
   margin: 0px -5px;
 }
 
@@ -107,4 +92,13 @@ $item-group-margin: 5px;
 
 .el-drawer__body {
   padding: 0px;
+}
+
+.el-menu-item.is-active {
+  color: var(--el-menu-active-color);
+  background-color: #ffffff1c;
+}
+
+.el-menu-item [class^="el-icon-"] {
+  vertical-align: text-top;
 }
