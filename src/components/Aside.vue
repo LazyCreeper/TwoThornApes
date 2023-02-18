@@ -1,22 +1,5 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
@@ -35,7 +18,6 @@
       <Logo></Logo>
       <el-menu-item-group>
         <template #title>{{ $t("aside.basic") }}</template>
-
         <el-menu-item key="/overview" index="/overview">
           <i class="el-icon-pie-chart"></i>
           <template #title>{{ $t("router.overview") }}</template>
@@ -44,9 +26,13 @@
           <i class="el-icon-coin"></i>
           <template #title>{{ $t("router.instances") }}</template>
         </el-menu-item>
-        <el-menu-item key="/users" index="/users">
-          <i class="el-icon-user"></i>
-          <template #title>{{ $t("aside.user") }}</template>
+        <el-menu-item key="/global_file_manager_entry" index="/global_file_manager_entry">
+          <i class="el-icon-folder-opened"></i>
+          <template #title>{{ $t("CommonText.052") }}</template>
+        </el-menu-item>
+        <el-menu-item key="/global_terminal_entry" index="/global_terminal_entry">
+          <i class="el-icon-postcard"></i>
+          <template #title>{{ $t("CommonText.053") }}</template>
         </el-menu-item>
         <el-menu-item key="/quickstart" index="/quickstart">
           <i class="el-icon-circle-plus-outline"></i>
@@ -55,48 +41,36 @@
       </el-menu-item-group>
       <el-menu-item-group>
         <template #title>{{ $t("aside.advanced") }}</template>
+        <el-menu-item key="/users" index="/users">
+          <i class="el-icon-user"></i>
+          <template #title>{{ $t("aside.user") }}</template>
+        </el-menu-item>
         <el-menu-item key="/services" index="/services">
           <i class="el-icon-connection"></i>
           <template #title>{{ $t("aside.node") }}</template>
         </el-menu-item>
+
         <el-menu-item key="/container" index="/container">
           <i class="el-icon-takeaway-box"></i>
           <template #title>{{ $t("router.container") }}</template>
         </el-menu-item>
-        <!-- <el-menu-item key="/update" index="/update">
-          <i class="el-icon-guide"></i>
-          <template #title>版本控制</template>
-        </el-menu-item> -->
       </el-menu-item-group>
-      <!-- <el-menu-item-group>
-        <template #title>扩展功能</template>
-        <el-menu-item key="/news" index="/news">
-          <i class="el-icon-news"></i>
-          <template #title>更新与通知</template>
-        </el-menu-item>
-      </el-menu-item-group> -->
       <el-menu-item-group>
         <template #title>{{ $t("aside.more") }}</template>
         <el-menu-item key="/settings" index="/settings">
           <i class="el-icon-setting"></i>
           <template #title>{{ $t("router.settings") }}</template>
         </el-menu-item>
-      </el-menu-item-group>
 
-      <!-- <el-menu-item-group> -->
-      <!-- <el-menu-item index="/extension">
-          <i class="el-icon-cpu"></i>
-          <template #title>程序接口</template>
-        </el-menu-item> -->
-      <!-- <el-menu-item index="/trigger">
-          <i class="el-icon-document"></i>
-          <template #title>触发器</template>
-        </el-menu-item> -->
-      <!-- <el-menu-item index="/analysis">
-          <i class="el-icon-document"></i>
-          <template #title>数据分析</template>
-        </el-menu-item> -->
-      <!-- </el-menu-item-group> -->
+        <el-menu-item v-if="hasElectron()" @click="toElectronUI">
+          <i class="el-icon-postcard"></i>
+          <template #title>{{ $t("aside.backElectronMain") }}</template>
+        </el-menu-item>
+        <el-menu-item v-if="hasElectron()" @click="toBrowser">
+          <i class="el-icon-position"></i>
+          <template #title>{{ $t("aside.toBrowser") }}</template>
+        </el-menu-item>
+      </el-menu-item-group>
     </el-scrollbar>
   </el-menu>
 </template>
@@ -104,9 +78,11 @@
 <script>
 import router from "../app/router";
 import Logo from "../components/Logo.vue";
-
+import { hasElectron } from "@/app/utils/electron";
 export default {
-  components: { Logo },
+  components: {
+    Logo
+  },
   data: function () {
     return {};
   },
@@ -120,8 +96,17 @@ export default {
     }
   },
   methods: {
+    hasElectron,
     toRouter(path) {
-      router.push({ path });
+      router.push({
+        path
+      });
+    },
+    toElectronUI() {
+      window.electionApi.openHome();
+    },
+    toBrowser() {
+      window.electionApi.openBrowser();
     }
   },
   mounted() {}
@@ -135,7 +120,7 @@ export default {
 }
 .page-el-menu {
   backdrop-filter: var(--cd-blur);
-  transition: all 1s;
+  transition: all 0.4s;
 }
 
 .page-el-menu:hover {
