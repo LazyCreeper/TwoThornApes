@@ -320,8 +320,9 @@ a:hover {
 }
 
 /* 按钮 */
+/* 默认 */
 .el-button.el-button--default,.el-button--small {
-  background: var(--btn-default-bg-color);
+  background-color: var(--btn-default-bg-color);
   color: var(--btn-default-color);
 }
 
@@ -335,10 +336,27 @@ a:hover {
   background-color:  var(--btn-default-bg-hover-color);
 }
 
+/* btn-primary */
+.el-button--primary {
+  background-color: var(--btn-primary-bg-color);
+}
+
+.el-button--primary.is-plain {
+  color: var(--btn-primary-plain-text-color);
+  background-color: var(--btn-primary-plain-bg-color);
+}
+
+/* btn-success */
 .el-button--success {
   background-color: var(--btn-success-bg-color);
 }
 
+.el-button--success.is-plain {
+  color: var(--btn-success-plain-text-color);
+  background-color: var(--btn-success-plain-bg-color);
+}
+
+/* btn-danger */
 .el-button--danger {
   background-color: var(--btn-danger-bg-color);
   border-color: var(--btn-danger-color);
@@ -348,6 +366,7 @@ a:hover {
   background-color: var(--btn-q-danger-color);
 }
 
+/* btn-warning */
 .el-button--warning.is-plain {
   background-color: var(--btn-q-warning-color);
 }
