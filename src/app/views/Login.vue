@@ -1,111 +1,167 @@
 <!--
-  Copyright (C) 2022 Suwings <Suwings@outlook.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  According to the AGPL, it is forbidden to delete all copyright notices, 
-  and if you modify the source code, you must open source the
-  modified source code.
-
-  版权所有 (C) 2022 Suwings <Suwings@outlook.com>
-
-  该程序是免费软件，您可以重新分发和/或修改据 GNU Affero 通用公共许可证的条款，
-  由自由软件基金会，许可证的第 3 版，或（由您选择）任何更高版本。
-
-  根据 AGPL 与用户协议，您必须保留所有版权声明，如果修改源代码则必须开源修改后的源代码。
-  可以前往 https://mcsmanager.com/ 阅读用户协议，申请闭源开发授权等。
+  Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 -->
 
 <template>
-  <div id="login-layer-top" :class="{ 'login-layer-fadeout-top': close, 'login-layer-fadein-top': !close }"></div>
-  <div id="login-layer-left" :class="{ 'login-layer-fadeout-left': close, 'login-layer-fadein-left': !close }"></div>
-  <div id="login-layer-right" :class="{ 'login-layer-fadeout-right': close, 'login-layer-fadein-right': !close }"></div>
-  <div id="login-layer-bottom" :class="{ 'login-layer-fadeout-bottom': close, 'login-layer-fadein-bottom': !close }">
-  </div>
+  <div>
+    <div
+      id="login-layer-top"
+      :class="{ 'login-layer-fadeout-top': close, 'login-layer-fadein-top': !close }"
+    ></div>
+    <div
+      id="login-layer-left"
+      :class="{ 'login-layer-fadeout-left': close, 'login-layer-fadein-left': !close }"
+    ></div>
+    <div
+      id="login-layer-right"
+      :class="{ 'login-layer-fadeout-right': close, 'login-layer-fadein-right': !close }"
+    ></div>
+    <div
+      id="login-layer-bottom"
+      :class="{ 'login-layer-fadeout-bottom': close, 'login-layer-fadein-bottom': !close }"
+    ></div>
 
-  <div id="login-panel-wrapper" :class="{ 'login-panel-wrapper-out': closeWindow }">
-    <Panel id="login-panel" body-style="padding:44px;" v-loading="loading"
-      element-loading-background="rgba(0, 0, 0, 0.5)">
-      <template #default>
-        <form action="/login" method="post">
-          <div style="font-size: 24px; font-weight: 600">{{ $t("login.title") }}</div>
-          <p>{{ $t("login.titleInfo") }}</p>
-          <form action="/" method="post">
-            <div style="margin-top: 22px">
-              <div>
-                <el-input type="text" name="mcsm_username" v-model="form.username" :placeholder="$t('login.account')"
-                  autocomplete="on" :disabled="close" @keyup.enter="submit">
-                  <template #suffix>
-                    <i class="el-icon-user"></i>
-                  </template>
-                </el-input>
-              </div>
-              <div class="row-mt">
-                <el-input type="password" name="mcsm_password" v-model="form.password"
-                  :placeholder="$t('login.passWord')" autocomplete="on" :disabled="close" @keyup.enter="submit">
-                  <template #suffix>
-                    <i class="el-icon-lock"></i>
-                  </template>
-                </el-input>
-              </div>
-              <div class="login-btn-wrapper row-mt">
-                <transition name="fade">
-                  <div v-if="cause" id="login-cause">{{ cause }}</div>
-                  <div v-else class="login-info-wrapper fgp" @click="forgotPassword">
-                    <a href="javascript:void(0)" rel="noopener noreferrer">
-                      {{ $t("login.forgotPassword") }}
-                    </a>
-                  </div>
-                </transition>
-                <el-button type="primary" size="small" style="width: 110px" @click="login" :disabled="close"
-                  :loading="loading">
-                  {{ loginText }}
-                </el-button>
-              </div>
-              <div class="login-info-wrapper row-mt" v-if="loginInfo">
-                <span class="color-gray">
-                  {{ loginInfo }}
-                </span>
-              </div>
-              <div class="login-info-wrapper row-mt">
+    <div id="login-panel-wrapper" :class="{ 'login-panel-wrapper-out': closeWindow }">
+      <Panel id="login-panel" body-style="padding:44px;" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+        <template #default>
+          <form action="/login" method="post">
+            <div style="font-size: 24px; font-weight: 600">{{ $t("login.title") }}</div>
+            <p>{{ $t("login.titleInfo") }}</p>
+            <form action="/" method="post">
+              <div style="margin-top: 22px">
                 <div>
+                  <el-input
+                    type="text"
+                    name="mcsm_username"
+                    v-model="form.username"
+                    :placeholder="$t('login.account')"
+                    autocomplete="on"
+                    :disabled="close"
+                    @keyup.enter="submit"
+                  >
+                    <template #suffix>
+                      <i class="el-icon-user"></i>
+                    </template>
+                  </el-input>
+                </div>
+                <div class="row-mt">
+                  <el-input
+                    type="password"
+                    name="mcsm_password"
+                    v-model="form.password"
+                    :placeholder="$t('login.passWord')"
+                    autocomplete="on"
+                    :disabled="close"
+                    @keyup.enter="submit"
+                  >
+                    <template #suffix>
+                      <i class="el-icon-lock"></i>
+                    </template>
+                  </el-input>
+                </div>
+                <div class="login-btn-wrapper row-mt">
+                  <transition name="fade">
+                    <div v-if="cause" id="login-cause">{{ cause }}</div>
+                  </transition>
+                  <transition name="fade">
+                    <div class="login-info-wrapper fgp" @click="forgotPassword">
+                      <a href="javascript:void(0)" rel="noopener noreferrer">
+                        {{ $t("login.forgotPassword") }}
+                      </a>
+                    </div>
+                  </transition>
+                  <el-button
+                    type="primary"
+                    size="small"
+                    style="width: 110px"
+                    @click="login"
+                    :disabled="close"
+                    :loading="loading"
+                  >
+                    {{ loginText }}
+                  </el-button>
+                </div>
+                <div class="login-info-wrapper row-mt" v-if="loginInfo">
                   <span class="color-gray">
-                    <strong>Powered by
-                      <a target="black" href="https://github.com/MCSManager">MCSManager</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                      Theme by <a href="https://www.lazy.ink" target="_blank">Lazy</a></strong>
+                    {{ loginInfo }}
                   </span>
                 </div>
+                <div class="login-info-wrapper row-mt">
+                  <div>
+                    <span class="color-gray"
+                      >Powered by
+                      <a target="black" href="https://github.com/MCSManager">MCSManager</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                      Theme by <a href="https://www.lazy.ink" target="_blank">Lazy</a></span
+                    >
+                  </div>
+                </div>
               </div>
-            </div>
+            </form>
           </form>
-        </form>
-      </template>
-    </Panel>
-  </div>
+        </template>
+      </Panel>
+    </div>
 
-  <div>
-    <el-row :gutter="20">
-      <el-col :md="24" :offset="0">
-        <Panel>
-          <template #default>
-            <el-skeleton :rows="8" />
-          </template>
-        </Panel>
-        <Panel>
-          <template #default>
-            <el-skeleton :rows="2" />
-          </template>
-        </Panel>
-        <Panel>
-          <template #default>
-            <el-skeleton :rows="2" />
-          </template>
-        </Panel>
-      </el-col>
-    </el-row>
+    <div>
+      <el-row :gutter="20">
+        <el-col :md="24" :offset="0">
+          <Panel>
+            <template #default>
+              <el-skeleton :rows="5" />
+            </template>
+          </Panel>
+        </el-col>
+        <el-col :md="6" :offset="0">
+          <Panel>
+            <template #default>
+              <el-skeleton :rows="7" />
+            </template>
+          </Panel>
+        </el-col>
+
+        <el-col :md="6" :offset="0">
+          <Panel>
+            <template #default>
+              <el-skeleton :rows="7" />
+            </template>
+          </Panel>
+        </el-col>
+
+        <el-col :md="6" :offset="0">
+          <Panel>
+            <template #default>
+              <el-skeleton :rows="7" />
+            </template>
+          </Panel>
+        </el-col>
+
+        <el-col :md="6" :offset="0">
+          <Panel>
+            <template #default>
+              <el-skeleton :rows="7" />
+            </template>
+          </Panel>
+        </el-col>
+
+        <el-col :md="24" :offset="0">
+          <Panel>
+            <template #default>
+              <el-skeleton :rows="4" />
+            </template>
+          </Panel>
+          <Panel>
+            <template #default>
+              <el-skeleton :rows="2" />
+            </template>
+          </Panel>
+          <Panel>
+            <template #default>
+              <el-skeleton :rows="5" />
+            </template>
+          </Panel>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -133,11 +189,10 @@ export default {
     };
   },
   methods: {
-    // 回车登录
     submit() {
       this.login();
     },
-    // 登录过程入口
+
     async login() {
       try {
         if (!this.form.username || !this.form.username) {
@@ -164,7 +219,7 @@ export default {
         this.loading = false;
       }
     },
-    // 登录失败
+
     async failed(error) {
       this.cause = error.message;
       if (this.cause == "null") {
@@ -175,7 +230,7 @@ export default {
       await sleep(400);
       this.close = false;
     },
-    // 登录成功
+
     async success() {
       this.close = true;
       this.closeWindow = true;
@@ -185,9 +240,9 @@ export default {
       } catch (error) {
         this.$alert(this.$t("login.notify.message"), this.$t("login.notify.title"));
       }
-      // 等待动画效果完毕
+      // wait for the animation to finish
       await sleep(1500);
-      // 无缝切换，不采用刷新方法登录系统
+      // Seamless switch, do not use the refresh method to log in to the system
       this.$router.push({ path: `/` });
     },
     async requestLoginInfo() {
@@ -207,25 +262,13 @@ export default {
   async mounted() {
     console.log("Welcome use MCSManager.");
     console.log("Copyright 2022 MCSManager All rights reserved.");
-    console.error("%c%s", "border:5px solid #ff6372;font-size:1em", "Theme by Lazy | https://blog.imlazy.ink:233/index.php/archives/253");
-    // 请求登录界面文案
+    // Request login copyleft text
     this.requestLoginInfo();
-
-    // try {
-    //   await setupUserInfo();
-    //   if (this.$store.state?.userInfo?.uuid) {
-    //     console.log("用户已登录，正在跳转");
-    //     window.location.href = "/";
-    //   }
-    // } catch (err) {
-    //   // 忽略
-    // }
   }
 };
 </script>
 
-<style scoped>
-/* 动画与基本元素CSS */
+<style lang="scss" scoped>
 
 .login-panel-wrapper-out {
   opacity: 0;
@@ -304,7 +347,6 @@ export default {
   background-color: rgb(0, 0, 0);
   position: fixed;
 }
-
 #login-layer-top {
   top: 0px;
   left: 0px;
@@ -316,13 +358,11 @@ export default {
   left: 0px;
   right: 0px;
 }
-
 #login-layer-left {
   top: 0px;
   right: 0px;
   bottom: 0px;
 }
-
 #login-layer-right {
   top: 0px;
   left: 0px;
@@ -342,7 +382,7 @@ export default {
   background: var(--background-login-image);
   background-repeat: no-repeat;
   background-size: cover;
-
+  
   transition-property: all;
   transition-duration: 1.5s;
   transition-timing-function: cubic-bezier(1, 0.05, 0.84, 0.74);
@@ -356,6 +396,7 @@ export default {
 }
 
 #login-panel:hover {
+  /* box-shadow: 0 0px 18px rgba(0, 0, 0, 0.1); */
   border: 1px solid #828487;
   transform: scale(1.04);
 }
@@ -374,12 +415,12 @@ export default {
 }
 
 .login-info-wrapper a {
-  color: #cccccc;
+  color: #fff;
   text-decoration: underline;
 }
 
 #login-cause {
-  color: rgb(170, 8, 8);
+  color: #ff7f7f;
   font-size: 12px;
   margin-right: 18px;
 }
@@ -389,14 +430,18 @@ export default {
   margin-right: 18px;
 }
 
-/* 针对手机的登录界面 */
 @media (max-width: 900px) {
   #login-panel-wrapper {
     background: var(--background-login-image-phone);
     background-repeat: no-repeat;
     background-size: cover;
   }
-
+  
+  .fgp {
+    font-size: 12px;
+    margin-right: 0px;
+    margin-top: 8px;
+  }
   #login-panel {
     text-align: center;
     margin: 0;
@@ -409,11 +454,9 @@ export default {
     align-items: center;
     border-radius: 0px;
   }
-
   #login-panel:hover {
     border: none;
   }
-
   .login-btn-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -421,12 +464,10 @@ export default {
     flex-direction: column-reverse;
     text-align: center;
   }
-
   #login-cause {
     margin-top: 12px;
     margin-right: 0px;
   }
-
   .login-info-wrapper {
     text-align: center;
     display: flex;
