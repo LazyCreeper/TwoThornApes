@@ -19,25 +19,26 @@
             <el-dropdown-menu>
               <el-dropdown-item @click="setSkin('summer')">Summer</el-dropdown-item>
               <el-dropdown-item @click="setSkin('shizuku')">{{ $t("settings.selectSkin.shizuku") }}</el-dropdown-item>
-              <el-dropdown-item @click="setSkin('LuoTianyi')">{{ $t("settings.selectSkin.LuoTianyi") }}</el-dropdown-item>
+              <el-dropdown-item
+                @click="setSkin('LuoTianyi')"
+              >{{ $t("settings.selectSkin.LuoTianyi") }}</el-dropdown-item>
               <el-dropdown-item @click="setCustomSkin()">{{ $t("settings.selectSkin.custom") }}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
       </el-tooltip>
     </div>
-
-    <div class="el-dropdown-link">
+    <div class="el-dropdown-link" @click="toPrivate">
       <el-tooltip class="item" effect="dark" :content="$t('root.private')" placement="bottom">
-        <el-link :underline="false" @click="toPrivate">
+        <el-link :underline="false">
           <i class="el-icon-user"></i>
         </el-link>
       </el-tooltip>
     </div>
 
-    <div class="el-dropdown-link">
+    <div class="el-dropdown-link" @click="logout">
       <el-tooltip class="item" effect="dark" :content="$t('root.logout')" placement="bottom">
-        <el-link :underline="false" @click="logout">
+        <el-link :underline="false">
           <i class="el-icon-switch-button"></i>
         </el-link>
       </el-tooltip>
