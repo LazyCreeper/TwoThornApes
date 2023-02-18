@@ -4,6 +4,11 @@
 
 <template>
   <div class="contanier">
+    <el-skeleton :rows="5" animated />
+    <br />
+    <el-skeleton :rows="8" animated />
+    <br />
+    <el-skeleton :rows="4" animated />
     <div class="bg"></div>
 
     <!-- <div class="panel-wrapper" v-if="step == -1">
@@ -245,12 +250,6 @@ export default {
   /* width: 540px; */
 }
 
-@media (max-width: 780px) {
-  .bg {
-    background-image: var(--background-login-image-phone);
-  }
-}
-
 .panel-bottom {
   position: absolute;
   bottom: 0px;
@@ -264,5 +263,11 @@ export default {
   font-weight: 400;
   font-size: 24px;
   margin: 0px 0px 12px 0px;
+}
+
+@media (max-width: 780px) {
+  .bg {
+    background-image: var(--background-login-image-phone);
+  }
 }
 </style>
