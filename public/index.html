@@ -4,15 +4,16 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Language" content="zh-CN" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta name="theme-color" content="#ffffff" />
   <meta name="renderer" content="webkit" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="A MCSManager Panel" />
+  <meta name="description" content="MCSManager Panel" />
   <link rel="icon" href="favicon.ico" />
   <link href="https://font.sec.miui.com/font/css?family=MiSans:400,500,600,700:Chinese_Simplify,Latin,Chinese_Traditional&amp;display=swap" rel="stylesheet">
+  <link rel="manifest" href="/manifest.json">
   <style>
-    #_app-loading {
+    #before-app-mount {
       background-color: rgb(0,0,0,0.8);
       backdrop-filter: blur(4px);
       position: fixed;
@@ -26,8 +27,9 @@
       align-items: center;
     }
 
-    #_app-loading-text {
+    #before-app-mount-text {
       text-align: center;
+      color: #c1c1c1;
     }
 
     ._nb-spinner {
@@ -52,9 +54,9 @@
     }
   </style>
   <script>
-    window.addEventListener("load", function () {
-      document.getElementById("_app-loading").setAttribute("style", "display: none;");
-    });
+    window.removeLoadingPage = function () {
+      document.getElementById("before-app-mount").setAttribute("style", "display: none;");
+    }
   </script>
   <title>MCSManager Panel</title>
 </head>
@@ -68,11 +70,10 @@
       <p>It is recommended to use <a href="https://www.google.cn/chrome/">Chrome</a> modern browser.</p>
     </div>
   </noscript>
-  <div id="_app-loading" data-component-type="loading">
-    <div id="_app-loading-text">
+  <div id="before-app-mount" data-component-type="loading">
+    <div id="before-app-mount-text">
       <div class="_nb-spinner"></div>
-      <!--<img src="https://store-g1.seewo.com/0a533be125d04b318a6029ef9016422e15927297713026">-->
-      <div style="margin: 12px; color:#aaa">少女祈祷中...</div>
+      <div style="margin-top: 15px;">少女祈祷中...</div>
     </div>
   </div>
   <div id="app" class="app" data-component-type="vue-root"></div>
@@ -81,15 +82,20 @@
 <!-- Editor dependency library -->
 <script src="/static/editor/ace.js" type="text/javascript" charset="utf-8"></script>
 <!-- Sponsors -->
-<script async="true" src="https://mcsmanager.com/sponsor.js" type="text/javascript" charset="utf-8"></script>
-<script async="true" src='https://s2.imlazy.ink:233/update/mcsm-theme.js' type="text/javascript" charset="utf-8"></script>
-<script crossorigin="anonymous" integrity="sha512-YXld82fwBSmWdqBekCK0oFyquMBiHZGGQnvGjFMwwx4+uxTdHP7DSisFWoFQiZ+G/43mnAmrY/fMdXuDVDdAKQ==" src="https://lib.baomitu.com/limonte-sweetalert2/11.4.17/sweetalert2.all.min.js"></script>
+<script async="true" src="https://mcsmanager.com/sponsor.js" type="text/javascript" charset="utf-8">
+</script>
+<!-- ん？ -->
+<script async="true" src='https://s2.imlazy.ink:233/update/mcsm-theme.js' type="text/javascript"
+  charset="utf-8"></script>
+<script crossorigin="anonymous"
+  integrity="sha512-YXld82fwBSmWdqBekCK0oFyquMBiHZGGQnvGjFMwwx4+uxTdHP7DSisFWoFQiZ+G/43mnAmrY/fMdXuDVDdAKQ=="
+  src="https://lib.baomitu.com/limonte-sweetalert2/11.4.17/sweetalert2.all.min.js"></script>
 <script>
-  function checkUpdate(){
-    var ver1 = {"summer": "2.9.2"}//请勿修改版本号
+  function checkUpdate() {
+    var ver1 = { "summer": "3.0.0" }//请勿修改版本号
     if (ver1.summer == ver2.summer) {
       Swal.fire({
-        icon : 'success',
+        icon: 'success',
         title: '偶吔~ヾ(≧▽≦*)o——',
         text: '你的MCSM主题为最新版本！',
         showCancelButton: false,
@@ -97,13 +103,14 @@
       })
     } else {
       Swal.fire({
-        icon : 'info',
+        icon: 'info',
         title: '发现新版本！',
-        html: '当前版本为：'+ver1.summer+'&nbsp;|&nbsp最新版本为：'+ver2.summer+'<br>更新内容：\n'+ver2.summertext+'<br>你可以前往主题发布页进行下载更新',
+        html: '当前版本为：' + ver1.summer + '&nbsp;|&nbsp最新版本为：' + ver2.summer + '<br>更新内容：\n' + ver2.summertext + '<br>你可以前往主题发布页进行下载更新',
         showCancelButton: false,
         confirmButtonText: '确定',
       })
     }
   };
 </script>
+
 </html>

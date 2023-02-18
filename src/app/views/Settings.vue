@@ -1,229 +1,236 @@
 <template>
-  <Panel>
-    <template #title>{{ $t("settings.setOperate") }}</template>
-    <template #default>
-      <div class="flex flex-space-between flex-align-items-center">
-        <div>
-          <ItemGroup>
-            <el-button type="success" size="small" @click="updateSettings">
-              {{
-              $t("settings.updateSet")
-              }}
-            </el-button>
-            <el-button size="small" @click="refresh">{{ $t("general.refresh") }}</el-button>
-          </ItemGroup>
+  <div>
+    <Panel>
+      <template #title>{{ $t("settings.setOperate") }}</template>
+      <template #default>
+        <div class="flex flex-space-between flex-align-items-center">
+          <div>
+            <ItemGroup>
+              <el-button type="success" size="small" @click="updateSettings">
+                {{
+                $t("settings.updateSet")
+                }}
+              </el-button>
+              <el-button size="small" @click="refresh">{{ $t("general.refresh") }}</el-button>
+            </ItemGroup>
+          </div>
+          <span class="color-gray hidden-md-and-down">{{ $t("settings.updateSetInfo") }}&nbsp;&nbsp;</span>
         </div>
-        <span class="color-gray hidden-md-and-down">{{ $t("settings.updateSetInfo") }}&nbsp;&nbsp;</span>
-      </div>
-    </template>
-  </Panel>
+      </template>
+    </Panel>
 
-  <div v-if="settings">
-    <Panel>
-      <template #title>{{ $t("settings.basicSetting") }}</template>
-      <template #default>
-        <el-row :gutter="20">
-          <el-col :md="12">
-            <!-- <div class="system-index-block">
+    <div v-if="settings">
+      <Panel>
+        <template #title>{{ $t("settings.basicSetting") }}</template>
+        <template #default>
+          <el-row :gutter="20">
+            <el-col :md="12">
+              <!-- <div class="system-index-block">
               <SystemIndex></SystemIndex>
-            </div>-->
+              </div>-->
 
-            <div class="config-item" style="margin-top: 0px">
-              <div class="sub-title">
-                <p class="sub-title-title">{{ $t("settings.languageSetting") }}</p>
-                <p class="sub-title-info">{{ $t("settings.languageSettingInfo") }}</p>
+              <div class="config-item" style="margin-top: 0px">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.languageSetting") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.languageSettingInfo") }}</p>
+                </div>
+                <el-select v-model="settings.language" :placeholder="$t('general.pleaseSelect')">
+                  <el-option label="English" value="en_us"></el-option>
+                  <el-option value="zh_cn" :label="$t('CommonText.011')"></el-option>
+                  <!-- <el-option label="Japanese" value="jp" disabled></el-option> -->
+                </el-select>
               </div>
-              <el-select v-model="settings.language" :placeholder="$t('general.pleaseSelect')">
-                <el-option label="English" value="en_us"></el-option>
-                <el-option value="zh_cn" :label="$t('CommonText.011')"></el-option>
-                <!-- <el-option label="Japanese" value="jp" disabled></el-option> -->
-              </el-select>
-            </div>
 
-            <div class="config-item">
-              <div class="sub-title">
-                <p class="sub-title-title">{{ $t("settings.accessPort") }}</p>
-                <p class="sub-title-info">{{ $t("settings.accessPortInfo") }}</p>
+              <div class="config-item">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.accessPort") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.accessPortInfo") }}</p>
+                </div>
+                <el-input :placeholder="$t('settings.inputNum')" v-model="settings.httpPort"></el-input>
               </div>
-              <el-input :placeholder="$t('settings.inputNum')" v-model="settings.httpPort"></el-input>
-            </div>
 
-            <div class="config-item">
-              <div class="sub-title">
-                <p class="sub-title-title">{{ $t("settings.bindIP") }}</p>
-                <p class="sub-title-info">{{ $t("settings.bindIPInfo") }}</p>
+              <div class="config-item">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.bindIP") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.bindIPInfo") }}</p>
+                </div>
+                <el-input :placeholder="$t('settings.inputIP')" v-model="settings.httpIp"></el-input>
               </div>
-              <el-input :placeholder="$t('settings.inputIP')" v-model="settings.httpIp"></el-input>
-            </div>
 
-            <div class="config-item">
-              <div class="sub-title">
-                <p class="sub-title-title">{{ $t("settings.loginPage") }}</p>
-                <p class="sub-title-info">{{ $t("settings.loginPageInfo") }}</p>
+              <div class="config-item">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.loginPage") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.loginPageInfo") }}</p>
+                </div>
+                <el-input :placeholder="$t('settings.inputCopy')" v-model="settings.loginInfo"></el-input>
               </div>
-              <el-input :placeholder="$t('settings.inputCopy')" v-model="settings.loginInfo"></el-input>
-            </div>
 
-            <div class="config-item" v-iszh>
-              <div class="sub-title">
-                <p class="sub-title-title">{{ $t("views.Settings.001") }}</p>
-                <p class="sub-title-info">{{ $t("views.Settings.002") }}</p>
+              <div class="config-item" v-iszh>
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("views.Settings.001") }}</p>
+                  <p class="sub-title-info">{{ $t("views.Settings.002") }}</p>
+                </div>
+                <el-input placeholder="https://..." v-model="settings.quickInstallAddr"></el-input>
               </div>
-              <el-input placeholder="https://..." v-model="settings.quickInstallAddr"></el-input>
-            </div>
-          </el-col>
+            </el-col>
 
-          <el-col :md="4"></el-col>
-          <el-col :md="8">
-            <div>
-              <div class="sub-title">
-                <p class="sub-title">{{ $t("settings.referenceLink") }}</p>
-                <p class="sub-title-info">{{ $t("settings.referenceLinksInfo") }}</p>
+            <el-col :md="4"></el-col>
+            <el-col :md="8">
+              <div>
+                <div class="sub-title">
+                  <p class="sub-title">{{ $t("settings.referenceLink") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.referenceLinksInfo") }}</p>
+                </div>
               </div>
-            </div>
-          </el-col>
-        </el-row>
-      </template>
-    </Panel>
-    <Panel>
-      <template #title>{{ $t("settings.limitAndSecurity") }}</template>
-      <template #default>
-        <el-row :gutter="20">
-          <el-col :md="12">
-            <div class="config-item" style="margin-top: 0px">
-              <div class="sub-title">
-                <p class="sub-title-title">{{ $t("settings.canFileManager") }}</p>
-                <p class="sub-title-info">{{ $t("settings.canFileManagerInfo") }}</p>
+            </el-col>
+          </el-row>
+        </template>
+      </Panel>
+      <Panel>
+        <template #title>{{ $t("settings.limitAndSecurity") }}</template>
+        <template #default>
+          <el-row :gutter="20">
+            <el-col :md="12">
+              <div class="config-item" style="margin-top: 0px">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.canFileManager") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.canFileManagerInfo") }}</p>
+                </div>
+                <el-select
+                  v-model="settings.canFileManager"
+                  :placeholder="$t('general.pleaseSelect')"
+                >
+                  <el-option :label="$t('general.allow')" :value="true"></el-option>
+                  <el-option :label="$t('general.forbid')" :value="false"></el-option>
+                </el-select>
               </div>
-              <el-select
-                v-model="settings.canFileManager"
-                :placeholder="$t('general.pleaseSelect')"
-              >
-                <el-option :label="$t('general.allow')" :value="true"></el-option>
-                <el-option :label="$t('general.forbid')" :value="false"></el-option>
-              </el-select>
-            </div>
-            <div class="config-item">
-              <div class="sub-title">
-                <p class="sub-title-title">{{ $t("settings.crossAPI") }}</p>
-                <p class="sub-title-info">{{ $t("settings.crossAPIInfo") }}</p>
+              <div class="config-item">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.crossAPI") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.crossAPIInfo") }}</p>
+                </div>
+                <el-select v-model="settings.crossDomain" :placeholder="$t('general.pleaseSelect')">
+                  <el-option :label="$t('general.enable')" :value="true"></el-option>
+                  <el-option :label="$t('general.forbid')" :value="false"></el-option>
+                </el-select>
               </div>
-              <el-select v-model="settings.crossDomain" :placeholder="$t('general.pleaseSelect')">
-                <el-option :label="$t('general.enable')" :value="true"></el-option>
-                <el-option :label="$t('general.forbid')" :value="false"></el-option>
-              </el-select>
-            </div>
-            <div class="config-item">
-              <div class="sub-title">
-                <p class="sub-title-title">{{ $t("settings.loginCheckIp") }}</p>
-                <p class="sub-title-info">{{ $t("settings.loginCheckIpInfo") }}</p>
+              <div class="config-item">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.loginCheckIp") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.loginCheckIpInfo") }}</p>
+                </div>
+                <el-select
+                  v-model="settings.loginCheckIp"
+                  :placeholder="$t('general.pleaseSelect')"
+                >
+                  <el-option :label="$t('general.enable')" :value="true"></el-option>
+                  <el-option :label="$t('general.forbid')" :value="false"></el-option>
+                </el-select>
               </div>
-              <el-select v-model="settings.loginCheckIp" :placeholder="$t('general.pleaseSelect')">
-                <el-option :label="$t('general.enable')" :value="true"></el-option>
-                <el-option :label="$t('general.forbid')" :value="false"></el-option>
-              </el-select>
-            </div>
-          </el-col>
+            </el-col>
 
-          <el-col :md="4"></el-col>
-          <el-col :md="8">
-            <div>
+            <el-col :md="4"></el-col>
+            <el-col :md="8">
+              <div>
+                <div class="sub-title">
+                  <p class="sub-title">{{ $t("settings.attention") }}</p>
+                  <p class="sub-title-info">
+                    <span v-html="$t('settings.attentionInfo')"></span>
+                  </p>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+        </template>
+      </Panel>
+
+      <Panel>
+        <template #title>{{ $t("settings.about") }}</template>
+        <template #default>
+          <el-row :gutter="20">
+            <el-col :md="12">
               <div class="sub-title">
-                <p class="sub-title">{{ $t("settings.attention") }}</p>
-                <p class="sub-title-info">
-                  <span v-html="$t('settings.attentionInfo')"></span>
+                <p class="sub-title-title">
+                  <span v-html="$t('settings.aboutTitle')"></span>
                 </p>
+                <p class="sub-title-info">{{ $t("settings.aboutTitle2") }}</p>
               </div>
-            </div>
-          </el-col>
-        </el-row>
-      </template>
-    </Panel>
 
-    <Panel>
-      <template #title>{{ $t("settings.about") }}</template>
-      <template #default>
-        <el-row :gutter="20">
-          <el-col :md="12">
-            <div class="sub-title">
-              <p class="sub-title-title">
-                <span v-html="$t('settings.aboutTitle')"></span>
-              </p>
-              <p class="sub-title-info">{{ $t("settings.aboutTitle2") }}</p>
-            </div>
-
-            <div class="contributors" v-if="sponsorList" v-iszh>
-              <div class="sub-title">
-                <p class="sub-title-title">{{ $t("settings.sponsorList") }}</p>
-                <p class="sub-title-info">
-                  {{ $t("settings.sponsorListInfo") }}
-                  <a
-                    href="https://mcsmanager.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >MCSManager.com</a>.
-                </p>
-                <p class="sub-title-info"></p>
-              </div>
-              <el-row :gutter="10">
-                <el-col :span="24">
-                  <div
-                    v-for="(item, index) in sponsorList"
-                    :key="index"
-                    style="margin: 0px 8px 4px 0px; display: inline-block"
-                  >
+              <div class="contributors" v-if="sponsorList" v-iszh>
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.sponsorList") }}</p>
+                  <p class="sub-title-info">
+                    {{ $t("settings.sponsorListInfo") }}
                     <a
-                      :href="item.link || 'https://mcsmanager.com'"
+                      href="https://mcsmanager.com/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      style="text-decoration: underline"
+                    >MCSManager.com</a>.
+                  </p>
+                  <p class="sub-title-info"></p>
+                </div>
+                <el-row :gutter="10">
+                  <el-col :span="24">
+                    <div
+                      v-for="(item, index) in sponsorList"
+                      :key="index"
+                      style="margin: 0px 8px 4px 0px; display: inline-block"
                     >
-                      <span style="margin: 0px; font-size: 13px">{{ item.name }}</span>
-                    </a>
-                  </div>
-                </el-col>
-              </el-row>
-            </div>
-          </el-col>
-          <el-col :md="4"></el-col>
-          <el-col :md="8">
-            <div class="contributors">
-              <div class="sub-title">
-                <p class="sub-title-title">{{ $t("settings.aboutTheme.title") }}</p>
-                <p class="sub-title-info">
-                  {{ $t("settings.aboutTheme.info") }}
-                  <br />
-                  {{ $t("settings.aboutTheme.info2") }}
-                  <a
-                    href="mailto:lazy_creeper@qq.com"
-                  >lazy_creeper@qq.com</a>
-                </p>
-                <br />
-                <p class="sub-title-title">
-                  {{ $t("settings.aboutTheme.blog") }}
-                  <a
-                    href="https://blog.imlazy.ink:233/index.php/archives/253/"
-                    target="_blank"
-                  >{{ $t("settings.aboutTheme.goLink") }}</a>
-                </p>
-                <p class="sub-title-title">
-                  {{ $t("settings.aboutTheme.qrCode") }}
-                  <a
-                    href="https://qn-store-pub-tx.seewo.com/676b69a1b8ad4f9391555c127a2331c7165760252223383"
-                    target="_blank"
-                  >{{ $t("settings.aboutTheme.goLink") }}</a>
-                </p>
-                <p class="sub-title-title">
-                  {{ $t("settings.aboutTheme.ver") }} 2.9.2&nbsp;&nbsp;
-                  <a href="javascript:checkUpdate();">{{ $t("settings.aboutTheme.checkVer") }}</a>
-                  <lazy id="lazy"></lazy>
-                </p>
+                      <a
+                        :href="item.link || 'https://mcsmanager.com'"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="text-decoration: underline"
+                      >
+                        <span style="margin: 0px; font-size: 13px">{{ item.name }}</span>
+                      </a>
+                    </div>
+                  </el-col>
+                </el-row>
               </div>
-            </div>
-          </el-col>
-        </el-row>
-      </template>
-    </Panel>
+            </el-col>
+            <el-col :md="4"></el-col>
+            <el-col :md="8">
+              <div class="contributors">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.aboutTheme.title") }}</p>
+                  <p class="sub-title-info">
+                    {{ $t("settings.aboutTheme.info") }}
+                    <br />
+                    {{ $t("settings.aboutTheme.info2") }}
+                    <a
+                      href="mailto:lazy_creeper@qq.com"
+                    >lazy_creeper@qq.com</a>
+                  </p>
+                  <br />
+                  <p class="sub-title-title">
+                    {{ $t("settings.aboutTheme.blog") }}
+                    <a
+                      href="https://blog.imlazy.ink:233/index.php/archives/253/"
+                      target="_blank"
+                    >{{ $t("settings.aboutTheme.goLink") }}</a>
+                  </p>
+                  <p class="sub-title-title">
+                    {{ $t("settings.aboutTheme.qrCode") }}
+                    <a
+                      href="https://qn-store-pub-tx.seewo.com/676b69a1b8ad4f9391555c127a2331c7165760252223383"
+                      target="_blank"
+                    >{{ $t("settings.aboutTheme.goLink") }}</a>
+                  </p>
+                  <p class="sub-title-title">
+                    {{ $t("settings.aboutTheme.ver") }} 3.0.0&nbsp;&nbsp;
+                    <a
+                      href="javascript:checkUpdate();"
+                    >{{ $t("settings.aboutTheme.checkVer") }}</a>
+                    <lazy id="lazy"></lazy>
+                  </p>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+        </template>
+      </Panel>
+    </div>
   </div>
 </template>
 
