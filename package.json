@@ -8,7 +8,7 @@
     "serve": "vue-cli-service serve",
     "start": "vue-cli-service serve",
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
