@@ -13,7 +13,6 @@ import "../assets/css/common.css";
 import "../assets/css/tools.css";
 import "../assets/css/responsive.css";
 import "../assets/css/action.css";
-import "../assets/css/dark-mode.scss";
 import { requestPanelStatus } from "./service/protocol.js";
 
 import App from "./App.vue";
