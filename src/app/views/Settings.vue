@@ -218,7 +218,7 @@
                     >{{ $t("settings.aboutTheme.goLink") }}</a>
                   </p>
                   <p class="sub-title-title">
-                    {{ $t("settings.aboutTheme.ver") }} 3.0.0&nbsp;&nbsp;
+                    {{ $t("settings.aboutTheme.ver") }} 3.0.1&nbsp;&nbsp;
                     <a
                       href="javascript:checkUpdate();"
                     >{{ $t("settings.aboutTheme.checkVer") }}</a>
