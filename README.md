@@ -51,4 +51,4 @@ https://blog.imlazy.ink:233/index.php/archives/283/
 
 ## 支持主题
 如果你觉得这个主题好，欢迎给我点赞助。虽然但是，哪怕是`0.01`.....
-![恰饭](https://qn-store-pub-tx.seewo.com/676b69a1b8ad4f9391555c127a2331c7165760252223383)
+![恰饭](https://cdn.imlazy.ink:233/img/20220924.jpg)

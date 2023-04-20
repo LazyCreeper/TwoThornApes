@@ -213,7 +213,7 @@
                   <p class="sub-title-title">
                     {{ $t("settings.aboutTheme.qrCode") }}
                     <a
-                      href="https://qn-store-pub-tx.seewo.com/676b69a1b8ad4f9391555c127a2331c7165760252223383"
+                      href="https://cdn.imlazy.ink:233/img/20220924.jpg"
                       target="_blank"
                     >{{ $t("settings.aboutTheme.goLink") }}</a>
                   </p>
