@@ -5,9 +5,9 @@
   "homepage": "https://mcsmanager.com/",
   "author": "https://github.com/unitwk",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "start": "vue-cli-service serve",
-    "dev": "vue-cli-service serve",
+    "serve": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
+    "dev": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "build": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
