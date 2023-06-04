@@ -45,12 +45,12 @@
     "043": "Row",
     "044": "install error",
     "045": "third-party service",
-    "046": "read",
-    "047": "to write",
-    "048": "implement",
-    "049": "owner",
-    "050": "user group",
-    "051": "anyone",
+    "046": "Read",
+    "047": "Write",
+    "048": "Executable",
+    "049": "Owner",
+    "050": "User Group",
+    "051": "Anyone",
     "052": "Files",
     "053": "Terminal",
     "054": "Console"
@@ -88,7 +88,7 @@
     "operation": "Operation",
     "moreOperation": "More Operations",
     "confirm2": "Confirm",
-    "permission": "permissions"
+    "permission": "Permissions"
   },
   "root": {
     "title": "Processing...",
@@ -142,7 +142,7 @@
     "systemLoadPercentage": "Host CPU/RAM Usage",
     "daemonOverview": "Daemon Overview",
     "daemonOverviewInfo": "Offlined daemons will be unavailable, please ensure all daemons online. <br> Panel version  {panelVersion} must corresponds to Daemon version {specifiedDaemonVersion} .",
-    "addr": "Address",
+    "addr": "IP Address",
     "remarks": "Remarks",
     "port": "Port",
     "mem": "Memory",
@@ -488,7 +488,8 @@
     "limit": "resource constraints",
     "openfrp": "Intranet mapping",
     "backInstancesView": "Back to Instance panelCpuUsageInfo",
-    "paramsSet": "Settings"
+    "paramsSet": "Settings",
+    "globalTerminalTip": "The console provides WebShell capability, which is suitable for daily server maintenance."
   },
   "processConfig": {
     "title": "Configure List Group",
@@ -512,22 +513,22 @@
   "termSet": {
     "title": "Terminal Settings",
     "pty": "Emulated terminal",
-    "ptyInfo": "The terminal is fully interactive by emulating the terminal forwarding program.<br />Including the use of Tab, Ctrl function keys, etc.",
+    "ptyInfo": "The terminal is fully interactive by emulating the terminal forwarding program.\nIncluding the use of Tab, Ctrl function keys, etc.",
     "ifHaveProblems": "If there is a problem with the use, it is recommended to close it.",
     "ptySize": "Size of the emulated terminal window",
-    "ptySizeInfo": "It takes effect when the emulated terminal is turned on. It is used to set the height and width of the emulated terminal. The instance needs to be restarted for changes to take effect.",
+    "ptySizeInfo": "It takes effect when the emulated terminal is turned on.\nIt is used to set the height and width of the emulated terminal.\nThe instance needs to be restarted for changes to take effect.",
     "col": "Column:",
     "line": "Line:",
     "WebColor": "Web color rendering",
-    "WebColorInfo": "The web page automatically adds color rendering to the output content, and the rendered color may not be completely correct.<br />If the color rendering function conflicts with the color function that comes with the software, you can turn off this function.",
-    "stopCmdInfo": "When the \"Close Instance\" button is clicked, this command will be executed immediately, ^C stands for Ctrl+C signal.",
+    "WebColorInfo": "Automatically render colors of the content (maybe not completely correct).\nIf it conflicts with the color coming with the software, you can turn off it.",
+    "stopCmdInfo": "Command to execute on clicking \"Close Instance\" button.\n^C stands for Ctrl+C signal.",
     "crlf": "Command executes carriage return",
-    "crlfInfo": "If you enter a command and press enter and nothing happens, try adjusting this option.",
-    "crlfInfo2": "It is usually \"carriage return and line feed\" under Windows platform, and \"line feed\" under Linux/MacOS platform.",
+    "crlfInfo": "If nothing happens when pressing enter, try adjusting this option.",
+    "crlfInfo2": "It is usually \"carriage return and line feed\" under Windows platform,\n and \"line feed\" under Linux/MacOS platform.",
     "newline": "\\n",
     "EnterNewline": "\\r\\n",
     "ioCode": "input and output code",
-    "ioCodeInfo": "If the content in the console is garbled, you can try to modify this code to solve the problem.",
+    "ioCodeInfo": "If the characters in the console are garbled, you can try to modify it.",
     "setUpdate": "The instance configuration has been updated, some configurations may need to restart the instance to take effect",
     "fontSize": "Terminal font size",
     "fontSizeInfo": "The default is 13px, after the change, refresh the page to take effect"
@@ -625,7 +626,8 @@
     "UnzipTaskStartInfo": "It took a while to finish an async decompression task. You can refresh the file list to view the content of target folder to determine if task decompression completed.",
     "uploadOk": "Upload completed",
     "disk": "Disk",
-    "rootDir": "Root Dir"
+    "rootDir": "Root Dir",
+    "searchFile": "type file name, enter to search"
   },
   "fileManagerEditor": {
     "title": "Edit",
@@ -781,7 +783,12 @@
     "inputNewKey": "Please provide new token, the panel will automatically attempt to connect with new token later.",
     "key": "Token",
     "keySub2": "Linux, the token is usually in /opt/mcsmanager/daemon/data/Config/global.json",
-    "copyId": "(available for API calls)"
+    "copyId": "(available for API calls)",
+    "toDocker": "Docker",
+    "toFileManager": "Files",
+    "toTerminal": "Terminal",
+    "cpuChartTip": "CPU (10 min)",
+    "memChartTip": "Memory (10 min)"
   },
   "container": {
     "remoteList": "Select daemon",
@@ -930,7 +937,7 @@
       "ver": "Current Theme Version: ",
       "checkVer": "Check for Update"
     },
-    "aboutTitle2": "You may copy or modify the source code, but you must keep all the copyright notice and attach it Powered by MCSManager."
+    "aboutTitle2": "https://github.com/MCSManager/MCSManager/blob/master/LICENSE"
   },
   "home": {
     "totalInstance": "Total Number of Instances",
@@ -967,7 +974,7 @@
       },
       {
         "title": "Manage my command-line program via the contorl panel",
-        "subTitle": "Manage your command-line progrem like Nginx.exe, frp.exe, and cmd.exe on the web page."
+        "subTitle": "Manage your command-line program like Nginx.exe, frp.exe, and cmd.exe on the web page."
       },
       {
         "title": "Get more information",
@@ -1149,7 +1156,7 @@
     },
     "Terminal_TermSetting": {
       "001": "Terminal font size",
-      "002": "The default value is 12px, and it will take effect after refreshing the webpage after the change. Changing this item may cause the emulation terminal text to be blocked."
+      "002": "The default value is 12px.\nIt will take effect after refreshing the webpage after the change.\nChanging this item may cause the emulation terminal text to be blocked."
     },
     "FileManagerEditor": {
       "001": "editor settings",
@@ -1163,7 +1170,7 @@
       "009": "You haven't saved the file yet, do you want to go back?"
     },
     "FileManager_PermissionDialog": {
-      "001": "File/folder permissions",
+      "001": "File permissions",
       "002": "apply to subdirectory"
     },
     "GlobalFileManager_index": {

@@ -142,7 +142,7 @@
     "systemLoadPercentage": "面板所在主机 CPU，RAM 百分比",
     "daemonOverview": "远程节点总览",
     "daemonOverviewInfo": "确保所有远程节点均在线，离线状态将导致此远程节点以及相关功能不可用，可能会影响使用体验与数据。<br>面板端 {panelVersion} 必须对应远程节点 {specifiedDaemonVersion} 版本",
-    "addr": "地址",
+    "addr": "IP 地址",
     "remarks": "备注",
     "port": "端口",
     "mem": "内存",
@@ -306,8 +306,8 @@
   "instancesDetail": {
     "title": "实例详细信息设置",
     "titleInfo": "当前界面所有设置只有管理员可以进行更改，应用实例拥有远程代码执行功能，请谨慎修改配置。",
-    "uid": "远程/本地实例标识符",
-    "gid": "远程节点标识符",
+    "uid": "应用实例 ID",
+    "gid": "远程节点 ID",
     "status": "当前状态",
     "started": "已启动次数",
     "createDateTime": "创建日期",
@@ -488,12 +488,13 @@
     "limit": "资源限制",
     "openfrp": "内网映射",
     "backInstancesView": "回到应用实例列表",
-    "paramsSet": "参数设置"
+    "paramsSet": "参数设置",
+    "globalTerminalTip": "控制台提供 WebShell 能力，适用于日常的服务器维护工作。"
   },
   "processConfig": {
     "title": "配置列表组",
     "aboutConfig": "关于配置文件列表",
-    "aboutConfigInfo": "配置文件适配工作由开发团队与开源社区开发者共同开发，相关作者已在具体项目中显示“模块作者”。如果出现多个同名的配置文件，在配置文件最前方已经标上适用于哪个服务端，请手动选择服务端/或衍生类服务端类型。",
+    "aboutConfigInfo": "配置文件适配工作由开发团队与开源社区开发者共同开发。如果没有看见您需要的配置文件，请前往实例配置界面手动选择服务端/或衍生类服务端类型。",
     "noConfigFile": "暂无任何配置文件",
     "noConfigFileInfo": "经过特定实例类型({type})并配合文件扫描未检测出有任何符合条件的配置文件，请进行进程配置初始化或更改实例类型来进行调整",
     "sameFile": "存在同名文件",
@@ -512,14 +513,14 @@
   "termSet": {
     "title": "终端设置",
     "pty": "仿真终端",
-    "ptyInfo": "通过仿真终端转发程序来获得终端完全交互能力。<br />包括使用 Tab，Ctrl 功能键等。",
+    "ptyInfo": "通过仿真终端转发程序来获得终端完全交互能力。\n包括使用 Tab，Ctrl 功能键等。",
     "ifHaveProblems": "如果使用有问题，建议关闭。",
     "ptySize": "仿真终端窗口大小",
     "ptySizeInfo": "在仿真终端开启时生效，用于设置仿真终端高度和宽度，更改生效需要重启实例。",
     "col": "列：",
     "line": "行：",
     "WebColor": "网页颜色渲染",
-    "WebColorInfo": "网页自动给输出内容增加颜色渲染，渲染的颜色不一定完全正确。<br />如果颜色渲染功能与软件自带的颜色功能冲突，可以关闭此功能。",
+    "WebColorInfo": "网页自动给输出内容增加颜色渲染，渲染的颜色不一定完全正确。\n如果颜色渲染功能与软件自带的颜色功能冲突，可以关闭此功能。",
     "stopCmdInfo": "当点击“关闭实例”按钮时，会立刻执行此命令，^C 代表 Ctrl+C 信号。",
     "crlf": "命令执行回车符",
     "crlfInfo": "如果您输入命令按回车没有反应，可以尝试调整此选项。",
@@ -625,7 +626,8 @@
     "UnzipTaskStart": "解压任务已开始",
     "UnzipTaskStartInfo": "异步解压需要一段时间，可以利用刷新文件列表查看目录内容来判断是否解压完毕",
     "uploadOk": "上传完毕",
-    "disk": "磁盘"
+    "disk": "磁盘",
+    "searchFile": "输入文件名，回车键搜索"
   },
   "fileManagerEditor": {
     "title": "编辑文件",
@@ -781,7 +783,12 @@
     "inputNewKey": "请输入新密钥，设置后将自动尝试连接",
     "key": "密钥",
     "keySub2": "在 Linux 下，密钥一般在 /opt/mcsmanager/daemon/data/Config/global.json 中",
-    "copyId": "（可用于 API 调用）"
+    "copyId": "（可用于 API 调用）",
+    "toFileManager": "文件管理",
+    "toTerminal": "控制台",
+    "toDocker": "镜像管理",
+    "cpuChartTip": "CPU（10min）",
+    "memChartTip": "内存（10min）"
   },
   "container": {
     "remoteList": "请选择一个节点",
@@ -930,7 +937,7 @@
       "ver": "当前主题版本：",
       "checkVer": "检查更新"
     },
-    "aboutTitle2": "你可以复制或修改源代码，但必须保留所有版权声明文字和并附上 Powered by MCSManager，不得删除。"
+    "aboutTitle2": "https://github.com/MCSManager/MCSManager/blob/master/LICENSE"
   },
   "home": {
     "totalInstance": "实例总计",
