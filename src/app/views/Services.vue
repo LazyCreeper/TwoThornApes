@@ -179,6 +179,14 @@
               <i style="cursor: pointer" class="el-icon-edit" @click="updateRemarks(node)"></i>
             </span>
           </template>
+          <template #rtitle v-if="node.available">
+            <el-button size="mini" @click="updateKey(node, true)">{{ $t("services.changeKey") }}</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="deleteService(node.uuid)"
+            >{{ $t("general.delete") }}</el-button>
+          </template>
           <template #default>
             <div class="daemonInfoArea">
               <div class="daemonValueArea">
@@ -317,30 +325,30 @@
                 <el-col :md="12" :xl="12" :offset="0">
                   <div class="daemon-operations">
                     <template v-if="node.available">
-                      <el-link type="primary" size="mini" @click="toDaemonTerminalPage(node.uuid)">
-                        <span class="color-black">{{ $t("services.toTerminal") }}</span>
-                      </el-link>
-                      <el-link
-                        type="primary"
-                        size="small"
+                      <el-button
+                        size="mini"
+                        @click="toDaemonTerminalPage(node.uuid)"
+                      >{{ $t("services.toTerminal") }}</el-button>
+                      <el-button
+                        size="mini"
                         @click="toDaemonFileManagerPage(node.uuid)"
-                      >
-                        <span class="color-black">{{ $t("services.toFileManager") }}</span>
-                      </el-link>
-                      <el-link type="primary" size="mini" @click="toDaemonImagesPage(node.uuid)">
-                        <span class="color-black">{{ $t("services.toDocker") }}</span>
-                      </el-link>
+                      >{{ $t("services.toFileManager") }}</el-button>
+                      <el-button
+                        size="mini"
+                        @click="toDaemonImagesPage(node.uuid)"
+                      >{{ $t("services.toDocker") }}</el-button>
                     </template>
-                    <span class="color-gray" v-if="node.available">|</span>
-
-                    <el-link type="primary" size="mini" @click="updateKey(node, true)">
-                      {{
-                      $t("services.changeKey")
-                      }}
-                    </el-link>
-                    <el-link type="primary" size="mini" @click="deleteService(node.uuid)">
-                      <span class="color-red">{{ $t("general.delete") }}</span>
-                    </el-link>
+                    <template v-else>
+                      <el-button
+                        size="mini"
+                        @click="updateKey(node, true)"
+                      >{{ $t("services.changeKey") }}</el-button>
+                      <el-button
+                        size="mini"
+                        type="danger"
+                        @click="deleteService(node.uuid)"
+                      >{{ $t("general.delete") }}</el-button>
+                    </template>
                   </div>
                 </el-col>
               </el-row>
