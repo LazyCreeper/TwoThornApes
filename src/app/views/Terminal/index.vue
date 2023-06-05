@@ -14,30 +14,36 @@
             </div>
             <div v-else>
               <LineInfo>
-                <i class="el-icon-edit"></i> {{ $t("terminal.name") }}:
+                <i class="el-icon-edit"></i>
+                {{ $t("terminal.name") }}:
                 {{ instanceInfo.config.nickname }}
               </LineInfo>
               <LineInfo>
-                <i class="el-icon-tickets"></i> {{ $t("terminal.type") }}:
+                <i class="el-icon-tickets"></i>
+                {{ $t("terminal.type") }}:
                 {{ typeToText(instanceInfo.config.type) }}
               </LineInfo>
               <LineInfo v-if="instanceInfo.info?.openFrpStatus">
-                <i class="el-icon-share"></i> {{ $t("terminal.openfrp") }}:
-                <span class="color-green">
-                  {{ $t("instances.status.running") }}
-                </span>
+                <i class="el-icon-share"></i>
+                {{ $t("terminal.openfrp") }}:
+                <span
+                  class="color-green"
+                >{{ $t("instances.status.running") }}</span>
               </LineInfo>
 
               <LineInfo v-if="hasDocker">
-                <i class="el-icon-tickets"></i> {{ $t("terminal.limit") }}:
-                <span class="color-blue" style="cursor: pointer" @click="openDockerInfoDialog">
-                  {{ $t("general.read") }}
-                </span>
+                <i class="el-icon-tickets"></i>
+                {{ $t("terminal.limit") }}:
+                <span
+                  class="color-blue"
+                  style="cursor: pointer"
+                  @click="openDockerInfoDialog"
+                >{{ $t("general.read") }}</span>
               </LineInfo>
 
               <LineInfo v-if="hasDocker && instanceInfo.config.docker.ports">
-                <i class="el-icon-money"></i> {{ $t("terminal.dockerPort") }}:
-
+                <i class="el-icon-money"></i>
+                {{ $t("terminal.dockerPort") }}:
                 <div style="padding: 10px 0px 0px 16px">
                   <div
                     style="margin-bottom: 2px"
@@ -45,10 +51,8 @@
                     :key="index"
                   >
                     <template v-if="!item.more">
-                      <span>{{ $t("CommonText.029") }}: {{ item.p1 }} </span>
-                      <span style="margin-left: 6px"
-                        >{{ $t("CommonText.030") }}: {{ item.p2 }}
-                      </span>
+                      <span>{{ $t("CommonText.029") }}: {{ item.p1 }}</span>
+                      <span style="margin-left: 6px">{{ $t("CommonText.030") }}: {{ item.p2 }}</span>
                       <span style="margin-left: 8px">
                         <el-tag type="success" size="mini">{{ item.protocol }}</el-tag>
                       </span>
@@ -57,32 +61,40 @@
                   </div>
                 </div>
               </LineInfo>
-              <LineInfo
-                ><i class="el-icon-finished"></i> {{ $t("imageManager.status") }}:
-                <span v-if="instanceInfo.status === -1" class="color-red">
-                  {{ $t("home.maintaining") }}
-                </span>
-                <span v-else-if="instanceInfo.status === 0" class="color-gray">
-                  {{ $t("home.outOfRunning") }}
-                </span>
-                <span v-else-if="instanceInfo.status === 1" class="color-yellow">
-                  {{ $t("home.stopping") }}
-                </span>
-                <span v-else-if="instanceInfo.status === 2" class="color-yellow">
-                  {{ $t("home.starting") }}
-                </span>
-                <span v-else-if="instanceInfo.status === 3" class="color-green">
-                  {{ $t("instances.status.running") }}
-                </span>
-                <span v-else class="color-red"> {{ $t("terminal.unknown") }} </span>
+              <LineInfo>
+                <i class="el-icon-finished"></i>
+                {{ $t("imageManager.status") }}:
+                <span
+                  v-if="instanceInfo.status === -1"
+                  class="color-red"
+                >{{ $t("home.maintaining") }}</span>
+                <span
+                  v-else-if="instanceInfo.status === 0"
+                  class="color-gray"
+                >{{ $t("home.outOfRunning") }}</span>
+                <span
+                  v-else-if="instanceInfo.status === 1"
+                  class="color-yellow"
+                >{{ $t("home.stopping") }}</span>
+                <span
+                  v-else-if="instanceInfo.status === 2"
+                  class="color-yellow"
+                >{{ $t("home.starting") }}</span>
+                <span
+                  v-else-if="instanceInfo.status === 3"
+                  class="color-green"
+                >{{ $t("instances.status.running") }}</span>
+                <span v-else class="color-red">{{ $t("terminal.unknown") }}</span>
               </LineInfo>
               <LineInfo v-if="instanceInfo.info && instanceInfo.info.currentPlayers != -1">
-                <i class="el-icon-user"></i> {{ $t("terminal.currentPlayers") }}:
+                <i class="el-icon-user"></i>
+                {{ $t("terminal.currentPlayers") }}:
                 {{ instanceInfo.info.currentPlayers }} /
                 {{ instanceInfo.info.maxPlayers }}
               </LineInfo>
               <LineInfo v-if="instanceInfo.info && instanceInfo.info.version">
-                <i class="el-icon-collection"></i> {{ $t("services.version") }}:
+                <i class="el-icon-collection"></i>
+                {{ $t("services.version") }}:
                 {{ instanceInfo.info.version }}
               </LineInfo>
             </div>
@@ -102,9 +114,7 @@
                         style="width: 100%"
                         size="small"
                         plain
-                      >
-                        {{ $t("terminal.start") }}
-                      </el-button>
+                      >{{ $t("terminal.start") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -116,8 +126,7 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                        >{{ $t("terminal.stop") }}
-                      </el-button>
+                      >{{ $t("terminal.stop") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -129,9 +138,7 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                      >
-                        {{ $t("terminal.restart") }}
-                      </el-button>
+                      >{{ $t("terminal.restart") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -145,8 +152,7 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                        >{{ $t("terminal.kill") }}
-                      </el-button>
+                      >{{ $t("terminal.kill") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -163,8 +169,7 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                        >{{ $t("terminal.killTask") }}
-                      </el-button>
+                      >{{ $t("terminal.killTask") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -180,8 +185,7 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                        >{{ $t("terminal.updateInstance") }}
-                      </el-button>
+                      >{{ $t("terminal.updateInstance") }}</el-button>
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -200,9 +204,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toProcessConfig"
-                >
-                  {{ getInstanceConfigBtnName }}
-                </el-button>
+                >{{ getInstanceConfigBtnName }}</el-button>
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
                 <el-button
@@ -211,8 +213,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toTerminalSettingPanel"
-                  >{{ $t("terminal.termSet") }}
-                </el-button>
+                >{{ $t("terminal.termSet") }}</el-button>
               </el-col>
 
               <el-col :lg="12" :offset="0" class="row-mb">
@@ -222,8 +223,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toSchedule"
-                  >{{ $t("router.schedule") }}
-                </el-button>
+                >{{ $t("router.schedule") }}</el-button>
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
                 <el-button
@@ -232,8 +232,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toPingPanel"
-                  >{{ $t("terminal.statusQuery") }}
-                </el-button>
+                >{{ $t("terminal.statusQuery") }}</el-button>
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
                 <el-button
@@ -242,8 +241,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toEventPanel"
-                  >{{ $t("terminal.eventTask") }}
-                </el-button>
+                >{{ $t("terminal.eventTask") }}</el-button>
               </el-col>
               <el-col :lg="24" :offset="0" class="row-mb">
                 <el-button
@@ -252,9 +250,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toFileManager"
-                >
-                  {{ $t("instancesDetail.fileManager") }}
-                </el-button>
+                >{{ $t("instancesDetail.fileManager") }}</el-button>
               </el-col>
 
               <el-col :lg="24" :offset="0" v-if="isTopPermission">
@@ -264,8 +260,7 @@
                   style="width: 100%"
                   size="small"
                   @click="toInstanceDetail"
-                  >{{ $t("terminal.instanceDetail") }}
-                </el-button>
+                >{{ $t("terminal.instanceDetail") }}</el-button>
               </el-col>
             </el-row>
           </template>
@@ -280,31 +275,36 @@
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
-                  <span style="font-size: 12px"> GID {{ serviceUuid }}</span>
+                  <span style="font-size: 12px">GID {{ serviceUuid }}</span>
                 </div>
               </LineInfo>
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
-                  <span class="text-overflow-ellipsis" style="font-size: 12px">
-                    UID {{ instanceInfo.instanceUuid }}</span
-                  >
+                  <span
+                    class="text-overflow-ellipsis"
+                    style="font-size: 12px"
+                  >UID {{ instanceInfo.instanceUuid }}</span>
                 </div>
               </LineInfo>
               <LineInfo>
-                <i class="el-icon-date"></i> {{ $t("instances.endTime") }}:
+                <i class="el-icon-date"></i>
+                {{ $t("instances.endTime") }}:
                 {{ instanceInfo.config.endTime || $t("instancesDetail.unlimited") }}
               </LineInfo>
               <LineInfo>
-                <i class="el-icon-date"></i> {{ $t("instancesDetail.createDateTime") }}:
+                <i class="el-icon-date"></i>
+                {{ $t("instancesDetail.createDateTime") }}:
                 {{ instanceInfo.config.createDatetime }}
               </LineInfo>
               <LineInfo>
-                <i class="el-icon-date"></i> {{ $t("terminal.lastDatetime") }}:
+                <i class="el-icon-date"></i>
+                {{ $t("terminal.lastDatetime") }}:
                 {{ instanceInfo.config.lastDatetime }}
               </LineInfo>
-              <LineInfo
-                ><i class="el-icon-document"></i> {{ $t("terminal.ie") }}:
+              <LineInfo>
+                <i class="el-icon-document"></i>
+                {{ $t("terminal.ie") }}:
                 {{ instanceInfo.config.ie }} {{ $t("terminal.oe") }}:
                 {{ instanceInfo.config.oe }}
               </LineInfo>
@@ -313,7 +313,11 @@
         </Panel>
       </el-col>
       <el-col :md="isGlobalTerminal ? 24 : 18">
-        <Panel v-loading="!available" :class="{ 'global-terminal-wrapper': isGlobalTerminal }" element-loading-background="rgba(0, 0, 0, 0.5)">
+        <Panel
+          v-loading="!available"
+          :class="{ 'global-terminal-wrapper': isGlobalTerminal }"
+          element-loading-background="rgba(0, 0, 0, 0.5)"
+        >
           <template #title>
             <span v-if="!isGlobalTerminal">{{ $t("router.terminal") }}</span>
             <span v-else>{{ $t("CommonText.054") }}</span>
@@ -346,24 +350,17 @@
             <!-- Logo display in full screen mode -->
             <!-- <div v-if="isFull" class="full-terminal-logo only-pc-display">
              <Logo></Logo>
-           </div> -->
+            </div>-->
             <!-- Action button in full screen mode -->
             <div v-show="isFull" class="full-terminal-button-wrapper">
-              <div class="full-terminal-button" @click="openInstance">
-                {{ $t("instances.start") }}
-              </div>
-              <div class="full-terminal-button" @click="stopInstance">
-                {{ $t("instances.stop") }}
-              </div>
-              <div class="full-terminal-button" @click="restartInstance">
-                {{ $t("terminal.restart2") }}
-              </div>
-              <div class="full-terminal-button" @click="killInstance">
-                {{ $t("instances.kill") }}
-              </div>
-              <div class="full-terminal-button" @click="backTerminal">
-                {{ $t("terminal.exit") }}
-              </div>
+              <div class="full-terminal-button" @click="openInstance">{{ $t("instances.start") }}</div>
+              <div class="full-terminal-button" @click="stopInstance">{{ $t("instances.stop") }}</div>
+              <div
+                class="full-terminal-button"
+                @click="restartInstance"
+              >{{ $t("terminal.restart2") }}</div>
+              <div class="full-terminal-button" @click="killInstance">{{ $t("instances.kill") }}</div>
+              <div class="full-terminal-button" @click="backTerminal">{{ $t("terminal.exit") }}</div>
             </div>
             <!-- Fullscreen and non-fullscreen terminal windows -->
             <div :class="{ 'terminal-wrapper': true, 'full-terminal-wrapper': isFull }">
@@ -376,7 +373,7 @@
               }"
             >
               <el-row :gutter="20">
-                <el-col :md="isGlobalTerminal ? 16 : 24" :offset="0">
+                <el-col :md="isGlobalTerminal ? 14 : 24" :offset="0">
                   <el-input
                     :placeholder="$t('terminal.inputCmd')"
                     prefix-icon="el-icon-arrow-right"
@@ -384,40 +381,45 @@
                     v-model="command"
                     ref="terminalCommandInput"
                     @keyup.enter="sendCommand(command)"
-                  >
-                  </el-input>
+                  ></el-input>
                 </el-col>
-                <el-col v-if="isGlobalTerminal" :md="8" :offset="0">
+                <el-col v-if="isGlobalTerminal" :md="10" :offset="0">
                   <div class="global-terminal-btn-container">
+                    <el-button
+                      icon="el-icon-video-play"
+                      size="small"
+                      style="width: 100px"
+                      @click="openInstance"
+                    >{{ $t("instances.start") }}</el-button>
                     <el-button
                       icon="el-icon-video-pause"
                       size="small"
                       style="width: 100px"
                       @click="killInstance"
-                    >
-                      {{ $t("instances.kill") }}
-                    </el-button>
+                    >{{ $t("instances.kill") }}</el-button>
                     <el-button
                       :disabled="!available"
                       icon="el-icon-monitor"
                       style="width: 100px"
                       size="small"
                       @click="toTerminalSettingPanel"
-                    >
-                      {{ $t("terminal.termSet") }}
-                    </el-button>
+                    >{{ $t("terminal.termSet") }}</el-button>
                     <el-button
                       :disabled="!available"
                       icon="el-icon-setting"
                       style="width: 100px"
                       size="small"
                       @click="toInstanceDetail"
-                    >
-                      {{ $t("terminal.paramsSet") }}
-                    </el-button>
+                    >{{ $t("terminal.paramsSet") }}</el-button>
                   </div>
                 </el-col>
               </el-row>
+
+              <div
+                class="sub-title-info row-mt"
+                style
+                v-if="isGlobalTerminal"
+              >{{ $t("terminal.globalTerminalTip") }}</div>
             </div>
           </template>
         </Panel>
@@ -440,29 +442,11 @@
                   type="info"
                   class="text-overflow-ellipsis cmdhistory"
                   style="max-width: 23%; cursor: pointer; font-size: 13px"
-                >
-                  {{ item }}
-                </div>
+                >{{ item }}</div>
               </ItemGroup>
             </div>
             <div v-else>
               <p class="color-gray">{{ $t("terminal.noCmdHistory") }}</p>
-            </div>
-          </template>
-        </Panel>
-        <Panel
-          v-if="
-            instanceInfo &&
-            instanceInfo.info &&
-            instanceInfo.info.playersChart &&
-            instanceInfo.info.playersChart.length
-          "
-        >
-          <template #title>{{ $t("terminal.panelOnline") }}</template>
-          <template #default>
-            <p>{{ $t("terminal.panelOnlineInfo") }}</p>
-            <div class="echart-wrapper">
-              <div id="echart-wrapper-players" style="width: 100%; height: 200px"></div>
             </div>
           </template>
         </Panel>
@@ -474,15 +458,11 @@
       <template #default>
         <div class="sub-title">
           <p class="sub-title-title">{{ $t("terminal.pingConfig.title2") }}</p>
-          <p class="sub-title-info">
-            {{ $t("terminal.pingConfig.title2Info") }}
-          </p>
+          <p class="sub-title-info">{{ $t("terminal.pingConfig.title2Info") }}</p>
         </div>
         <div class="sub-title">
           <p class="sub-title-title">{{ $t("terminal.pingConfig.addr") }}</p>
-          <p class="sub-title-info">
-            {{ $t("terminal.pingConfig.inputAddr") }}
-          </p>
+          <p class="sub-title-info">{{ $t("terminal.pingConfig.inputAddr") }}</p>
         </div>
         <el-input
           v-model="pingConfigForm.ip"
@@ -500,12 +480,16 @@
         ></el-input>
         <div class="row-mt">
           <ItemGroup>
-            <el-button type="success" size="small" @click="instanceConfigUpdate">{{
+            <el-button type="success" size="small" @click="instanceConfigUpdate">
+              {{
               $t("users.updateData")
-            }}</el-button>
-            <el-button @click="pingConfigForm.is = !pingConfigForm.is" size="small">{{
+              }}
+            </el-button>
+            <el-button @click="pingConfigForm.is = !pingConfigForm.is" size="small">
+              {{
               $t("general.cancel")
-            }}</el-button>
+              }}
+            </el-button>
           </ItemGroup>
         </div>
       </template>
@@ -536,12 +520,16 @@
 
         <div class="row-mt">
           <ItemGroup>
-            <el-button type="success" size="small" @click="instanceConfigUpdate">{{
+            <el-button type="success" size="small" @click="instanceConfigUpdate">
+              {{
               $t("general.save")
-            }}</el-button>
-            <el-button size="small" @click="eventConfigPanel.visible = false">{{
+              }}
+            </el-button>
+            <el-button size="small" @click="eventConfigPanel.visible = false">
+              {{
               $t("general.cancel")
-            }}</el-button>
+              }}
+            </el-button>
           </ItemGroup>
         </div>
       </template>
@@ -554,16 +542,14 @@
       :serviceUuid="serviceUuid"
       :isDisable="instanceInfo.status != 0"
       :instanceUuid="instanceUuid"
-    >
-    </TermSetting>
+    ></TermSetting>
 
     <NetworkTip
       ref="networkTip"
       :extraServiceConfig="instanceInfo.config.extraServiceConfig"
       :instanceUuid="instanceUuid"
       :serviceUuid="serviceUuid"
-    >
-    </NetworkTip>
+    ></NetworkTip>
 
     <DockerInfo
       v-if="instanceInfo.config.docker"
@@ -690,9 +676,7 @@ export default {
   },
   methods: {
     receiveInstanceDetailEvent() {
-      if (!this.isStarted && this.isGlobalTerminal) {
-        this.openInstance();
-      }
+      // empty
     },
     // request data source (Ajax)
     async renderFromAjax() {
@@ -1310,13 +1294,13 @@ export default {
   border: 1px solid #bfbfbf;
   color: #55ff62;
   max-width: 25%;
+  transition: all 0.3s;
 }
 
 .cmdhistory:hover {
   border: 1px solid #4eff42;
   box-shadow: 0 0 5px #42ff85;
   padding: 5px 12px 5px 12px;
-  transition: all 0.3s;
 }
 
 .terminal-wrapper {
@@ -1385,7 +1369,7 @@ export default {
   color: white;
   background-color: rgba(54, 54, 54, 0.6);
   border-radius: 4px;
-  box-shadow: 0px 0px 12px rgba(25, 25, 25, 0.6);
+  box-shadow: 0px 0px 12px rgba(25, 25, 25, 0.626);
   border: 1px solid rgb(73, 73, 73);
   transition: all 0.6s;
   cursor: pointer;
@@ -1425,10 +1409,10 @@ export default {
   justify-content: center;
 }
 
-@media (max-width:790px) {
-	.full-terminal-wrapper {
-		background-image: var(--terminal-full-bg-phone)!important;
-	}
+@media (max-width: 790px) {
+  .full-terminal-wrapper {
+    background-image: var(--terminal-full-bg-phone) !important;
+  }
 }
 
 @media (max-width: 900px) {
