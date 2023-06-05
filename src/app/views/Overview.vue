@@ -79,13 +79,16 @@
           <p v-html="$t('overview.daemonOverviewInfo', { panelVersion, specifiedDaemonVersion })"></p>
           <el-table :data="servicesStatus" style="width: 100%" size="small">
             <el-table-column prop="ip" :label="$t('overview.addr')" width="180"></el-table-column>
+            <el-table-column prop="port" :label="$t('overview.port')" width="90"></el-table-column>
             <el-table-column prop="remarks" :label="$t('overview.remarks')"></el-table-column>
-            <el-table-column prop="port" :label="$t('overview.port')" width="180"></el-table-column>
-            <el-table-column prop="cpu" label="CPU"></el-table-column>
-            <el-table-column prop="mem" :label="$t('overview.mem')"></el-table-column>
-            <el-table-column prop="instance" :label="$t('overview.instance')" width="160"></el-table-column>
-            <el-table-column prop="started" :label="$t('overview.runningInstance')" width="160"></el-table-column>0
-            <el-table-column prop="version" :label="$t('overview.daemonVersion')" width="160">
+
+            <el-table-column prop="cpu" label="CPU" width="90"></el-table-column>
+            <el-table-column prop="mem" :label="$t('overview.mem')" width="130"></el-table-column>
+            <el-table-column prop="instance" :label="$t('overview.runningInstance')" width="140">
+              <template #default="scope">{{ scope.row.started }}/{{ scope.row.instance }}</template>
+            </el-table-column>
+
+            <el-table-column prop="version" :label="$t('overview.daemonVersion')" width="120">
               <template #default="scope">
                 <span
                   class="color-green"
@@ -108,7 +111,7 @@
                   </el-tooltip>
                 </span>
               </template>
-            </el-table-column>0
+            </el-table-column>
             <el-table-column prop="status" :label="$t('overview.connectStatus')" width="160">
               <template #default="scope">
                 <span class="color-green" v-if="scope.row.status">
@@ -319,11 +322,11 @@ export default {
         },
         {
           name: this.$t("overview.webPanelTime"),
-          value: system.time
+          value: new Date(system.time).toLocaleString()
         },
         {
           name: this.$t("overview.localTime"),
-          value: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString()
+          value: new Date().toLocaleString()
         },
         {
           name: this.$t("overview.computerName"),
@@ -408,9 +411,9 @@ export default {
       this.systemChart2 = echarts.init(document.getElementById("echart-wrapper-main2"));
       this.systemChart2.setOption(getDefaultOption());
       this.systemChart3 = echarts.init(document.getElementById("echart-wrapper-main3"));
-      this.systemChart3.setOption(getStatusChartOption2());
+      this.systemChart3.setOption(getStatusChartOption1());
       this.systemChart4 = echarts.init(document.getElementById("echart-wrapper-main4"));
-      this.systemChart4.setOption(getStatusChartOption1());
+      this.systemChart4.setOption(getStatusChartOption2());
       this.setChartSource();
     },
     setRequestChart() {
