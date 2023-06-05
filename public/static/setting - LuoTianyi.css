@@ -20,7 +20,7 @@
 	/* 滚动条高度 */
 	--scrool-bg: #0000001a;
 	/* 滚动条背景颜色 */
-	--scrool-color: #ffaef7;
+	--scrool-color: #ff84c8b4;
 	/* 滚动条里面的条的颜色 */
 
 	--font-family: MiSans;
@@ -37,9 +37,9 @@
 	/*手机端首页背景图*/
 
 	/*终端*/
-	--terminal-full-bg: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(48,48,48,0.5) 100%),url(//api.imlazy.ink/img/);
+	--terminal-full-bg: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(48, 48, 48, 0.5) 100%), url(//api.imlazy.ink/img/);
 	/*全屏终端下的背景样式*/
-	--terminal-full-bg-phone: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(28, 103, 146, 0.7) 100%),url(//api.imlazy.ink/img-phone/);
+	--terminal-full-bg-phone: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(28, 103, 146, 0.7) 100%), url(//api.imlazy.ink/img-phone/);
 	/*手机全屏终端下的背景样式*/
 
 	--terminal-backdrop-filter: blur(4px);
@@ -60,11 +60,11 @@
 	/*手机端菜单的背景颜色*/
 	--menu-bg-color: rgba(0, 0, 0, 0.5);
 	/*电脑端菜单背景颜色*/
-	--cd-bg-color: rgba(171,26,26,0.5);
+	--cd-bg-color: rgba(171, 26, 26, 0.5);
 	/*菜单被选中时的 背景颜色*/
 	--cd-color: #fff;
 	/*菜单被选中时的 文本颜色*/
-	--cd-bg-hover-color: rgba(171,26,26,0.5);
+	--cd-bg-hover-color: rgba(171, 26, 26, 0.5);
 	/*当鼠标悬浮到菜单上时的背景颜色*/
 	--cd-title-color: #d0c8ff;
 	/*菜单标题颜色*/
@@ -104,9 +104,9 @@
 	/*卡片阴影效果*/
 	--card-blur: unset;
 	/*卡片背景模糊；默认unset，需要请设置为blur(数字px)。注意！设置后终端将无法全屏！*/
-	--card-instance-bg-hover:rgba(0,25,45,0.6);
+	--card-instance-bg-hover: rgba(0, 25, 45, 0.6);
 	/*实例列表卡片当鼠标悬浮到上面时的 背景颜色*/
-	--card-instance-shadow-hover: 0 0 9px 0px rgba(11,49,85,0.6)!important;
+	--card-instance-shadow-hover: 0 0 9px 0px rgba(11, 49, 85, 0.6) !important;
 	/*实例列表卡片当鼠标悬浮到上面时的 阴影颜色*/
 	--card-instance-gray-filter: hue-rotate(323deg);
 	/*实例卡片 未运行时的效果*/
@@ -147,9 +147,9 @@
 	--btn-q-danger-color: rgba(167, 114, 114, 0.5);
 	/*浅红色按钮的 背景 颜色*/
 
-	--btn-q-warning-color: rgba(253,246,236,0.3);
+	--btn-q-warning-color: rgba(253, 246, 236, 0.3);
 	/*浅黄色按钮的 背景 颜色*/
-	
+
 	/*浅黄色按钮的 背景 颜色*/
 	--btn-disabled-filter: brightness(0.6);
 	/*按钮禁用时的效果*/
