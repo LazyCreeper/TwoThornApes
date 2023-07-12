@@ -400,7 +400,7 @@ export default {
 }
 .themeInfoDialog img {
   position: absolute;
-  top: 40px;
+  bottom: 0;
   width: 233px;
   right: 0;
 }
