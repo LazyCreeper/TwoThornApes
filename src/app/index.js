@@ -24,12 +24,12 @@ import FunctionGroupComponent from "../components/FunctionGroupComponent.vue";
 import Panel from "../components/Panel.vue";
 
 if (localStorage.getItem("customSkin")) {
-  document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="${localStorage.getItem("customSkin")}">`;
+  document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="${localStorage.getItem("customSkin")}?t_=${Date.now()}">`;
 } else {
   if (localStorage.getItem("skin")) {
-    document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/${localStorage.getItem("skin")}.css">`;
+    document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/${localStorage.getItem("skin")}.css?t_=${Date.now()}">`;
   } else {
-    document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/default.css">`;
+    document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/default.css?t_=${Date.now()}">`;
   }
 }
 

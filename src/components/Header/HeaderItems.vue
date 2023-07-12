@@ -67,7 +67,7 @@ export default {
       localStorage.setItem("skin", v);
       document.getElementById(
         "linkSkinCss"
-      ).innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/${v}.css">`;
+      ).innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/${v}.css?t_=${Date.now()}">`;
       localStorage.setItem("customSkin", "");
       this.$message({ message: this.$t("fileManager.setSuccess"), type: "success" });
     },
@@ -82,7 +82,7 @@ export default {
         });
         document.getElementById(
           "linkSkinCss"
-        ).innerHTML = `<link type="text/css" rel="stylesheet" href="${value}">`;
+        ).innerHTML = `<link type="text/css" rel="stylesheet" href="${value}?t_=${Date.now()}">`;
         localStorage.setItem("customSkin", value);
       });
     },
