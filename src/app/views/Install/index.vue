@@ -29,21 +29,30 @@
           </ItemGroup>
         </div>
       </Panel>
-    </div> -->
+    </div>-->
 
     <div class="panel-wrapper" v-if="step == 0">
       <Panel class="panel tc" body-style="padding:40px;">
         <h1 class="title">{{ $t("install.welcome") }}</h1>
         <p>{{ $t("install.desc") }}</p>
         <div style="margin-top: 48px">
-          <el-button type="primary" @click="next" v-loading="isLoading" element-loading-background="rgba(0, 0, 0, 0.5)">{{
+          <el-button
+            type="primary"
+            @click="next"
+            v-loading="isLoading"
+            element-loading-background="rgba(0, 0, 0, 0.5)"
+          >
+            {{
             $t("install.start")
-          }}</el-button>
+            }}
+          </el-button>
         </div>
         <div class="panel-bottom">
-          <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer">
-            Reference: https://mcsmanager.com/
-          </a>
+          <a
+            href="https://mcsmanager.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Reference: https://mcsmanager.com/</a>
           <br />
           <span>Released under the Apache-2.0 License.</span>
         </div>
@@ -62,10 +71,13 @@
             <el-form-item :label="$t('install.passWord')" prop="passWord">
               <el-input v-model="initUser.passWord" />
             </el-form-item>
-            <el-form-item label="">
-              <el-button type="primary" @click="createUser" v-loading="isLoading" element-loading-background="rgba(0, 0, 0, 0.5)">
-                {{ $t("install.createAccount") }}
-              </el-button>
+            <el-form-item label>
+              <el-button
+                type="primary"
+                @click="createUser"
+                v-loading="isLoading"
+                element-loading-background="rgba(0, 0, 0, 0.5)"
+              >{{ $t("install.createAccount") }}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -73,7 +85,12 @@
     </div>
 
     <div class="panel-wrapper" v-if="step == 2">
-      <Panel class="panel" body-style="padding:40px;" v-loading="isLoading" element-loading-background="rgba(0, 0, 0, 0.5)">
+      <Panel
+        class="panel"
+        body-style="padding:40px;"
+        v-loading="isLoading"
+        element-loading-background="rgba(0, 0, 0, 0.5)"
+      >
         <h1 class="title">{{ $t("install.ohhh") }}</h1>
         <p>{{ $t("install.ohhhInfo") }}</p>
         <ItemGroup>
@@ -168,10 +185,10 @@ export default {
       });
     },
     toQuickStart() {
-      window.location.href = "/#/quickstart?from_install=1";
+      window.location.href = "./#/quickstart?from_install=1";
     },
     toOverview() {
-      window.location.href = "/#/overview?from_install=1";
+      window.location.href = "./#/overview?from_install=1";
     },
     installLib() {
       this.next();
