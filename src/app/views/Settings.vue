@@ -191,9 +191,9 @@
             </el-col>
             <el-col :md="4"></el-col>
             <el-col :md="8">
-              <div class="contributors">
+              <div>
                 <div class="sub-title">
-                  <p class="sub-title-title">{{ $t("settings.aboutTheme.title") }}</p>
+                  <p class="sub-title">{{ $t("settings.aboutTheme.title") }}</p>
                   <p class="sub-title-info">
                     {{ $t("settings.aboutTheme.info") }}
                     <br />
@@ -218,9 +218,10 @@
                     >{{ $t("settings.aboutTheme.goLink") }}</a>
                   </p>
                   <p class="sub-title-title">
-                    {{ $t("settings.aboutTheme.ver") }} 3.0.2&nbsp;&nbsp;
+                    {{ $t("settings.aboutTheme.ver") }} {{ themeInfo.version }}&nbsp;&nbsp;
                     <a
-                      href="javascript:checkUpdate();"
+                      href="javascript:;"
+                      @click="checkThemeUpdate"
                     >{{ $t("settings.aboutTheme.checkVer") }}</a>
                     <lazy id="lazy"></lazy>
                   </p>
@@ -231,6 +232,40 @@
         </template>
       </Panel>
     </div>
+
+    <!-- 检查更新 -->
+    <Dialog v-model="themeInfo.dialog">
+      <template #title>{{ themeInfo.title }}</template>
+      <template #default>
+        <div v-if="!themeInfo.haveNew" class="themeInfoDialog" style="text-align: center;">
+          <h1>你的MCSM主题为最新版本！</h1>
+          <div class="row-mt">
+            <ItemGroup>
+              <el-button size="small" @click="themeInfo.dialog = false">{{ $t("general.cancel") }}</el-button>
+            </ItemGroup>
+          </div>
+        </div>
+        <div v-else class="themeInfoDialog">
+          <h1>
+            当前版本：{{ themeInfo.version }}&nbsp;&nbsp;|&nbsp;&nbsp;最新版本：
+            <span
+              class="newVersion"
+            >{{ themeInfo.haveNew }}</span>
+          </h1>
+          <h1>更新内容：</h1>
+          <wow v-html="themeInfo.content"></wow>
+          <img src="../../assets/like.gif" />
+          <br />
+          <br />
+          <b>你可以前往主题发布页获取更新</b>
+          <div class="row-mt">
+            <ItemGroup>
+              <el-button size="small" @click="themeInfo.dialog = false">{{ $t("general.cancel") }}</el-button>
+            </ItemGroup>
+          </div>
+        </div>
+      </template>
+    </Dialog>
   </div>
 </template>
 
@@ -238,15 +273,24 @@
 import Panel from "../../components/Panel";
 import { API_SETTINGS } from "../service/common";
 import { request } from "../service/protocol";
+import Dialog from "@/components/Dialog";
 export default {
   // eslint-disable-next-line vue/no-unused-components
   components: {
-    Panel
+    Panel,
+    Dialog
   },
   data: function () {
     return {
       settings: {},
-      sponsorList: null
+      sponsorList: null,
+      themeInfo: {
+        dialog: false,
+        title: "",
+        content: "",
+        version: "3.0.2",
+        haveNew: false
+      }
     };
   },
   methods: {
@@ -303,8 +347,22 @@ export default {
       } else {
         this.sponsorList = null;
       }
-    } //async changeForwardType(v) {
+    }, //async changeForwardType(v) {
     //}
+
+    checkThemeUpdate() {
+      const { summer, summertext } = window.ver2;
+      if (this.themeInfo.version === summer) {
+        this.themeInfo.title = "偶吔~ヾ(≧▽≦*)o——";
+        this.themeInfo.haveNew = false;
+        this.themeInfo.dialog = true;
+      } else {
+        this.themeInfo.title = "发现新版本";
+        this.themeInfo.content = summertext;
+        this.themeInfo.dialog = true;
+        this.themeInfo.haveNew = summer;
+      }
+    }
   },
 
   async mounted() {
@@ -319,9 +377,6 @@ export default {
   border: 1px solid #0450ff;
   color: #409eff;
 }
-</style>
-
-<style scoped>
 .system-index-block {
   margin: 0px 0px 24px 0px;
 }
@@ -330,5 +385,23 @@ export default {
 }
 .contributors {
   margin: 10px 0px;
+}
+
+.themeInfoDialog {
+  position: relative;
+  width: 443px;
+}
+.themeInfoDialog .newVersion {
+  filter: hue-rotate(315deg);
+}
+.themeInfoDialog h1 {
+  font-size: 1.17em;
+  margin-block: 4px;
+}
+.themeInfoDialog img {
+  position: absolute;
+  top: 40px;
+  width: 233px;
+  right: 0;
 }
 </style>
