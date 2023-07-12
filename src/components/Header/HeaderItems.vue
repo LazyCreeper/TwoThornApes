@@ -17,11 +17,11 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="setSkin('summer')">Summer</el-dropdown-item>
-              <el-dropdown-item @click="setSkin('shizuku')">{{ $t("settings.selectSkin.shizuku") }}</el-dropdown-item>
               <el-dropdown-item
-                @click="setSkin('LuoTianyi')"
-              >{{ $t("settings.selectSkin.LuoTianyi") }}</el-dropdown-item>
+                v-for="item in skins"
+                @click="setSkin(item.fileName)"
+                :key="item"
+              >{{ item.name }}</el-dropdown-item>
               <el-dropdown-item @click="setCustomSkin()">{{ $t("settings.selectSkin.custom") }}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -54,20 +54,24 @@ import { request } from "@/app/service/protocol";
 export default {
   props: {},
   data: function () {
-    return {};
+    return {
+      skins: []
+    };
   },
   computed: {},
+  mounted() {
+    this.getSkins();
+  },
   methods: {
     setSkin(v = "") {
       localStorage.setItem("skin", v);
       document.getElementById(
         "linkSkinCss"
-      ).innerHTML = `<link type="text/css" rel="stylesheet" href="./static/setting - ${v}.css">`;
+      ).innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/${v}.css">`;
       localStorage.setItem("customSkin", "");
       this.$message({ message: this.$t("fileManager.setSuccess"), type: "success" });
     },
     setCustomSkin() {
-      // window.$t("")
       this.$prompt(window.$t("settings.selectSkin.customUrl"), window.$t("CommonText.040"), {
         confirmButtonText: window.$t("CommonText.041"),
         cancelButtonText: window.$t("CommonText.042")
@@ -80,6 +84,12 @@ export default {
           "linkSkinCss"
         ).innerHTML = `<link type="text/css" rel="stylesheet" href="${value}">`;
         localStorage.setItem("customSkin", value);
+      });
+    },
+    async getSkins() {
+      this.skins = await request({
+        method: "GET",
+        url: "./static/skins/index.json"
       });
     },
     async refresh() {
