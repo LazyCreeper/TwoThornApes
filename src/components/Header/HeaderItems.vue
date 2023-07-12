@@ -63,7 +63,7 @@ export default {
       document.getElementById(
         "linkSkinCss"
       ).innerHTML = `<link type="text/css" rel="stylesheet" href="./static/setting - ${v}.css">`;
-      localStorage.setItem("customSkin", '');
+      localStorage.setItem("customSkin", "");
       this.$message({ message: this.$t("fileManager.setSuccess"), type: "success" });
     },
     setCustomSkin() {
@@ -98,7 +98,7 @@ export default {
           method: "GET",
           url: API_USER_LOGOUT
         });
-        window.location.href = "/";
+        window.location.href = "./";
         this.$notify({
           title: this.$t("root.logoutSuccess"),
           message: this.$t("root.logoutSuccessInfo"),
