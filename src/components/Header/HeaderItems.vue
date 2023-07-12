@@ -89,7 +89,7 @@ export default {
     async getSkins() {
       this.skins = await request({
         method: "GET",
-        url: "./static/skins/index.json"
+        url: "./static/skins/index.json?t_=" + Date.now()
       });
     },
     async refresh() {
