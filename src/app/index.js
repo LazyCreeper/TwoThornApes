@@ -27,9 +27,9 @@ if (localStorage.getItem("customSkin")) {
   document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="${localStorage.getItem("customSkin")}">`;
 } else {
   if (localStorage.getItem("skin")) {
-    document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="./static/setting - ${localStorage.getItem("skin")}.css">`;
-  }else {
-    document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="./static/setting - summer.css">`;
+    document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/${localStorage.getItem("skin")}.css">`;
+  } else {
+    document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/default.css">`;
   }
 }
 
