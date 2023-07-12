@@ -327,6 +327,16 @@
               <el-tooltip
                 class="item"
                 effect="dark"
+                :content="$t('terminal.clearTerminal')"
+                placement="top"
+              >
+                <span class="terminal-right-botton" @click="term.clear()">
+                  <i class="el-icon-delete"></i>
+                </span>
+              </el-tooltip>
+              <el-tooltip
+                class="item"
+                effect="dark"
                 :content="$t('terminal.newFullScreen')"
                 placement="top"
               >
