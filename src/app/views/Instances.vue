@@ -28,6 +28,20 @@
               </el-select>
             </FunctionComponent>
             <FunctionComponent>
+              <el-select
+                style="width: 120px"
+                v-model="query.status"
+                filterable
+                :placeholder="$t('services.instanceStatus')"
+                size="small"
+                @change="refresh"
+              >
+                <el-option :label="$t('CommonText.055')" value=""> </el-option>
+                <el-option v-for="(item, i) in INSTANCE_STATUS" :key="i" :label="item" :value="i">
+                </el-option>
+              </el-select>
+            </FunctionComponent>
+            <FunctionComponent>
               <el-input
                 v-model="query.instanceName"
                 :placeholder="$t('instances.searchInstanceName')"
@@ -445,11 +459,20 @@ export default {
       maxPage: 1,
 
       query: {
-        instanceName: ""
+        instanceName: "",
+        status: ""
       },
 
       // batch mode
-      showTableList: false
+      showTableList: false,
+
+      INSTANCE_STATUS: {
+        "-1": this.$t("home.maintaining"),
+        0: this.$t("home.outOfRunning"),
+        1: this.$t("home.stopping"),
+        2: this.$t("home.starting"),
+        3: this.$t("home.running")
+      }
     };
   },
   async mounted() {
@@ -518,7 +541,7 @@ export default {
           params: {
             daemonId: this.currentRemoteUuid,
             page: this.page,
-            status: "",
+            status: this.query.status,
             page_size: 10,
             instance_name: this.query.instanceName
           }

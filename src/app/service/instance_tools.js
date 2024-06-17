@@ -8,7 +8,7 @@ import i18n from "../i18n";
  * @return {string}
  */
 export function statusCodeToText(statusCode) {
-  const $t = i18n.global.t
+  const $t = i18n.global.t;
   let statusText = "--";
   if (statusCode == -1) statusText = $t("home.maintaining");
   if (statusCode == 0) statusText = $t("home.outOfRunning");
@@ -19,10 +19,10 @@ export function statusCodeToText(statusCode) {
 }
 
 export function typeTextToReadableText(type) {
-  const $t = i18n.global.t
+  const $t = i18n.global.t;
   const text = INSTANCE_TYPE_TRANSLATION[type];
 
-  if (text) return $t('instanceTypeList.' + text);
+  if (text) return $t("instanceTypeList." + text);
   else return type;
 }
 
