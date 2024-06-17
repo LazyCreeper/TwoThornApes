@@ -109,7 +109,7 @@ export default {
         url: API_PROCESS_CONFIG_LIST,
         params: {
           uuid: this.instanceUuid,
-          remote_uuid: this.serviceUuid
+          daemonId: this.serviceUuid
         },
         data: {
           files

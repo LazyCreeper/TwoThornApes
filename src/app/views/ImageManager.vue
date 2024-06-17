@@ -153,14 +153,14 @@ export default {
           method: "GET",
           url: API_IMAGES,
           params: {
-            remote_uuid: this.serviceUuid
+            daemonId: this.serviceUuid
           }
         });
         this.containers = await request({
           method: "GET",
           url: API_CONTAINERS,
           params: {
-            remote_uuid: this.serviceUuid
+            daemonId: this.serviceUuid
           }
         });
         this.loading = false;
@@ -186,7 +186,7 @@ export default {
           method: "DELETE",
           url: API_IMAGES,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             imageId: String(row.RepoTags[0])
           }
         });

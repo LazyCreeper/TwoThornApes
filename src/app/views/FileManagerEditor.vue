@@ -380,7 +380,7 @@ export default {
           method: "PUT",
           url: API_FILE_URL,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           },
           data: {
@@ -401,7 +401,7 @@ export default {
         method: "PUT",
         url: API_FILE_URL,
         params: {
-          remote_uuid: this.serviceUuid,
+          daemonId: this.serviceUuid,
           uuid: this.instanceUuid
         },
         data: {

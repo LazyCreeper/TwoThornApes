@@ -664,7 +664,7 @@ export default {
         await request({
           method: "PUT",
           url: API_INSTANCE,
-          params: { remote_uuid: this.serviceUuid, uuid: this.instanceUuid },
+          params: { daemonId: this.serviceUuid, uuid: this.instanceUuid },
           data: postData
         });
         this.$message({ message: this.$t("notify.saveSuccess"), type: "success" });
@@ -683,7 +683,7 @@ export default {
           method: "GET",
           url: API_IMAGES,
           params: {
-            remote_uuid: this.serviceUuid
+            daemonId: this.serviceUuid
           }
         });
         if (images) {
@@ -718,7 +718,7 @@ export default {
           method: "GET",
           url: API_NETWORK_MODES,
           params: {
-            remote_uuid: this.serviceUuid
+            daemonId: this.serviceUuid
           }
         });
       } catch (error) {
@@ -794,7 +794,7 @@ export default {
     const result = await request({
       method: "GET",
       url: API_INSTANCE,
-      params: { remote_uuid: this.serviceUuid, uuid: this.instanceUuid }
+      params: { daemonId: this.serviceUuid, uuid: this.instanceUuid }
     });
     this.instanceInfo = result;
     if (this.instanceInfo.config.docker && this.instanceInfo.config.docker.ports) {

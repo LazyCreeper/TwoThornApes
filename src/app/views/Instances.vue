@@ -140,30 +140,36 @@
             ></el-pagination>
           </div>
         </div>
+      </div>
+    </template>
+  </Panel>
 
-        <!-- Display when no daemon is selected -->
-        <div v-show="!currentRemoteUuid">
-          <div class="notAnyInstanceTip">
-            <img src="../../assets/p.gif">
-            <div class="sub-title">
-              <div class="sub-title-title">{{ $t("instances.selectRemoteTitle") }}</div>
-              <div class="sub-title-info">
-                {{ $t("instances.selectRemoteInfo") }}
-              </div>
-            </div>
+  <!-- Display when no daemon is selected -->
+  <Panel v-if="!currentRemoteUuid">
+    <template #title>{{ $t("instances.table.instancesList") }}</template>
+    <template #default>
+      <div class="notAnyInstanceTip">
+        <img src="../../assets/p.gif" />
+        <div class="sub-title">
+          <div class="sub-title-title">{{ $t("instances.selectRemoteTitle") }}</div>
+          <div class="sub-title-info">
+            {{ $t("instances.selectRemoteInfo") }}
           </div>
         </div>
+      </div>
+    </template>
+  </Panel>
 
-        <!-- Display when the first page has no data -->
-        <div v-show="notAnyInstance && page === 1">
-          <div class="notAnyInstanceTip">
-            <img src="../../assets/notAnyInstance.gif">
-            <div class="sub-title">
-              <div class="sub-title-title">{{ $t("instances.notAnyInstanceTitle") }}</div>
-              <div class="sub-title-info">
-                {{ $t("instances.notAnyInstanceInfo") }}
-              </div>
-            </div>
+  <!-- Display when the first page has no data -->
+  <Panel v-if="notAnyInstance && page === 1">
+    <template #title>{{ $t("instances.table.instancesList") }}</template>
+    <template #default>
+      <div class="notAnyInstanceTip">
+        <img src="../../assets/notAnyInstance.gif" />
+        <div class="sub-title">
+          <div class="sub-title-title">{{ $t("instances.notAnyInstanceTitle") }}</div>
+          <div class="sub-title-info">
+            {{ $t("instances.notAnyInstanceInfo") }}
           </div>
         </div>
       </div>
@@ -171,7 +177,7 @@
   </Panel>
 
   <!-- Card display style -->
-  <el-row :gutter="20" class="row-mb" v-show="!showTableList">
+  <el-row :gutter="20" class="row-mb" v-if="!showTableList && !notAnyInstance">
     <el-col :md="6" :offset="0" v-for="(item, index) in instances" :key="index">
       <Panel
         :class="{
@@ -272,7 +278,7 @@
   </el-row>
 
   <!-- Table display style -->
-  <el-row :gutter="20" class="row-mb" v-show="showTableList">
+  <el-row :gutter="20" class="row-mb" v-if="showTableList && !notAnyInstance">
     <el-col :span="24" :offset="0">
       <Panel>
         <template #title>{{ $t("instances.table.instancesList") }}</template>
@@ -510,9 +516,10 @@ export default {
           method: "GET",
           url: API_SERVICE_INSTANCES,
           params: {
-            remote_uuid: this.currentRemoteUuid,
+            daemonId: this.currentRemoteUuid,
             page: this.page,
-            page_size: 20,
+            status: "",
+            page_size: 10,
             instance_name: this.query.instanceName
           }
         });
@@ -613,7 +620,7 @@ export default {
         method: "DELETE",
         url: API_INSTANCE,
         params: {
-          remote_uuid: this.currentRemoteUuid
+          daemonId: this.currentRemoteUuid
         },
         data: { uuids: [uuid], deleteFile }
       });
@@ -657,7 +664,7 @@ export default {
         method: "DELETE",
         url: API_INSTANCE,
         params: {
-          remote_uuid: this.currentRemoteUuid
+          daemonId: this.currentRemoteUuid
         },
         data: { uuids, deleteFile: type === 1 ? false : true }
       });

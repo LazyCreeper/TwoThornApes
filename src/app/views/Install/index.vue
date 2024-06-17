@@ -42,17 +42,13 @@
             v-loading="isLoading"
             element-loading-background="rgba(0, 0, 0, 0.5)"
           >
-            {{
-            $t("install.start")
-            }}
+            {{ $t("install.start") }}
           </el-button>
         </div>
         <div class="panel-bottom">
-          <a
-            href="https://mcsmanager.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >Reference: https://mcsmanager.com/</a>
+          <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer"
+            >Reference: https://mcsmanager.com/</a
+          >
           <br />
           <span>Released under the Apache-2.0 License.</span>
         </div>
@@ -77,7 +73,8 @@
                 @click="createUser"
                 v-loading="isLoading"
                 element-loading-background="rgba(0, 0, 0, 0.5)"
-              >{{ $t("install.createAccount") }}</el-button>
+                >{{ $t("install.createAccount") }}</el-button
+              >
             </el-form-item>
           </el-form>
         </div>

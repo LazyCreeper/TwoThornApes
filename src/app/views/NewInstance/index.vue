@@ -415,7 +415,7 @@ export default {
           url: API_INSTANCE_UPLOAD,
           params: {
             upload_dir: ".",
-            remote_uuid: this.serviceUuid
+            daemonId: this.serviceUuid
           },
           data: this.form
         });
@@ -470,7 +470,7 @@ export default {
         const data = await request({
           method: "POST",
           url: API_INSTANCE,
-          params: { remote_uuid: this.serviceUuid },
+          params: { daemonId: this.serviceUuid },
           data: this.form
         });
         this.$message({ message: this.$t("newInstances.createSuccess"), type: "success" });

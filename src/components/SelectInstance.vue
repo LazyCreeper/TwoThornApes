@@ -133,7 +133,7 @@ export default {
           method: "GET",
           url: API_SERVICE_INSTANCES,
           params: {
-            remote_uuid: serviceUuid,
+            daemonId: serviceUuid,
             page: this.page,
             page_size: 10,
             instance_name: this.instanceNameKeyword

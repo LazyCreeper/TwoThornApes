@@ -263,7 +263,7 @@ export default {
           method: "GET",
           url: API_SCHEDULE,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           }
         });
@@ -333,7 +333,7 @@ export default {
           method: "DELETE",
           url: API_SCHEDULE,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid,
             task_name: row.name
           }
@@ -392,7 +392,7 @@ export default {
           method: "POST",
           url: API_SCHEDULE,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           },
           data: this.newTask

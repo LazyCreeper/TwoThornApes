@@ -3,17 +3,17 @@
 -->
 <template>
   <div class="quick-container-install">
-    <div v-if="!installView" v-loading="requestLoading" element-loading-background="rgba(0, 0, 0, 0.5)">
+    <div
+      v-if="!installView"
+      v-loading="requestLoading"
+      element-loading-background="rgba(0, 0, 0, 0.5)"
+    >
       <Panel>
         <template #title>{{ $t("views.quickstart_McPreset.tip") }}</template>
         <template #default>
           <p>
             {{ $t("views.quickstart_McPreset.eulaReadTitle") }}
-            <a
-              href="https://aka.ms/MinecraftEULA"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://aka.ms/MinecraftEULA" target="_blank" rel="noopener noreferrer">
               {{ $t("views.quickstart_McPreset.eulaReadTitle2") }}
             </a>
           </p>
@@ -193,7 +193,7 @@ export default {
         method: "POST",
         url: API_INSTANCE_ASYNC_TASK,
         params: {
-          remote_uuid: this.remoteUuid,
+          daemonId: this.remoteUuid,
           uuid: "-",
           task_name: "quick_install"
         },
@@ -211,7 +211,7 @@ export default {
         method: "POST",
         url: API_INSTANCE_ASYNC_QUERY,
         params: {
-          remote_uuid: this.remoteUuid,
+          daemonId: this.remoteUuid,
           uuid: "-",
           task_name: "quick_install"
         },

@@ -239,7 +239,7 @@ export default {
         methods: "POST",
         url: API_PROGRESS,
         params: {
-          remote_uuid: this.serviceUuid
+          daemonId: this.serviceUuid
         }
       });
       const list = [];
@@ -269,7 +269,7 @@ export default {
           method: "POST",
           url: API_IMAGES,
           params: {
-            remote_uuid: this.serviceUuid
+            daemonId: this.serviceUuid
           },
           data: {
             dockerFile: this.dockerFile,

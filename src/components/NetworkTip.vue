@@ -256,7 +256,7 @@ export default {
           method: "PUT",
           url: API_INSTANCE_UPDATE,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           },
           data: {

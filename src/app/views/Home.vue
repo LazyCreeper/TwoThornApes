@@ -233,7 +233,7 @@ export default {
           method: "PUT",
           url: API_INSTANCE_LOW_PERMISSION_PUT,
           params: {
-            remote_uuid: row.serviceUuid,
+            daemonId: row.serviceUuid,
             uuid: row.instanceUuid
           },
           data: row

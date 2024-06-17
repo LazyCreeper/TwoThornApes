@@ -44,16 +44,16 @@
           </div>
           <div class="task-btn" v-for="(item, index) in taskList" :key="index">
             <span>
-              <el-link
-                type="primary"
-                v-if="item.detail && item.detail.instanceConfig"
-              >{{ index + 1 }}. {{ item.detail.instanceConfig.nickname }}</el-link>
+              <el-link type="primary" v-if="item.detail && item.detail.instanceConfig"
+                >{{ index + 1 }}. {{ item.detail.instanceConfig.nickname }}</el-link
+              >
               <el-link
                 type="info"
                 v-if="item.status === 0"
                 style="margin-left: 4px"
                 @click="toInstance(selectedHostUuid, item.detail.instanceUuid)"
-              >{{ $t("views.quickstart_index.003") }}</el-link>
+                >{{ $t("views.quickstart_index.003") }}</el-link
+              >
             </span>
             <span style="margin-left: 8px">
               <span v-if="item.status === 0">
@@ -146,7 +146,7 @@ export default {
 
   async mounted() {
     this.taskDetailPageId = this.$route.query.task_id;
-    this.selectedHostUuid = this.$route.query.remote_uuid;
+    this.selectedHostUuid = this.$route.query.daemonId;
 
     if (this.taskDetailPageId) {
       this.displayType = 2;
@@ -273,7 +273,7 @@ export default {
         method: "POST",
         url: API_INSTANCE_ASYNC_QUERY,
         params: {
-          remote_uuid: this.selectedHostUuid,
+          daemonId: this.selectedHostUuid,
           uuid: "-",
           task_name: "quick_install"
         },
@@ -287,7 +287,7 @@ export default {
         path: "/quickstart",
         query: {
           task_id: item.taskId,
-          remote_uuid: this.selectedHostUuid
+          daemonId: this.selectedHostUuid
         }
       });
       setTimeout(() => {

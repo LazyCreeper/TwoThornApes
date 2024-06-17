@@ -26,19 +26,15 @@
               <LineInfo v-if="instanceInfo.info?.openFrpStatus">
                 <i class="el-icon-share"></i>
                 {{ $t("terminal.openfrp") }}:
-                <span
-                  class="color-green"
-                >{{ $t("instances.status.running") }}</span>
+                <span class="color-green">{{ $t("instances.status.running") }}</span>
               </LineInfo>
 
               <LineInfo v-if="hasDocker">
                 <i class="el-icon-tickets"></i>
                 {{ $t("terminal.limit") }}:
-                <span
-                  class="color-blue"
-                  style="cursor: pointer"
-                  @click="openDockerInfoDialog"
-                >{{ $t("general.read") }}</span>
+                <span class="color-blue" style="cursor: pointer" @click="openDockerInfoDialog">{{
+                  $t("general.read")
+                }}</span>
               </LineInfo>
 
               <LineInfo v-if="hasDocker && instanceInfo.config.docker.ports">
@@ -52,7 +48,9 @@
                   >
                     <template v-if="!item.more">
                       <span>{{ $t("CommonText.029") }}: {{ item.p1 }}</span>
-                      <span style="margin-left: 6px">{{ $t("CommonText.030") }}: {{ item.p2 }}</span>
+                      <span style="margin-left: 6px"
+                        >{{ $t("CommonText.030") }}: {{ item.p2 }}</span
+                      >
                       <span style="margin-left: 8px">
                         <el-tag type="success" size="mini">{{ item.protocol }}</el-tag>
                       </span>
@@ -64,32 +62,26 @@
               <LineInfo>
                 <i class="el-icon-finished"></i>
                 {{ $t("imageManager.status") }}:
-                <span
-                  v-if="instanceInfo.status === -1"
-                  class="color-red"
-                >{{ $t("home.maintaining") }}</span>
-                <span
-                  v-else-if="instanceInfo.status === 0"
-                  class="color-gray"
-                >{{ $t("home.outOfRunning") }}</span>
-                <span
-                  v-else-if="instanceInfo.status === 1"
-                  class="color-yellow"
-                >{{ $t("home.stopping") }}</span>
-                <span
-                  v-else-if="instanceInfo.status === 2"
-                  class="color-yellow"
-                >{{ $t("home.starting") }}</span>
-                <span
-                  v-else-if="instanceInfo.status === 3"
-                  class="color-green"
-                >{{ $t("instances.status.running") }}</span>
+                <span v-if="instanceInfo.status === -1" class="color-red">{{
+                  $t("home.maintaining")
+                }}</span>
+                <span v-else-if="instanceInfo.status === 0" class="color-gray">{{
+                  $t("home.outOfRunning")
+                }}</span>
+                <span v-else-if="instanceInfo.status === 1" class="color-yellow">{{
+                  $t("home.stopping")
+                }}</span>
+                <span v-else-if="instanceInfo.status === 2" class="color-yellow">{{
+                  $t("home.starting")
+                }}</span>
+                <span v-else-if="instanceInfo.status === 3" class="color-green">{{
+                  $t("instances.status.running")
+                }}</span>
                 <span v-else class="color-red">{{ $t("terminal.unknown") }}</span>
               </LineInfo>
               <LineInfo v-if="instanceInfo.info && instanceInfo.info.currentPlayers != -1">
                 <i class="el-icon-user"></i>
-                {{ $t("terminal.currentPlayers") }}:
-                {{ instanceInfo.info.currentPlayers }} /
+                {{ $t("terminal.currentPlayers") }}: {{ instanceInfo.info.currentPlayers }} /
                 {{ instanceInfo.info.maxPlayers }}
               </LineInfo>
               <LineInfo v-if="instanceInfo.info && instanceInfo.info.version">
@@ -114,7 +106,8 @@
                         style="width: 100%"
                         size="small"
                         plain
-                      >{{ $t("terminal.start") }}</el-button>
+                        >{{ $t("terminal.start") }}</el-button
+                      >
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -126,7 +119,8 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                      >{{ $t("terminal.stop") }}</el-button>
+                        >{{ $t("terminal.stop") }}</el-button
+                      >
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -138,7 +132,8 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                      >{{ $t("terminal.restart") }}</el-button>
+                        >{{ $t("terminal.restart") }}</el-button
+                      >
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -152,7 +147,8 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                      >{{ $t("terminal.kill") }}</el-button>
+                        >{{ $t("terminal.kill") }}</el-button
+                      >
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -169,7 +165,8 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                      >{{ $t("terminal.killTask") }}</el-button>
+                        >{{ $t("terminal.killTask") }}</el-button
+                      >
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -185,7 +182,8 @@
                         style="width: 100%"
                         size="small"
                         class="row-mt"
-                      >{{ $t("terminal.updateInstance") }}</el-button>
+                        >{{ $t("terminal.updateInstance") }}</el-button
+                      >
                     </template>
                   </el-popconfirm>
                 </el-col>
@@ -204,7 +202,8 @@
                   style="width: 100%"
                   size="small"
                   @click="toProcessConfig"
-                >{{ getInstanceConfigBtnName }}</el-button>
+                  >{{ getInstanceConfigBtnName }}</el-button
+                >
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
                 <el-button
@@ -213,7 +212,8 @@
                   style="width: 100%"
                   size="small"
                   @click="toTerminalSettingPanel"
-                >{{ $t("terminal.termSet") }}</el-button>
+                  >{{ $t("terminal.termSet") }}</el-button
+                >
               </el-col>
 
               <el-col :lg="12" :offset="0" class="row-mb">
@@ -223,7 +223,8 @@
                   style="width: 100%"
                   size="small"
                   @click="toSchedule"
-                >{{ $t("router.schedule") }}</el-button>
+                  >{{ $t("router.schedule") }}</el-button
+                >
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
                 <el-button
@@ -232,7 +233,8 @@
                   style="width: 100%"
                   size="small"
                   @click="toPingPanel"
-                >{{ $t("terminal.statusQuery") }}</el-button>
+                  >{{ $t("terminal.statusQuery") }}</el-button
+                >
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
                 <el-button
@@ -241,7 +243,8 @@
                   style="width: 100%"
                   size="small"
                   @click="toEventPanel"
-                >{{ $t("terminal.eventTask") }}</el-button>
+                  >{{ $t("terminal.eventTask") }}</el-button
+                >
               </el-col>
               <el-col :lg="24" :offset="0" class="row-mb">
                 <el-button
@@ -250,7 +253,8 @@
                   style="width: 100%"
                   size="small"
                   @click="toFileManager"
-                >{{ $t("instancesDetail.fileManager") }}</el-button>
+                  >{{ $t("instancesDetail.fileManager") }}</el-button
+                >
               </el-col>
 
               <el-col :lg="24" :offset="0" v-if="isTopPermission">
@@ -260,7 +264,8 @@
                   style="width: 100%"
                   size="small"
                   @click="toInstanceDetail"
-                >{{ $t("terminal.instanceDetail") }}</el-button>
+                  >{{ $t("terminal.instanceDetail") }}</el-button
+                >
               </el-col>
             </el-row>
           </template>
@@ -281,10 +286,9 @@
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
-                  <span
-                    class="text-overflow-ellipsis"
-                    style="font-size: 12px"
-                  >UID {{ instanceInfo.instanceUuid }}</span>
+                  <span class="text-overflow-ellipsis" style="font-size: 12px"
+                    >UID {{ instanceInfo.instanceUuid }}</span
+                  >
                 </div>
               </LineInfo>
               <LineInfo>
@@ -304,8 +308,7 @@
               </LineInfo>
               <LineInfo>
                 <i class="el-icon-document"></i>
-                {{ $t("terminal.ie") }}:
-                {{ instanceInfo.config.ie }} {{ $t("terminal.oe") }}:
+                {{ $t("terminal.ie") }}: {{ instanceInfo.config.ie }} {{ $t("terminal.oe") }}:
                 {{ instanceInfo.config.oe }}
               </LineInfo>
             </div>
@@ -363,14 +366,21 @@
             </div>-->
             <!-- Action button in full screen mode -->
             <div v-show="isFull" class="full-terminal-button-wrapper">
-              <div class="full-terminal-button" @click="openInstance">{{ $t("instances.start") }}</div>
-              <div class="full-terminal-button" @click="stopInstance">{{ $t("instances.stop") }}</div>
-              <div
-                class="full-terminal-button"
-                @click="restartInstance"
-              >{{ $t("terminal.restart2") }}</div>
-              <div class="full-terminal-button" @click="killInstance">{{ $t("instances.kill") }}</div>
-              <div class="full-terminal-button" @click="backTerminal">{{ $t("terminal.exit") }}</div>
+              <div class="full-terminal-button" @click="openInstance">
+                {{ $t("instances.start") }}
+              </div>
+              <div class="full-terminal-button" @click="stopInstance">
+                {{ $t("instances.stop") }}
+              </div>
+              <div class="full-terminal-button" @click="restartInstance">
+                {{ $t("terminal.restart2") }}
+              </div>
+              <div class="full-terminal-button" @click="killInstance">
+                {{ $t("instances.kill") }}
+              </div>
+              <div class="full-terminal-button" @click="backTerminal">
+                {{ $t("terminal.exit") }}
+              </div>
             </div>
             <!-- Fullscreen and non-fullscreen terminal windows -->
             <div :class="{ 'terminal-wrapper': true, 'full-terminal-wrapper': isFull }">
@@ -400,36 +410,38 @@
                       size="small"
                       style="width: 100px"
                       @click="openInstance"
-                    >{{ $t("instances.start") }}</el-button>
+                      >{{ $t("instances.start") }}</el-button
+                    >
                     <el-button
                       icon="el-icon-video-pause"
                       size="small"
                       style="width: 100px"
                       @click="killInstance"
-                    >{{ $t("instances.kill") }}</el-button>
+                      >{{ $t("instances.kill") }}</el-button
+                    >
                     <el-button
                       :disabled="!available"
                       icon="el-icon-monitor"
                       style="width: 100px"
                       size="small"
                       @click="toTerminalSettingPanel"
-                    >{{ $t("terminal.termSet") }}</el-button>
+                      >{{ $t("terminal.termSet") }}</el-button
+                    >
                     <el-button
                       :disabled="!available"
                       icon="el-icon-setting"
                       style="width: 100px"
                       size="small"
                       @click="toInstanceDetail"
-                    >{{ $t("terminal.paramsSet") }}</el-button>
+                      >{{ $t("terminal.paramsSet") }}</el-button
+                    >
                   </div>
                 </el-col>
               </el-row>
 
-              <div
-                class="sub-title-info row-mt"
-                style
-                v-if="isGlobalTerminal"
-              >{{ $t("terminal.globalTerminalTip") }}</div>
+              <div class="sub-title-info row-mt" style v-if="isGlobalTerminal">
+                {{ $t("terminal.globalTerminalTip") }}
+              </div>
             </div>
           </template>
         </Panel>
@@ -452,7 +464,9 @@
                   type="info"
                   class="text-overflow-ellipsis cmdhistory"
                   style="max-width: 23%; cursor: pointer; font-size: 13px"
-                >{{ item }}</div>
+                >
+                  {{ item }}
+                </div>
               </ItemGroup>
             </div>
             <div v-else>
@@ -491,14 +505,10 @@
         <div class="row-mt">
           <ItemGroup>
             <el-button type="success" size="small" @click="instanceConfigUpdate">
-              {{
-              $t("users.updateData")
-              }}
+              {{ $t("users.updateData") }}
             </el-button>
             <el-button @click="pingConfigForm.is = !pingConfigForm.is" size="small">
-              {{
-              $t("general.cancel")
-              }}
+              {{ $t("general.cancel") }}
             </el-button>
           </ItemGroup>
         </div>
@@ -531,14 +541,10 @@
         <div class="row-mt">
           <ItemGroup>
             <el-button type="success" size="small" @click="instanceConfigUpdate">
-              {{
-              $t("general.save")
-              }}
+              {{ $t("general.save") }}
             </el-button>
             <el-button size="small" @click="eventConfigPanel.visible = false">
-              {{
-              $t("general.cancel")
-              }}
+              {{ $t("general.cancel") }}
             </el-button>
           </ItemGroup>
         </div>
@@ -696,9 +702,10 @@ export default {
           url: API_INSTANCE,
           params: {
             uuid: this.instanceUuid,
-            remote_uuid: this.serviceUuid
+            daemonId: this.serviceUuid
           }
         });
+
         this.instanceInfo = result;
       } catch (err) {
         console.log("Error", err);
@@ -720,7 +727,7 @@ export default {
           method: "POST",
           url: API_INSTANCE_REMOTE_SERVICE_STREAM,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           }
         });
@@ -845,7 +852,7 @@ export default {
           method: "GET",
           url: API_INSTANCE_OPEN,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           }
         });
@@ -866,7 +873,7 @@ export default {
           method: "GET",
           url: API_INSTANCE_STOP,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           }
         });
@@ -886,7 +893,7 @@ export default {
           method: "GET",
           url: API_INSTANCE_ASYNC_STOP,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           }
         });
@@ -906,7 +913,7 @@ export default {
           method: "POST",
           url: API_INSTANCE_ASYNC_TASK,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid,
             task_name: "update"
           },
@@ -931,7 +938,7 @@ export default {
           method: "GET",
           url: API_INSTANCE_KILL,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           }
         });
@@ -952,7 +959,7 @@ export default {
           method: "GET",
           url: API_INSTANCE_RESTART,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           }
         });
@@ -1059,7 +1066,7 @@ export default {
           url: API_INSTANCE_OUTPUT,
           method: "GET",
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           }
         });
@@ -1081,7 +1088,7 @@ export default {
           method: "PUT",
           url: API_INSTANCE_UPDATE,
           params: {
-            remote_uuid: this.serviceUuid,
+            daemonId: this.serviceUuid,
             uuid: this.instanceUuid
           },
           data: {

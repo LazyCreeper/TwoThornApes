@@ -152,7 +152,7 @@ export default {
         method: "PUT",
         url: API_FILE_CHMOD,
         params: {
-          remote_uuid: this.serviceUuid,
+          daemonId: this.serviceUuid,
           uuid: this.instanceUuid
         },
         data: {
