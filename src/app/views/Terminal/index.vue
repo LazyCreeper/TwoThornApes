@@ -111,6 +111,20 @@
                     </template>
                   </el-popconfirm>
                 </el-col>
+                <el-col :lg="24" v-show="instanceInfo.status === 0">
+                  <el-popconfirm :title="$t('terminal.confirmOperate')" @confirm="resetInstance">
+                    <template #reference>
+                      <el-button
+                        icon="el-icon-video-play"
+                        type="warning"
+                        style="width: 100%"
+                        size="small"
+                        plain
+                        >{{ $t("terminal.reinstall") }}</el-button
+                      >
+                    </template>
+                  </el-popconfirm>
+                </el-col>
                 <el-col :lg="24" v-show="instanceInfo.status === 3">
                   <el-popconfirm :title="$t('terminal.confirmOperate')" @confirm="stopInstance">
                     <template #reference>
@@ -954,6 +968,26 @@ export default {
     // Restart the instance (Ajax)
     async restartInstance() {
       // this. busy = true;
+      try {
+        await request({
+          method: "GET",
+          url: API_INSTANCE_RESTART,
+          params: {
+            daemonId: this.serviceUuid,
+            uuid: this.instanceUuid
+          }
+        });
+      } catch (error) {
+        this.$message({
+          message: error.toString(),
+          type: "error"
+        });
+      } finally {
+        setTimeout(() => (this.busy = false), 2000);
+      }
+    },
+    // 重设实例模板
+    async resetInstance() {
       try {
         await request({
           method: "GET",

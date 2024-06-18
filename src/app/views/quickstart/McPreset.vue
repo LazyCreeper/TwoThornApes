@@ -3,11 +3,7 @@
 -->
 <template>
   <div class="quick-container-install">
-    <div
-      v-if="!installView"
-      v-loading="requestLoading"
-      element-loading-background="rgba(0, 0, 0, 0.5)"
-    >
+    <div v-if="!installView" element-loading-background="rgba(0, 0, 0, 0.5)">
       <Panel>
         <template #title>{{ $t("views.quickstart_McPreset.tip") }}</template>
         <template #default>
@@ -20,39 +16,8 @@
           <p>{{ $t("views.quickstart_McPreset.007") }}</p>
         </template>
       </Panel>
-      <el-row :gutter="20" v-if="tableData && tableData.length > 0">
-        <el-col :md="6" :offset="0" v-for="(item, index) in tableData" :key="index">
-          <Panel>
-            <template #title>
-              {{ item.mc }}
-            </template>
-            <template #default>
-              <div class="package-info-wrapper">
-                <p>{{ item.info }}</p>
-                <p class="color-gray">{{ $t("views.quickstart_McPreset.004") }}: {{ item.java }}</p>
-                <p class="color-gray">
-                  {{ $t("views.quickstart_McPreset.005") }}:
-                  {{ $t("views.quickstart_McPreset.006", [item.size]) }}
-                </p>
-                <p class="color-gray">
-                  {{ item.remark }}
-                </p>
-              </div>
-              <div class="package-op-wrapper">
-                <el-link
-                  type="warning"
-                  size="medium"
-                  href="javascript:void(0)"
-                  @click="handleSelectTemplate(index, item)"
-                >
-                  {{ $t("router.install") }}
-                </el-link>
-              </div>
-            </template>
-          </Panel>
-        </el-col>
-      </el-row>
-      <Panel v-else-if="!requestLoading" class="flex flex-align-items-center flex-space-center">
+      <AppPackages @handleSelectTemplate="handleSelectTemplate" />
+      <!-- <Panel v-else-if="!requestLoading" class="flex flex-align-items-center flex-space-center">
         <template #default>
           <div style="text-align: center">
             <i class="el-icon-warning-outline" style="font-size: 100px"></i>
@@ -66,7 +31,7 @@
             </div>
           </div>
         </template>
-      </Panel>
+      </Panel> -->
     </div>
 
     <Panel style="width: 600px" v-if="installView && !isInstalled">
@@ -106,16 +71,14 @@
 
 <script>
 import Panel from "@/components/Panel";
-import {
-  API_GET_QUICK_INSTALL_LIST_ADDR,
-  API_INSTANCE_ASYNC_TASK,
-  API_INSTANCE_ASYNC_QUERY
-} from "../../service/common";
+import { API_INSTANCE_ASYNC_TASK, API_INSTANCE_ASYNC_QUERY } from "../../service/common";
 import { request } from "../../service/protocol";
+import AppPackages from "./AppPackages.vue";
 export default {
   // eslint-disable-next-line vue/no-unused-components
   components: {
-    Panel
+    Panel,
+    AppPackages
   },
   props: {
     remoteUuid: {
@@ -141,32 +104,15 @@ export default {
           nickname: ""
         },
         instanceStatus: 0,
-        instanceUuid: "19a0d57f6ebd4585951ff529f3e687f6",
+        instanceUuid: "",
         status: 1,
-        taskId:
-          "QuickInstallTask-19a0d57f6ebd4585951ff529f3e687f6-9f7b0318-9c55-450b-9388-7bab89e30389"
+        taskId: ""
       }
     };
   },
   methods: {
     async init() {
-      this.requestLoading = true;
-      try {
-        const data = await request({
-          method: "GET",
-          url: API_GET_QUICK_INSTALL_LIST_ADDR
-        });
-        this.tableData = data || [];
-      } catch (error) {
-        this.$message({
-          type: "error",
-          message: error.message
-        });
-        this.tableData = null;
-      } finally {
-        this.requestLoading = false;
-      }
-      if (this.taskId && this.tableData) {
+      if (this.taskId) {
         this.percentage = 50;
         this.startDownloadTask();
       }
@@ -182,7 +128,7 @@ export default {
       }, 3000);
     },
     // Start install
-    async handleSelectTemplate(index, row) {
+    async handleSelectTemplate(item) {
       const { value: instanceName } = await this.$prompt(
         window.$t("views.quickstart_McPreset.016")
       );
@@ -200,7 +146,7 @@ export default {
         data: {
           time: new Date().getTime(),
           newInstanceName: instanceName,
-          targetLink: row.targetLink
+          targetLink: item.targetLink
         }
       });
       this.requestLoading = false;
@@ -250,45 +196,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.package-info-wrapper {
-  height: 140px;
-  overflow: hidden;
-  p {
-    font-size: 13px;
-    margin: 0px 0px 6px 0px;
-  }
-}
-.package-op-wrapper {
-  text-align: center;
-  padding-bottom: 8px;
-}
-.panel-action {
-  transition: all 0.4s;
-}
-
-.panel-action:hover {
-  transform: scale(1.024);
-  border: 1px solid rgb(27, 121, 203);
-}
-
-.display-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.quick-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-}
-
-.tip-title {
-  font-size: 18px;
-}
-</style>
