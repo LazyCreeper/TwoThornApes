@@ -7,14 +7,14 @@
           <div>
             <ItemGroup>
               <el-button type="success" size="small" @click="updateSettings">
-                {{
-                $t("settings.updateSet")
-                }}
+                {{ $t("settings.updateSet") }}
               </el-button>
               <el-button size="small" @click="refresh">{{ $t("general.refresh") }}</el-button>
             </ItemGroup>
           </div>
-          <span class="color-gray hidden-md-and-down">{{ $t("settings.updateSetInfo") }}&nbsp;&nbsp;</span>
+          <span class="color-gray hidden-md-and-down"
+            >{{ $t("settings.updateSetInfo") }}&nbsp;&nbsp;</span
+          >
         </div>
       </template>
     </Panel>
@@ -46,7 +46,10 @@
                   <p class="sub-title-title">{{ $t("settings.accessPort") }}</p>
                   <p class="sub-title-info">{{ $t("settings.accessPortInfo") }}</p>
                 </div>
-                <el-input :placeholder="$t('settings.inputNum')" v-model="settings.httpPort"></el-input>
+                <el-input
+                  :placeholder="$t('settings.inputNum')"
+                  v-model="settings.httpPort"
+                ></el-input>
               </div>
 
               <div class="config-item">
@@ -54,7 +57,10 @@
                   <p class="sub-title-title">{{ $t("settings.bindIP") }}</p>
                   <p class="sub-title-info">{{ $t("settings.bindIPInfo") }}</p>
                 </div>
-                <el-input :placeholder="$t('settings.inputIP')" v-model="settings.httpIp"></el-input>
+                <el-input
+                  :placeholder="$t('settings.inputIP')"
+                  v-model="settings.httpIp"
+                ></el-input>
               </div>
 
               <div class="config-item">
@@ -62,7 +68,10 @@
                   <p class="sub-title-title">{{ $t("settings.loginPage") }}</p>
                   <p class="sub-title-info">{{ $t("settings.loginPageInfo") }}</p>
                 </div>
-                <el-input :placeholder="$t('settings.inputCopy')" v-model="settings.loginInfo"></el-input>
+                <el-input
+                  :placeholder="$t('settings.inputCopy')"
+                  v-model="settings.loginInfo"
+                ></el-input>
               </div>
 
               <div class="config-item" v-iszh>
@@ -70,7 +79,7 @@
                   <p class="sub-title-title">{{ $t("views.Settings.001") }}</p>
                   <p class="sub-title-info">{{ $t("views.Settings.002") }}</p>
                 </div>
-                <el-input placeholder="https://..." v-model="settings.quickInstallAddr"></el-input>
+                <el-input placeholder="https://..." v-model="settings.presetPackAddr"></el-input>
               </div>
             </el-col>
 
@@ -104,12 +113,38 @@
                   <el-option :label="$t('general.forbid')" :value="false"></el-option>
                 </el-select>
               </div>
+              <div class="config-item" style="margin-top: 0px">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.allowUsePreset") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.allowUsePresetInfo") }}</p>
+                </div>
+                <el-select
+                  v-model="settings.allowUsePreset"
+                  :placeholder="$t('general.pleaseSelect')"
+                >
+                  <el-option :label="$t('general.allow')" :value="true"></el-option>
+                  <el-option :label="$t('general.forbid')" :value="false"></el-option>
+                </el-select>
+              </div>
               <div class="config-item">
                 <div class="sub-title">
                   <p class="sub-title-title">{{ $t("settings.crossAPI") }}</p>
                   <p class="sub-title-info">{{ $t("settings.crossAPIInfo") }}</p>
                 </div>
                 <el-select v-model="settings.crossDomain" :placeholder="$t('general.pleaseSelect')">
+                  <el-option :label="$t('general.enable')" :value="true"></el-option>
+                  <el-option :label="$t('general.forbid')" :value="false"></el-option>
+                </el-select>
+              </div>
+              <div class="config-item">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.reverseProxyMode") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.reverseProxyModeInfo") }}</p>
+                </div>
+                <el-select
+                  v-model="settings.reverseProxyMode"
+                  :placeholder="$t('general.pleaseSelect')"
+                >
                   <el-option :label="$t('general.enable')" :value="true"></el-option>
                   <el-option :label="$t('general.forbid')" :value="false"></el-option>
                 </el-select>
@@ -161,11 +196,9 @@
                   <p class="sub-title-title">{{ $t("settings.sponsorList") }}</p>
                   <p class="sub-title-info">
                     {{ $t("settings.sponsorListInfo") }}
-                    <a
-                      href="https://mcsmanager.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >MCSManager.com</a>.
+                    <a href="https://mcsmanager.com/" target="_blank" rel="noopener noreferrer"
+                      >MCSManager.com</a
+                    >.
                   </p>
                   <p class="sub-title-info"></p>
                 </div>
@@ -198,31 +231,26 @@
                     {{ $t("settings.aboutTheme.info") }}
                     <br />
                     {{ $t("settings.aboutTheme.info2") }}
-                    <a
-                      href="mailto:lazy_creeper@qq.com"
-                    >lazy_creeper@qq.com</a>
+                    <a href="mailto:lazy_creeper@qq.com">lazy_creeper@qq.com</a>
                   </p>
                   <br />
                   <p class="sub-title-title">
                     {{ $t("settings.aboutTheme.blog") }}
-                    <a
-                      href="https://blog.imlazy.ink:233/index.php/archives/253/"
-                      target="_blank"
-                    >{{ $t("settings.aboutTheme.goLink") }}</a>
+                    <a href="https://blog.imlazy.ink:233/index.php/archives/253/" target="_blank">{{
+                      $t("settings.aboutTheme.goLink")
+                    }}</a>
                   </p>
                   <p class="sub-title-title">
                     {{ $t("settings.aboutTheme.qrCode") }}
-                    <a
-                      href="https://cdn.imlazy.ink:233/img/20220924.jpg"
-                      target="_blank"
-                    >{{ $t("settings.aboutTheme.goLink") }}</a>
+                    <a href="https://cdn.imlazy.ink:233/img/20220924.jpg" target="_blank">{{
+                      $t("settings.aboutTheme.goLink")
+                    }}</a>
                   </p>
                   <p class="sub-title-title">
                     {{ $t("settings.aboutTheme.ver") }} {{ themeInfo.version }}&nbsp;&nbsp;
-                    <a
-                      href="javascript:;"
-                      @click="checkThemeUpdate"
-                    >{{ $t("settings.aboutTheme.checkVer") }}</a>
+                    <a href="javascript:;" @click="checkThemeUpdate">{{
+                      $t("settings.aboutTheme.checkVer")
+                    }}</a>
                     <lazy id="lazy"></lazy>
                   </p>
                 </div>
@@ -237,20 +265,20 @@
     <Dialog v-model="themeInfo.dialog">
       <template #title>{{ themeInfo.title }}</template>
       <template #default>
-        <div v-if="!themeInfo.haveNew" class="themeInfoDialog" style="text-align: center;">
+        <div v-if="!themeInfo.haveNew" class="themeInfoDialog" style="text-align: center">
           <h1>你的MCSM主题为最新版本！</h1>
           <div class="row-mt">
             <ItemGroup>
-              <el-button size="small" @click="themeInfo.dialog = false">{{ $t("general.cancel") }}</el-button>
+              <el-button size="small" @click="themeInfo.dialog = false">{{
+                $t("general.cancel")
+              }}</el-button>
             </ItemGroup>
           </div>
         </div>
         <div v-else class="themeInfoDialog">
           <h1>
             当前版本：{{ themeInfo.version }}&nbsp;&nbsp;|&nbsp;&nbsp;最新版本：
-            <span
-              class="newVersion"
-            >{{ themeInfo.haveNew }}</span>
+            <span class="newVersion">{{ themeInfo.haveNew }}</span>
           </h1>
           <h1>更新内容：</h1>
           <wow v-html="themeInfo.content"></wow>
@@ -260,7 +288,9 @@
           <b>你可以前往主题发布页获取更新</b>
           <div class="row-mt">
             <ItemGroup>
-              <el-button size="small" @click="themeInfo.dialog = false">{{ $t("general.cancel") }}</el-button>
+              <el-button size="small" @click="themeInfo.dialog = false">{{
+                $t("general.cancel")
+              }}</el-button>
             </ItemGroup>
           </div>
         </div>

@@ -436,6 +436,7 @@
     "kill": "强制终止实例",
     "killTask": "终止正在运行的任务",
     "updateInstance": "更新/安装实例",
+    "reinstall": "重装实例",
     "functionGroup": "实例功能组",
     "processConfig": "特定配置",
     "termSet": "终端设置",
@@ -902,6 +903,8 @@
     "limitAndSecurity": "限制与安全",
     "canFileManager": "准许普通用户使用文件管理功能",
     "canFileManagerInfo": "文件管理是一个较为消耗资源且不易控制的功能，如果您的普通用户没有文件管理的任何需求，可以禁止用户使用文件管理。",
+    "allowUsePreset": "准许普通用户使用实例模板功能",
+    "allowUsePresetInfo": "该功能允许普通用户使用“快速部署”里面的预设包来进行重装实例。",
     "crossAPI": "跨域请求 API 接口",
     "crossAPIInfo": "HTTP 响应将会加入 access-control-allow-origin: *，可能会降低安全性，但是会提高开发扩展性。",
     "loginCheckIp": "同 IP 登录次数限制",
@@ -939,7 +942,9 @@
       "ver": "当前主题版本：",
       "checkVer": "检查更新"
     },
-    "aboutTitle2": "https://github.com/MCSManager/MCSManager/blob/master/LICENSE"
+    "aboutTitle2": "https://github.com/MCSManager/MCSManager/blob/master/LICENSE",
+    "reverseProxyMode": "反向代理模式",
+    "reverseProxyModeInfo": "如果您正在使用反向代理访问面板，请开启此选项。面板将会从请求头的“X-Real-IP”来获取真实IP。"
   },
   "home": {
     "totalInstance": "实例总计",

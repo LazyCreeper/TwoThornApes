@@ -436,6 +436,7 @@
     "kill": "Force Quit",
     "killTask": "Terminate Running Task(s)",
     "updateInstance": "Update/Install Instance",
+    "reinstall": "Reset Instance",
     "functionGroup": "Function Group",
     "processConfig": "Process Settings",
     "termSet": "Terminal",
@@ -902,6 +903,8 @@
     "limitAndSecurity": "Restrictions and Security",
     "canFileManager": "Allow normal users to use file management",
     "canFileManagerInfo": "File management is a complicate and resource-consuming (like file compression) function. You can disable this function for normal users if they do don't have to modify any files.",
+    "allowUsePreset": "Allow Instance Reset",
+    "allowUsePresetInfo": "This feature allows general users to use the default packages in \"Quick Deployment\" to reinstall instances.",
     "crossAPI": "CRSF API",
     "crossAPIInfo": "'access-control-allow-origin: *' will be joined to the HTTP respond. It might lower the security but provides flexibility for additional development.",
     "loginCheckIp": "Login retries for same IP",
@@ -939,7 +942,9 @@
       "ver": "Current Theme Version: ",
       "checkVer": "Check for Update"
     },
-    "aboutTitle2": "https://github.com/MCSManager/MCSManager/blob/master/LICENSE"
+    "aboutTitle2": "https://github.com/MCSManager/MCSManager/blob/master/LICENSE",
+    "reverseProxyModeInfo": "If you are using a reverse proxy to access the panel, turn this option on. \nThe panel will obtain the real IP from the \\\"X-Real-IP\\\" in the request header.",
+    "reverseProxyMode": "Reverse Proxy Mode"
   },
   "home": {
     "totalInstance": "Total Number of Instances",
