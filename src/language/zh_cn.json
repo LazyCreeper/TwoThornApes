@@ -167,6 +167,7 @@
     "Q&A": "常见问题"
   },
   "instances": {
+    "001": "实例",
     "instancesList": "应用实例列表",
     "selectDaemon": "请选择远程节点地址",
     "searchInstanceName": "使用名字搜索",
@@ -791,7 +792,8 @@
     "toTerminal": "控制台",
     "toDocker": "镜像管理",
     "cpuChartTip": "CPU（10min）",
-    "memChartTip": "内存（10min）"
+    "memChartTip": "内存（10min）",
+    "started": "启动次数"
   },
   "container": {
     "remoteList": "请选择一个节点",
@@ -1226,6 +1228,7 @@
     "info": "可以在此管理所有基于 Docker 的容器和镜像情况，创建镜像后可以为实例分配指定镜像，确保运行环境隔离和宿主机的安全。"
   },
   "service": {
+    "001": "节点",
     "instance_type": {
       "001": "群组配置文件",
       "002": "服务端配置文件",

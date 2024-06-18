@@ -79,6 +79,11 @@
                 }}</span>
                 <span v-else class="color-red">{{ $t("terminal.unknown") }}</span>
               </LineInfo>
+              <LineInfo>
+                <i class="el-icon-baseball"></i>
+                {{ $t("services.started") }}:
+                {{ instanceInfo.started }}
+              </LineInfo>
               <LineInfo v-if="instanceInfo.info && instanceInfo.info.currentPlayers != -1">
                 <i class="el-icon-user"></i>
                 {{ $t("terminal.currentPlayers") }}: {{ instanceInfo.info.currentPlayers }} /
@@ -292,31 +297,34 @@
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
-                  <span style="font-size: 12px">GID {{ serviceUuid }}</span>
+                  <span style="font-size: 12px">{{ $t("instances.001") }}ID {{ serviceUuid }}</span>
                 </div>
               </LineInfo>
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
                   <span class="text-overflow-ellipsis" style="font-size: 12px"
-                    >UID {{ instanceInfo.instanceUuid }}</span
+                    >{{ $t("service.001") }}ID {{ instanceInfo.instanceUuid }}</span
                   >
                 </div>
               </LineInfo>
               <LineInfo>
                 <i class="el-icon-date"></i>
                 {{ $t("instances.endTime") }}:
-                {{ instanceInfo.config.endTime || $t("instancesDetail.unlimited") }}
+                {{
+                  new Date(instanceInfo.config.endTime).toLocaleString() ||
+                  $t("instancesDetail.unlimited")
+                }}
               </LineInfo>
               <LineInfo>
                 <i class="el-icon-date"></i>
                 {{ $t("instancesDetail.createDateTime") }}:
-                {{ instanceInfo.config.createDatetime }}
+                {{ new Date(instanceInfo.config.createDatetime).toLocaleString() }}
               </LineInfo>
               <LineInfo>
                 <i class="el-icon-date"></i>
                 {{ $t("terminal.lastDatetime") }}:
-                {{ instanceInfo.config.lastDatetime }}
+                {{ new Date(instanceInfo.config.lastDatetime).toLocaleString() }}
               </LineInfo>
               <LineInfo>
                 <i class="el-icon-document"></i>

@@ -791,7 +791,8 @@
     "toFileManager": "Files",
     "toTerminal": "Terminal",
     "cpuChartTip": "CPU (10 min)",
-    "memChartTip": "Memory (10 min)"
+    "memChartTip": "Memory (10 min)",
+    "started": "Number of Starts"
   },
   "container": {
     "remoteList": "Select daemon",
