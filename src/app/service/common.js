@@ -1,6 +1,9 @@
 // Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 
-export const API_URL = (window.location.pathname.length > 1) ? "//" + window.location.host + window.location.pathname : "//" + window.location.host;
+export const API_URL =
+  window.location.pathname.length > 1
+    ? "//" + window.location.host + window.location.pathname
+    : "//" + window.location.host;
 
 export const API_SERVICE_INSTANCES = `${API_URL}/api/service/remote_service_instances`;
 export const API_SERVICE_LIST = `${API_URL}/api/service/remote_services_list`;
@@ -50,6 +53,7 @@ export const API_INSTANCE_OUTPUT = `${API_URL}/api/protected_instance/outputlog`
 export const API_INSTANCE_ASYNC_TASK = `${API_URL}/api/protected_instance/asynchronous`;
 export const API_INSTANCE_ASYNC_QUERY = `${API_URL}/api/protected_instance/query_asynchronous`;
 export const API_INSTANCE_ASYNC_STOP = `${API_URL}/api/protected_instance/stop_asynchronous`;
+export const API_INSTANCE_REINSTALL = `${API_URL}/api/protected_instance/install_instance`;
 
 export const API_PROCESS_CONFIG_LIST = `${API_URL}/api/protected_instance/process_config/list`;
 export const API_PROCESS_CONFIG_FILE = `${API_URL}/api/protected_instance/process_config/file`;

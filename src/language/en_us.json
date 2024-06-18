@@ -998,7 +998,9 @@
     },
     "quickItems[2]": {
       "title": "Manage my command-line program(s)"
-    }
+    },
+    "selectTemplateWarn": "After selecting this template, all data of this instance will be deleted. Please compress and download the file backup in file management first. Do you want to continue?",
+    "selectTemplate": "Change Instance Template"
   },
   "install": {
     "welcome": "Welcome to the MCSManager",

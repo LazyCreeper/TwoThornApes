@@ -111,14 +111,15 @@
                     </template>
                   </el-popconfirm>
                 </el-col>
-                <el-col :lg="24" v-show="instanceInfo.status === 0">
+                <el-col v-if="isAllowUsePreset" :lg="24" v-show="instanceInfo.status === 0">
                   <el-popconfirm :title="$t('terminal.confirmOperate')" @confirm="resetInstance">
                     <template #reference>
                       <el-button
-                        icon="el-icon-video-play"
+                        icon="el-icon-box"
                         type="warning"
                         style="width: 100%"
                         size="small"
+                        class="row-mt"
                         plain
                         >{{ $t("terminal.reinstall") }}</el-button
                       >
@@ -167,10 +168,7 @@
                   </el-popconfirm>
                 </el-col>
                 <el-col :lg="24" v-show="instanceInfo.status === -1">
-                  <el-popconfirm
-                    :title="$t('terminal.confirmOperate')"
-                    @confirm="stopAsynchronousTask"
-                  >
+                  <el-popconfirm :title="$t('terminal.confirmOperate')" @confirm="killInstance">
                     <template #reference>
                       <el-button
                         icon="el-icon-switch-button"
@@ -260,7 +258,7 @@
                   >{{ $t("terminal.eventTask") }}</el-button
                 >
               </el-col>
-              <el-col :lg="24" :offset="0" class="row-mb">
+              <el-col v-if="isAllowFileManager" :lg="24" :offset="0" class="row-mb">
                 <el-button
                   :disabled="!available"
                   icon="el-icon-folder-opened"
@@ -586,6 +584,8 @@
       ref="dockerInfoDialog"
       :dockerInfo="instanceInfo.config.docker"
     ></DockerInfo>
+
+    <Reinstall ref="reinstallDialog" :daemonId="serviceUuid" :instanceId="instanceUuid" />
   </div>
 </template>
 
@@ -618,6 +618,7 @@ import { getPlayersOption } from "../../service/chart_option";
 import TermSetting from "./TermSetting";
 import DockerInfo from "./DockerInfo";
 import NetworkTip from "@/components/NetworkTip";
+import Reinstall from "./Reinstall.vue";
 import { INSTANCE_TYPE_DEF_CONFIG } from "@/app/service/instance_type";
 export default {
   components: {
@@ -626,7 +627,8 @@ export default {
     Dialog,
     TermSetting,
     NetworkTip,
-    DockerInfo
+    DockerInfo,
+    Reinstall
   },
   data: function () {
     return {
@@ -702,6 +704,18 @@ export default {
     getInstanceConfigBtnName() {
       if (!this.isShowInstanceConfig) return null;
       return INSTANCE_TYPE_DEF_CONFIG[this.instanceInfo?.config?.type]?.getConfigEntryName();
+    },
+    isAllowFileManager() {
+      return (
+        this.$store.state.userInfo.permission >= 10 ||
+        this.$store.state.panelStatus.settings.canFileManager
+      );
+    },
+    isAllowUsePreset() {
+      return (
+        this.$store.state.userInfo.permission >= 10 ||
+        this.$store.state.panelStatus.settings.allowUsePreset
+      );
     }
   },
   methods: {
@@ -988,23 +1002,7 @@ export default {
     },
     // 重设实例模板
     async resetInstance() {
-      try {
-        await request({
-          method: "GET",
-          url: API_INSTANCE_RESTART,
-          params: {
-            daemonId: this.serviceUuid,
-            uuid: this.instanceUuid
-          }
-        });
-      } catch (error) {
-        this.$message({
-          message: error.toString(),
-          type: "error"
-        });
-      } finally {
-        setTimeout(() => (this.busy = false), 2000);
-      }
+      this.$refs.reinstallDialog.open();
     },
     sendResize(w, h) {
       if (this.instanceInfo.config.processType !== "docker") return;

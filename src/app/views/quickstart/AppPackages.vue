@@ -36,7 +36,7 @@
               style="width: 100%"
               type="success"
               size="medium"
-              href="javascript:void(0)"
+              icon="el-icon-download"
               @click="$emit('handleSelectTemplate', item)"
             >
               {{ $t("router.install") }}
