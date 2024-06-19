@@ -22,7 +22,13 @@
     ></div>
 
     <div id="login-panel-wrapper" :class="{ 'login-panel-wrapper-out': closeWindow }">
-      <Panel id="login-panel" body-style="padding:44px;" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+      <Panel
+        v-if="step === 1"
+        id="login-panel"
+        body-style="padding:44px;"
+        v-loading="loading"
+        element-loading-background="rgba(0, 0, 0, 0.5)"
+      >
         <template #default>
           <form action="/login" method="post">
             <div style="font-size: 24px; font-weight: 600">{{ $t("login.title") }}</div>
@@ -90,8 +96,73 @@
                   <div>
                     <span class="color-gray"
                       >Powered by
-                      <a target="black" href="https://github.com/MCSManager">MCSManager</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                      Theme by <a href="https://www.lazy.ink" target="_blank">Lazy</a></span
+                      <a target="black" href="https://github.com/MCSManager">MCSManager</a
+                      >&nbsp;&nbsp;|&nbsp;&nbsp; Theme by
+                      <a href="https://www.lazy.ink" target="_blank">Lazy</a></span
+                    >
+                  </div>
+                </div>
+              </div>
+            </form>
+          </form>
+        </template>
+      </Panel>
+      <Panel
+        v-if="step === 2"
+        id="login-panel"
+        body-style="padding:44px;"
+        v-loading="loading"
+        element-loading-background="rgba(0, 0, 0, 0.5)"
+      >
+        <template #default>
+          <form action="/login" method="post">
+            <div style="font-size: 24px; font-weight: 600">{{ $t("login.title") }}</div>
+            <p>{{ $t("login.titleInfo") }}</p>
+            <form action="/" method="post">
+              <div style="margin-top: 22px">
+                <div>
+                  <el-input
+                    type="text"
+                    name="mcsm_code"
+                    v-model="form.code"
+                    :placeholder="$t('login.need2FA')"
+                    autocomplete="on"
+                    :disabled="close"
+                    @keyup.enter="submit"
+                  >
+                    <template #suffix>
+                      <i class="el-icon-user"></i>
+                    </template>
+                  </el-input>
+                </div>
+
+                <div class="login-btn-wrapper row-mt">
+                  <transition name="fade">
+                    <div v-if="cause" id="login-cause">{{ cause }}</div>
+                  </transition>
+                  <el-button
+                    type="primary"
+                    size="small"
+                    style="width: 110px"
+                    @click="login"
+                    :disabled="close"
+                    :loading="loading"
+                  >
+                    {{ loginText }}
+                  </el-button>
+                </div>
+                <div class="login-info-wrapper row-mt" v-if="loginInfo">
+                  <span class="color-gray">
+                    {{ loginInfo }}
+                  </span>
+                </div>
+                <div class="login-info-wrapper row-mt">
+                  <div>
+                    <span class="color-gray"
+                      >Powered by
+                      <a target="black" href="https://github.com/MCSManager">MCSManager</a
+                      >&nbsp;&nbsp;|&nbsp;&nbsp; Theme by
+                      <a href="https://www.lazy.ink" target="_blank">Lazy</a></span
                     >
                   </div>
                 </div>
@@ -177,6 +248,7 @@ export default {
   data: function () {
     return {
       form: {
+        code: "",
         username: "",
         password: ""
       },
@@ -185,7 +257,8 @@ export default {
       loginText: this.$t("login.login"),
       loading: false,
       cause: "",
-      loginInfo: ""
+      loginInfo: "",
+      step: 1
     };
   },
   methods: {
@@ -199,18 +272,20 @@ export default {
           this.cause = this.$t("login.isNull");
           return;
         }
+        this.cause = "";
         this.loading = true;
         this.loginText = this.$t("login.logging");
-        await sleep(600);
+
         const res = await request({
           method: "POST",
           url: API_USER_LOGIN,
-          data: {
-            username: this.form.username,
-            password: this.form.password
-          }
+          data: this.form
         });
-        if (res) {
+        if (res === "NEED_2FA") {
+          this.loginText = this.$t("login.login");
+          this.step = 2;
+          return;
+        } else {
           return this.success(res);
         }
       } catch (error) {
@@ -269,7 +344,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .login-panel-wrapper-out {
   opacity: 0;
   z-index: 1;
@@ -382,7 +456,7 @@ export default {
   background: var(--background-login-image);
   background-repeat: no-repeat;
   background-size: cover;
-  
+
   transition-property: all;
   transition-duration: 1.5s;
   transition-timing-function: cubic-bezier(1, 0.05, 0.84, 0.74);
@@ -436,7 +510,7 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
   }
-  
+
   .fgp {
     font-size: 12px;
     margin-right: 0px;
