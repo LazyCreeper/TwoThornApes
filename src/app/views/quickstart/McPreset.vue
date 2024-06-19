@@ -176,10 +176,7 @@ export default {
     },
     toInstance() {
       this.$router.push({
-        path: `/terminal/${this.remoteUuid}/${this.taskInfo.detail.instanceUuid}/`,
-        query: {
-          network_tip: 1
-        }
+        path: `/terminal/${this.remoteUuid}/${this.taskInfo.detail.instanceUuid}/`
       });
     },
     toCreateInstancePage() {

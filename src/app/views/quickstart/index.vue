@@ -297,10 +297,7 @@ export default {
 
     toInstance(remoteUuid, instanceUuid) {
       this.$router.push({
-        path: `/terminal/${remoteUuid}/${instanceUuid}/`,
-        query: {
-          network_tip: 1
-        }
+        path: `/terminal/${remoteUuid}/${instanceUuid}/`
       });
     }
   }
