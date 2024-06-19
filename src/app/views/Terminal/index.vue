@@ -312,7 +312,8 @@
                 <i class="el-icon-date"></i>
                 {{ $t("instances.endTime") }}:
                 {{
-                  new Date(instanceInfo.config.endTime).toLocaleString() ||
+                  instanceInfo.config.endTime ?
+                  new Date(instanceInfo.config.endTime).toLocaleString() :
                   $t("instancesDetail.unlimited")
                 }}
               </LineInfo>

@@ -23,14 +23,14 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
               <div class="sub-title bt">{{ $t("instancesDetail.started") }}</div>
               <p v-text="instanceInfo.started"></p>
               <div class="sub-title bt">{{ $t("instancesDetail.createDateTime") }}</div>
-              <p v-text="instanceInfo.config.createDatetime"></p>
+              <p v-text="new Date(instanceInfo.config.createDatetime).toLocaleString()"></p>
               <div class="sub-title bt">{{ $t("instancesDetail.lastDateTime") }}</div>
-              <p v-text="instanceInfo.config.lastDatetime"></p>
+              <p v-text="new Date(instanceInfo.config.lastDatetime).toLocaleString()"></p>
               <div class="sub-title bt">{{ $t("instancesDetail.endTime") }}</div>
               <p
                 v-text="
                   instanceInfo.config.endTime
-                    ? instanceInfo.config.endTime
+                    ? new Date(instanceInfo.config.endTime).toLocaleString()
                     : $t('instancesDetail.unlimited')
                 "
               ></p>
@@ -658,9 +658,9 @@ export default {
         } else {
           postData.docker.extraVolumes = [];
         }
-        if (!this.instanceInfo.config.endTime) postData.endTime = "";
+        if (!this.instanceInfo.config.endTime) postData.endTime = 0;
         else if (typeof this.instanceInfo.config.endTime === "object")
-          postData.endTime = this.instanceInfo.config.endTime.toLocaleDateString();
+          postData.endTime = new Date(this.instanceInfo.config.endTime).getTime();
         await request({
           method: "PUT",
           url: API_INSTANCE,
