@@ -39,8 +39,12 @@
                   :key="index"
                 >
                   <span>{{ item.protocol }}:</span>
-                  <span style="margin-left: 8px">{{ $t("CommonText.029") }}: {{ item.p1 }} </span>
-                  <span style="margin-left: 6px">{{ $t("CommonText.030") }}: {{ item.p2 }} </span>
+                  <span style="margin-left: 8px"
+                    >{{ $t("CommonText.029") }}: {{ item.port1 }}
+                  </span>
+                  <span style="margin-left: 6px"
+                    >{{ $t("CommonText.030") }}: {{ item.port2 }}
+                  </span>
                 </div>
               </div>
             </LineInfo>
@@ -52,23 +56,11 @@
 </template>
 
 <script>
-// dockerInfo: {
-//   containerName: "",
-//   image: "",
-//   ports: ["8080:25565/tcp", "8081:27766/tcp", "8082:20348/udp", "23142:65563/udp", "214:2412/tcp"],
-//   extraVolumes: [],
-//   memory: null,
-//   networkMode: "bridge",
-//   networkAliases: [],
-//   cpusetCpus: "",
-//   cpuUsage: null,
-//   maxSpace: null,
-//   io: null,
-//   network: null
-// };
 import LineInfo from "@/components/LineInfo";
 import Dialog from "@/components/Dialog";
 import { TERMINAL_CODE } from "../../service/common";
+import { dockerPortsArray } from "../../utils";
+
 export default {
   components: {
     Dialog,
@@ -96,30 +88,7 @@ export default {
     },
     // [ "25565:25565/tcp", "27766:27766/tcp" ]
     dockerPortsParse(list = []) {
-      let line = [];
-      list.forEach((v, index) => {
-        if (index >= 50) return;
-        const tmp = v.split("/");
-        if (tmp.length != 2) return;
-        const protocol = tmp[1];
-        const p = tmp[0].split(":");
-        if (p.length >= 2) {
-          line.push({
-            p1: p[0],
-            p2: p[1],
-            protocol: String(protocol).toUpperCase()
-          });
-        }
-      });
-      if (list.length >= 50) {
-        line.push({
-          p1: null,
-          p2: null,
-          protocol: null,
-          more: true
-        });
-      }
-      return line;
+      return dockerPortsArray(list);
     }
   }
 };

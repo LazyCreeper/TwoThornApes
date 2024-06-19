@@ -598,6 +598,7 @@ import { request } from "../service/protocol";
 import CommandAssist from "../../components/CommandAssist";
 import DockerVariableSetup from "../../components/DockerVariableSetup";
 import { INSTANCE_TYPE_DEF_CONFIG } from "../service/instance_type";
+import { dockerPortsArray } from "../utils";
 // import qs from "qs";
 
 export default {
@@ -807,22 +808,8 @@ export default {
       this.$refs.dockerVariableSetup.show();
     },
     handleDockerPortLoadData() {
-      const result = [];
       const lines = this.instanceInfo.config?.docker?.ports?.split(" ");
-      for (const iterator of lines) {
-        const pad = iterator.split("/");
-        const ports = pad[0];
-        const protocol = pad[1];
-        const port1 = ports.split(":")[0];
-        const port2 = ports.split(":")[1];
-        result.push({
-          port1,
-          port2,
-          protocol
-        });
-      }
-      console.log(result);
-      return result;
+      return dockerPortsArray(lines);
     },
     handleSubmitDockerPort(items) {
       let v = [];

@@ -47,9 +47,9 @@
                     :key="index"
                   >
                     <template v-if="!item.more">
-                      <span>{{ $t("CommonText.029") }}: {{ item.p1 }}</span>
+                      <span>{{ $t("CommonText.029") }}: {{ item.port1 }}</span>
                       <span style="margin-left: 6px"
-                        >{{ $t("CommonText.030") }}: {{ item.p2 }}</span
+                        >{{ $t("CommonText.030") }}: {{ item.port2 }}</span
                       >
                       <span style="margin-left: 8px">
                         <el-tag type="success" size="mini">{{ item.protocol }}</el-tag>
@@ -629,6 +629,7 @@ import DockerInfo from "./DockerInfo";
 import NetworkTip from "@/components/NetworkTip";
 import Reinstall from "./Reinstall.vue";
 import { INSTANCE_TYPE_DEF_CONFIG } from "@/app/service/instance_type";
+import { dockerPortsArray } from "../../utils";
 export default {
   components: {
     Panel,
@@ -1260,25 +1261,11 @@ export default {
     },
     // [ "25565:25565/tcp", "27766:27766/tcp" ]
     dockerPortsParse(list = []) {
-      let line = [];
-      list.forEach((v, index) => {
-        if (index >= 2) return;
-        const tmp = v.split("/");
-        if (tmp.length != 2) return;
-        const protocol = tmp[1];
-        const p = tmp[0].split(":");
-        if (p.length >= 2) {
-          line.push({
-            p1: p[0],
-            p2: p[1],
-            protocol: String(protocol).toUpperCase()
-          });
-        }
-      });
-      if (list.length >= 2) {
+      const line = dockerPortsArray(list)
+      if (list.length > 2) {
         line.push({
-          p1: null,
-          p2: null,
+          port1: null,
+          port2: null,
           protocol: null,
           more: true
         });
