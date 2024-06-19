@@ -52,7 +52,7 @@
             </SelectBlock>
           </el-col>
           <el-col :md="6" :offset="0">
-            <SelectBlock style="min-height: 120px; margin-bottom: 20px" @click="selectType(5)">
+            <SelectBlock style="min-height: 120px; margin-bottom: 20px" @click="selectType(6)">
               <template #title>{{ $t("newImage.images[5].title") }}</template>
               <template #info>{{ $t("newImage.images[5].info") }}</template>
             </SelectBlock>
