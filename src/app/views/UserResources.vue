@@ -139,7 +139,7 @@ export default {
     selectedInstance(row) {
       this.userInfo.instances.push({
         instanceUuid: row.instanceUuid,
-        serviceUuid: row.serviceUuid,
+        daemonId: row.serviceUuid,
         nickname: row.nickname,
         status: row.status,
         hostIp: row.hostIp
