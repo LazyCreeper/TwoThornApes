@@ -2,7 +2,7 @@
 
     @FileName: MCSManager 9 二次元主题设置文件
     @SkinName: Summer
-    @Last Date: 2023.1.5
+    @Last Date: 2024.6.19
     @Create Date: 2022.2.5				
     @Author: Lazy
     @Description：在这里设置你的主题背景图片、颜色等
@@ -33,7 +33,7 @@
 	/*电脑端首页背景图*/
 	--background-login-image-phone: url(https://api.imlazy.ink/img-phone);
 	/*手机端登录页背景图（来自 雫 API 的随机图片API）*/
-	--background-image-phone: url('../static/images/88152202_p0.jpg');
+	--background-image-phone: url(https://cdn.imlazy.ink:233/img/Pbg/118728153_p0.jpg);
 	/*手机端首页背景图*/
 
 	/*终端*/
