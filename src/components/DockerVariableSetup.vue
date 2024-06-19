@@ -52,7 +52,6 @@ export default {
   },
   methods: {
     show() {
-      console.log(1);
       this.items = this.loadData();
       this.visible = true;
     },

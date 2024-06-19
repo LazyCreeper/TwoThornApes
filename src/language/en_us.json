@@ -398,12 +398,30 @@
       },
       {
         "label": "Mounted directory in container"
+      },
+      {
+        "label": "Variable Name"
+      },
+      {
+        "label": "Variable Value"
       }
     ],
     "startError": "The startup command could not contain new lines. Please limit your command to only one line.",
     "cantGetImageList": "Failed to fetch image list from Daemon, please create new image in service environment",
     "cantGetNetModeList": "Unable to fetch network list from Daemon, please check your Docker configuration.",
-    "networkTip": "Server network connection method"
+    "networkTip": "Server network connection method",
+    "workingDir": "Container Working Directory Mount",
+    "workingDirInfo": "All files in the instance's working directory will be mounted to this directory inside the container",
+    "workingDirExample": "Optional, default: /workspace/",
+    "env": "Environment Variables",
+    "envInfo": "Pass environment variables to the container",
+    "envTooltip": "Optional",
+    "dockerTableDict[5]": {
+      "label": "Variable Name"
+    },
+    "dockerTableDict[6]": {
+      "label": "Variable Value"
+    }
   },
   "instanceTypeList": {
     "General console program": "Console Program (General)",

@@ -399,12 +399,30 @@
       },
       {
         "label": "挂载到容器路径"
+      },
+      {
+        "label": "变量名"
+      },
+      {
+        "label": "变量值"
       }
     ],
     "startError": "启动命令中不可包含换行，这并非脚本文件，不可执行多条命令，请检查",
     "cantGetImageList": "无法获得远程主机镜像列表，建议前往“服务环境”界面创建镜像",
     "cantGetNetModeList": "无法获得远程主机网络列表，建议检查 Docker 配置",
-    "networkTip": "联机模式"
+    "networkTip": "联机模式",
+    "workingDir": "容器工作目录挂载",
+    "workingDirInfo": "实例工作目录中的所有文件将会挂载到容器内部的此目录中",
+    "workingDirExample": "选填，不填写默认值：/workspace/",
+    "env": "环境变量",
+    "envInfo": "为容器传递环境变量，多个以空格分割，等号左边为变量名，右边为变量值",
+    "envTooltip": "选填，例如 abc=def",
+    "dockerTableDict[5]": {
+      "label": "变量名"
+    },
+    "dockerTableDict[6]": {
+      "label": "变量值"
+    }
   },
   "instanceTypeList": {
     "General console program": "控制台程序（通用）",

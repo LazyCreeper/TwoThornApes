@@ -343,7 +343,23 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
                   </el-col>
                 </el-row>
                 <el-row :gutter="20">
-                  <el-col class="row-mt" :offset="0">
+                  <el-col :md="12" class="row-mt" :offset="0">
+                    <div class="sub-title">
+                      <div class="sub-title-title">
+                        {{ $t("instancesDetail.workingDir") }}
+                      </div>
+                      <div class="sub-title-info">
+                        {{ $t("instancesDetail.workingDirInfo") }}
+                      </div>
+                    </div>
+                    <el-input
+                      v-model="instanceInfo.config.docker.workingDir"
+                      type="text"
+                      :placeholder="$t('instancesDetail.workingDirExample')"
+                    >
+                    </el-input>
+                  </el-col>
+                  <el-col :md="12" class="row-mt" :offset="0">
                     <div class="sub-title">
                       <div class="sub-title-title">
                         {{ $t("instancesDetail.extraVolumes") }}
@@ -488,6 +504,29 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
                     </el-input>
                   </el-col>
                 </el-row>
+                <el-row :gutter="20">
+                  <el-col :md="12" class="row-mt" :offset="0">
+                    <div class="sub-title">
+                      <div class="sub-title-title">
+                        {{ $t("instancesDetail.env") }}
+                      </div>
+                      <div class="sub-title-info">
+                        {{ $t("instancesDetail.envInfo") }}
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <el-input
+                        v-model="instanceInfo.config.docker.env"
+                        type="text"
+                        :placeholder="$t('instancesDetail.envTooltip')"
+                      >
+                      </el-input>
+                      <el-button type="primary" plain @click="toEditDockerEnv">{{
+                        $t("instancesDetail.quickEdit")
+                      }}</el-button>
+                    </div>
+                  </el-col>
+                </el-row>
               </div>
             </el-col>
           </el-row>
@@ -532,6 +571,13 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
       @submit="handleSubmitDockerVolumes"
       :loadData="handleDockerVolumesLoadData"
       :columns="tableDict2"
+    ></DockerVariableSetup>
+
+    <DockerVariableSetup
+      ref="dockerVariableSetup3"
+      @submit="handleSubmitDockerEnv"
+      :loadData="handleDockerEnvLoadData"
+      :columns="tableDict3"
     ></DockerVariableSetup>
   </div>
 </template>
@@ -606,6 +652,20 @@ export default {
           width: "200px"
         }
       ],
+
+      // docker env
+      tableDict3: [
+        {
+          prop: "name",
+          label: this.$t("instancesDetail.dockerTableDict[5].label"),
+          width: "140px"
+        },
+        {
+          prop: "value",
+          label: this.$t("instancesDetail.dockerTableDict[6].label"),
+          width: "140px"
+        }
+      ],
       // optional character encoding
       characters: TERMINAL_CODE
     };
@@ -657,6 +717,11 @@ export default {
           postData.docker.extraVolumes = this.instanceInfo.config.docker.extraVolumes.split(" ");
         } else {
           postData.docker.extraVolumes = [];
+        }
+        if (this.instanceInfo.config.docker.env) {
+          postData.docker.env = this.instanceInfo.config.docker.env.split(" ");
+        } else {
+          postData.docker.env = [];
         }
         if (!this.instanceInfo.config.endTime) postData.endTime = 0;
         else if (typeof this.instanceInfo.config.endTime === "object")
@@ -756,6 +821,7 @@ export default {
           protocol
         });
       }
+      console.log(result);
       return result;
     },
     handleSubmitDockerPort(items) {
@@ -772,7 +838,6 @@ export default {
     handleDockerVolumesLoadData() {
       const result = [];
       const lines = this.instanceInfo.config?.docker?.extraVolumes.split(" ");
-      console.log(lines);
       for (const iterator of lines) {
         const [path1, path2] = iterator.split("|");
         result.push({
@@ -788,6 +853,32 @@ export default {
         v.push(`${iterator.path1}|${iterator.path2}`);
       }
       this.instanceInfo.config.docker.extraVolumes = v.join(" ");
+    },
+
+    toEditDockerEnv() {
+      this.$refs.dockerVariableSetup3.show();
+    },
+
+    handleDockerEnvLoadData() {
+      const result = [];
+      const lines = this.instanceInfo.config?.docker?.env.split(" ");
+      for (const iterator of lines) {
+        console.log(iterator);
+        const [name, value] = iterator.split("=");
+        result.push({
+          name,
+          value
+        });
+      }
+      return result;
+    },
+
+    handleSubmitDockerEnv(items) {
+      let v = [];
+      for (const iterator of items) {
+        v.push(`${iterator.name}=${iterator.value}`);
+      }
+      this.instanceInfo.config.docker.env = v.join(" ");
     }
   },
   async mounted() {
@@ -807,6 +898,9 @@ export default {
     if (this.instanceInfo.config.docker && this.instanceInfo.config.docker.extraVolumes) {
       this.instanceInfo.config.docker.extraVolumes =
         this.instanceInfo.config.docker.extraVolumes.join(" ");
+    }
+    if (this.instanceInfo.config.docker && this.instanceInfo.config.docker.env) {
+      this.instanceInfo.config.docker.env = this.instanceInfo.config.docker.env.join(" ");
     }
     let DEF_CODE = "UTF-8";
     if (this.$i18n.locale == "zh_cn") DEF_CODE = "GBK";
