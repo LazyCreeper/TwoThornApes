@@ -126,7 +126,6 @@
                     name="mcsm_code"
                     v-model="form.code"
                     :placeholder="$t('login.need2FA')"
-                    autocomplete="on"
                     :disabled="close"
                     @keyup.enter="submit"
                   >
