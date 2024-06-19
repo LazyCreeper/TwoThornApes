@@ -318,7 +318,7 @@ export default {
         dialog: false,
         title: "",
         content: "",
-        version: "3.0.3",
+        version: "3.1",
         haveNew: false
       }
     };
@@ -381,14 +381,14 @@ export default {
     //}
 
     checkThemeUpdate() {
-      const { summer, summertext } = window.ver2;
+      const { summer, summerText } = window.ver2;
       if (this.themeInfo.version === summer) {
         this.themeInfo.title = "偶吔~ヾ(≧▽≦*)o——";
         this.themeInfo.haveNew = false;
         this.themeInfo.dialog = true;
       } else {
         this.themeInfo.title = "发现新版本";
-        this.themeInfo.content = summertext;
+        this.themeInfo.content = summerText;
         this.themeInfo.dialog = true;
         this.themeInfo.haveNew = summer;
       }
