@@ -24,6 +24,21 @@
                   ></el-input>
                 </FunctionComponent>
                 <FunctionComponent>
+                  <el-select
+                    style="width: 120px"
+                    v-model="query.role"
+                    filterable
+                    :placeholder="$t('users.permit.permissionLevel')"
+                    size="small"
+                    @change="refresh"
+                  >
+                    <el-option :label="$t('CommonText.055')" value=""> </el-option>
+                    <el-option :label="$t('users.info.user')" value="1"> </el-option>
+                    <el-option :label="$t('users.info.admin')" value="10"> </el-option>
+                    <el-option :label="$t('users.info.baned')" value="-1"> </el-option>
+                  </el-select>
+                </FunctionComponent>
+                <FunctionComponent>
                   <el-button size="small" type="primary" @click="refresh">
                     <i class="el-icon-refresh"></i> {{ $t("general.search") }}
                   </el-button>
@@ -224,7 +239,8 @@ export default {
       page: 1,
       maxPage: 1,
       query: {
-        userName: ""
+        userName: "",
+        role: ""
       },
       newUserInfo: {
         userName: "",
@@ -262,7 +278,8 @@ export default {
         params: {
           userName: this.query.userName,
           page: this.page,
-          page_size: 50
+          page_size: 20,
+          role: this.query.role
         }
       });
       this.maxPage = result.maxPage;
