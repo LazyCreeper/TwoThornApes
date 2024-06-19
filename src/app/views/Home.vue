@@ -107,13 +107,14 @@
         <el-table-column :label="$t('instances.table.byteStreamCode')">
           <template #default="scope"> {{ scope.row.ie }}/{{ scope.row.oe }} </template>
         </el-table-column>
-        <el-table-column
-          prop="lastDatetime"
-          :label="$t('instances.table.lastDatetime')"
-        ></el-table-column>
+        <el-table-column prop="lastDatetime" :label="$t('instances.table.lastDatetime')">
+          <template #default="scope">
+            {{ new Date(scope.row.lastDatetime).toLocaleString() }}
+          </template>
+        </el-table-column>
         <el-table-column :label="$t('instances.endTime')">
           <template #default="scope">
-            {{ String(scope.row.endTime || "").split("T")[0] }}
+            {{ new Date(scope.row.endTime).toLocaleString() }}
           </template>
         </el-table-column>
         <el-table-column
@@ -124,7 +125,7 @@
           <template #default="scope">
             <el-button
               size="small"
-              @click="toInstance(scope.row.serviceUuid, scope.row.instanceUuid)"
+              @click="toInstance(scope.row.daemonId, scope.row.instanceUuid)"
               :disabled="scope.row.status == -1"
             >
               {{ $t("general.manage") }}
