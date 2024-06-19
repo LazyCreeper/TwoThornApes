@@ -768,7 +768,14 @@
     "apiKeyChangeSuccess": "Success",
     "inputPasswd": "Pleae provde your password. Leave empty for no change.",
     "notStandard": "Incorrect password length, has to be 9 to 36.",
-    "notSame": "Password does not match"
+    "notSame": "Password does not match",
+    "2fa": "Two-Factor Authentication",
+    "1": "Scan the QR code using Google Authentication or other universal 2FA tools.",
+    "2": "Click the 'I have scanned' button.",
+    "3": "I have scanned",
+    "4": "Rebind",
+    "5": "Start Binding",
+    "6": "Disable"
   },
   "services": {
     "remoteDaemonManage": "Add Daemon",

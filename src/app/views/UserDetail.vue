@@ -155,14 +155,57 @@
         </template>
       </Panel>
     </el-col>
+
+    <el-col :md="8" :offset="0">
+      <Panel>
+        <template #title>{{ $t("userDetail.2fa") }}</template>
+        <template #default>
+          <div v-if="qrCode" class="row-mt">
+            <div class="sub-title row-mt">
+              <p class="sub-title-info">1. {{ $t("userDetail.1") }}</p>
+              <p class="sub-title-info">2. {{ $t("userDetail.2") }}</p>
+            </div>
+            <img :src="qrCode" style="height: 180px" />
+            <div style="text-align: right">
+              <ItemGroup>
+                <el-button size="small" class="row-mt" @click="confirm2FACode(true)">{{
+                  $t("userDetail.3")
+                }}</el-button>
+              </ItemGroup>
+            </div>
+          </div>
+          <div v-else>
+            <ItemGroup>
+              <el-button size="small" class="row-mt" @click="handleBind2FA">{{
+                userInfo.open2FA ? $t("userDetail.4") : $t("userDetail.5")
+              }}</el-button>
+              <el-button
+                v-if="userInfo.open2FA"
+                type="danger"
+                size="small"
+                class="row-mt"
+                @click="confirm2FACode(false)"
+                >{{ $t("userDetail.6") }}</el-button
+              >
+            </ItemGroup>
+          </div>
+        </template>
+      </Panel>
+    </el-col>
   </el-row>
 </template>
 
 <script>
 import Panel from "../../components/Panel";
 import LineLabel from "../../components/LineLabel";
-import { API_URL, API_USER_API, API_USER_UPDATE } from "../service/common";
-import { request } from "../service/protocol";
+import {
+  API_BIND_2FA,
+  API_CONFIRM_2FA,
+  API_URL,
+  API_USER_API,
+  API_USER_UPDATE
+} from "../service/common";
+import { request, requestUserInfo } from "../service/protocol";
 
 export default {
   data() {
@@ -189,7 +232,8 @@ export default {
       rules: {
         passWord: [{ validator: this.validatePassword, trigger: "blur" }],
         passWord2: [{ validator: this.validatePassword, trigger: "blur" }]
-      }
+      },
+      qrCode: ""
     };
   },
   computed: {
@@ -238,6 +282,44 @@ export default {
         });
         this.$store.commit("setApiKey", key);
         this.$message({ message: this.$t("userDetail.apiKeyChangeSuccess"), type: "success" });
+      } catch (error) {
+        this.$message({
+          message: `Error: ${error}`,
+          type: "error"
+        });
+      }
+    },
+
+    async handleBind2FA() {
+      try {
+        this.qrCode = await request({
+          method: "POST",
+          url: API_BIND_2FA,
+          data: {}
+        });
+      } catch (error) {
+        this.$message({
+          message: `Error: ${error}`,
+          type: "error"
+        });
+      }
+    },
+
+    async confirm2FACode(enable) {
+      try {
+        await request({
+          method: "POST",
+          url: API_CONFIRM_2FA,
+          data: {
+            enable
+          }
+        });
+        await requestUserInfo();
+        this.qrCode = "";
+        this.$message({
+          message: this.$t("home.updateSuccess"),
+          type: "success"
+        });
       } catch (error) {
         this.$message({
           message: `Error: ${error}`,

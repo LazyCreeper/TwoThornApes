@@ -769,7 +769,14 @@
     "apiKeyChangeSuccess": "API 操作更改成功",
     "inputPasswd": "请输入密码值，若不输入则不进行密码修改",
     "notStandard": "密码长度不规范，必须长度在 9 位到 36 位之间",
-    "notSame": "两次密码不一致"
+    "notSame": "两次密码不一致",
+    "2fa": "双重登录验证（2FA）",
+    "1": "使用 Google Authentication 或其他通用二次验证工具扫描二维码。",
+    "2": "点击 “我已扫描完毕” 按钮。",
+    "3": "我已扫描完毕",
+    "4": "重新绑定",
+    "5": "开始绑定",
+    "6": "停用"
   },
   "services": {
     "remoteDaemonManage": "新增节点",
