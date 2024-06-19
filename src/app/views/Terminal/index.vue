@@ -258,7 +258,7 @@
                   style="width: 100%"
                   size="small"
                   @click="$refs.rconDialog.open()"
-                  >{{ $t("Steam Rcon 协议") }}</el-button
+                  >{{ $t("terminal.rconConfig.1") }}</el-button
                 >
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
