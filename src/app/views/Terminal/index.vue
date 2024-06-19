@@ -312,9 +312,9 @@
                 <i class="el-icon-date"></i>
                 {{ $t("instances.endTime") }}:
                 {{
-                  instanceInfo.config.endTime ?
-                  new Date(instanceInfo.config.endTime).toLocaleString() :
-                  $t("instancesDetail.unlimited")
+                  instanceInfo.config.endTime
+                    ? new Date(instanceInfo.config.endTime).toLocaleString()
+                    : $t("instancesDetail.unlimited")
                 }}
               </LineInfo>
               <LineInfo>
@@ -581,13 +581,6 @@
       :instanceUuid="instanceUuid"
     ></TermSetting>
 
-    <NetworkTip
-      ref="networkTip"
-      :extraServiceConfig="instanceInfo.config.extraServiceConfig"
-      :instanceUuid="instanceUuid"
-      :serviceUuid="serviceUuid"
-    ></NetworkTip>
-
     <DockerInfo
       v-if="instanceInfo.config.docker"
       ref="dockerInfoDialog"
@@ -626,7 +619,6 @@ import { initTerminalWindow, textToTermText } from "../../service/term";
 import { getPlayersOption } from "../../service/chart_option";
 import TermSetting from "./TermSetting";
 import DockerInfo from "./DockerInfo";
-import NetworkTip from "@/components/NetworkTip";
 import Reinstall from "./Reinstall.vue";
 import { INSTANCE_TYPE_DEF_CONFIG } from "@/app/service/instance_type";
 import { dockerPortsArray } from "../../utils";
@@ -636,7 +628,6 @@ export default {
     LineInfo,
     Dialog,
     TermSetting,
-    NetworkTip,
     DockerInfo,
     Reinstall
   },
@@ -650,7 +641,6 @@ export default {
       term: null,
       terminalWidth: 0,
       terminalHeight: 0,
-      visibleNetworkTip: false,
       command: "",
       available: false,
       socket: null,
@@ -812,7 +802,7 @@ export default {
       this.socket.on("stream/detail", (packet) => {
         this.instanceInfo = packet.data;
         this.resizePtyTerminalWindow();
-        this.initChart();
+        // this.initChart();
         this.receiveInstanceDetailEvent(this.instanceInfo);
       });
       // disconnect event
@@ -1261,7 +1251,7 @@ export default {
     },
     // [ "25565:25565/tcp", "27766:27766/tcp" ]
     dockerPortsParse(list = []) {
-      const line = dockerPortsArray(list)
+      const line = dockerPortsArray(list);
       if (list.length > 2) {
         line.push({
           port1: null,
@@ -1275,7 +1265,6 @@ export default {
   },
   async mounted() {
     try {
-      this.visibleNetworkTip = this.$route.query.network_tip ? true : false;
 
       // Initialize web local storage
       this.initStorage();
@@ -1296,11 +1285,7 @@ export default {
     } catch (error) {
       console.error(error);
       // neglect
-    } finally {
-      if (this.visibleNetworkTip) {
-        this.$refs.networkTip.open();
-      }
-    }
+    } 
 
     // Listen for window change events
     window.addEventListener("resize", this.onChangeTerminalContainerHeight);

@@ -27,7 +27,9 @@
             </SelectBlock>
           </el-col>
           <el-col :span="12" :offset="0">
-            <SelectBlock style="height: 140px" @click="select(2)">
+            <SelectBlock
+              style="height: 140px; filter: brightness(0.5) grayscale(1); cursor: no-drop"
+            >
               <template #title>
                 <p class="sub-title-title">
                   {{ $t("components.NetworkTip.003") }}
