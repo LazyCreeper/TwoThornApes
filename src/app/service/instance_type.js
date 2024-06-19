@@ -18,6 +18,7 @@ export const TYPE_MINECRAFT_BEDROCK = "minecraft/bedrock";
 export const TYPE_MINECRAFT_BDS = "minecraft/bedrock/bds";
 export const TYPE_MINECRAFT_NUKKIT = "minecraft/bedrock/nukkit";
 export const TYPE_STEAM_SERVER_UNIVERSAL = "steam/universal";
+export const TYPE_TERRARIA = "steam/terraria";
 
 // Front-end selectable type list
 const INSTANCE_TYPE_TRANSLATION = {};
@@ -37,6 +38,7 @@ INSTANCE_TYPE_TRANSLATION[TYPE_MINECRAFT_BUKKIT] = "MC Bukkit";
 INSTANCE_TYPE_TRANSLATION[TYPE_MINECRAFT_GEYSER] = "MC Geyser";
 INSTANCE_TYPE_TRANSLATION[TYPE_MINECRAFT_MCDR] = "MC MCDR";
 INSTANCE_TYPE_TRANSLATION[TYPE_WEB_SHELL] = "Web Shell";
+INSTANCE_TYPE_TRANSLATION[TYPE_TERRARIA] = "Terraria";
 
 // Different types of specific configuration files
 const INSTANCE_TYPE_DEF_CONFIG = {
@@ -55,6 +57,9 @@ const INSTANCE_TYPE_DEF_CONFIG = {
     stopCommand: "^c"
   },
   [TYPE_UNIVERSAL]: {
+    stopCommand: "^c"
+  },
+  [TYPE_TERRARIA]: {
     stopCommand: "^c"
   },
   [TYPE_MINECRAFT_JAVA]: {
