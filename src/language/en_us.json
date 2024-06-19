@@ -888,11 +888,15 @@
       },
       {
         "title": "Create Ubuntu environment image",
-        "info": "Suitablefor Minecraft Bedrock Server or other Linux application."
+        "info": "Suitable for Minecraft Bedrock Server or other Linux application."
       },
       {
         "title": "Use DockerFile to customize",
         "info": "Use DockerFile to customize image creation, for advanced usage only."
+      },
+      {
+        "title": "Create OpenJDK 21 environment image",
+        "info": "built-in Java 21 runtime,suitable for Minecraft 1.21 and above."
       }
     ],
     "aboutDockerFile": "About DockerFile",

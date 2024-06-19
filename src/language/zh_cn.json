@@ -894,6 +894,10 @@
       {
         "title": "使用 DockerFile 自定义创建",
         "info": "使用 DockerFile 自定义创建任何环境镜像，此操作建议技术人员进行"
+      },
+      {
+        "title": "创建 OpenJDK 21 环境镜像",
+        "info": "内置 Java 21 运行时环境，适用于 Minecraft 1.21 版本以上的服务端"
       }
     ],
     "aboutDockerFile": "关于 DockerFile 文件",

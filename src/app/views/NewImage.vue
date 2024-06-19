@@ -29,10 +29,10 @@
           </div>
         </template>
       </LineOption>
-      <div class="row-mt">
-        <el-row :gutter="10">
+      <div style="margin-top: 20px">
+        <el-row :gutter="20">
           <el-col :md="6" :offset="0">
-            <SelectBlock style="min-height: 120px" @click="selectType(1)">
+            <SelectBlock style="min-height: 120px; margin-bottom: 20px" @click="selectType(1)">
               <template #title>{{ $t("newImage.images[0].title") }}</template>
               <template #info>
                 {{ $t("newImage.images[0].info") }}
@@ -40,27 +40,31 @@
             </SelectBlock>
           </el-col>
           <el-col :md="6" :offset="0">
-            <SelectBlock style="min-height: 120px" @click="selectType(2)">
+            <SelectBlock style="min-height: 120px; margin-bottom: 20px" @click="selectType(2)">
               <template #title>{{ $t("newImage.images[1].title") }}</template>
               <template #info>{{ $t("newImage.images[1].info") }}</template>
             </SelectBlock>
           </el-col>
           <el-col :md="6" :offset="0">
-            <SelectBlock style="min-height: 120px" @click="selectType(5)">
+            <SelectBlock style="min-height: 120px; margin-bottom: 20px" @click="selectType(5)">
               <template #title>{{ $t("newImage.images[2].title") }}</template>
               <template #info>{{ $t("newImage.images[2].info") }}</template>
             </SelectBlock>
           </el-col>
           <el-col :md="6" :offset="0">
-            <SelectBlock style="min-height: 120px" @click="selectType(3)">
+            <SelectBlock style="min-height: 120px; margin-bottom: 20px" @click="selectType(5)">
+              <template #title>{{ $t("newImage.images[5].title") }}</template>
+              <template #info>{{ $t("newImage.images[5].info") }}</template>
+            </SelectBlock>
+          </el-col>
+          <el-col :md="6" :offset="0">
+            <SelectBlock style="min-height: 120px; margin-bottom: 20px" @click="selectType(3)">
               <template #title>{{ $t("newImage.images[3].title") }}</template>
               <template #info>{{ $t("newImage.images[3].info") }}</template>
             </SelectBlock>
           </el-col>
-        </el-row>
-        <el-row :gutter="10" class="row-mt">
           <el-col :md="6" :offset="0">
-            <SelectBlock style="min-height: 120px" @click="selectType(4)">
+            <SelectBlock style="min-height: 120px; margin-bottom: 20px" @click="selectType(4)">
               <template #title>{{ $t("newImage.images[4].title") }}</template>
               <template #info>{{ $t("newImage.images[4].info") }}</template>
             </SelectBlock>
@@ -175,8 +179,10 @@ import {
   openjdk17CN,
   openjdk8,
   openjdk8CN,
-  ubuntu18,
-  ubuntu18CN
+  openjdk21,
+  openjdk21CN,
+  ubuntu22,
+  ubuntu22CN
 } from "../service/build_dockerfile";
 
 export default {
@@ -215,14 +221,19 @@ export default {
         this.version = "16";
       }
       if (type === 3) {
-        this.dockerFile = this.dockerFile = this.isCN ? ubuntu18CN : ubuntu18;
+        this.dockerFile = this.dockerFile = this.isCN ? ubuntu22CN : ubuntu22;
         this.name = "mcsm-ubuntu";
-        this.version = "18.04";
+        this.version = "22.04";
       }
       if (type === 5) {
         this.dockerFile = this.dockerFile = this.isCN ? openjdk17CN : openjdk17;
         this.name = "mcsm-openjdk";
         this.version = "17";
+      }
+      if (type === 6) {
+        this.dockerFile = this.dockerFile = this.isCN ? openjdk21CN : openjdk21;
+        this.name = "mcsm-openjdk";
+        this.version = "21";
       }
       this.step = 2;
     },
