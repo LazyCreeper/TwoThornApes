@@ -771,10 +771,10 @@ export default {
     },
     handleDockerVolumesLoadData() {
       const result = [];
-      const lines = this.instanceInfo.config?.docker?.extraVolumes?.split(" ");
+      const lines = this.instanceInfo.config?.docker?.extraVolumes.split(" ");
+      console.log(lines);
       for (const iterator of lines) {
-        const path1 = iterator.split(":")[0];
-        const path2 = iterator.split(":")[1];
+        const [path1, path2] = iterator.split("|");
         result.push({
           path1,
           path2
@@ -785,7 +785,7 @@ export default {
     handleSubmitDockerVolumes(items) {
       let v = [];
       for (const iterator of items) {
-        v.push(`${iterator.path1}:${iterator.path2}`);
+        v.push(`${iterator.path1}|${iterator.path2}`);
       }
       this.instanceInfo.config.docker.extraVolumes = v.join(" ");
     }
