@@ -136,7 +136,8 @@ export default {
             daemonId: serviceUuid,
             page: this.page,
             page_size: 10,
-            instance_name: this.instanceNameKeyword
+            instance_name: this.instanceNameKeyword,
+            status: ""
           }
         });
         this.page = result.page;
