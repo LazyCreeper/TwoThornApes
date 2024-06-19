@@ -297,14 +297,14 @@
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
-                  <span style="font-size: 12px">{{ $t("instances.001") }}ID {{ serviceUuid }}</span>
+                  <span style="font-size: 12px">{{ $t("service.001") }}ID {{ serviceUuid }}</span>
                 </div>
               </LineInfo>
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
                   <span class="text-overflow-ellipsis" style="font-size: 12px"
-                    >{{ $t("service.001") }}ID {{ instanceInfo.instanceUuid }}</span
+                    >{{ $t("instances.001") }}ID {{ instanceInfo.instanceUuid }}</span
                   >
                 </div>
               </LineInfo>
