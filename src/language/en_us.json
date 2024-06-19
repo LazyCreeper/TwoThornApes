@@ -485,6 +485,18 @@
       "inputPort": "Required, numbers from 1-65535",
       "portExample": "For example: 25565"
     },
+    "rconConfig": {
+      "1": "Steam Rcon Protocol Settings",
+      "2":  "Most Steam game servers require RCON protocol to support command execution, including Minecraft game servers. If you find that the built-in console cannot execute commands when running a Steam game server, try configuring RCON protocol to support command execution.",
+      "3": "Enable Rcon Protocol",
+      "4": "Once Rcon Protocol is enabled, all commands entered at the console will be sent in RCON mode and will no longer be compatible with the original console program.",
+      "5": "Game Server IP",
+      "6": "Please enter the IP address of the game server, leave blank for the local host (localhost) by default.",
+      "7": "RCON Port",
+      "8": "Please enter the RCON protocol port of the game server, usually found in the configuration file.",
+      "9": "RCON Password",
+      "10": "Please enter the access password for the game server's RCON protocol, usually found in the configuration file."
+    },
     "eventConfigPanel": {
       "title": "Event Triggered Tasks",
       "autoRestart": "Auto Restart",

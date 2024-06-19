@@ -244,13 +244,21 @@
                 >
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
-                <el-button
+                <!-- <el-button
                   :disabled="!available"
                   icon="el-icon-data-line"
                   style="width: 100%"
                   size="small"
                   @click="toPingPanel"
                   >{{ $t("terminal.statusQuery") }}</el-button
+                > -->
+                <el-button
+                  :disabled="!available"
+                  icon="el-icon-data-line"
+                  style="width: 100%"
+                  size="small"
+                  @click="$refs.rconDialog.open()"
+                  >{{ $t("Steam Rcon 协议") }}</el-button
                 >
               </el-col>
               <el-col :lg="12" :offset="0" class="row-mb">
@@ -498,7 +506,7 @@
       </el-col>
     </el-row>
 
-    <Dialog v-model="pingConfigForm.is">
+    <!-- <Dialog v-model="pingConfigForm.is">
       <template #title>{{ $t("terminal.pingConfig.title") }}</template>
       <template #default>
         <div class="sub-title">
@@ -534,7 +542,14 @@
           </ItemGroup>
         </div>
       </template>
-    </Dialog>
+    </Dialog> -->
+
+    <RconSettings
+      ref="rconDialog"
+      :daemonId="serviceUuid"
+      :instanceId="instanceUuid"
+      :instanceInfo="instanceInfo"
+    />
 
     <Dialog v-model="eventConfigPanel.visible">
       <template #title>{{ $t("terminal.eventConfigPanel.title") }}</template>
@@ -620,6 +635,7 @@ import { getPlayersOption } from "../../service/chart_option";
 import TermSetting from "./TermSetting";
 import DockerInfo from "./DockerInfo";
 import Reinstall from "./Reinstall.vue";
+import RconSettings from "./RconSettings.vue";
 import { INSTANCE_TYPE_DEF_CONFIG } from "@/app/service/instance_type";
 import { dockerPortsArray } from "../../utils";
 export default {
@@ -629,7 +645,8 @@ export default {
     Dialog,
     TermSetting,
     DockerInfo,
-    Reinstall
+    Reinstall,
+    RconSettings
   },
   data: function () {
     return {
@@ -1265,7 +1282,6 @@ export default {
   },
   async mounted() {
     try {
-
       // Initialize web local storage
       this.initStorage();
 
@@ -1285,7 +1301,7 @@ export default {
     } catch (error) {
       console.error(error);
       // neglect
-    } 
+    }
 
     // Listen for window change events
     window.addEventListener("resize", this.onChangeTerminalContainerHeight);
