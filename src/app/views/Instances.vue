@@ -150,7 +150,7 @@
               @click="removeAllTags"
             >
               <i class="el-icon-delete"></i>
-              {{ $t("terminal.clearTerminal").slice(0, 2) }}
+              {{ isZh ? $t("terminal.clearTerminal").slice(0, 2) : $t("terminal.clearTerminal") }}
             </el-button>
 
             <el-button
@@ -505,6 +505,11 @@ export default {
         3: this.$t("home.running")
       }
     };
+  },
+  computed: {
+    isZh() {
+      return window.i18n.global.locale === "zh_cn";
+    }
   },
   async mounted() {
     // Initialize data read
