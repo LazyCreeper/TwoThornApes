@@ -141,6 +141,28 @@
             <div class="color-red" v-if="!currentRemoteUuid">
               &nbsp;Error: {{ $t("instances.selectRemoteError") }}
             </div>
+
+            <el-button
+              v-if="selectedTags.length"
+              size="mini"
+              type="danger"
+              :plain="true"
+              @click="removeAllTags"
+            >
+              <i class="el-icon-delete"></i>
+              {{ $t("terminal.clearTerminal").slice(0, 2) }}
+            </el-button>
+
+            <el-button
+              v-for="tag in allTags"
+              :key="tag"
+              size="mini"
+              type="plain"
+              class="tag-btn"
+              :class="{ 'tag-btn-selected': selectedTags.includes(tag) }"
+              @click="selectedTags.includes(tag) ? removeTag(tag) : selectTag(tag)"
+              >{{ tag }}</el-button
+            >
           </div>
           <div>
             <el-pagination
@@ -239,6 +261,14 @@
           </div>
         </template>
         <template #default>
+          <div
+            v-if="item.tags.length"
+            class="row-mb flex flex-align-items-center flex-wrap"
+            style="gap: 8px"
+          >
+            <el-tag v-for="tag in item.tags" :key="tag" size="mini" type="plain">{{ tag }}</el-tag>
+          </div>
+
           <div
             class="instanceInfoArea only-line-text"
             @click="toInstance(item.serviceUuid, item.instanceUuid)"
@@ -417,7 +447,6 @@
   overflow: hidden;
   cursor: pointer;
   transition: all 1s;
-  height: 146px;
 }
 .runningInstanceCard:hover {
   background: var(--card-instance-bg-hover);
@@ -446,6 +475,8 @@ export default {
       remoteList: [],
       currentRemoteUuid: null,
       instances: [],
+      allTags: [],
+      selectedTags: [],
       multipleSelection: [], // table multiple selection properties
       startedInstance: 0,
       loading: true,
@@ -543,12 +574,14 @@ export default {
             page: this.page,
             status: this.query.status,
             page_size: 10,
-            instance_name: this.query.instanceName
+            instance_name: this.query.instanceName,
+            tag: JSON.stringify(this.selectedTags)
           }
         });
         // page number adjustment
         this.page = result.page;
         this.maxPage = result.maxPage;
+        this.allTags = result.allTags;
         const instances = result.data;
         instances.forEach((instance) => {
           const status = instance.status;
@@ -557,6 +590,7 @@ export default {
           if (instance.status != 0) this.startedInstance++;
           // push all instances
           this.instances.push({
+            tags: instance.config.tag,
             instanceUuid: instance.instanceUuid,
             serviceUuid: this.currentRemoteUuid,
             nickname: instance.config.nickname,
@@ -568,7 +602,6 @@ export default {
             status
           });
         });
-        console.log(this.instances);
         this.loading = false;
         // Record the currently selected daemon process, so that it can be loaded directly next time
         localStorage.setItem("pageSelectedRemoteUuid", this.currentRemoteUuid);
@@ -739,6 +772,21 @@ export default {
       if (type === 1) this.showTableList = false;
       if (type === 2) this.showTableList = true;
       localStorage.setItem("InstanceView", type);
+    },
+
+    selectTag(tag) {
+      this.selectedTags.push(tag);
+      this.refresh();
+    },
+
+    removeTag(tag) {
+      this.selectedTags.splice(this.selectedTags.indexOf(tag), 1);
+      this.refresh();
+    },
+
+    removeAllTags() {
+      this.selectedTags = [];
+      this.refresh();
     }
   }
 };

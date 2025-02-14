@@ -331,7 +331,8 @@ a:hover {
 /* 按钮 */
 /* 默认 */
 .el-button.el-button--default,
-.el-button--small {
+.el-button--small,
+.el-button--mini {
   background-color: var(--btn-default-bg-color);
   color: var(--btn-default-color);
 }
@@ -491,4 +492,25 @@ button[disabled] {
 
 .el-progress__text {
   color: inherit !important;
+}
+
+.tag-btn {
+  filter: invert(1);
+  color: #550e0e;
+  border: 1px solid #855858;
+}
+
+.tag-btn:hover,
+.tag-btn:focus,
+.tag-btn-selected {
+  background: #eae8ff59;
+  color: #1b017f;
+  border: 1px solid #360082d1;
+}
+
+.el-tag,
+.el-tag--plain {
+  background: #000000bd;
+  color: #f9f9f9;
+  border: 1px solid #7d7d7d;
 }
