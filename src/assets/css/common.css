@@ -510,7 +510,7 @@ button[disabled] {
 
 .el-tag,
 .el-tag--plain {
-  background: #000000bd;
-  color: #f9f9f9;
-  border: 1px solid #7d7d7d;
+  background: var(--tag-bg-color);
+  color: var(--tag-color);
+  border: var(--tag-border);
 }
