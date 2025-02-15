@@ -8,8 +8,13 @@
       <div v-show="modelValue" class="component-dialog-wrapper">
         <div class="component-dialog-overflow">
           <transition name="el-zoom-in-center">
-            <Panel v-show="modelValue" style="margin-bottom: 0px">
+            <Panel
+              v-show="modelValue"
+              class="component-dialog-panel"
+              :style="{ maxWidth: maxWidth }"
+            >
               <template #title>
+                {{ maxWidth }}
                 <slot name="title"></slot>
               </template>
               <template #rtitle>
@@ -37,6 +42,10 @@ export default {
   props: {
     modelValue: Boolean,
     cancel: Function,
+    maxWidth: {
+      type: String,
+      default: "fit-content"
+    },
 
     canClose: {
       type: Boolean,
@@ -60,6 +69,9 @@ export default {
 </script>
 
 <style scoped>
+.component-dialog-panel {
+  margin-bottom: 0px;
+}
 .component-dialog-overflow {
   max-height: 90%;
   max-width: 90%;
@@ -89,6 +101,9 @@ export default {
   font-size: 18px;
 }
 @media (max-width: 860px) {
+  .component-dialog-panel {
+    max-width: 100% !important;
+  }
   .component-dialog-overflow {
     max-height: 100%;
     max-width: 100%;
