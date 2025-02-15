@@ -197,7 +197,7 @@
   </Panel>
 
   <!-- Display when the first page has no data -->
-  <Panel v-if="notAnyInstance && page === 1">
+  <Panel v-else-if="notAnyInstance && page === 1">
     <template #title>{{ $t("instances.table.instancesList") }}</template>
     <template #default>
       <div class="notAnyInstanceTip">
@@ -243,6 +243,9 @@
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
+                  <el-dropdown-item @click="openTagsDialog(item.serviceUuid, item.instanceUuid)">{{
+                    $t("编辑标签")
+                  }}</el-dropdown-item>
                   <el-dropdown-item @click="editInstance(item.serviceUuid, item.instanceUuid)">{{
                     $t("instances.card.editConfig")
                   }}</el-dropdown-item>
@@ -348,6 +351,19 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column prop="currentPlayers" label="Tags" width="240">
+              <template #default="scope">
+                <div
+                  v-if="scope.row.tags.length"
+                  class="flex flex-align-items-center flex-wrap"
+                  style="gap: 8px"
+                >
+                  <el-tag v-for="tag in scope.row.tags" :key="tag" size="mini" type="plain">{{
+                    tag
+                  }}</el-tag>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column prop="currentPlayers" :label="$t('instances.detailsInfo')" width="240">
               <template #default="scope">
                 <div>
@@ -411,6 +427,8 @@
       </Panel>
     </el-col>
   </el-row>
+
+  <TagsDialog ref="tagsDialog" />
 </template>
 
 <style scoped>
@@ -467,9 +485,10 @@ import { API_INSTANCE, API_SERVICE_INSTANCES, API_SERVICE_LIST, API_URL } from "
 import router from "../router";
 import { request } from "../service/protocol";
 import { typeTextToReadableText } from "../service/instance_tools";
+import TagsDialog from "./NewInstance/TagsDialog.vue";
 export default {
   // eslint-disable-next-line vue/no-unused-components
-  components: { Panel, CircleCheckFilled, CircleCloseFilled },
+  components: { Panel, CircleCheckFilled, CircleCloseFilled, TagsDialog },
   data() {
     return {
       remoteList: [],
@@ -518,6 +537,11 @@ export default {
   },
   beforeUnmount() {},
   methods: {
+    openTagsDialog(serviceUuid, instanceUuid) {
+      console.log(this.$refs.tagsDialog);
+
+      this.$refs.tagsDialog.openDialog(serviceUuid, instanceUuid);
+    },
     // Get the list of distributed services (excluding the list of specific instances)
     async displayRemoteServiceList() {
       const data = await request({
