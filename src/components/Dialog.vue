@@ -14,7 +14,6 @@
               :style="{ maxWidth: maxWidth }"
             >
               <template #title>
-                {{ maxWidth }}
                 <slot name="title"></slot>
               </template>
               <template #rtitle>

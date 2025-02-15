@@ -88,3 +88,9 @@ export const dockerPortsArray = (ports) => {
   });
   return portArray;
 };
+
+export function arrayUnique(arr, felidName) {
+  if (!felidName) return Array.from(new Set(arr));
+  const map = new Map();
+  return arr.filter((v) => !map.has(v[felidName]) && map.set(v[felidName], v));
+}

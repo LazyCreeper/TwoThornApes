@@ -243,9 +243,17 @@
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item @click="openTagsDialog(item.serviceUuid, item.instanceUuid)">{{
-                    $t("编辑标签")
-                  }}</el-dropdown-item>
+                  <el-dropdown-item
+                    @click="
+                      $refs.tagsDialog.openDialog(
+                        item.serviceUuid,
+                        item.instanceUuid,
+                        item.tags,
+                        allTags
+                      )
+                    "
+                    >{{ $t("tag.008") }}</el-dropdown-item
+                  >
                   <el-dropdown-item @click="editInstance(item.serviceUuid, item.instanceUuid)">{{
                     $t("instances.card.editConfig")
                   }}</el-dropdown-item>
@@ -353,11 +361,21 @@
             </el-table-column>
             <el-table-column prop="currentPlayers" label="Tags" width="240">
               <template #default="scope">
-                <div
-                  v-if="scope.row.tags.length"
-                  class="flex flex-align-items-center flex-wrap"
-                  style="gap: 8px"
-                >
+                <div class="flex flex-align-items-center flex-wrap" style="gap: 8px">
+                  <el-button
+                    icon="el-icon-edit"
+                    size="mini"
+                    circle
+                    @click="
+                      $refs.tagsDialog.openDialog(
+                        scope.row.serviceUuid,
+                        scope.row.instanceUuid,
+                        scope.row.tags,
+                        allTags
+                      )
+                    "
+                  >
+                  </el-button>
                   <el-tag v-for="tag in scope.row.tags" :key="tag" size="mini" type="plain">{{
                     tag
                   }}</el-tag>
@@ -428,7 +446,7 @@
     </el-col>
   </el-row>
 
-  <TagsDialog ref="tagsDialog" />
+  <TagsDialog ref="tagsDialog" @update:tags="refresh" />
 </template>
 
 <style scoped>
@@ -476,7 +494,7 @@
 </style>
 
 <script>
-import { CircleCheckFilled, CircleCloseFilled } from "@element-plus/icons";
+import { CircleCheckFilled, CircleCloseFilled, Edit } from "@element-plus/icons";
 import Panel from "../../components/Panel";
 // import LineLabel from "../../components/LineLabel";
 import { ElMessage } from "element-plus";
@@ -488,7 +506,7 @@ import { typeTextToReadableText } from "../service/instance_tools";
 import TagsDialog from "./NewInstance/TagsDialog.vue";
 export default {
   // eslint-disable-next-line vue/no-unused-components
-  components: { Panel, CircleCheckFilled, CircleCloseFilled, TagsDialog },
+  components: { Panel, CircleCheckFilled, CircleCloseFilled, Edit, TagsDialog },
   data() {
     return {
       remoteList: [],
@@ -537,11 +555,6 @@ export default {
   },
   beforeUnmount() {},
   methods: {
-    openTagsDialog(serviceUuid, instanceUuid) {
-      console.log(this.$refs.tagsDialog);
-
-      this.$refs.tagsDialog.openDialog(serviceUuid, instanceUuid);
-    },
     // Get the list of distributed services (excluding the list of specific instances)
     async displayRemoteServiceList() {
       const data = await request({

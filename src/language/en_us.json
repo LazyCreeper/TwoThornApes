@@ -1281,5 +1281,15 @@
       "008": "Fabric configuration file",
       "009": "MCDR configuration file"
     }
+  },
+  "tag": {
+    "001": "Instance Tag",
+    "002": "After an instance has a tag, MCSManager will automatically classify the instance by tag name for users to filter when displaying these instances. Tag names support any language.",
+    "003": "Tag list of this instance",
+    "004": "Do not create too many new tags, which may cause confusion of elements on the interface and degrade panel performance.",
+    "005": "New Tag",
+    "006": "Some optional tags",
+    "007": "These selectable tags are calculated from the instance list of the current page and do not include all existing tags. A maximum of 30 are displayed here.",
+    "008": "Edit Tags"
   }
 }
