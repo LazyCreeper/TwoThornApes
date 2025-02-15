@@ -94,3 +94,5 @@ export function arrayUnique(arr, felidName) {
   const map = new Map();
   return arr.filter((v) => !map.has(v[felidName]) && map.set(v[felidName], v));
 }
+
+export const parseTimestamp = (t) => (t ? new Date(t).toLocaleString() : "");

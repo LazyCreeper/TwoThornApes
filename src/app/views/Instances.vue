@@ -304,15 +304,15 @@
               <span class="color-red" v-else>{{ $t("instances.status.busy") }}</span>
             </div>
             <div>
-              <span>{{ $t("instances.lastDatetime") }}:</span>
-              <span>{{ item.config.lastDatetime }}</span>
+              <span>{{ $t("instances.lastDatetime") }}: </span>
+              <span>{{ formatTimestamp(item.config.lastDatetime) }}</span>
             </div>
             <div>
-              <span>{{ $t("instances.endTime") }}:</span>
-              <span>{{ item.config.endTime }}</span>
+              <span>{{ $t("instances.endTime") }}: </span>
+              <span>{{ formatTimestamp(item.config.endTime) }}</span>
             </div>
             <div>
-              <span>{{ $t("instances.otherInfo") }}:</span>
+              <span>{{ $t("instances.otherInfo") }}: </span>
               <span>
                 <span v-if="item.info && item.info.currentPlayers >= 0">
                   {{ $t("instances.playerCount") }} {{ item.info.currentPlayers }}/{{
@@ -504,6 +504,7 @@ import router from "../router";
 import { request } from "../service/protocol";
 import { typeTextToReadableText } from "../service/instance_tools";
 import TagsDialog from "./NewInstance/TagsDialog.vue";
+import { parseTimestamp } from "../utils";
 export default {
   // eslint-disable-next-line vue/no-unused-components
   components: { Panel, CircleCheckFilled, CircleCloseFilled, Edit, TagsDialog },
@@ -829,7 +830,9 @@ export default {
     removeAllTags() {
       this.selectedTags = [];
       this.refresh();
-    }
+    },
+
+    formatTimestamp: (t) => parseTimestamp(t)
   }
 };
 </script>
