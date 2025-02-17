@@ -140,7 +140,30 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('general.operate')" style="text-align: center" width="300px">
+        <el-table-column :label="$t('overview.frontendConnection')">
+          <template #default="scope">
+            <span
+              class="color-green"
+              v-if="frontendSocketStatus[scope.row.uuid] === SocketStatus.Connected"
+            >
+              <i class="el-icon-circle-check"></i>
+              {{ $t("CommonText.056") }}
+            </span>
+            <span class="color-red" v-else>
+              <el-tooltip
+                effect="dark"
+                :content="$t('overview.frontendConnectionError')"
+                placement="top"
+              >
+                <span>
+                  <i class="el-icon-warning-outline"></i>
+                  {{ $t("CommonText.057") }}
+                </span>
+              </el-tooltip>
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('general.operate')" style="text-align: center" width="230px">
           <template #default="scope">
             <el-button size="mini" @click="linkService(scope.row, true)">{{
               scope.row.available ? $t("services.update") : $t("services.connect")
