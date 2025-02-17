@@ -89,7 +89,10 @@
     "operation": "Operation",
     "moreOperation": "More Operations",
     "confirm2": "Confirm",
-    "permission": "Permissions"
+    "permission": "Permissions",
+    "copySuccess": "Copy successfully",
+    "copyFailed": "Copy failed",
+    "copyFailedInfo": "Please manually copy the following content"
   },
   "root": {
     "title": "Processing...",

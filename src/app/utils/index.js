@@ -1,17 +1,26 @@
-import { ElMessage } from "element-plus";
+import { h } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 export async function copyText(text) {
   try {
-    await navigator.clipboard.writeText(text);
+    if (navigator.clipboard) await navigator.clipboard.writeText(text);
+    else {
+      const input = document.createElement("input");
+      input.value = text;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      document.body.removeChild(input);
+    }
     ElMessage({
-      message: "复制成功",
+      message: window.$t("general.copySuccess"),
       type: "success"
     });
   } catch (err) {
-    ElMessage({
-      message: "操作失败",
-      type: "error"
-    });
+    ElMessageBox.alert(
+      h("span", null, [window.$t("general.copyFailedInfo") + "：", h("br"), text]),
+      window.$t("general.copyFailed")
+    );
   }
 }
 

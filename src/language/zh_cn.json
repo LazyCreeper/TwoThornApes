@@ -89,7 +89,10 @@
     "operation": "操作",
     "moreOperation": "更多操作",
     "confirm2": "我清楚后果并确定操作",
-    "permission": "权限"
+    "permission": "权限",
+    "copySuccess": "复制成功",
+    "copyFailed": "复制失败",
+    "copyFailedInfo": "请手动复制以下内容"
   },
   "root": {
     "title": "处理中...",
