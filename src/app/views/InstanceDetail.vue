@@ -343,13 +343,31 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
                   </el-col>
                 </el-row>
                 <el-row :gutter="20">
-                  <el-col :md="12" class="row-mt" :offset="0">
+                  <el-col :md="8" class="row-mt" :offset="0">
+                    <div class="sub-title">
+                      <p class="sub-title-title">{{ $t("instancesDetail.changeWorkdir") }}</p>
+                      <p class="sub-title-info">
+                        {{ $t("instancesDetail.changeWorkdirInfo") }}
+                      </p>
+                    </div>
+                    <el-select
+                      v-model="instanceInfo.config.docker.changeWorkdir"
+                      :placeholder="$t('general.pleaseSelect')"
+                      style="width: 100%"
+                    >
+                      <el-option :label="$t('general.enable')" :value="true"></el-option>
+                      <el-option :label="$t('general.forbid')" :value="false"></el-option>
+                    </el-select>
+                  </el-col>
+                  <el-col :md="16" class="row-mt" :offset="0">
                     <div class="sub-title">
                       <div class="sub-title-title">
                         {{ $t("instancesDetail.workingDir") }}
                       </div>
                       <div class="sub-title-info">
                         {{ $t("instancesDetail.workingDirInfo") }}
+                        <br />
+                        <br />
                       </div>
                     </div>
                     <el-input
@@ -359,6 +377,8 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
                     >
                     </el-input>
                   </el-col>
+                </el-row>
+                <el-row :gutter="20">
                   <el-col :md="12" class="row-mt" :offset="0">
                     <div class="sub-title">
                       <div class="sub-title-title">
@@ -376,6 +396,29 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
                       >
                       </el-input>
                       <el-button type="primary" plain @click="toEditDockerVolumes">{{
+                        $t("instancesDetail.quickEdit")
+                      }}</el-button>
+                    </div>
+                  </el-col>
+                  <el-col :md="12" class="row-mt" :offset="0">
+                    <div class="sub-title">
+                      <div class="sub-title-title">
+                        {{ $t("instancesDetail.env") }}
+                      </div>
+                      <div class="sub-title-info">
+                        {{ $t("instancesDetail.envInfo") }}
+                        <br />
+                        <br />
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <el-input
+                        v-model="instanceInfo.config.docker.env"
+                        type="text"
+                        :placeholder="$t('instancesDetail.envTooltip')"
+                      >
+                      </el-input>
+                      <el-button type="primary" plain @click="toEditDockerEnv">{{
                         $t("instancesDetail.quickEdit")
                       }}</el-button>
                     </div>
@@ -502,29 +545,6 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
                       :placeholder="$t('instancesDetail.maxMemExample')"
                     >
                     </el-input>
-                  </el-col>
-                </el-row>
-                <el-row :gutter="20">
-                  <el-col :md="12" class="row-mt" :offset="0">
-                    <div class="sub-title">
-                      <div class="sub-title-title">
-                        {{ $t("instancesDetail.env") }}
-                      </div>
-                      <div class="sub-title-info">
-                        {{ $t("instancesDetail.envInfo") }}
-                      </div>
-                    </div>
-                    <div class="flex">
-                      <el-input
-                        v-model="instanceInfo.config.docker.env"
-                        type="text"
-                        :placeholder="$t('instancesDetail.envTooltip')"
-                      >
-                      </el-input>
-                      <el-button type="primary" plain @click="toEditDockerEnv">{{
-                        $t("instancesDetail.quickEdit")
-                      }}</el-button>
-                    </div>
                   </el-col>
                 </el-row>
               </div>

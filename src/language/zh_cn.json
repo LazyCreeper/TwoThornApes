@@ -329,7 +329,7 @@
     },
     "instanceType": "实例类型",
     "instanceTypeInfo": "不同类型会导致功能不同，若无需求类型，可以选择较为抽象的通用类型，例如 Java 通用版服务端",
-    "launchCmdText": "适用于任何程序命令，若程序路径或附加参数中含有空格可使用引号作为边界，包含的文本将视作一段整体。整条命令不可有换行。<br />如果您输入命令无反应，或者终端排版错乱，可以开启 控制台-终端设置-伪终端进行尝试。<br />不同类型会导致功能不同，若无需求类型，可以选择较为抽象的通用类型，例如 Java 通用版服务端<br />通常情况下，建议使用命令助手生成启动命令，如果有额外需求可以自定义启动命令。<br />列如 \"C: \\Program Files\\Java\\bin\\java.exe\" -Dfile.encoding=utf-8 -Djline.terminal=jline.UnsupportedTerminal -jar \"my server.jar\" -nogui",
+    "launchCmdText": "适用于任何程序命令，若程序路径或附加参数中含有空格可使用引号作为边界，包含的文本将视作一段整体。整条命令不可有换行。<br />如果您输入命令无反应，或者终端排版错乱，可以开启 控制台-终端设置-伪终端进行尝试。<br />不同类型会导致功能不同，若无需求类型，可以选择较为抽象的通用类型，例如 Java 通用版服务端<br />通常情况下，建议使用命令助手生成启动命令，如果有额外需求可以自定义启动命令。<br />列如 \"C: \\Program Files\\Java\\bin\\java.exe\" -Dfile.encoding=utf-8 -Djline.terminal=jline.UnsupportedTerminal -jar server.jar -nogui",
     "cwd": "工作目录",
     "cwdInfo": "实例运行的工作目录，可填绝对路径与相对路径",
     "cwdExample": "例如: D:/MyServers/0001",
@@ -412,7 +412,7 @@
     "cantGetImageList": "无法获得远程主机镜像列表，建议前往“服务环境”界面创建镜像",
     "cantGetNetModeList": "无法获得远程主机网络列表，建议检查 Docker 配置",
     "networkTip": "联机模式",
-    "workingDir": "容器工作目录挂载",
+    "workingDir": "数据储存目录",
     "workingDirInfo": "实例工作目录中的所有文件将会挂载到容器内部的此目录中",
     "workingDirExample": "选填，不填写默认值：/workspace/",
     "env": "环境变量",
@@ -423,7 +423,9 @@
     },
     "dockerTableDict[6]": {
       "label": "变量值"
-    }
+    },
+    "changeWorkdir": "更变容器默认工作目录",
+    "changeWorkdirInfo": "启动容器时，将自动忽略镜像默认的工作目录，强制切换到当前目录到“数据储存目录”"
   },
   "instanceTypeList": {
     "General console program": "控制台程序（通用）",

@@ -328,7 +328,7 @@
     },
     "instanceType": "Instance type",
     "instanceTypeInfo": "Different instance type will lead to differnt functionality. For general purpose, you coulld choose an abstracted instance type(e.g. Java general server).",
-    "launchCmdText": "Apply to any command: use double quotes for parameters or directories that contains space. The inner string will be treated as a whole. The command should not contains a new line. <br /> If a command does not respond, or the output characters are unrecognizable, try enable the emulation terminal. <br />Different instance type will lead to differnt functionality. For general purpose, you coulld choose an abstracted instance type(e.g. Java general server).<br />In general, we recommend using command helper to generate startup command. However, you can also use customized commands. <br /> For example   \"C: \\Program Files\\Java\\bin\\java.exe\" -Dfile.encoding=utf-8 -Djline.terminal=jline.UnsupportedTerminal -jar \"my server.jar\" -nogui",
+    "launchCmdText": "Apply to any command: use double quotes for parameters or directories that contains space. The inner string will be treated as a whole. The command should not contains a new line. <br /> If a command does not respond, or the output characters are unrecognizable, try enable the emulation terminal. <br />Different instance type will lead to differnt functionality. For general purpose, you coulld choose an abstracted instance type(e.g. Java general server).<br />In general, we recommend using command helper to generate startup command. However, you can also use customized commands. <br /> For example   \"C: \\Program Files\\Java\\bin\\java.exe\" -Dfile.encoding=utf-8 -Djline.terminal=jline.UnsupportedTerminal -jar server.jar -nogui",
     "cwd": "Working directory",
     "cwdInfo": "Working directory for instance. Bothe relative and absolute path are acceptable.",
     "cwdExample": "For example: D:/MyServers/0001",
@@ -411,7 +411,7 @@
     "cantGetImageList": "Failed to fetch image list from Daemon, please create new image in service environment",
     "cantGetNetModeList": "Unable to fetch network list from Daemon, please check your Docker configuration.",
     "networkTip": "Server network connection method",
-    "workingDir": "Container Working Directory Mount",
+    "workingDir": "Data storage directory",
     "workingDirInfo": "All files in the instance's working directory will be mounted to this directory inside the container",
     "workingDirExample": "Optional, default: /workspace/",
     "env": "Environment Variables",
@@ -422,7 +422,9 @@
     },
     "dockerTableDict[6]": {
       "label": "Variable Value"
-    }
+    },
+    "changeWorkdir": "Change container default working directory",
+    "changeWorkdirInfo": "When starting the container, the default working directory of the image will be ignored, and the current directory will be forced to be switched to the \"Data storage directory\""
   },
   "instanceTypeList": {
     "General console program": "Console Program (General)",
