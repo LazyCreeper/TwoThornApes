@@ -102,6 +102,21 @@
             <el-col :md="12">
               <div class="config-item" style="margin-top: 0px">
                 <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.allowChangeCmd") }}</p>
+                  <p class="sub-title-info">
+                    {{ $t("settings.allowChangeCmdInfo") }}
+                  </p>
+                </div>
+                <el-select
+                  v-model="settings.allowChangeCmd"
+                  :placeholder="$t('general.pleaseSelect')"
+                >
+                  <el-option :label="$t('general.allow')" :value="true"></el-option>
+                  <el-option :label="$t('general.forbid')" :value="false"></el-option>
+                </el-select>
+              </div>
+              <div class="config-item">
+                <div class="sub-title">
                   <p class="sub-title-title">{{ $t("settings.canFileManager") }}</p>
                   <p class="sub-title-info">{{ $t("settings.canFileManagerInfo") }}</p>
                 </div>
@@ -113,7 +128,7 @@
                   <el-option :label="$t('general.forbid')" :value="false"></el-option>
                 </el-select>
               </div>
-              <div class="config-item" style="margin-top: 0px">
+              <div class="config-item">
                 <div class="sub-title">
                   <p class="sub-title-title">{{ $t("settings.allowUsePreset") }}</p>
                   <p class="sub-title-info">{{ $t("settings.allowUsePresetInfo") }}</p>

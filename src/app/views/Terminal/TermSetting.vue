@@ -93,27 +93,6 @@
             </div>
           </div>
 
-          <div>
-            <div class="sub-title row-mt">
-              <p class="sub-title-title">{{ $t("termSet.crlf") }}</p>
-              <p class="sub-title-info">
-                {{ $t("termSet.crlfInfo") }}
-                <br />
-                {{ $t("termSet.crlfInfo2") }}
-              </p>
-            </div>
-            <div class="row-mt">
-              <el-select
-                v-model="options.crlf"
-                :placeholder="$t('general.pleaseSelect')"
-                size="small"
-                style="width: 220px"
-              >
-                <el-option :label="$t('termSet.newline')" :value="1"></el-option>
-                <el-option :label="$t('termSet.EnterNewline')" :value="2"></el-option>
-              </el-select>
-            </div>
-          </div>
           <div class="row-mt">
             <div class="sub-title">
               <p class="sub-title-title">{{ $t("termSet.ioCode") }}</p>
@@ -129,7 +108,7 @@
                 allow-create
                 default-first-option
                 :placeholder="$t('instancesDetail.ie')"
-                style="width: 220px"
+                style="width: 100%"
               >
                 <el-option
                   v-for="item in TERMINAL_CODE"
@@ -146,7 +125,54 @@
                 size="small"
                 default-first-option
                 :placeholder="$t('instancesDetail.oe')"
-                style="width: 220px; margin-left: 12px"
+                style="width: 100%; margin-left: 12px"
+              >
+                <el-option
+                  v-for="item in TERMINAL_CODE"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+
+          <div>
+            <div class="sub-title row-mt">
+              <p class="sub-title-title">{{ $t("termSet.crlf") }}</p>
+              <p class="sub-title-info">
+                {{ $t("termSet.crlfInfo") }}
+                <br />
+                {{ $t("termSet.crlfInfo2") }}
+              </p>
+            </div>
+            <div class="row-mt">
+              <el-select
+                v-model="options.crlf"
+                :placeholder="$t('general.pleaseSelect')"
+                size="small"
+                style="width: 100%"
+              >
+                <el-option :label="$t('termSet.newline')" :value="1"></el-option>
+                <el-option :label="$t('termSet.EnterNewline')" :value="2"></el-option>
+              </el-select>
+            </div>
+          </div>
+
+          <div class="row-mt">
+            <div class="sub-title">
+              <p class="sub-title-title">{{ $t("instancesDetail.fileCode") }}</p>
+              <p class="sub-title-info">
+                {{ $t("instancesDetail.fileCodeInfo") }}
+              </p>
+            </div>
+            <div class="row-mt">
+              <el-select
+                v-model="options.fileCode"
+                :placeholder="$t('general.pleaseSelect')"
+                size="small"
+                style="width: 100%"
               >
                 <el-option
                   v-for="item in TERMINAL_CODE"

@@ -292,6 +292,16 @@
                   >{{ $t("terminal.instanceDetail") }}</el-button
                 >
               </el-col>
+              <el-col :lg="24" :offset="0" v-else-if="isAllowChangeCmd">
+                <el-button
+                  :disabled="!available"
+                  icon="el-icon-setting"
+                  style="width: 100%"
+                  size="small"
+                  @click="$refs.extraEditDialog.openDialog()"
+                  >{{ $t("terminal.instanceDetail") }}</el-button
+                >
+              </el-col>
             </el-row>
           </template>
         </Panel>
@@ -603,6 +613,8 @@
     ></DockerInfo>
 
     <Reinstall ref="reinstallDialog" :daemonId="serviceUuid" :instanceId="instanceUuid" />
+
+    <ExtraEdit ref="extraEditDialog" :daemonId="serviceUuid" :instanceId="instanceUuid" />
   </div>
 </template>
 
@@ -636,6 +648,7 @@ import TermSetting from "./TermSetting";
 import DockerInfo from "./DockerInfo";
 import Reinstall from "./Reinstall.vue";
 import RconSettings from "./RconSettings.vue";
+import ExtraEdit from "./ExtraEdit.vue";
 import { INSTANCE_TYPE_DEF_CONFIG } from "@/app/service/instance_type";
 import { dockerPortsArray } from "../../utils";
 export default {
@@ -646,7 +659,8 @@ export default {
     TermSetting,
     DockerInfo,
     Reinstall,
-    RconSettings
+    RconSettings,
+    ExtraEdit
   },
   data: function () {
     return {
@@ -732,6 +746,13 @@ export default {
       return (
         this.$store.state.userInfo.permission >= 10 ||
         this.$store.state.panelStatus.settings.allowUsePreset
+      );
+    },
+    isAllowChangeCmd() {
+      return (
+        this.instanceInfo?.config?.processType === "docker" &&
+        this.$store.state.userInfo.permission < 10 &&
+        this.$store.state.panelStatus.settings.allowChangeCmd
       );
     }
   },
@@ -1105,7 +1126,8 @@ export default {
         crlf: this.instanceInfo.config.crlf,
         oe: this.instanceInfo.config.oe,
         ie: this.instanceInfo.config.ie,
-        stopCommand: this.instanceInfo.config.stopCommand
+        stopCommand: this.instanceInfo.config.stopCommand,
+        fileCode: this.instanceInfo.config.fileCode
       };
       this.terminalSettingPanel.visible = true;
     },

@@ -947,6 +947,8 @@
     "referenceLink": "Attention",
     "referenceLinksInfo": "In general, most of the configurations should be in their default value. Do not change any settings unless you absolutely know what you are doing.",
     "limitAndSecurity": "Restrictions and Security",
+    "allowChangeCmd": "Allow normal users to edit launch command",
+    "allowChangeCmdInfo": "This feature allows normal users to edit the 'start' and 'update' commands of Docker instances",
     "canFileManager": "Allow normal users to use file management",
     "canFileManagerInfo": "File management is a complicate and resource-consuming (like file compression) function. You can disable this function for normal users if they do don't have to modify any files.",
     "allowUsePreset": "Allow Instance Reset",
