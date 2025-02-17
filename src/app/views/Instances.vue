@@ -213,8 +213,18 @@
   </Panel>
 
   <!-- Card display style -->
-  <el-row :gutter="20" class="row-mb" v-if="!showTableList && !notAnyInstance">
-    <el-col :md="6" :offset="0" v-for="(item, index) in instances" :key="index">
+  <el-row class="row-mb" v-if="!showTableList && !notAnyInstance" style="margin: -10px">
+    <el-col
+      :xs="24"
+      :sm="12"
+      :md="8"
+      :lg="6"
+      :xl="4"
+      :offset="0"
+      v-for="(item, index) in instances"
+      :key="index"
+      style="padding: 10px"
+    >
       <Panel
         :class="{
           instanceStatusGreen: item.status === 3,
@@ -222,6 +232,7 @@
           runningInstanceCard: true
         }"
         :tipType="0"
+        style="margin-bottom: 0; height: 100%"
       >
         <template #title>
           <div
