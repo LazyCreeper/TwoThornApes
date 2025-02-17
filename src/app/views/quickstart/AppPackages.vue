@@ -109,6 +109,11 @@ export default {
   },
   methods: {
     async init() {
+      if (
+        this.$store.state.userInfo.permission < 10 &&
+        !this.$store.state.panelStatus.settings.allowUsePreset
+      )
+        return;
       try {
         this.appListLoading = true;
         const result = await request({
