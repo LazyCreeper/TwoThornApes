@@ -54,7 +54,9 @@
     "052": "文件管理",
     "053": "命令终端",
     "054": "控制台",
-    "055": "所有"
+    "055": "所有",
+    "056": "正常",
+    "057": "异常"
   },
   "general": {
     "search": "搜索",
@@ -156,6 +158,8 @@
     "daemonVersion": "远程节点版本",
     "lowDaemonVersion": "与面板端要求版本不一致",
     "connectStatus": "连接状态",
+    "frontendConnection": "网页直连",
+    "frontendConnectionError": "网页前端无法与节点建立 WebSocket 连接，请检查网络代理配置或防火墙配置！",
     "online": "在线",
     "errorConnect": "无法连接到指定 IP 或者密钥错误",
     "offline": "离线",

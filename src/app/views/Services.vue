@@ -8,28 +8,22 @@
     <template #default>
       <div class="flex flex-space-between">
         <ItemGroup>
-          <el-button
-            type="success"
-            size="small"
-            @click="openNewServiceDialog"
-          >{{ $t("services.addDaemon") }}</el-button>
+          <el-button type="success" size="small" @click="openNewServiceDialog">{{
+            $t("services.addDaemon")
+          }}</el-button>
           <el-button size="small" @click="refresh">{{ $t("general.refresh") }}</el-button>
         </ItemGroup>
         <ItemGroup>
-          <el-button
-            size="small"
-            v-if="showTableList"
-            @click="changeView(1)"
-            type="success"
-          >{{$t("instances.showCardList")}}</el-button>
+          <el-button size="small" v-if="showTableList" @click="changeView(1)" type="success">{{
+            $t("instances.showCardList")
+          }}</el-button>
 
-          <el-button
-            size="small"
-            v-if="!showTableList"
-            @click="changeView(2)"
-            type="primary"
-          >{{ $t("instances.showTableList") }}</el-button>
-          <el-button size="small" @click="openPrinciplePanel">{{$t("services.learnHowItWork")}}</el-button>
+          <el-button size="small" v-if="!showTableList" @click="changeView(2)" type="primary">{{
+            $t("instances.showTableList")
+          }}</el-button>
+          <el-button size="small" @click="openPrinciplePanel">{{
+            $t("services.learnHowItWork")
+          }}</el-button>
         </ItemGroup>
       </div>
       <div>
@@ -44,12 +38,20 @@
       <el-table :data="services" size="small">
         <el-table-column :label="$t('overview.addr')" width="170">
           <template #default="scope">
-            <el-input size="small" v-model="scope.row.ip" :placeholder="$t('general.required')"></el-input>
+            <el-input
+              size="small"
+              v-model="scope.row.ip"
+              :placeholder="$t('general.required')"
+            ></el-input>
           </template>
         </el-table-column>
         <el-table-column :label="$t('overview.port')" width="100">
           <template #default="scope">
-            <el-input size="small" v-model="scope.row.port" :placeholder="$t('general.required')"></el-input>
+            <el-input
+              size="small"
+              v-model="scope.row.port"
+              :placeholder="$t('general.required')"
+            ></el-input>
           </template>
         </el-table-column>
         <el-table-column label="ID" width="40">
@@ -68,24 +70,22 @@
           <template #default="scope">
             <span>
               {{ scope.row.remarks }}
-              <i
-                style="cursor: pointer"
-                class="el-icon-edit"
-                @click="updateRemarks(scope.row)"
-              ></i>
+              <i style="cursor: pointer" class="el-icon-edit" @click="updateRemarks(scope.row)"></i>
             </span>
           </template>
         </el-table-column>
         <el-table-column :label="$t('services.platform')" width="100">
           <template #default="scope">
-            <div
-              v-if="scope.row.system"
-            >{{ scope.row.system.platform == "win32" ? "windows" : scope.row.system.platform }}</div>
+            <div v-if="scope.row.system">
+              {{ scope.row.system.platform == "win32" ? "windows" : scope.row.system.platform }}
+            </div>
           </template>
         </el-table-column>
         <el-table-column label="CPU">
           <template #default="scope">
-            <div v-if="scope.row.system">{{ Number(scope.row.system.cpuUsage * 100).toFixed(1) }}%</div>
+            <div v-if="scope.row.system">
+              {{ Number(scope.row.system.cpuUsage * 100).toFixed(1) }}%
+            </div>
           </template>
         </el-table-column>
         <el-table-column :label="$t('overview.mem')">
@@ -95,9 +95,9 @@
         </el-table-column>
         <el-table-column :label="$t('services.instanceStatus')">
           <template #default="scope">
-            <div
-              v-if="scope.row.instance"
-            >{{ scope.row.instance.running }}/{{ scope.row.instance.total }}</div>
+            <div v-if="scope.row.instance">
+              {{ scope.row.instance.running }}/{{ scope.row.instance.total }}
+            </div>
           </template>
         </el-table-column>
         <el-table-column :label="$t('services.version')">
@@ -142,19 +142,14 @@
         </el-table-column>
         <el-table-column :label="$t('general.operate')" style="text-align: center" width="300px">
           <template #default="scope">
-            <el-button
-              size="mini"
-              @click="linkService(scope.row, true)"
-            >{{ scope.row.available ? $t("services.update") : $t("services.connect") }}</el-button>
+            <el-button size="mini" @click="linkService(scope.row, true)">{{
+              scope.row.available ? $t("services.update") : $t("services.connect")
+            }}</el-button>
             <el-button size="mini" @click="updateKey(scope.row, true)">
-              {{
-              $t("services.changeKey")
-              }}
+              {{ $t("services.changeKey") }}
             </el-button>
             <el-button size="mini" type="danger" plain @click="deleteService(scope.row.uuid)">
-              {{
-              $t("general.delete")
-              }}
+              {{ $t("general.delete") }}
             </el-button>
           </template>
         </el-table-column>
@@ -180,12 +175,12 @@
             </span>
           </template>
           <template #rtitle v-if="node.available">
-            <el-button size="mini" @click="updateKey(node, true)">{{ $t("services.changeKey") }}</el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="deleteService(node.uuid)"
-            >{{ $t("general.delete") }}</el-button>
+            <el-button size="mini" @click="updateKey(node, true)">{{
+              $t("services.changeKey")
+            }}</el-button>
+            <el-button size="mini" type="danger" @click="deleteService(node.uuid)">{{
+              $t("general.delete")
+            }}</el-button>
           </template>
           <template #default>
             <div class="daemonInfoArea">
@@ -195,9 +190,9 @@
                     <p>{{ $t("services.platform") }}</p>
                     <div>
                       {{
-                      node?.system?.platform == "win32"
-                      ? "windows"
-                      : node?.system?.platform || "--"
+                        node?.system?.platform == "win32"
+                          ? "windows"
+                          : node?.system?.platform || "--"
                       }}
                     </div>
                   </el-col>
@@ -207,12 +202,16 @@
                   </el-col>
                   <el-col :md="12" :xs="12" :lg="6" :offset="0">
                     <p>CPU</p>
-                    <div v-if="node.system">{{ Number(node.system.cpuUsage * 100).toFixed(1) }}%</div>
+                    <div v-if="node.system">
+                      {{ Number(node.system.cpuUsage * 100).toFixed(1) }}%
+                    </div>
                     <div v-else>--</div>
                   </el-col>
                   <el-col :md="12" :xs="12" :lg="6" :offset="0">
                     <p>{{ $t("services.instanceStatus") }}</p>
-                    <div v-if="node.instance">{{ node.instance.running }}/{{ node.instance.total }}</div>
+                    <div v-if="node.instance">
+                      {{ node.instance.running }}/{{ node.instance.total }}
+                    </div>
                     <div v-else>--</div>
                   </el-col>
                   <el-col :md="12" :xs="12" :lg="6" :offset="0">
@@ -231,6 +230,30 @@
                           <span>
                             <i class="el-icon-warning-outline"></i>
                             {{ $t("overview.offline") }}
+                          </span>
+                        </el-tooltip>
+                      </span>
+                    </div>
+                  </el-col>
+                  <el-col :md="12" :xs="12" :lg="6" :offset="0">
+                    <p>{{ $t("overview.frontendConnection") }}</p>
+                    <div>
+                      <span
+                        class="color-green"
+                        v-if="frontendSocketStatus[node.uuid] === SocketStatus.Connected"
+                      >
+                        <i class="el-icon-circle-check"></i>
+                        {{ $t("CommonText.056") }}
+                      </span>
+                      <span class="color-red" v-else>
+                        <el-tooltip
+                          effect="dark"
+                          :content="$t('overview.frontendConnectionError')"
+                          placement="top"
+                        >
+                          <span>
+                            <i class="el-icon-warning-outline"></i>
+                            {{ $t("CommonText.057") }}
                           </span>
                         </el-tooltip>
                       </span>
@@ -316,38 +339,30 @@
                     ></el-input>
 
                     <el-button size="mini" @click="linkService(node, true)">
-                      {{
-                      node.available ? $t("services.update") : $t("services.connect")
-                      }}
+                      {{ node.available ? $t("services.update") : $t("services.connect") }}
                     </el-button>
                   </div>
                 </el-col>
                 <el-col :md="12" :xl="12" :offset="0">
                   <div class="daemon-operations">
                     <template v-if="node.available">
-                      <el-button
-                        size="mini"
-                        @click="toDaemonTerminalPage(node.uuid)"
-                      >{{ $t("services.toTerminal") }}</el-button>
-                      <el-button
-                        size="mini"
-                        @click="toDaemonFileManagerPage(node.uuid)"
-                      >{{ $t("services.toFileManager") }}</el-button>
-                      <el-button
-                        size="mini"
-                        @click="toDaemonImagesPage(node.uuid)"
-                      >{{ $t("services.toDocker") }}</el-button>
+                      <el-button size="mini" @click="toDaemonTerminalPage(node.uuid)">{{
+                        $t("services.toTerminal")
+                      }}</el-button>
+                      <el-button size="mini" @click="toDaemonFileManagerPage(node.uuid)">{{
+                        $t("services.toFileManager")
+                      }}</el-button>
+                      <el-button size="mini" @click="toDaemonImagesPage(node.uuid)">{{
+                        $t("services.toDocker")
+                      }}</el-button>
                     </template>
                     <template v-else>
-                      <el-button
-                        size="mini"
-                        @click="updateKey(node, true)"
-                      >{{ $t("services.changeKey") }}</el-button>
-                      <el-button
-                        size="mini"
-                        type="danger"
-                        @click="deleteService(node.uuid)"
-                      >{{ $t("general.delete") }}</el-button>
+                      <el-button size="mini" @click="updateKey(node, true)">{{
+                        $t("services.changeKey")
+                      }}</el-button>
+                      <el-button size="mini" type="danger" @click="deleteService(node.uuid)">{{
+                        $t("general.delete")
+                      }}</el-button>
                     </template>
                   </div>
                 </el-col>
@@ -393,18 +408,16 @@
             <br />
             {{ $t("services.keySub2") }}
             <br />
-            <a
-              href="https://docs.mcsmanager.com/"
-              target="_blank"
-              class="color-blue"
-              v-iszh
-            >{{ $t("services.getKey") }}</a>
+            <a href="https://docs.mcsmanager.com/" target="_blank" class="color-blue" v-iszh>{{
+              $t("services.getKey")
+            }}</a>
             <a
               href="   https://github.com/MCSManager/MCSManager/wiki/Connect-to-a-Remote-Daemon"
               target="_blank"
               class="color-blue"
               v-isen
-            >{{ $t("services.getKey") }}</a>
+              >{{ $t("services.getKey") }}</a
+            >
           </div>
         </div>
         <el-input
@@ -415,14 +428,10 @@
         <div class="row-mt">
           <ItemGroup>
             <el-button type="success" size="small" @click="toNewService(false)">
-              {{
-              $t("general.add")
-              }}
+              {{ $t("general.add") }}
             </el-button>
             <el-button @click="isNewService = !isNewService" size="small">
-              {{
-              $t("general.cancel")
-              }}
+              {{ $t("general.cancel") }}
             </el-button>
           </ItemGroup>
         </div>
@@ -456,14 +465,10 @@
       <div class="row-mt">
         <ItemGroup>
           <el-button type="danger" size="small" @click="toNewService(true)">
-            {{
-            $t("services.addNewWarn.yeah")
-            }}
+            {{ $t("services.addNewWarn.yeah") }}
           </el-button>
           <el-button @click="isNewServiceWarning = !isNewServiceWarning" size="small">
-            {{
-            $t("services.addNewWarn.cancel")
-            }}
+            {{ $t("services.addNewWarn.cancel") }}
           </el-button>
         </ItemGroup>
       </div>
@@ -493,11 +498,9 @@
       </div>
       <div class="row-mt">
         <ItemGroup>
-          <el-button
-            type="success"
-            size="small"
-            @click="isOpenPrinciplePanel = false"
-          >{{ $t("general.confirm") }}</el-button>
+          <el-button type="success" size="small" @click="isOpenPrinciplePanel = false">{{
+            $t("general.confirm")
+          }}</el-button>
         </ItemGroup>
       </div>
     </template>
@@ -513,6 +516,7 @@ import { API_OVERVIEW, API_SERVICE_CURD, API_SERVICE_URL } from "../service/comm
 import { request } from "../service/protocol";
 import { copyText } from "../utils/index";
 import { getDaemonMemChartOption } from "../service/chart_option";
+import { SocketStatus, testFrontendSocket } from "@/app/utils/socketIo";
 
 export default {
   components: { Panel, Dialog },
@@ -536,10 +540,18 @@ export default {
 
       daemonCharts: {},
 
-      showTableList: false
+      showTableList: false,
+      frontendSocketStatus: {},
+      SocketStatus
     };
   },
   methods: {
+    async checkFrontendSocketStatus() {
+      for (const node of this.services) {
+        this.frontendSocketStatus[node.uuid] = await testFrontendSocket(node);
+      }
+    },
+
     copyText,
     // refresh button
     async refresh() {
@@ -562,6 +574,7 @@ export default {
         }
       });
       this.services = result.remote;
+      this.checkFrontendSocketStatus();
       // Version related data rendering
       this.specifiedDaemonVersion = result.specifiedDaemonVersion;
       this.panelVersion = result.version;

@@ -105,3 +105,11 @@ export function arrayUnique(arr, felidName) {
 }
 
 export const parseTimestamp = (t) => (t ? new Date(t).toLocaleString() : "");
+
+export function removeTrail(origin, trail) {
+  if (origin.endsWith(trail)) {
+    return origin.slice(0, origin.length - trail.length);
+  } else {
+    return origin;
+  }
+}

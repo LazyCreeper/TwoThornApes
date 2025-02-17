@@ -54,7 +54,9 @@
     "052": "Files",
     "053": "Terminal",
     "054": "Console",
-    "055": "All"
+    "055": "All",
+    "056": "Connected",
+    "057": "No signal"
   },
   "general": {
     "search": "Search",
@@ -156,6 +158,8 @@
     "daemonVersion": "Daemon version",
     "lowDaemonVersion": "Incompatible Version",
     "connectStatus": "Connection",
+    "frontendConnection": "Frontend Connection",
+    "frontendConnectionError": "The web front end cannot establish a WebSocket connection with the node, please check the network proxy configuration or firewall configuration!",
     "online": "Online",
     "errorConnect": "Unable to connect to specified IP or incorrect token.",
     "offline": "Offline",
