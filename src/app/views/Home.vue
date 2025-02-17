@@ -167,8 +167,7 @@ import Dialog from "../../components/Dialog";
 import Panel from "../../components/Panel";
 import ValueCard from "../../components/ValueCard";
 import LineLabel from "../../components/LineLabel";
-import { request, requestUserInfo } from "../service/protocol";
-import { API_INSTANCE_LOW_PERMISSION_PUT } from "../service/common";
+import { requestUserInfo } from "../service/protocol";
 import { statusCodeToText } from "../service/instance_tools";
 export default {
   // eslint-disable-next-line vue/no-unused-components
@@ -226,25 +225,6 @@ export default {
     toEditInstance(row) {
       this.editInstance.is = true;
       this.editInstance.instance = JSON.parse(JSON.stringify(row));
-    },
-    async saveInstance() {
-      const row = this.editInstance.instance;
-      try {
-        await request({
-          method: "PUT",
-          url: API_INSTANCE_LOW_PERMISSION_PUT,
-          params: {
-            daemonId: row.serviceUuid,
-            uuid: row.instanceUuid
-          },
-          data: row
-        });
-        this.$message({ type: "success", message: this.$t("home.updateSuccess") });
-      } catch (error) {
-        this.$message({ type: "error", message: `error:${error.message}` });
-      }
-      this.editInstance.is = false;
-      await this.render();
     }
   },
   async mounted() {

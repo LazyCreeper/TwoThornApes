@@ -42,7 +42,6 @@ export const API_UPDATE_SETTING_WHEN_INSTALL = `${API_URL}/api/overview/install`
 
 export const API_INSTANCE = `${API_URL}/api/instance`;
 export const API_INSTANCE_UPLOAD = `${API_URL}/api/instance/upload`;
-export const API_INSTANCE_LOW_PERMISSION_PUT = `${API_URL}/api/protected_instance/low_permission`;
 export const API_INSTANCE_OPEN = `${API_URL}/api/protected_instance/open`;
 export const API_INSTANCE_STOP = `${API_URL}/api/protected_instance/stop`;
 export const API_INSTANCE_KILL = `${API_URL}/api/protected_instance/kill`;
