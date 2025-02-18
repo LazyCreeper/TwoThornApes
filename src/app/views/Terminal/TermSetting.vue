@@ -22,7 +22,7 @@
             </div>
           </div>
 
-          <div>
+          <!-- <div>
             <div class="row-mt">
               <div class="sub-title">
                 <p class="sub-title-title">{{ $t("termSet.ptySize") }}</p>
@@ -52,7 +52,7 @@
                 </el-input>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div>
             <div class="row-mt">
@@ -60,10 +60,11 @@
                 <p class="sub-title-title">{{ $t("views.Terminal_TermSetting.001") }}</p>
                 <p class="sub-title-info">{{ $t("views.Terminal_TermSetting.002") }}</p>
               </div>
-              <div class="row-mt">
+              <div class="row-mt flex flex-align-items-center" style="gap: 5px">
+                <el-input v-model="options.fontFamily" size="small"> </el-input>
                 <el-input v-model="options.fontSize" size="small" style="width: 80px"> </el-input>
                 &nbsp;
-                <span>px</span>
+                <span style="width: 50px">px</span>
               </div>
             </div>
           </div>
@@ -202,7 +203,7 @@
 import Dialog from "@/components/Dialog";
 import { request } from "@/app//service/protocol";
 import { API_INSTANCE_UPDATE } from "@/app/service/common";
-import { TERMINAL_CODE } from "../../service/common";
+import { TERMINAL_CODE, TERMINAL_FONT_FAMILY } from "../../service/common";
 export default {
   components: {
     Dialog
@@ -229,6 +230,7 @@ export default {
   data() {
     return {
       TERMINAL_CODE,
+      TERMINAL_FONT_FAMILY,
       v: false,
       options: {}
     };
@@ -243,6 +245,7 @@ export default {
     init() {
       this.options = this.config;
       this.options.fontSize = parseInt(localStorage.getItem("terminalFontSize") || 12);
+      this.options.fontFamily = localStorage.getItem("terminalFontFamily") || TERMINAL_FONT_FAMILY;
     },
     show() {
       this.$emit("update:visible", true);
@@ -270,6 +273,7 @@ export default {
           }
         });
         localStorage.setItem("terminalFontSize", this.options.fontSize);
+        localStorage.setItem("terminalFontFamily", this.options.fontFamily);
         this.options = {};
         this.close();
         this.$message({

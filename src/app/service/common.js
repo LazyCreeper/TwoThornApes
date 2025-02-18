@@ -92,6 +92,8 @@ export const TERMINAL_CODE = [
   { label: "UTF-16", value: "UTF-16" }
 ];
 
+export const TERMINAL_FONT_FAMILY = "Cascadia Code, Menlo, consolas, monospace, MiSans";
+
 export function sleep(t) {
   return new Promise((s) => {
     setTimeout(s, t);

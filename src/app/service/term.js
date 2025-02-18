@@ -2,6 +2,7 @@
 
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
+import { TERMINAL_FONT_FAMILY } from "./common";
 
 export const termColor = {};
 termColor.TERM_RESET = "\x1B[0m";
@@ -36,12 +37,13 @@ export function initTerminalWindow(elem, { fontSize }) {
     cursorStyle: "underline",
     cursorBlink: true,
     fontSize,
-	fontFamily: "Cascadia Code, Menlo, consolas,monospace,MiSans",
+    fontFamily: localStorage.getItem("terminalFontFamily") || TERMINAL_FONT_FAMILY,
     allowTransparency: true,
     theme: {
       background: "rgba(0,0,0,0)"
     }
   });
+  console.log(term);
 
   const fitAddon = new FitAddon();
   term.loadAddon(fitAddon);
