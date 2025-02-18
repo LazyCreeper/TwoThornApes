@@ -26,7 +26,7 @@
               <i class="el-icon-refresh"></i>
               {{ $t("general.refresh") }}
             </el-button>
-            <el-button size="small" @click="back" v-if="!backType">
+            <el-button size="small" @click="back" v-if="backType">
               <i class="el-icon-pie-chart"></i>
               {{ $t("fileManagerEditor.backToFileManager") }}
             </el-button>
@@ -354,14 +354,18 @@ export default {
           confirmButtonText: window.$t("CommonText.041"),
           cancelButtonText: window.$t("CommonText.042"),
           type: "warning"
-        }).then(() => {
-          this.$router.push({
-            path: `/file/${this.serviceUuid}/${this.instanceUuid}/`,
-            query: {
-              path: path.dirname(this.target)
-            }
+        })
+          .then(() => {
+            this.$router.push({
+              path: `/file/${this.serviceUuid}/${this.instanceUuid}/`,
+              query: {
+                path: path.dirname(this.target)
+              }
+            });
+          })
+          .catch((err) => {
+            console.log("err:", err);
           });
-        });
       } else {
         this.$router.push({
           path: `/file/${this.serviceUuid}/${this.instanceUuid}/`,
