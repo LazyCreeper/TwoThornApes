@@ -470,7 +470,7 @@
     "functionGroup": "实例功能组",
     "processConfig": "特定配置",
     "termSet": "终端设置",
-    "statusQuery": "状态查询",
+    "statusQuery": "Minecraft 状态获取",
     "eventTask": "事件任务",
     "instanceDetail": "高级实例设置",
     "lastDatetime": "最后启动",
@@ -498,7 +498,7 @@
       "portExample": "例如：25565"
     },
     "rconConfig": {
-      "1": "Steam Rcon 协议设置",
+      "1": "Steam Rcon 协议",
       "2":  "大部分 Steam 游戏服务器都需要 RCON 协议来支持命令的执行，同时也支持 Minecraft 游戏服务器，如果你在运行 Steam 游戏服务器时发现自带的控制台无法执行命令，可以尝试配置 RCON 协议来支持命令执行。",
       "3": "启用 Rcon 协议",
       "4": "一旦启用 Rcon 协议，那么接下来在控制台处输入的所有命令都将以 RCON 的方式发送，不再兼容原本的控制台程序。",

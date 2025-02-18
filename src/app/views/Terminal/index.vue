@@ -243,25 +243,7 @@
                   >{{ $t("router.schedule") }}</el-button
                 >
               </el-col>
-              <el-col :lg="12" :offset="0" class="row-mb">
-                <!-- <el-button
-                  :disabled="!available"
-                  icon="el-icon-data-line"
-                  style="width: 100%"
-                  size="small"
-                  @click="toPingPanel"
-                  >{{ $t("terminal.statusQuery") }}</el-button
-                > -->
-                <el-button
-                  :disabled="!available"
-                  icon="el-icon-data-line"
-                  style="width: 100%"
-                  size="small"
-                  @click="$refs.rconDialog.open()"
-                  >{{ $t("terminal.rconConfig.1") }}</el-button
-                >
-              </el-col>
-              <el-col :lg="12" :offset="0" class="row-mb">
+              <el-col :lg="isAllowFileManager ? 12 : 24" :offset="0" class="row-mb">
                 <el-button
                   :disabled="!available"
                   icon="el-icon-notebook-2"
@@ -271,7 +253,7 @@
                   >{{ $t("terminal.eventTask") }}</el-button
                 >
               </el-col>
-              <el-col v-if="isAllowFileManager" :lg="24" :offset="0" class="row-mb">
+              <el-col v-if="isAllowFileManager" :lg="12" :offset="0" class="row-mb">
                 <el-button
                   :disabled="!available"
                   icon="el-icon-folder-opened"
@@ -281,7 +263,26 @@
                   >{{ $t("instancesDetail.fileManager") }}</el-button
                 >
               </el-col>
-
+              <el-col :lg="24" :md="24" :offset="0" class="row-mb">
+                <el-button
+                  :disabled="!available"
+                  icon="el-icon-data-line"
+                  style="width: 100%"
+                  size="small"
+                  @click="toPingPanel"
+                  >{{ $t("terminal.statusQuery") }}</el-button
+                >
+              </el-col>
+              <el-col :lg="24" :md="24" :offset="0" class="row-mb">
+                <el-button
+                  :disabled="!available"
+                  icon="el-icon-data-line"
+                  style="width: 100%"
+                  size="small"
+                  @click="$refs.rconDialog.open()"
+                  >{{ $t("terminal.rconConfig.1") }}</el-button
+                >
+              </el-col>
               <el-col :lg="24" :offset="0" v-if="isTopPermission">
                 <el-button
                   :disabled="!available"
@@ -516,7 +517,7 @@
       </el-col>
     </el-row>
 
-    <!-- <Dialog v-model="pingConfigForm.is">
+    <Dialog v-model="pingConfigForm.is">
       <template #title>{{ $t("terminal.pingConfig.title") }}</template>
       <template #default>
         <div class="sub-title">
@@ -552,7 +553,7 @@
           </ItemGroup>
         </div>
       </template>
-    </Dialog> -->
+    </Dialog>
 
     <RconSettings
       ref="rconDialog"
