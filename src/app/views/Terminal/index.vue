@@ -364,6 +364,18 @@
           <template #title>
             <span v-if="!isGlobalTerminal">{{ $t("router.terminal") }}</span>
             <span v-else>{{ $t("CommonText.054") }}</span>
+            <el-tooltip
+              v-if="instanceInfo?.watcher && instanceInfo?.watcher > 1"
+              class=""
+              effect="dark"
+              :content="$t('已连接到此终端的网页数量，这可能会影响到你的终端宽度和高度')"
+              placement="top"
+            >
+              <span style="margin-left: 10px">
+                <i class="el-icon-monitor"></i>
+                {{ instanceInfo?.watcher }}
+              </span>
+            </el-tooltip>
           </template>
           <template #rtitle>
             <div v-if="!isGlobalTerminal">
@@ -373,7 +385,7 @@
                 :content="$t('terminal.clearTerminal')"
                 placement="top"
               >
-                <span class="terminal-right-botton" @click="term.clear()">
+                <span class="terminal-right-bottom" @click="term.clear()">
                   <i class="el-icon-delete"></i>
                 </span>
               </el-tooltip>
@@ -383,7 +395,7 @@
                 :content="$t('terminal.newFullScreen')"
                 placement="top"
               >
-                <span class="terminal-right-botton" @click="toFullTerminal(2)">
+                <span class="terminal-right-bottom" @click="toFullTerminal(2)">
                   <i class="el-icon-monitor"></i>
                 </span>
               </el-tooltip>
@@ -393,7 +405,7 @@
                 :content="$t('terminal.fullScreen')"
                 placement="top"
               >
-                <span class="terminal-right-botton" @click="toFullTerminal(1)">
+                <span class="terminal-right-bottom" @click="toFullTerminal(1)">
                   <i class="el-icon-full-screen"></i>
                 </span>
               </el-tooltip>
@@ -489,20 +501,20 @@
         <Panel v-if="!isGlobalTerminal">
           <template #title>{{ $t("terminal.cmdHistory") }}</template>
           <template #rtitle>
-            <span class="terminal-right-botton" @click="deleteCommandHistory">
+            <span class="terminal-right-bottom" @click="deleteCommandHistory">
               <i class="el-icon-delete"></i>
             </span>
           </template>
           <template #default>
-            <div v-if="commandhistory.length > 0">
+            <div v-if="commandHistory.length > 0">
               <ItemGroup>
                 <div
-                  v-for="(item, index) in commandhistory"
+                  v-for="(item, index) in commandHistory"
                   :key="index"
                   @click="selectHistoryCommand(item)"
                   size="small"
                   type="info"
-                  class="text-overflow-ellipsis cmdhistory"
+                  class="text-overflow-ellipsis cmdHistory"
                   style="max-width: 23%; cursor: pointer; font-size: 13px"
                 >
                   {{ item }}
@@ -510,7 +522,7 @@
               </ItemGroup>
             </div>
             <div v-else>
-              <p class="color-gray">{{ $t("terminal.noCmdHistory") }}</p>
+              <p class="color-gray">{{ $t("terminal.nocmdHistory") }}</p>
             </div>
           </template>
         </Panel>
@@ -611,7 +623,8 @@
       v-if="instanceInfo.config.docker"
       ref="dockerInfoDialog"
       :dockerInfo="instanceInfo.config.docker"
-    ></DockerInfo>
+    >
+    </DockerInfo>
 
     <Reinstall ref="reinstallDialog" :daemonId="serviceUuid" :instanceId="instanceUuid" />
 
@@ -680,7 +693,7 @@ export default {
         config: {}
       },
       renderTask: null,
-      commandhistory: [],
+      commandHistory: [],
       busy: false,
       bool: false,
       pingConfigForm: {
@@ -699,7 +712,13 @@ export default {
       },
       unavailableIp: null,
       playersChart: null,
-      isShowPlayersChart: false
+      isShowPlayersChart: false,
+
+      cachedSize: {
+        w: 80,
+        h: 40
+      },
+      fitAddonTask: null
     };
   },
   computed: {
@@ -867,17 +886,17 @@ export default {
     pushHistoryCommand(cmd) {
       if (cmd.trim().length <= 0) return;
       // Clear duplicate records with the same record as the current command
-      this.commandhistory = Array.from(new Set(this.commandhistory)).filter((r) => r != cmd);
+      this.commandHistory = Array.from(new Set(this.commandHistory)).filter((r) => r != cmd);
       // Insert the currently entered command forward
-      this.commandhistory.unshift(cmd);
-      if (this.commandhistory.length > 40) {
-        this.commandhistory.pop();
+      this.commandHistory.unshift(cmd);
+      if (this.commandHistory.length > 40) {
+        this.commandHistory.pop();
       }
-      localStorage.setItem("CommandHistory", JSON.stringify(this.commandhistory));
+      localStorage.setItem("CommandHistory", JSON.stringify(this.commandHistory));
     },
     deleteCommandHistory() {
       localStorage.setItem("CommandHistory", JSON.stringify([]));
-      this.commandhistory = [];
+      this.commandHistory = [];
     },
     startInterval() {
       if (!this.renderTask) this.renderTask = setInterval(this.renderFromSocket, 1000);
@@ -889,27 +908,15 @@ export default {
     initTerm() {
       // Create window and pass input event
       const terminalContainer = document.getElementById("terminal-container");
-      const ft = localStorage.getItem("terminalFontSize");
-      if (!ft) {
-        this.term = initTerminalWindow(terminalContainer, {
-          fontSize: 12
-        });
-      } else {
-        this.term = initTerminalWindow(terminalContainer, {
-          fontSize: localStorage.getItem("terminalFontSize")
-        });
-      }
+      const fontSize = localStorage.getItem("terminalFontSize") || 12;
+      this.term = initTerminalWindow(terminalContainer, { fontSize });
       this.term.onData(this.sendInput);
       this.onChangeTerminalContainerHeight();
     },
     // Fixed height and width based on backend configuration settings in PTY mode
     resizePtyTerminalWindow() {
-      if (this.instanceInfo.config?.terminalOption?.pty) {
-        this.term.resize(
-          this.instanceInfo.config?.terminalOption?.ptyWindowCol,
-          this.instanceInfo.config?.terminalOption?.ptyWindowRow
-        );
-      }
+      this.term.fitAddon.fit();
+      this.term.resize(this.term.cols - 1, this.term.rows - 1);
     },
     // Open the instance (Ajax)
     async openInstance() {
@@ -1189,7 +1196,7 @@ export default {
       const ch = localStorage.getItem("CommandHistory");
       // record the history of executed commands
       if (ch) {
-        this.commandhistory = JSON.parse(ch);
+        this.commandHistory = JSON.parse(ch);
       } else {
         localStorage.setItem("CommandHistory", JSON.stringify([]));
       }
@@ -1354,7 +1361,7 @@ export default {
 </script>
 
 <style scoped>
-.cmdhistory {
+.cmdHistory {
   cursor: pointer;
   font-size: 13px;
   margin: 2px;
@@ -1367,7 +1374,7 @@ export default {
   transition: all 0.3s;
 }
 
-.cmdhistory:hover {
+.cmdHistory:hover {
   border: 1px solid #4eff42;
   box-shadow: 0 0 5px #42ff85;
   padding: 5px 12px 5px 12px;
@@ -1412,7 +1419,7 @@ export default {
   z-index: 99;
 }
 
-.terminal-right-botton {
+.terminal-right-bottom {
   font-size: 14px;
   padding: 2px 6px;
   margin: 0 2px;
@@ -1421,7 +1428,7 @@ export default {
   border-radius: 4px;
 }
 
-.terminal-right-botton:hover {
+.terminal-right-bottom:hover {
   background-color: rgb(219, 219, 219);
 }
 
@@ -1448,6 +1455,7 @@ export default {
 .full-terminal-button:hover {
   background-color: rgb(101, 101, 101);
 }
+
 .full-terminal-logo {
   z-index: 100;
   text-align: center;
