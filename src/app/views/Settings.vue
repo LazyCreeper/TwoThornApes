@@ -323,7 +323,7 @@
       <template #title>{{ themeInfo.title }}</template>
       <template #default>
         <div v-if="!themeInfo.haveNew" class="themeInfoDialog" style="text-align: center">
-          <h1>你的MCSM主题为最新版本！</h1>
+          <h1>{{ $t("settings.aboutTheme.001") }}</h1>
           <div class="row-mt">
             <ItemGroup>
               <el-button size="small" @click="themeInfo.dialog = false">{{
@@ -334,15 +334,17 @@
         </div>
         <div v-else class="themeInfoDialog">
           <h1>
-            当前版本：{{ themeInfo.version }}&nbsp;&nbsp;|&nbsp;&nbsp;最新版本：
+            {{ $t("settings.aboutTheme.002") }}：{{ themeInfo.version }}&nbsp;&nbsp;|&nbsp;&nbsp;{{
+              $t("settings.aboutTheme.003")
+            }}：
             <span class="newVersion">{{ themeInfo.haveNew }}</span>
           </h1>
-          <h1>更新内容：</h1>
-          <wow v-html="themeInfo.content"></wow>
+          <h1>{{ $t("settings.aboutTheme.004") }}：</h1>
+          <wow class="sub-title-info" v-html="themeInfo.content"></wow>
           <img src="../../assets/like.gif" />
           <br />
           <br />
-          <b>你可以前往主题发布页获取更新</b>
+          <b>{{ $t("settings.aboutTheme.005") }}</b>
           <div class="row-mt">
             <ItemGroup>
               <el-button size="small" @click="themeInfo.dialog = false">{{
@@ -375,7 +377,7 @@ export default {
         dialog: false,
         title: "",
         content: "",
-        version: "3.1",
+        version: "3.2",
         haveNew: false
       }
     };

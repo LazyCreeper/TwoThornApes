@@ -996,7 +996,12 @@
       "goLink": "Click to go",
       "qrCode": "Donation QR Code:",
       "ver": "Current Theme Version: ",
-      "checkVer": "Check for Update"
+      "checkVer": "Check for Update",
+      "001": "Your MCSManage theme is the latest version!",
+      "002": "Current version",
+      "003": "Latest version",
+      "004": "Update content",
+      "005": "You can go to the Lazy's Blog to get updates"
     },
     "aboutTitle2": "https://github.com/MCSManager/MCSManager/blob/master/LICENSE",
     "reverseProxyModeInfo": "If you are using a reverse proxy to access the panel, turn this option on. \nThe panel will obtain the real IP from the \\\"X-Real-IP\\\" in the request header.",
@@ -1039,7 +1044,8 @@
       "TXT_CODE_2093cc1a": "Purchase history query",
       "TXT_CODE_a3de630": "Please enter the redemption code used when purchasing",
       "TXT_CODE_cb61062d": "Unable to view",
-      "TXT_CODE_f3209427": "Panel address"
+      "TXT_CODE_f3209427": "Panel address",
+      "TXT_CODE_f77093c8": "Renewal"
     }
   },
   "home": {
