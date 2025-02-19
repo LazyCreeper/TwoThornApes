@@ -95,6 +95,7 @@
           </el-row>
         </template>
       </Panel>
+
       <Panel>
         <template #title>{{ $t("settings.limitAndSecurity") }}</template>
         <template #default>
@@ -188,6 +189,47 @@
                     <span v-html="$t('settings.attentionInfo')"></span>
                   </p>
                 </div>
+              </div>
+            </el-col>
+          </el-row>
+        </template>
+      </Panel>
+
+      <Panel>
+        <template #title>{{ $t("settings.businessMode.001") }}</template>
+        <template #default>
+          <el-row :gutter="20">
+            <el-col :md="12">
+              <div class="config-item" style="margin-top: 0px">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.businessMode.TXT_CODE_180884da") }}</p>
+                  <p class="sub-title-info">
+                    {{ $t("settings.businessMode.TXT_CODE_3f227bcf") }}
+                  </p>
+                </div>
+                <el-select
+                  v-model="settings.businessMode"
+                  :placeholder="$t('general.pleaseSelect')"
+                >
+                  <el-option :label="$t('general.allow')" :value="true"></el-option>
+                  <el-option :label="$t('general.forbid')" :value="false"></el-option>
+                </el-select>
+              </div>
+              <div class="config-item">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("settings.businessMode.TXT_CODE_d31196db") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.businessMode.TXT_CODE_59c39e03") }}</p>
+                </div>
+                <el-button :disabled="!settings.businessMode" @click="gotoBusinessCenter">{{
+                  $t("settings.businessMode.TXT_CODE_aa43b248")
+                }}</el-button>
+              </div>
+              <div class="config-item">
+                <div class="sub-title">
+                  <p class="sub-title-title">{{ $t("instancesDetail.gid") }}</p>
+                  <p class="sub-title-info">{{ $t("settings.businessMode.TXT_CODE_678164d7") }}</p>
+                </div>
+                <el-input placeholder="eg: 114514" v-model="settings.businessId"></el-input>
               </div>
             </el-col>
           </el-row>
@@ -407,6 +449,10 @@ export default {
         this.themeInfo.dialog = true;
         this.themeInfo.haveNew = summer;
       }
+    },
+
+    gotoBusinessCenter() {
+      window.open("https://redeem.mcsmanager.com/", "_blank");
     }
   },
 

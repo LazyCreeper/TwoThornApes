@@ -999,7 +999,29 @@
     },
     "aboutTitle2": "https://github.com/MCSManager/MCSManager/blob/master/LICENSE",
     "reverseProxyModeInfo": "If you are using a reverse proxy to access the panel, turn this option on. \nThe panel will obtain the real IP from the \\\"X-Real-IP\\\" in the request header.",
-    "reverseProxyMode": "Reverse Proxy Mode"
+    "reverseProxyMode": "Reverse Proxy Mode",
+    "businessMode": {
+      "001": "Business Mode",
+      "TXT_CODE_180884da": "Enable business mode",
+      "TXT_CODE_3f227bcf": "Enable business mode, the panel will be allowed to connect to the MCSManager business control panel, supporting the customization of packages through an online platform and the sale of cards to users.",
+      "TXT_CODE_d31196db": "Business Control Panel",
+      "TXT_CODE_59c39e03": "MCSManager Redemption Center will assist you in completing your business plan.",
+      "TXT_CODE_678164d7": "You can find the node ID in the 'Business Control Panel - Node List'.",
+      "TXT_CODE_84cf0951": "Unable to retrieve business information.",
+      "TXT_CODE_d080f2d7": "Reload",
+      "TXT_CODE_22510c5c": "Login account",
+      "TXT_CODE_17b3748b": "Check purchase history",
+      "TXT_CODE_4bf8a52f": "Reference price",
+      "TXT_CODE_ef27fda1": "After-sales channel:",
+      "TXT_CODE_ec0b25f5": "You can copy this page address to share with users over the internet, and users can access this page without logging in.",
+      "TXT_CODE_e5bf0df1": "Unable to retrieve business information temporarily, the server may be under maintenance, please try again later!",
+      "TXT_CODE_4ef3f800": "If you are a merchant, please pay attention to the announcements on https://redeem.mcsmanager.com or the official website for assistance.",
+      "TXT_CODE_aa43b248": "Enter the control panel",
+      "TXT_CODE_4770de17": "Business information",
+      "TXT_CODE_381f8f22": "Product list",
+      "TXT_CODE_2dbd3cd3": "Business control panel"
+    }
+
   },
   "home": {
     "totalInstance": "Total Number of Instances",

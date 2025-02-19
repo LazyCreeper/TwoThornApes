@@ -499,7 +499,7 @@
     },
     "rconConfig": {
       "1": "Steam Rcon 协议",
-      "2":  "大部分 Steam 游戏服务器都需要 RCON 协议来支持命令的执行，同时也支持 Minecraft 游戏服务器，如果你在运行 Steam 游戏服务器时发现自带的控制台无法执行命令，可以尝试配置 RCON 协议来支持命令执行。",
+      "2": "大部分 Steam 游戏服务器都需要 RCON 协议来支持命令的执行，同时也支持 Minecraft 游戏服务器，如果你在运行 Steam 游戏服务器时发现自带的控制台无法执行命令，可以尝试配置 RCON 协议来支持命令执行。",
       "3": "启用 Rcon 协议",
       "4": "一旦启用 Rcon 协议，那么接下来在控制台处输入的所有命令都将以 RCON 的方式发送，不再兼容原本的控制台程序。",
       "5": "游戏服务器 IP",
@@ -1000,7 +1000,28 @@
     },
     "aboutTitle2": "https://github.com/MCSManager/MCSManager/blob/master/LICENSE",
     "reverseProxyMode": "反向代理模式",
-    "reverseProxyModeInfo": "如果您正在使用反向代理访问面板，请开启此选项。面板将会从请求头的“X-Real-IP”来获取真实IP。"
+    "reverseProxyModeInfo": "如果您正在使用反向代理访问面板，请开启此选项。面板将会从请求头的“X-Real-IP”来获取真实IP。",
+    "businessMode": {
+      "001": "商家模式",
+      "TXT_CODE_180884da": "是否开启商家模式",
+      "TXT_CODE_3f227bcf": "开启商家模式后，面板将被允许对接到 MCSManager 商家控制台，支持通过在线平台定制套餐，并使用卡密的形式出售给用户",
+      "TXT_CODE_d31196db": "商家控制台",
+      "TXT_CODE_59c39e03": "MCSManager 兑换中心将协助你完成你的商业计划。",
+      "TXT_CODE_678164d7": "在 “商家控制台 - 节点列表” 中可以找到节点ID",
+      "TXT_CODE_84cf0951": "无法获取商家信息",
+      "TXT_CODE_d080f2d7": "重新加载",
+      "TXT_CODE_22510c5c": "登录账号",
+      "TXT_CODE_17b3748b": "查询购买历史",
+      "TXT_CODE_4bf8a52f": "参考价",
+      "TXT_CODE_ef27fda1": "售后渠道：",
+      "TXT_CODE_ec0b25f5": "您可以将此页面地址复制通过互联网分享给用户，用户无需登录即可访问此页面。",
+      "TXT_CODE_e5bf0df1": "暂时无法获取商家信息，可能服务器正在维护中，请稍后再稍后再尝试！",
+      "TXT_CODE_4ef3f800": "如果您是商家，请留意 https://redeem.mcsmanager.com 或官网网站的公告以获取帮助。",
+      "TXT_CODE_aa43b248": "进入控制台",
+      "TXT_CODE_4770de17": "商家信息",
+      "TXT_CODE_381f8f22": "商品列表",
+      "TXT_CODE_2dbd3cd3": "进入商家控制台"
+    }
   },
   "home": {
     "totalInstance": "实例总计",
