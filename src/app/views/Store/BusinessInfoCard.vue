@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useShopInfo } from "../../hooks/useStore";
 import i18n from "../../i18n";
+import store from "../../store/index";
 import md5 from "md5";
 import UseRedeemDialog from "./UseRedeemDialog.vue";
 import PurchaseQueryDialog from "./PurchaseQueryDialog.vue";
-const t = i18n.global.t;
 
+const t = i18n.global.t;
+const isLogin = computed(() => !store.state.userInfo.uuid);
 const { isLoading, isError, ispInfo } = useShopInfo();
 
 const useRedeemDialog = ref();
@@ -72,6 +74,9 @@ const purchaseQueryDialog = ref();
         </div>
 
         <div class="flex flex-space-around" style="margin: 20px 0">
+          <el-button v-if="isLogin" type="primary" @click="$router.push('/login')">{{
+            t("settings.businessMode.TXT_CODE_22510c5c")
+          }}</el-button>
           <el-button type="success" @click="useRedeemDialog?.openDialog">{{
             t("settings.businessMode.005")
           }}</el-button>

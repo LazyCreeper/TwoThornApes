@@ -29,13 +29,11 @@ const stateModel = {
     userName: "",
     loginTime: "",
     registerTime: "",
-    permission: 10,
+    permission: 0,
     instances: [],
     apiKey: ""
   },
-  panelStatus: {
-
-  },
+  panelStatus: {},
   gameProfile: null,
   onlineNotice: null
 };

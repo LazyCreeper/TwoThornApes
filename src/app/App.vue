@@ -94,7 +94,6 @@ export default {
       setTimeout(() => router.push({ path: "/install" }), 1200);
       return;
     }
-
     try {
       // After the first refresh, try to get user data once
       // If it fails, navigate to / view to further decide the jump route
@@ -107,6 +106,7 @@ export default {
     }
 
     this.loading = false;
+    localStorage.setItem("lastPath", window.location.hash);
     if (needToRoot) return router.push({ path: "/" });
   },
 

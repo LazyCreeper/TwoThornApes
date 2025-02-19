@@ -41,7 +41,10 @@ export default {
       } catch (error) {
         console.log("Root.vue setupUserInfo() err:");
         console.log(error);
-        if (!router.currentRoute.value.path.startsWith("/store")) router.push({ path: "/login" });
+        // What can i say?
+        if (localStorage.getItem("lastPath").startsWith("#/store"))
+          return router.push({ path: "/store" });
+        router.push({ path: "/login" });
       }
     }
   },
