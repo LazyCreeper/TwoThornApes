@@ -1001,7 +1001,9 @@
       "002": "Current version",
       "003": "Latest version",
       "004": "Update content",
-      "005": "You can go to the Lazy's Blog to get updates"
+      "005": "You can go to the Lazy's Blog to get updates",
+      "006": "Whoops ~ヾ(≧▽≦*)o——",
+      "009": "Discover a new version"
     },
     "aboutTitle2": "https://github.com/MCSManager/MCSManager/blob/master/LICENSE",
     "reverseProxyModeInfo": "If you are using a reverse proxy to access the panel, turn this option on. \nThe panel will obtain the real IP from the \\\"X-Real-IP\\\" in the request header.",

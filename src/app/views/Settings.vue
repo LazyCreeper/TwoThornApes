@@ -442,11 +442,11 @@ export default {
     checkThemeUpdate() {
       const { summer, summerText } = window.ver2;
       if (this.themeInfo.version === summer) {
-        this.themeInfo.title = "偶吔~ヾ(≧▽≦*)o——";
+        this.themeInfo.title = this.$t("settings.aboutTheme.006");
         this.themeInfo.haveNew = false;
         this.themeInfo.dialog = true;
       } else {
-        this.themeInfo.title = "发现新版本";
+        this.themeInfo.title = this.$t("settings.aboutTheme.007");
         this.themeInfo.content = summerText;
         this.themeInfo.dialog = true;
         this.themeInfo.haveNew = summer;
