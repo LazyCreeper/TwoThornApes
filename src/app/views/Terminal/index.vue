@@ -204,6 +204,21 @@
                     </template>
                   </el-popconfirm>
                 </el-col>
+                <el-col v-if="isBusinessMode" :lg="24">
+                  <el-popconfirm :title="$t('terminal.confirmOperate')" @confirm="renewInstance">
+                    <template #reference>
+                      <el-button
+                        icon="el-icon-money"
+                        type="warning"
+                        style="width: 100%"
+                        size="small"
+                        class="row-mt"
+                        plain
+                        >{{ $t("settings.businessMode.TXT_CODE_f77093c8") }}</el-button
+                      >
+                    </template>
+                  </el-popconfirm>
+                </el-col>
               </el-row>
             </div>
           </template>
@@ -629,6 +644,8 @@
     <Reinstall ref="reinstallDialog" :daemonId="serviceUuid" :instanceId="instanceUuid" />
 
     <ExtraEdit ref="extraEditDialog" :daemonId="serviceUuid" :instanceId="instanceUuid" />
+
+    <UseRedeemDialog ref="renewDialog" :instanceId="instanceUuid" />
   </div>
 </template>
 
@@ -663,6 +680,7 @@ import DockerInfo from "./DockerInfo";
 import Reinstall from "./Reinstall.vue";
 import RconSettings from "./RconSettings.vue";
 import ExtraEdit from "./ExtraEdit.vue";
+import UseRedeemDialog from "../Store/UseRedeemDialog.vue";
 import { INSTANCE_TYPE_DEF_CONFIG } from "@/app/service/instance_type";
 import { dockerPortsArray } from "../../utils";
 export default {
@@ -674,7 +692,8 @@ export default {
     DockerInfo,
     Reinstall,
     RconSettings,
-    ExtraEdit
+    ExtraEdit,
+    UseRedeemDialog
   },
   data: function () {
     return {
@@ -774,6 +793,9 @@ export default {
         this.$store.state.userInfo.permission < 10 &&
         this.$store.state.panelStatus.settings.allowChangeCmd
       );
+    },
+    isBusinessMode() {
+      return this.$store.state.panelStatus.settings.businessMode;
     }
   },
   methods: {
@@ -1049,6 +1071,11 @@ export default {
     // 重设实例模板
     async resetInstance() {
       this.$refs.reinstallDialog.open();
+    },
+
+    // 续费
+    async renewInstance() {
+      this.$refs.renewDialog.openDialog();
     },
     sendResize(w, h) {
       if (this.instanceInfo.config.processType !== "docker") return;
