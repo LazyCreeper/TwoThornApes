@@ -31,7 +31,11 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
               <Header v-bind:breadcrumbsList="breadCrumbs" :aside="toAside" />
             </el-col>
           </el-row>
-          <div v-loading="loading" style="min-height: 50px" element-loading-background="rgba(0, 0, 0, 0.5)">
+          <div
+            v-loading="loading"
+            style="min-height: 50px"
+            element-loading-background="rgba(0, 0, 0, 0.5)"
+          >
             <router-view v-if="!loading"></router-view>
           </div>
         </div>
@@ -43,8 +47,7 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 <script>
 import Aside from "../components/Aside";
 import Header from "../components/Header";
-// eslint-disable-next-line no-unused-vars
-import { requestPanelStatus, setupUserInfo } from "./service/protocol.js";
+import { setupUserInfo } from "./service/protocol.js";
 import router from "./router";
 import store from "./store";
 
@@ -109,7 +112,6 @@ export default {
 
   async mounted() {
     router.beforeEach((to, from, next) => {
-      console.log("Router:", from, "->", to);
       this.breadCrumbs = [
         {
           title: to.name,

@@ -11,10 +11,10 @@ import Analysis from "./views/Analysis";
 import GlobalFileManager from "./views/GlobalFileManager";
 import GlobalTerminalEntry from "./views/GlobalTerminal";
 import FileManagerCopy from "./views/GlobalFileManager/copy";
-import News from "./views/News";
+// import News from "./views/News";
 import Container from "./views/Container";
 import ImageManager from "./views/ImageManager";
-import Extension from "./views/Extension";
+// import Extension from "./views/Extension";
 import Settings from "./views/Settings";
 import Terminal from "./views/Terminal";
 import InstanceDetail from "./views/InstanceDetail";
@@ -24,13 +24,13 @@ import FileManager from "./views/FileManager";
 import FileManagerEditor from "./views/FileManagerEditor";
 import Home from "./views/Home";
 import Login from "./views/Login";
-import Trigger from "./views/Trigger";
+// import Trigger from "./views/Trigger";
 import Root from "./views/Root";
 import UserResources from "./views/UserResources";
 import ProcessConfig from "./views/ProcessConfig";
 import ProcessConfigFile from "./views/ProcessConfigFile";
 import Schedule from "./views/Schedule";
-import Update from "./views/Update";
+// import Update from "./views/Update";
 import Quickstart from "./views/quickstart";
 import Install from "./views/Install";
 import UnavailableTerminal from "./views/Terminal/UnavailableTerminal";
@@ -76,11 +76,11 @@ const routes = [
     name: "analysis",
     component: Analysis
   },
-  {
-    path: "/news",
-    name: "news",
-    component: News
-  },
+  // {
+  //   path: "/news",
+  //   name: "news",
+  //   component: News
+  // },
   {
     path: "/container",
     name: "container",
@@ -92,16 +92,16 @@ const routes = [
     component: ImageManager,
     meta: { activeMenu: "/container" }
   },
-  {
-    path: "/trigger",
-    name: "trigger",
-    component: Trigger
-  },
-  {
-    path: "/extension",
-    name: "extension",
-    component: Extension
-  },
+  // {
+  //   path: "/trigger",
+  //   name: "trigger",
+  //   component: Trigger
+  // },
+  // {
+  //   path: "/extension",
+  //   name: "extension",
+  //   component: Extension
+  // },
   {
     path: "/settings",
     name: "settings",
@@ -183,11 +183,11 @@ const routes = [
     name: "quickStart",
     component: Quickstart
   },
-  {
-    path: "/update",
-    name: "update",
-    component: Update
-  },
+  // {
+  //   path: "/update",
+  //   name: "update",
+  //   component: Update
+  // },
   {
     path: "/install",
     name: "install",
@@ -214,6 +214,11 @@ const routes = [
     name: "globalTerminal",
     component: Terminal,
     meta: { activeMenu: "/global_terminal_entry" }
+  },
+  {
+    path: "/store",
+    name: "store",
+    component: () => import("./views/Store/index.vue")
   }
 ];
 
