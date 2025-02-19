@@ -42,13 +42,19 @@
           <template #title>{{ $t("aside.user") }}</template>
         </el-menu-item>
       </el-menu-item-group>
+      <el-menu-item-group v-if="isBusinessMode">
+        <template #title>{{ $t("router.extension") }}</template>
+        <el-menu-item key="/store" index="/store">
+          <i class="el-icon-shopping-bag-1"></i>
+          <template #title>{{ $t("router.store") }}</template>
+        </el-menu-item>
+      </el-menu-item-group>
       <el-menu-item-group>
         <template #title>{{ $t("aside.more") }}</template>
         <el-menu-item key="/settings" index="/settings">
           <i class="el-icon-setting"></i>
           <template #title>{{ $t("router.settings") }}</template>
         </el-menu-item>
-
         <el-menu-item v-if="hasElectron()" @click="toElectronUI">
           <i class="el-icon-postcard"></i>
           <template #title>{{ $t("aside.backElectronMain") }}</template>
@@ -80,6 +86,9 @@ export default {
     },
     isTopPermission() {
       return this.$store.state.userInfo.permission >= 10;
+    },
+    isBusinessMode() {
+      return this.$store.state.panelStatus.settings.businessMode;
     }
   },
   methods: {

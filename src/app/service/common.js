@@ -76,6 +76,9 @@ export const API_FORWARD_REQUEST = `${API_URL}/api/instance/forward`;
 export const API_BIND_2FA = `${API_URL}/api/auth/bind2fa`;
 export const API_CONFIRM_2FA = `${API_URL}/api/auth/confirm2fa`;
 
+export const API_REQUEST_REDEEM_PLATFORM = `${API_URL}/api/exchange/request_redeem_platform`;
+export const API_REDEEM_PRODUCTS = `/api/instances/query_products`;
+
 export const QUERY_PUBLIC_IP = "http://statistics.mcsmanager.com/ip";
 
 export const GLOBAL_INSTANCE_UUID = "global0001";

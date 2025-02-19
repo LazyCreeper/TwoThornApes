@@ -1133,7 +1133,7 @@
     "container": "容器镜像",
     "imageManager": "镜像管理",
     "trigger": "面板触发器",
-    "extension": "面板扩展",
+    "extension": "扩展功能",
     "settings": "设置",
     "newImage": "创建镜像",
     "terminal": "实例控制台",
@@ -1153,7 +1153,8 @@
     "globalFileManagerEntry": "节点文件管理",
     "globalFileManager": "节点文件管理",
     "globalTerminalEntry": "节点命令终端",
-    "globalTerminal": "节点终端"
+    "globalTerminal": "节点终端",
+    "store": "店铺"
   },
   "aside": {
     "basic": "基础功能",

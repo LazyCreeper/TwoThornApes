@@ -41,7 +41,7 @@ export default {
       } catch (error) {
         console.log("Root.vue setupUserInfo() err:");
         console.log(error);
-        router.push({ path: "/login" });
+        if (!router.currentRoute.value.path.startsWith("/store")) router.push({ path: "/login" });
       }
     }
   },

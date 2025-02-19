@@ -1153,7 +1153,8 @@
     "globalFileManager": "Node File Management",
     "globalFileManagerEntry": "Node File Management",
     "globalTerminal": "Node Terminal",
-    "globalTerminalEntry": "Node Terminal"
+    "globalTerminalEntry": "Node Terminal",
+    "store": "Store"
   },
   "aside": {
     "basic": "Basic",
