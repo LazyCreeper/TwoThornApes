@@ -86,11 +86,12 @@ const purchaseQueryDialog = ref();
         </div>
       </div>
       <div v-else>
-        <el-empty
-          :image="require('../../../assets/p.gif')"
-          :image-size="250"
-          :description="t('settings.businessMode.TXT_CODE_e5bf0df1')"
-        ></el-empty>
+        <el-empty :image="require('../../../assets/p.gif')" :image-size="250">
+          <template #description>
+            <div class="sub-title-info">{{ t("settings.businessMode.TXT_CODE_e5bf0df1") }}</div>
+            <div class="sub-title-info">{{ t("settings.businessMode.TXT_CODE_4ef3f800") }}</div>
+          </template>
+        </el-empty>
       </div>
     </template>
   </Panel>
