@@ -1,9 +1,7 @@
 <script setup>
-import { onMounted } from "vue";
-import Panel from "../../../components/Panel";
+// import { onMounted } from "vue";
 import ShelvesCard from "./ShelvesCard.vue";
-
-onMounted(() => {});
+import BusinessInfoCard from "./BusinessInfoCard.vue";
 </script>
 
 <template>
@@ -12,17 +10,7 @@ onMounted(() => {});
       <ShelvesCard />
     </el-col>
     <el-col :md="8" :offset="0">
-      <Panel>
-        <template #title>商家信息</template>
-        <template #default>
-          <div style="height: 280px; overflow: auto">
-            <div class="sub-title">
-              <div class="sub-title-title"></div>
-              <div class="sub-title-info"></div>
-            </div>
-          </div>
-        </template>
-      </Panel>
+      <BusinessInfoCard />
     </el-col>
   </el-row>
 </template>

@@ -4,7 +4,7 @@ import { useShopInfo } from "../../hooks/useStore";
 import i18n from "../../i18n";
 const t = i18n.global.t;
 
-const { products: shopItems, isLoading, isError } = useShopInfo();
+const { products, isLoading, isError } = useShopInfo();
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const { products: shopItems, isLoading, isError } = useShopInfo();
     <template #title>{{ t("settings.businessMode.TXT_CODE_381f8f22") }}</template>
     <template #default>
       <div v-if="!isError" style="min-height: 280px; overflow: auto">
-        <div class="sub-title prods" v-for="(item, index) in shopItems" :key="index">
+        <div class="sub-title prods" v-for="(item, index) in products" :key="index">
           <div class="sub-title-title flex flex-space-between flex-wrap row-mb">
             {{ item.title }}
             <small style="opacity: 0.7">Product ID {{ item.productId }}</small>
@@ -33,7 +33,10 @@ const { products: shopItems, isLoading, isError } = useShopInfo();
         </div>
       </div>
       <div v-else>
-        <el-empty :image="require('../../../assets/p.gif')" :image-size="250"></el-empty>
+        <el-empty
+          :image="require('../../../assets/notAnyInstance.gif')"
+          :image-size="250"
+        ></el-empty>
       </div>
     </template>
   </Panel>

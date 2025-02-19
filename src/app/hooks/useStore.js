@@ -48,7 +48,7 @@ export function useShopInfo() {
     loadProducts,
     isLoading,
     state,
-    shopInfo: computed(() => state.value?.ispInfo),
+    ispInfo: computed(() => state.value?.ispInfo),
     products: computed(() => state.value?.products)
   };
 }
