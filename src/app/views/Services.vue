@@ -102,10 +102,7 @@
         </el-table-column>
         <el-table-column :label="$t('services.version')">
           <template #default="scope">
-            <span
-              class="color-green"
-              v-if="isCorrectDaemonVersion(scope.row.version, specifiedDaemonVersion)"
-            >
+            <span class="color-green" v-if="scope.row.version === specifiedDaemonVersion">
               <i class="el-icon-circle-check"></i>
               {{ scope.row.version }}
             </span>
@@ -280,10 +277,7 @@
                   <el-col :md="12" :xs="12" :lg="6" :offset="0">
                     <p>{{ $t("services.version") }}</p>
                     <div v-if="node.instance">
-                      <span
-                        class="color-green"
-                        v-if="isCorrectDaemonVersion(node.version, specifiedDaemonVersion)"
-                      >
+                      <span class="color-green" v-if="node.version === specifiedDaemonVersion">
                         <i class="el-icon-circle-check"></i>
                         {{ node.version }}
                       </span>
@@ -799,11 +793,11 @@ export default {
     openPrinciplePanel() {
       this.isOpenPrinciplePanel = true;
     },
-    isCorrectDaemonVersion(remoteVersion = "", specifiedDaemonVersion = "") {
-      const [major1, minor1] = remoteVersion.split(".");
-      const [major2, minor2] = specifiedDaemonVersion.split(".");
-      return major1 === major2 && minor1 === minor2;
-    },
+    // isCorrectDaemonVersion(remoteVersion = "", specifiedDaemonVersion = "") {
+    //   const [major1, minor1] = remoteVersion.split(".");
+    //   const [major2, minor2] = specifiedDaemonVersion.split(".");
+    //   return major1 === major2 && minor1 === minor2;
+    // },
     toDaemonTerminalPage(uuid) {
       this.$router.push({
         path: `/global_terminal/${uuid}/global0001/`

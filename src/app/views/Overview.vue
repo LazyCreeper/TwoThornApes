@@ -76,7 +76,9 @@
       <Panel v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
         <template #title>{{ $t("overview.daemonOverview") }}</template>
         <template #default>
-          <p v-html="$t('overview.daemonOverviewInfo', { panelVersion, specifiedDaemonVersion })"></p>
+          <p
+            v-html="$t('overview.daemonOverviewInfo', { panelVersion, specifiedDaemonVersion })"
+          ></p>
           <el-table :data="servicesStatus" style="width: 100%" size="small">
             <el-table-column prop="ip" :label="$t('overview.addr')" width="180"></el-table-column>
             <el-table-column prop="port" :label="$t('overview.port')" width="90"></el-table-column>
@@ -90,17 +92,13 @@
 
             <el-table-column prop="version" :label="$t('overview.daemonVersion')" width="120">
               <template #default="scope">
-                <span
-                  class="color-green"
-                  v-if="scope.row.version && scope.row.version === specifiedDaemonVersion"
-                >
+                <span class="color-green" v-if="scope.row?.version === specifiedDaemonVersion">
                   <i class="el-icon-circle-check"></i>
                   {{ scope.row.version }}
                 </span>
-                <span class="color-red">
+                <span class="color-red" v-else>
                   <el-tooltip
                     effect="dark"
-                    v-if="scope.row.version !== specifiedDaemonVersion && scope.row.status"
                     placement="top"
                     :content="$t('overview.lowDaemonVersion')"
                   >
