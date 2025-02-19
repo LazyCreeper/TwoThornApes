@@ -175,6 +175,7 @@
     "Q&A": "Frequently Asked Questions"
   },
   "instances": {
+    "001": "Instances",
     "instancesList": "Instance List",
     "selectDaemon": "Choose a Daemon",
     "searchInstanceName": "Search by name",
@@ -498,7 +499,7 @@
     },
     "rconConfig": {
       "1": "Steam Rcon Protocol Settings",
-      "2":  "Most Steam game servers require RCON protocol to support command execution, including Minecraft game servers. If you find that the built-in console cannot execute commands when running a Steam game server, try configuring RCON protocol to support command execution.",
+      "2": "Most Steam game servers require RCON protocol to support command execution, including Minecraft game servers. If you find that the built-in console cannot execute commands when running a Steam game server, try configuring RCON protocol to support command execution.",
       "3": "Enable Rcon Protocol",
       "4": "Once Rcon Protocol is enabled, all commands entered at the console will be sent in RCON mode and will no longer be compatible with the original console program.",
       "5": "Game Server IP",
@@ -749,6 +750,12 @@
     "select": "Select"
   },
   "userDetail": {
+    "1": "Scan the QR code using Google Authentication or other universal 2FA tools.",
+    "2": "Click the 'I have scanned' button.",
+    "3": "I have scanned",
+    "4": "Rebind",
+    "5": "Start Binding",
+    "6": "Disable",
     "basicInfo": "Basic Info",
     "uuid": "UUID",
     "status": "Account Status",
@@ -779,13 +786,7 @@
     "inputPasswd": "Pleae provde your password. Leave empty for no change.",
     "notStandard": "Incorrect password length, has to be 9 to 36.",
     "notSame": "Password does not match",
-    "2fa": "Two-Factor Authentication",
-    "1": "Scan the QR code using Google Authentication or other universal 2FA tools.",
-    "2": "Click the 'I have scanned' button.",
-    "3": "I have scanned",
-    "4": "Rebind",
-    "5": "Start Binding",
-    "6": "Disable"
+    "2fa": "Two-Factor Authentication"
   },
   "services": {
     "remoteDaemonManage": "Add Daemon",
@@ -1019,9 +1020,22 @@
       "TXT_CODE_aa43b248": "Enter the control panel",
       "TXT_CODE_4770de17": "Business information",
       "TXT_CODE_381f8f22": "Product list",
-      "TXT_CODE_2dbd3cd3": "Business control panel"
+      "TXT_CODE_2dbd3cd3": "Business control panel",
+      "002": "Merchant Email",
+      "003": "Nick name",
+      "004": "Last active time",
+      "005": "Use redemption code",
+      "006": "Store introduction",
+      "TXT_CODE_3ee20639": "Redeem successfully, please keep the following information in mind",
+      "TXT_CODE_4c72565d": "This username does not exist, we will create a new account, are you sure?",
+      "TXT_CODE_8028e95b": "Please fill in your account username on this panel, and if it does not exist, it will be automatically created",
+      "TXT_CODE_8074a178": "New expiration time:",
+      "TXT_CODE_a95c0f85": "Please enter the redemption code, list such as: 2WJBUHJUD0V",
+      "TXT_CODE_ae51f93b": "Renewal successfully!",
+      "TXT_CODE_b90e9abd": "The redemption code takes effect immediately after use and will be automatically bound to an account with the same username.",
+      "TXT_CODE_c38813a8": "Account username",
+      "TXT_CODE_fb87ccd": "Example redemption code"
     }
-
   },
   "home": {
     "totalInstance": "Total Number of Instances",
@@ -1314,7 +1328,8 @@
       "007": "Forge configuration file",
       "008": "Fabric configuration file",
       "009": "MCDR configuration file"
-    }
+    },
+    "001": "node"
   },
   "tag": {
     "001": "Instance Tag",

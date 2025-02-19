@@ -1,10 +1,14 @@
 <script setup>
+import { ref } from "vue";
 import { useShopInfo } from "../../hooks/useStore";
 import i18n from "../../i18n";
 import md5 from "md5";
+import UseRedeemDialog from "./UseRedeemDialog.vue";
 const t = i18n.global.t;
 
 const { isLoading, isError, ispInfo } = useShopInfo();
+
+const useRedeemDialog = ref();
 </script>
 
 <template>
@@ -66,7 +70,9 @@ const { isLoading, isError, ispInfo } = useShopInfo();
         </div>
 
         <div class="flex flex-space-around" style="margin: 20px 0">
-          <el-button type="success">{{ t("settings.businessMode.005") }}</el-button>
+          <el-button type="success" @click="useRedeemDialog?.openDialog">{{
+            t("settings.businessMode.005")
+          }}</el-button>
           <el-button type="warning" plain>{{
             t("settings.businessMode.TXT_CODE_17b3748b")
           }}</el-button>
@@ -81,4 +87,6 @@ const { isLoading, isError, ispInfo } = useShopInfo();
       </div>
     </template>
   </Panel>
+
+  <UseRedeemDialog ref="useRedeemDialog" />
 </template>
