@@ -4,11 +4,13 @@ import { useShopInfo } from "../../hooks/useStore";
 import i18n from "../../i18n";
 import md5 from "md5";
 import UseRedeemDialog from "./UseRedeemDialog.vue";
+import PurchaseQueryDialog from "./PurchaseQueryDialog.vue";
 const t = i18n.global.t;
 
 const { isLoading, isError, ispInfo } = useShopInfo();
 
 const useRedeemDialog = ref();
+const purchaseQueryDialog = ref();
 </script>
 
 <template>
@@ -73,7 +75,7 @@ const useRedeemDialog = ref();
           <el-button type="success" @click="useRedeemDialog?.openDialog">{{
             t("settings.businessMode.005")
           }}</el-button>
-          <el-button type="warning" plain>{{
+          <el-button type="warning" plain @click="purchaseQueryDialog?.openDialog">{{
             t("settings.businessMode.TXT_CODE_17b3748b")
           }}</el-button>
         </div>
@@ -89,4 +91,6 @@ const useRedeemDialog = ref();
   </Panel>
 
   <UseRedeemDialog ref="useRedeemDialog" />
+
+  <PurchaseQueryDialog ref="purchaseQueryDialog" />
 </template>
