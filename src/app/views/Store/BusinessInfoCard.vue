@@ -14,7 +14,7 @@ const { isLoading, isError, ispInfo } = useShopInfo();
       <div v-if="!isError" style="min-height: 280px; overflow: auto">
         <div
           class="flex flex-wrap flex-align-items-center flex-space-around"
-          style="margin-bottom: 20px"
+          style="margin-bottom: 20px; gap: 15px"
         >
           <el-avatar
             :size="100"

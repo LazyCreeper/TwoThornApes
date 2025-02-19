@@ -11,7 +11,7 @@ const { products, isLoading, isError } = useShopInfo();
   <Panel v-loading="isLoading" element-loading-background="rgba(0, 0, 0, 0.5)">
     <template #title>{{ t("settings.businessMode.TXT_CODE_381f8f22") }}</template>
     <template #default>
-      <div v-if="!isError" style="min-height: 280px; overflow: auto">
+      <div v-if="!isError">
         <div class="sub-title prods" v-for="(item, index) in products" :key="index">
           <div class="sub-title-title flex flex-space-between flex-wrap row-mb">
             {{ item.title }}
