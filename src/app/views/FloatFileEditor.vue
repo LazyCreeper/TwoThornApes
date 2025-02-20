@@ -4,7 +4,7 @@
 
 <template>
   <Dialog v-model="visible">
-    <template #title>文件编辑</template>
+    <template #title>{{ $t("fileManagerEditor.title") }}</template>
     <template #default>
       <FileManagerEditor
         v-if="visible"
