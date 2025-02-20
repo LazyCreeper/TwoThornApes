@@ -57,6 +57,9 @@
                 <p class="sub-title color-green" v-if="ipv4">
                   {{ $t("components.NetworkTip.005", [ipv4]) }}
                 </p>
+                <p class="sub-title color-green" v-if="ipv6">
+                  {{ ipv6 }}
+                </p>
               </div>
             </div>
           </div>
@@ -185,7 +188,12 @@
 import Dialog from "@/components/Dialog";
 import SelectBlock from "@/components/SelectBlock";
 import { request } from "@/app/service/protocol";
-import { API_FORWARD_REQUEST, API_INSTANCE_UPDATE, QUERY_PUBLIC_IP } from "../app/service/common";
+import {
+  API_FORWARD_REQUEST,
+  API_INSTANCE_UPDATE,
+  QUERY_PUBLIC_IP_V4,
+  QUERY_PUBLIC_IP_V6
+} from "../app/service/common";
 export default {
   components: {
     Dialog,
@@ -197,6 +205,7 @@ export default {
       v: false,
       viewType: 0,
       ipv4: "",
+      ipv6: "",
       indexCode: "",
       tunnelId: "",
       // config: {},
@@ -219,16 +228,23 @@ export default {
   methods: {
     async getPublicIP() {
       try {
-        const data = await request({
+        this.ipv4 = await request({
           method: "GET",
           url: API_FORWARD_REQUEST,
           params: {
-            target: QUERY_PUBLIC_IP
+            target: QUERY_PUBLIC_IP_V4
           }
         });
-        this.ipv4 = data.ipv4;
+        this.ipv6 = await request({
+          method: "GET",
+          url: API_FORWARD_REQUEST,
+          params: {
+            target: QUERY_PUBLIC_IP_V6
+          }
+        });
       } catch (error) {
         this.ipv4 = "";
+        this.ipv6 = "";
       }
     },
     init() {
@@ -243,7 +259,6 @@ export default {
       this.v = false;
     },
     select(type) {
-      console.log("extraServiceConfig", this.extraServiceConfig);
       this.config = this.extraServiceConfig;
       this.viewType = type;
     },

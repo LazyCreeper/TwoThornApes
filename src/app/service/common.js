@@ -80,6 +80,8 @@ export const API_REQUEST_REDEEM_PLATFORM = `${API_URL}/api/exchange/request_rede
 export const API_REDEEM_PRODUCTS = `/api/instances/query_products`;
 
 export const QUERY_PUBLIC_IP = "http://statistics.mcsmanager.com/ip";
+export const QUERY_PUBLIC_IP_V4 = "http://4.ipw.cn";
+export const QUERY_PUBLIC_IP_V6 = "http://6.ipw.cn";
 
 export const GLOBAL_INSTANCE_UUID = "global0001";
 
