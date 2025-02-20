@@ -393,7 +393,11 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="currentPlayers" :label="$t('instances.detailsInfo')" width="100">
+            <el-table-column
+              prop="currentPlayers"
+              :label="$t('instances.detailsInfo')"
+              min-width="100"
+            >
               <template #default="scope">
                 <div>
                   <span v-if="scope.row.info && scope.row.info.currentPlayers >= 0">
