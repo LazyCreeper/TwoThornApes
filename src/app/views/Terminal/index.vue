@@ -704,7 +704,7 @@ import RconSettings from "./RconSettings.vue";
 import ExtraEdit from "./ExtraEdit.vue";
 import UseRedeemDialog from "../Store/UseRedeemDialog.vue";
 import { INSTANCE_TYPE_DEF_CONFIG } from "@/app/service/instance_type";
-import { dockerPortsArray } from "../../utils";
+import { copyText, dockerPortsArray } from "../../utils";
 export default {
   components: {
     Panel,
@@ -759,7 +759,9 @@ export default {
         w: 80,
         h: 40
       },
-      fitAddonTask: null
+      fitAddonTask: null,
+
+      copyText
     };
   },
   computed: {
