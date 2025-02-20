@@ -6,7 +6,7 @@
   <Panel>
     <template #title>{{ $t("services.remoteDaemonManage") }}</template>
     <template #default>
-      <div class="flex flex-space-between">
+      <div class="flex flex-space-between row-mb">
         <ItemGroup>
           <el-button type="success" size="small" @click="openNewServiceDialog">{{
             $t("services.addDaemon")
@@ -26,9 +26,7 @@
           }}</el-button>
         </ItemGroup>
       </div>
-      <div>
-        <p v-html="$t('services.remoteInfo', { specifiedDaemonVersion })"></p>
-      </div>
+      <div v-html="$t('services.remoteInfo', { specifiedDaemonVersion })"></div>
     </template>
   </Panel>
 

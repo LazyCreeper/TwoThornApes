@@ -360,7 +360,7 @@
             v-show="!notAnyInstance && currentRemoteUuid && showTableList"
           >
             <el-table-column type="selection" width="55"> </el-table-column>
-            <el-table-column prop="nickname" :label="$t('instances.instanceName')" min-width="240">
+            <el-table-column prop="nickname" :label="$t('instances.instanceName')" min-width="140">
               <template #default="scope">
                 <div
                   @click="toInstance(scope.row.serviceUuid, scope.row.instanceUuid)"
@@ -370,7 +370,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="currentPlayers" label="Tags" width="240">
+            <el-table-column prop="currentPlayers" label="Tags" min-width="240">
               <template #default="scope">
                 <div class="flex flex-align-items-center flex-wrap" style="gap: 8px">
                   <el-button
@@ -393,7 +393,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="currentPlayers" :label="$t('instances.detailsInfo')" width="240">
+            <el-table-column prop="currentPlayers" :label="$t('instances.detailsInfo')" width="100">
               <template #default="scope">
                 <div>
                   <span v-if="scope.row.info && scope.row.info.currentPlayers >= 0">
@@ -407,7 +407,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="status" :label="$t('instances.status.runStatus')" width="180">
+            <el-table-column prop="status" :label="$t('instances.status.runStatus')" width="100">
               <template #default="scope">
                 <div class="color-gray" v-if="scope.row.status == 0">
                   <i class="el-icon-video-pause"></i>
@@ -433,7 +433,7 @@
             <el-table-column
               prop="type"
               :label="$t('instances.table.instanceType')"
-              width="220"
+              width="160"
             ></el-table-column>
             <el-table-column :label="$t('general.operate')" style="text-align: center" width="240">
               <template #default="scope">
