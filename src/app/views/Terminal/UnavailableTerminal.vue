@@ -60,13 +60,17 @@ export default {
       unavailableIp: ""
     };
   },
-
+  computed: {
+    isTopPermission() {
+      return this.$store.state.userInfo?.permission >= 10;
+    }
+  },
   created() {
     this.unavailableIp = this.$route.query.ip;
   },
   methods: {
     backInstancesView() {
-      this.$router.push("/instances");
+      this.$router.push(this.isTopPermission ? "/instances" : "/home");
     },
     toDocs() {
       window.open("https://docs.mcsmanager.com/");
