@@ -17,17 +17,26 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item
-                v-for="item in skins"
-                @click="setSkin(item.fileName)"
-                :key="item"
-              >{{ item.name }}</el-dropdown-item>
-              <el-dropdown-item @click="setCustomSkin()">{{ $t("settings.selectSkin.custom") }}</el-dropdown-item>
+              <el-dropdown-item v-for="item in skins" @click="setSkin(item.fileName)" :key="item">{{
+                item.name
+              }}</el-dropdown-item>
+              <el-dropdown-item @click="setCustomSkin()">{{
+                $t("settings.selectSkin.custom")
+              }}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
       </el-tooltip>
     </div>
+
+    <div v-if="!isTopPermission" class="el-dropdown-link" @click="toStore">
+      <el-tooltip class="item" effect="dark" :content="$t('router.store')" placement="bottom">
+        <el-link :underline="false">
+          <i class="el-icon-shopping-bag-1"></i>
+        </el-link>
+      </el-tooltip>
+    </div>
+
     <div class="el-dropdown-link" @click="toPrivate">
       <el-tooltip class="item" effect="dark" :content="$t('root.private')" placement="bottom">
         <el-link :underline="false">
@@ -36,11 +45,15 @@
       </el-tooltip>
     </div>
 
-    <div class="el-dropdown-link" @click="logout">
+    <div class="el-dropdown-link">
       <el-tooltip class="item" effect="dark" :content="$t('root.logout')" placement="bottom">
-        <el-link :underline="false">
-          <i class="el-icon-switch-button"></i>
-        </el-link>
+        <el-popconfirm :title="$t('terminal.confirmOperate')" @confirm="logout">
+          <template #reference>
+            <el-link :underline="false">
+              <i class="el-icon-switch-button"></i>
+            </el-link>
+          </template>
+        </el-popconfirm>
       </el-tooltip>
     </div>
   </ItemGroup>
@@ -58,7 +71,11 @@ export default {
       skins: []
     };
   },
-  computed: {},
+  computed: {
+    isTopPermission() {
+      return this.$store.state.userInfo.permission >= 10;
+    }
+  },
   mounted() {
     this.getSkins();
   },
@@ -101,6 +118,9 @@ export default {
     },
     toPrivate() {
       router.push({ path: "/private" });
+    },
+    toStore() {
+      router.push({ path: "/store" });
     },
     async logout() {
       try {

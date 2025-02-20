@@ -46,7 +46,7 @@ Copyright (C) 2022 MCSManager <mcsmanager-dev@outlook.com>
 
 <script>
 import Aside from "../components/Aside";
-import Header from "../components/Header";
+import Header from "../components/Header/index.vue";
 import { setupUserInfo } from "./service/protocol.js";
 import router from "./router";
 import store from "./store";

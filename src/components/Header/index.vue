@@ -21,9 +21,9 @@
           :to="{ path: item.path }"
           :key="index"
         >
-          <span
-            class="only-pc-display"
-          >{{ $t("router.panel") }}&nbsp;/&nbsp;{{ $t("router." + item.title) }}</span>
+          <span class="only-pc-display"
+            >{{ $t("router.panel") }}&nbsp;/&nbsp;{{ $t("router." + item.title) }}</span
+          >
         </div>
       </el-col>
       <el-col :span="12" style="text-align: right; line-height: 28px; color: #409eff">
