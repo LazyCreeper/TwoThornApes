@@ -535,7 +535,8 @@
     "openfrp": "内网映射",
     "backInstancesView": "回到应用实例列表",
     "paramsSet": "参数设置",
-    "globalTerminalTip": "控制台提供 WebShell 能力，适用于日常的服务器维护工作。"
+    "globalTerminalTip": "控制台提供 WebShell 能力，适用于日常的服务器维护工作。",
+    "TXT_CODE_4a37ec9c": "已连接到此终端的网页数量，这可能会影响到你的终端宽度和高度"
   },
   "processConfig": {
     "title": "配置列表组",

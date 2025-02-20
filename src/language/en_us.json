@@ -535,7 +535,8 @@
     "openfrp": "Intranet mapping",
     "backInstancesView": "Back to Instance panelCpuUsageInfo",
     "paramsSet": "Settings",
-    "globalTerminalTip": "The console provides WebShell capability, which is suitable for daily server maintenance."
+    "globalTerminalTip": "The console provides WebShell capability, which is suitable for daily server maintenance.",
+    "TXT_CODE_4a37ec9c": "The number of web pages connected to this terminal, which may affect your terminal width and height"
   },
   "processConfig": {
     "title": "Configure List Group",
