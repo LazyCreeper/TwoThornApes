@@ -534,7 +534,6 @@ export default {
   },
   async mounted() {
     this.quickStartType = this.$route.query.type;
-    console.log(this.$route);
   }
 };
 </script>

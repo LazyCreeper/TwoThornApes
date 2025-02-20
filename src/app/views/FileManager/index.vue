@@ -492,7 +492,7 @@ export default defineComponent({
     },
     // Directory List function
     async list(cwd = this.currentDir) {
-      this.$route.query.path = cwd;
+      this.$router.replace({ query: { path: cwd } });
       try {
         const data = await request({
           method: "GET",
