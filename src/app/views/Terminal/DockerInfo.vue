@@ -38,7 +38,9 @@
                   v-for="(item, index) in dockerPortsParse(dockerInfo.ports)"
                   :key="index"
                 >
-                  <span>{{ item.protocol }}:</span>
+                  <el-tag type="success" size="mini">{{
+                    item.protocol.toLocaleUpperCase()
+                  }}</el-tag>
                   <span style="margin-left: 8px"
                     >{{ $t("CommonText.029") }}: {{ item.port1 }}
                   </span>

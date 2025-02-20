@@ -537,7 +537,7 @@
               </ItemGroup>
             </div>
             <div v-else>
-              <p class="color-gray">{{ $t("terminal.nocmdHistory") }}</p>
+              <p class="color-gray">{{ $t("terminal.noCmdHistory") }}</p>
             </div>
           </template>
         </Panel>
