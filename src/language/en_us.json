@@ -94,7 +94,8 @@
     "permission": "Permissions",
     "copySuccess": "Copy successfully",
     "copyFailed": "Copy failed",
-    "copyFailedInfo": "Please manually copy the following content"
+    "copyFailedInfo": "Please manually copy the following content",
+    "clickToCopy": "Click to copy"
   },
   "root": {
     "title": "Processing...",

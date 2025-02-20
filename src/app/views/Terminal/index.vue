@@ -52,7 +52,9 @@
                         >{{ $t("CommonText.030") }}: {{ item.port2 }}</span
                       >
                       <span style="margin-left: 8px">
-                        <el-tag type="success" size="mini">{{ item.protocol }}</el-tag>
+                        <el-tag type="success" size="mini">{{
+                          item.protocol.toLocaleUpperCase()
+                        }}</el-tag>
                       </span>
                     </template>
                     <template v-else>...</template>
@@ -331,15 +333,35 @@
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
-                  <span style="font-size: 12px">{{ $t("service.001") }}ID {{ serviceUuid }}</span>
+                  <el-tooltip
+                    class="box-item"
+                    effect="dark"
+                    :content="$t('general.clickToCopy')"
+                    placement="bottom"
+                  >
+                    <span style="font-size: 13px; margin-left: 2px" @click="copyText(serviceUuid)">
+                      {{ $t("service.001") }}ID: {{ serviceUuid }}</span
+                    >
+                  </el-tooltip>
                 </div>
               </LineInfo>
               <LineInfo>
                 <div class="text-overflow-ellipsis">
                   <i class="el-icon-document"></i>
-                  <span class="text-overflow-ellipsis" style="font-size: 12px"
-                    >{{ $t("instances.001") }}ID {{ instanceInfo.instanceUuid }}</span
+                  <el-tooltip
+                    class="box-item"
+                    effect="dark"
+                    :content="$t('general.clickToCopy')"
+                    placement="bottom"
                   >
+                    <span
+                      class="text-overflow-ellipsis"
+                      style="font-size: 13px; margin-left: 2px"
+                      @click="copyText(instanceInfo.instanceUuid)"
+                    >
+                      {{ $t("instances.001") }}ID: {{ instanceInfo.instanceUuid }}</span
+                    >
+                  </el-tooltip>
                 </div>
               </LineInfo>
               <LineInfo>

@@ -94,7 +94,8 @@
     "permission": "权限",
     "copySuccess": "复制成功",
     "copyFailed": "复制失败",
-    "copyFailedInfo": "请手动复制以下内容"
+    "copyFailedInfo": "请手动复制以下内容",
+    "clickToCopy": "点击复制"
   },
   "root": {
     "title": "处理中...",

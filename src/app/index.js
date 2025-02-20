@@ -18,18 +18,28 @@ import { requestPanelStatus } from "./service/protocol.js";
 import App from "./App.vue";
 import directive from "./directive";
 
-import ItemGroup from "../components/ItemGroup";
+import ItemGroup from "../components/ItemGroup.vue";
 import FunctionGroup from "../components/FunctionGroup.vue";
 import FunctionGroupComponent from "../components/FunctionGroupComponent.vue";
 import Panel from "../components/Panel.vue";
 
 if (localStorage.getItem("customSkin")) {
-  document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="${localStorage.getItem("customSkin")}?t_=${Date.now()}">`;
+  document.getElementById(
+    "linkSkinCss"
+  ).innerHTML = `<link type="text/css" rel="stylesheet" href="${localStorage.getItem(
+    "customSkin"
+  )}?t_=${Date.now()}">`;
 } else {
   if (localStorage.getItem("skin")) {
-    document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/${localStorage.getItem("skin")}.css?t_=${Date.now()}">`;
+    document.getElementById(
+      "linkSkinCss"
+    ).innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/${localStorage.getItem(
+      "skin"
+    )}.css?t_=${Date.now()}">`;
   } else {
-    document.getElementById('linkSkinCss').innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/default.css?t_=${Date.now()}">`;
+    document.getElementById(
+      "linkSkinCss"
+    ).innerHTML = `<link type="text/css" rel="stylesheet" href="./static/skins/default.css?t_=${Date.now()}">`;
   }
 }
 
