@@ -415,7 +415,7 @@
             </el-tooltip>
           </template>
           <template #rtitle>
-            <div v-if="!isGlobalTerminal">
+            <div >
               <el-tooltip
                 class="item"
                 effect="dark"
@@ -427,6 +427,7 @@
                 </span>
               </el-tooltip>
               <el-tooltip
+              v-if="!isGlobalTerminal"
                 class="item"
                 effect="dark"
                 :content="$t('terminal.newFullScreen')"
@@ -437,6 +438,7 @@
                 </span>
               </el-tooltip>
               <el-tooltip
+              v-if="!isGlobalTerminal"
                 class="item"
                 effect="dark"
                 :content="$t('terminal.fullScreen')"
