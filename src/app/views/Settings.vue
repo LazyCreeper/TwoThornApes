@@ -377,7 +377,7 @@ export default {
         dialog: false,
         title: "",
         content: "",
-        version: "3.2",
+        version: "3.2.1",
         haveNew: false
       }
     };
