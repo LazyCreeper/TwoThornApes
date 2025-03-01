@@ -76,6 +76,7 @@
     "refresh": "Refresh",
     "refreshFinish": "Refreshed",
     "required": "Required",
+    "optional": "Optional",
     "warn": "Warning",
     "allow": "Allow",
     "forbid": "Deny",
@@ -153,6 +154,7 @@
     "addr": "IP Address",
     "remarks": "Remarks",
     "port": "Port",
+    "prefix": "Path Prefix",
     "mem": "Memory",
     "instance": "Existing instance",
     "runningInstance": "Running instance",
@@ -813,6 +815,7 @@
     "keySub": "Token will be displayed when the Daemon started, pleae make sure it is stored safely.",
     "getKey": "How to get token?",
     "keyInfo": "Required, e.g. 6ff0fa1ef9a943f3c6f2fe0e4564a2fa383d35c4b78ccb5",
+    "prefixInfo": "Used when sharing ports, usually no configuration is needed here.",
     "addNewWarn": {
       "title": "Warning for Adding New Daemon",
       "ip": "Detected current connected IP as: { newServiceInfo }, perhaps it is a LAN IP?",

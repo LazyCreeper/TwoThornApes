@@ -52,6 +52,15 @@
             ></el-input>
           </template>
         </el-table-column>
+        <el-table-column :label="$t('overview.prefix')" width="100">
+          <template #default="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.prefix"
+              :placeholder="$t('general.optional')"
+            ></el-input>
+          </template>
+        </el-table-column>
         <el-table-column label="ID" width="40">
           <template #default="scope">
             <el-tooltip
@@ -348,6 +357,13 @@
                       style="max-width: 70px; margin-right: 4px"
                     ></el-input>
 
+                    <el-input
+                      size="mini"
+                      v-model="node.prefix"
+                      :placeholder="$t('overview.prefix')"
+                      style="max-width: 80px; margin-right: 4px"
+                    ></el-input>
+
                     <el-button size="mini" @click="linkService(node, true)">
                       {{ node.available ? $t("services.update") : $t("services.connect") }}
                     </el-button>
@@ -433,6 +449,17 @@
         <el-input
           v-model="newServiceInfo.apiKey"
           :placeholder="$t('services.keyInfo')"
+          size="small"
+        ></el-input>
+        <div class="sub-title row-mt">
+          <div class="sub-title-title">{{ $t("overview.prefix") }}</div>
+          <div class="sub-title-info">
+            {{ $t("services.prefixInfo") }}
+          </div>
+        </div>
+        <el-input
+          v-model="newServiceInfo.prefix"
+          :placeholder="$t('general.optional')"
           size="small"
         ></el-input>
         <div class="row-mt">
@@ -723,7 +750,7 @@ export default {
     async updateService(row) {
       await axios.put(
         API_SERVICE_CURD,
-        { ip: row.ip, port: row.port, remarks: row.remarks || "Remote Host" },
+        { ip: row.ip, port: row.port, remarks: row.remarks || "Remote Host", prefix: row.prefix },
         {
           params: { uuid: row.uuid }
         }

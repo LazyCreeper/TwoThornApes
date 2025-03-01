@@ -76,6 +76,7 @@
     "refresh": "刷新",
     "refreshFinish": "已刷新",
     "required": "必填",
+    "optional": "选填",
     "warn": "警告",
     "allow": "准许",
     "forbid": "禁止",
@@ -153,6 +154,7 @@
     "addr": "IP 地址",
     "remarks": "备注",
     "port": "端口",
+    "prefix": "路径前缀",
     "mem": "内存",
     "instance": "已有实例",
     "runningInstance": "运行实例",
@@ -813,6 +815,7 @@
     "keySub": "在远程节点启动时控制台上会输出显示，务必确保密钥安全",
     "getKey": "如何获取密钥？",
     "keyInfo": "必填，例如 6ff0fa1ef9a943f3c6f2fe0e4564a2fa383d35c4b78ccb5",
+    "prefixInfo": "共用端口时使用，通常情况下此处无需配置",
     "addNewWarn": {
       "title": "新增远程主机警告",
       "ip": "检测到您的连接 IP 为 : { newServiceInfo }，似乎是一个内网地址？",
