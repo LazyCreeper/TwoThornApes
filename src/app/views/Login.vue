@@ -87,9 +87,14 @@
                     {{ loginText }}
                   </el-button>
                 </div>
-                <div class="login-info-wrapper row-mt" v-if="loginInfo">
-                  <span class="color-gray">
+                <div class="login-info-wrapper row-mt flex-space-between">
+                  <span v-if="loginInfo" class="color-gray">
                     {{ loginInfo }}
+                  </span>
+                  <span v-if="isBusinessMode">
+                    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.lazy.ink" target="_blank">{{
+                      $t("login.store")
+                    }}</a>
                   </span>
                 </div>
                 <div class="login-info-wrapper row-mt">
@@ -97,7 +102,7 @@
                     <span class="color-gray"
                       >Powered by
                       <a target="black" href="https://github.com/MCSManager">MCSManager</a
-                      >&nbsp;&nbsp;|&nbsp;&nbsp; Theme by
+                      >&nbsp;&nbsp;|&nbsp;&nbsp;Theme by
                       <a href="https://www.lazy.ink" target="_blank">Lazy</a></span
                     >
                   </div>
@@ -259,6 +264,11 @@ export default {
       loginInfo: "",
       step: 1
     };
+  },
+  computed: {
+    isBusinessMode() {
+      return this.$store.state.panelStatus.settings.businessMode;
+    }
   },
   methods: {
     submit() {

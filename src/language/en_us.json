@@ -123,7 +123,8 @@
       "title": "This page doesn't work correctly.",
       "message": "Unable to get user identity, possibly due to a banned account or network problem. Please try again."
     },
-    "need2FA": "Please enter the two-factor authentication code"
+    "need2FA": "Please enter the two-factor authentication code",
+    "store": "Store"
   },
   "overview": {
     "systemInfoTable": "Overview",
