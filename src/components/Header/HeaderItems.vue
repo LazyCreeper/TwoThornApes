@@ -37,7 +37,7 @@
       </el-tooltip>
     </div>
 
-    <div class="el-dropdown-link" @click="toPrivate">
+    <div v-if="isLogin" class="el-dropdown-link" @click="toPrivate">
       <el-tooltip class="item" effect="dark" :content="$t('root.private')" placement="bottom">
         <el-link :underline="false">
           <i class="el-icon-user"></i>
@@ -45,7 +45,7 @@
       </el-tooltip>
     </div>
 
-    <div class="el-dropdown-link">
+    <div v-if="isLogin" class="el-dropdown-link">
       <el-tooltip class="item" effect="dark" :content="$t('root.logout')" placement="bottom">
         <el-popconfirm :title="$t('terminal.confirmOperate')" @confirm="logout">
           <template #reference>
@@ -74,6 +74,9 @@ export default {
   computed: {
     isTopPermission() {
       return this.$store.state.userInfo.permission >= 10;
+    },
+    isLogin() {
+      return !!this.$store.state.userInfo.uuid;
     }
   },
   mounted() {

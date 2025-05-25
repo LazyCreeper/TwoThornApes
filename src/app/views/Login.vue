@@ -92,9 +92,11 @@
                     {{ loginInfo }}
                   </span>
                   <span v-if="isBusinessMode">
-                    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.lazy.ink" target="_blank">{{
-                      $t("login.store")
-                    }}</a>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;<a
+                      href="javascript:;"
+                      @click="$router.push('/store')"
+                      >{{ $t("login.store") }}</a
+                    >
                   </span>
                 </div>
                 <div class="login-info-wrapper row-mt">
