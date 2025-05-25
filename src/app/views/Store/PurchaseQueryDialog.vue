@@ -22,13 +22,13 @@ const t = i18n.global.t,
       trigger: "blur"
     }
   },
-  res = ref(),
+  res = ref(null),
   openDialog = () => {
     v.value = true;
   },
   close = () => {
     v.value = false;
-    res.value = void 0;
+    res.value = null;
     formData.value.code = "";
   },
   submit = async () => {
@@ -69,8 +69,15 @@ defineExpose({ openDialog });
   <Dialog v-model="v" :cancel="close">
     <template #title>{{ $t("settings.businessMode.TXT_CODE_2093cc1a") }}</template>
 
-    <template #default v-if="!res">
-      <el-form :model="formData" :rules="rules" label-position="top" size="small" ref="formRef">
+    <template #default>
+      <el-form
+        v-if="!res"
+        :model="formData"
+        :rules="rules"
+        label-position="top"
+        size="small"
+        ref="formRef"
+      >
         <el-form-item :label="$t('settings.businessMode.TXT_CODE_a3de630')" prop="code" required>
           <el-input
             size="small"
@@ -90,10 +97,7 @@ defineExpose({ openDialog });
           }}</el-button>
         </div>
       </el-form>
-    </template>
-
-    <template #default v-else>
-      <el-result icon="success">
+      <el-result v-else icon="success">
         <template #subTitle>
           <table>
             <tr>
