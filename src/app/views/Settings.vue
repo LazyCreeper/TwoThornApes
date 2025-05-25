@@ -229,7 +229,11 @@
                   <p class="sub-title-title">{{ $t("instancesDetail.gid") }}</p>
                   <p class="sub-title-info">{{ $t("settings.businessMode.TXT_CODE_678164d7") }}</p>
                 </div>
-                <el-input placeholder="eg: 114514" v-model="settings.businessId"></el-input>
+                <el-input
+                  placeholder="eg: 114514"
+                  v-model="settings.businessId"
+                  :disabled="!settings.businessMode"
+                ></el-input>
               </div>
             </el-col>
           </el-row>
@@ -377,7 +381,7 @@ export default {
         dialog: false,
         title: "",
         content: "",
-        version: "3.2.1",
+        version: "3.2.2",
         haveNew: false
       }
     };
