@@ -139,47 +139,46 @@ defineExpose({ openDialog });
   <Dialog v-model="v" :cancel="close" max-width="500px">
     <template #title>{{ $t("settings.businessMode.005") }}</template>
 
-    <template #default v-if="!res">
-      <p>
-        {{ t("settings.businessMode.TXT_CODE_b90e9abd") }}
-      </p>
-      <el-form :model="formData" :rules="rules" label-position="top" size="small" ref="formRef">
-        <el-form-item
-          :label="$t('settings.businessMode.TXT_CODE_c38813a8')"
-          prop="username"
-          required
-        >
-          <el-input
-            size="small"
-            v-model="formData.username"
-            autocomplete="off"
-            :placeholder="$t('settings.businessMode.TXT_CODE_8028e95b')"
+    <template #default>
+      <div v-if="!res">
+        <p>
+          {{ t("settings.businessMode.TXT_CODE_b90e9abd") }}
+        </p>
+        <el-form :model="formData" :rules="rules" label-position="top" size="small" ref="formRef">
+          <el-form-item
+            :label="$t('settings.businessMode.TXT_CODE_c38813a8')"
+            prop="username"
+            required
           >
-          </el-input>
-        </el-form-item>
+            <el-input
+              size="small"
+              v-model="formData.username"
+              autocomplete="off"
+              :placeholder="$t('settings.businessMode.TXT_CODE_8028e95b')"
+            >
+            </el-input>
+          </el-form-item>
 
-        <el-form-item :label="$t('settings.businessMode.TXT_CODE_fb87ccd')" prop="code" required>
-          <el-input
-            size="small"
-            v-model="formData.code"
-            :placeholder="$t('settings.businessMode.TXT_CODE_a95c0f85')"
-            autocomplete="off"
-          >
-          </el-input>
-        </el-form-item>
-        <div class="btn-area">
-          <el-button size="small" type="danger" @click="close">{{
-            $t("general.cancel")
-          }}</el-button>
-          <el-button size="small" type="primary" @click="submit" :loading="isLoading">{{
-            $t("general.confirm")
-          }}</el-button>
-        </div>
-      </el-form>
-    </template>
-
-    <template #default v-else>
-      <el-result icon="success">
+          <el-form-item :label="$t('settings.businessMode.TXT_CODE_fb87ccd')" prop="code" required>
+            <el-input
+              size="small"
+              v-model="formData.code"
+              :placeholder="$t('settings.businessMode.TXT_CODE_a95c0f85')"
+              autocomplete="off"
+            >
+            </el-input>
+          </el-form-item>
+          <div class="btn-area">
+            <el-button size="small" type="danger" @click="close">{{
+              $t("general.cancel")
+            }}</el-button>
+            <el-button size="small" type="primary" @click="submit" :loading="isLoading">{{
+              $t("general.confirm")
+            }}</el-button>
+          </div>
+        </el-form>
+      </div>
+      <el-result v-else icon="success">
         <template #title>
           {{
             isRenewalMode
